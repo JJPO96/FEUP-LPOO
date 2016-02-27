@@ -3,14 +3,24 @@ package maze.logic;
 public class Objeto {
 	private int x;
 	private int y;
+	protected char simbolo;
 	
 	Objeto(){
-		x = 0;
-		y = 0;
+		this.x = 0;
+		this.y = 0;
 	}
-	Objeto(int a, int b){
-		x = a;
-		y = b;
+	Objeto(int a, int b, char simbolo){
+		this.x = a;
+		this.y = b;
+		this.simbolo = simbolo;
+	}
+	
+	public void setSimbolo(char simbolo){
+		this.simbolo = simbolo;
+	}
+	
+	public char getSimbolo(){
+		return simbolo;
 	}
 	
 	public int getX(){

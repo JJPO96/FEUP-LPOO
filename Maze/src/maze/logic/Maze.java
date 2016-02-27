@@ -2,8 +2,6 @@ package maze.logic;
 
 public class Maze {
 	
-	private enum tipoJogo {Dormir, Nao};
-	
 	private Labirinto lab;
 	private Heroi hero;
 	private Dragao dragon;
@@ -11,9 +9,22 @@ public class Maze {
 	private boolean running;
 
 	public Maze(){
-		lab = new Labirinto();
-		setRunning(true);
+		this.lab = new Labirinto();
+		this.hero = new Heroi(1, 1, 'H');
+		this.dragon = new Dragao(1, 3, 'D');
+		this.sword = new Espada(1, 8, 'E');
+		this.running = false;
 	};
+	
+	/**
+	 * Coloca os elementos do jogo nas posições iniciais do tabuleiro
+	 */
+	public void init(){
+		lab.setObjeto(hero);
+		lab.setObjeto(dragon);
+		lab.setObjeto(sword);
+		this.running = true;
+	}
 	
 	public boolean isRunning() {
 		return running;

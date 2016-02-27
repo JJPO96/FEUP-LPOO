@@ -5,10 +5,10 @@ import maze.logic.*;
 
 public class Jogo {
 	
-	public static void mostraTab(char[][] tabuleiro){
+	public static void mostraTab(Maze game){
 		for(int i = 0;i < 10;i++){
 			for(int j = 0;j < 10;j++){
-				System.out.print(tabuleiro[i][j]);
+				System.out.print(game.getLab().getTab()[i][j]);
 			}
 			System.out.println();
 		}
@@ -41,14 +41,18 @@ public class Jogo {
 
 	public static void main(String[] args) {
 		
-		Maze game = new Maze();		
 		Scanner scan = new Scanner(System.in);
 		char input;
 		
-		mostraTab(game.getLab().getTab());
+		Maze game = new Maze();
+		
+		// TODO - Quando se criar varios modos de jogo, a função init() irá receber um parâmeto
+		//  que irá dizer o modo de jogo escolhido
+		game.init();		
+		mostraTab(game);
 		
 		while(game.isRunning()){
-			//APAGAR -  A cada comando, o programa atualiza e mostra anova situação do labirinto
+			//APAGAR -  A cada comando, o programa atualiza e mostra a nova situação do labirinto
 			
 			// Movimento - E ou e (Esquerda), D ou d (Direita), C ou c (Cima), B ou b (Baixo)
 			
@@ -56,7 +60,7 @@ public class Jogo {
 			
 			if (validMove(input)){
 				game.update(input);
-				mostraTab(game.getLab().getTab());
+				mostraTab(game);
 			}
 		}		
 		

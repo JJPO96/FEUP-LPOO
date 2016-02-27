@@ -5,11 +5,12 @@ public class Dragao extends Objeto {
 	
 	public Dragao(){
 		super();
+		super.setSimbolo('H');
 		setDormir(false);
 	}
 	
-	public Dragao(int x, int y) {
-		super(x, y);
+	public Dragao(int x, int y, char simbolo) {
+		super(x, y, simbolo);
 	}
 
 	public boolean isDormir() {
