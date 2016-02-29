@@ -18,7 +18,7 @@ public class GameLauncher {
 
 				if (game.getHero().getPos().equals(pos))
 					maze+= game.getHero().getSymbol();
-				else if (game.getDragon().getPos().equals(pos))
+				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos))
 					maze+= game.getDragon().getSymbol();
 				else if (game.getSword().getPos().equals(pos) && !game.getSword().isPicked())
 					maze+= game.getSword().getSymbol();
@@ -32,6 +32,13 @@ public class GameLauncher {
 		return maze;		
 	}
 
+	public static void gameEnd(Maze game){
+		if (game.getHero().getAlive())
+			System.out.println("VITORY!");
+		else
+			System.out.println("DEFEAT!");
+	}
+	
 	public static void printMaze(Maze game){	
 		System.out.println(convertString(game));
 	}
@@ -46,7 +53,7 @@ public class GameLauncher {
 			return true;
 		case 'U':
 			return true;
-		case 'B':
+		case 'D':
 			return true;
 		default:
 			return false;
@@ -81,7 +88,9 @@ public class GameLauncher {
 				game.update(input);
 				printMaze(game);
 			}
-		}		
+		}
+		
+		gameEnd(game);
 
 		scan.close();
 	}

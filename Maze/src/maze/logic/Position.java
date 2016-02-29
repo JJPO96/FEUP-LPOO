@@ -31,6 +31,11 @@ public class Position {
 		return y;
 	}
 	
+	public void updatePos(int x, int y){
+		this.x += x;
+		this.y += y;
+	}
+	
 	/**
 	 * Implementation of equals() function for Position objects (compares if 2 object have the same position)
 	 * 
