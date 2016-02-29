@@ -2,7 +2,7 @@ package maze.logic;
 
 public class Maze {
 
-	private Labirinto lab;
+	private Board gameBoard;
 	private Hero hero;
 	private Dragon dragon;
 	private Sword sword;
@@ -10,7 +10,7 @@ public class Maze {
 	private boolean win;
 
 	public Maze(){
-		this.lab = new Labirinto();
+		this.gameBoard = new Board();
 		this.hero = new Hero(1, 1, 'H');
 		this.dragon = new Dragon(1, 3, 'D');
 		this.sword = new Sword(1, 8, 'E');
@@ -33,8 +33,8 @@ public class Maze {
 		this.running = running;
 	}
 
-	public Labirinto getLab(){		
-		return lab;
+	public Board getgameBoard(){		
+		return gameBoard;
 	}
 
 	public void checkSword(){
@@ -49,19 +49,19 @@ public class Maze {
 
 		switch (input){
 		case 'L':
-			if(!lab.checkCollision(hero.getPos().getX()-1, hero.getPos().getY()))
+			if(!gameBoard.checkCollision(hero.getPos().getX()-1, hero.getPos().getY()))
 				hero.pos.x = hero.pos.x-1;
 			break;
 		case 'R':
-			if(!lab.checkCollision(hero.getPos().getX()+1, hero.getPos().getY()))
+			if(!gameBoard.checkCollision(hero.getPos().getX()+1, hero.getPos().getY()))
 				hero.pos.x = hero.pos.x+1;
 			break;
 		case 'U':
-			if(!lab.checkCollision(hero.getPos().getX(), hero.getPos().getY()-1))
+			if(!gameBoard.checkCollision(hero.getPos().getX(), hero.getPos().getY()-1))
 				hero.pos.y = hero.pos.y-1;
 			break;
 		case 'B':
-			if(!lab.checkCollision(hero.getPos().getX(), hero.getPos().getY()+1))
+			if(!gameBoard.checkCollision(hero.getPos().getX(), hero.getPos().getY()+1))
 				hero.pos.y = hero.pos.y+1;
 			break;
 		default:

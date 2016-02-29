@@ -1,10 +1,10 @@
 package maze.logic;
 
-public class Labirinto {
-	
+public class Board {
+
 	private static char path = ' ';
 	private static char exit = 'S';
-	private char[][] tabuleiro = {
+	private char[][] board = {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ','X','X',' ','X',' ','X',' ','X'},
@@ -16,10 +16,10 @@ public class Labirinto {
 			{'X',' ','X','X',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X','X'}};
 	
-	public Labirinto(){};
+	public Board(){};
 	
-	public char[][] getTab(){
-		return tabuleiro;
+	public char[][] getBoard(){
+		return board;
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class Labirinto {
 	public boolean checkCollision(int x, int y){
 		// TODO - Falta corrigir (verificar caso de colisão com dragao/espada/saida)
 		
-		if (tabuleiro[y][x] == path)
+		if (board[y][x] == path)
 			return false;		
 		
 		return true;
