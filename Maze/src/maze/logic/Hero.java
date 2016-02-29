@@ -1,17 +1,17 @@
 package maze.logic;
 
-public class Heroi extends Objeto {
-	
+public class Hero extends GameElement{
+
 	private boolean alive = true;
 	private boolean armed = false;
 	
-	public Heroi(){
+	public Hero(){
 		super();
-		this.simbolo = 'H';
+		this.symbol = 'H';
 	}
 	
-	public Heroi(int x, int y, char simbolo) {
-		super(x, y, simbolo);
+	public Hero(int x, int y, char symbol) {
+		super(x, y, symbol);
 	}
 	
 	public void setAlive(boolean alive){
@@ -24,7 +24,7 @@ public class Heroi extends Objeto {
 	
 	public void setArmed(){
 		armed = true;
-		simbolo = 'A';
+		symbol = 'A';
 	}
 	
 	public boolean isArmed(){

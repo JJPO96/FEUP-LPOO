@@ -3,24 +3,21 @@ package maze.logic;
 public class Maze {
 
 	private Labirinto lab;
-	private Heroi hero;
-	private Dragao dragon;
-	private Espada sword;
+	private Hero hero;
+	private Dragon dragon;
+	private Sword sword;
 	private boolean running;
 	private boolean win;
 
 	public Maze(){
 		this.lab = new Labirinto();
-		this.hero = new Heroi(1, 1, 'H');
-		this.dragon = new Dragao(1, 3, 'D');
-		this.sword = new Espada(1, 8, 'E');
+		this.hero = new Hero(1, 1, 'H');
+		this.dragon = new Dragon(1, 3, 'D');
+		this.sword = new Sword(1, 8, 'E');
 		this.running = false;
 		this.setWin(false);
 	};
-
-	/**
-	 * Coloca os elementos do jogo nas posições iniciais do tabuleiro
-	 */
+	
 	public void init(){
 		
 		// TODO - adicionar modo de jogo escolhido
@@ -41,7 +38,7 @@ public class Maze {
 	}
 
 	public void checkSword(){
-		if (hero.coords.x == sword.coords.x && hero.coords.y == sword.coords.y)
+		if (hero.pos.equals(sword.pos))
 			if (!sword.isPicked()){
 				hero.setArmed();
 				sword.setPicked();
@@ -51,36 +48,36 @@ public class Maze {
 	public void moveHero(char input){
 
 		switch (input){
-		case 'e':
-			if(!lab.checkCollision(hero.getCoords().getX()-1, hero.getCoords().getY()))
-				hero.coords.x = hero.coords.x-1;
+		case 'L':
+			if(!lab.checkCollision(hero.getPos().getX()-1, hero.getPos().getY()))
+				hero.pos.x = hero.pos.x-1;
 			break;
-		case 'd':
-			if(!lab.checkCollision(hero.getCoords().getX()+1, hero.getCoords().getY()))
-				hero.coords.x = hero.coords.x+1;
+		case 'R':
+			if(!lab.checkCollision(hero.getPos().getX()+1, hero.getPos().getY()))
+				hero.pos.x = hero.pos.x+1;
 			break;
-		case 'c':
-			if(!lab.checkCollision(hero.getCoords().getX(), hero.getCoords().getY()-1))
-				hero.coords.y = hero.coords.y-1;
+		case 'U':
+			if(!lab.checkCollision(hero.getPos().getX(), hero.getPos().getY()-1))
+				hero.pos.y = hero.pos.y-1;
 			break;
-		case 'b':
-			if(!lab.checkCollision(hero.getCoords().getX(), hero.getCoords().getY()+1))
-				hero.coords.y = hero.coords.y+1;
+		case 'B':
+			if(!lab.checkCollision(hero.getPos().getX(), hero.getPos().getY()+1))
+				hero.pos.y = hero.pos.y+1;
 			break;
 		default:
 			break;
 		}				
 	}
 		
-	public Heroi getHero(){
+	public Hero getHero(){
 		return hero;
 	}
 	
-	public Dragao getDragon(){
+	public Dragon getDragon(){
 		return dragon;
 	}
 	
-	public Espada getSword(){
+	public Sword getSword(){
 		return sword;
 	}
 

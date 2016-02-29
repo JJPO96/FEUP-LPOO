@@ -1,16 +1,16 @@
 package maze.logic;
 
-public class Espada extends Objeto {
-	
+public class Sword extends GameElement{
+
 	private boolean picked = false;
 
-	public Espada(){
+	public Sword(){
 		super();
-		this.simbolo = 'E';
+		this.symbol = 'E';
 	}
 	
-	public Espada(int x, int y, char simbolo) {
-		super(x, y, simbolo);
+	public Sword(int x, int y, char symbol) {
+		super(x, y, symbol);
 	}
 
 	public boolean isPicked() {

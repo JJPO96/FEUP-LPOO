@@ -7,17 +7,21 @@ public class Jogo {
 	
 	public static String convertString(Maze game){
 		
+		Position pos = new Position(0, 0);
+		
 		String maze = "";
 
 		for (int i = 0; i < game.getLab().getTab().length; i++){
 			for ( int j = 0; j < game.getLab().getTab()[i].length; j++){
+				pos.setX(j);
+				pos.setY(i);
 				
-				if (game.getHero().getCoords().getX() ==j && game.getHero().getCoords().getY() == i)
-					maze+= game.getHero().getSimbolo();
-				else if (game.getDragon().getCoords().getX() ==j && game.getDragon().getCoords().getY() == i)
-					maze+= game.getDragon().getSimbolo();
-				else if (game.getSword().getCoords().getX() ==j && game.getSword().getCoords().getY() == i && !game.getSword().isPicked())
-					maze+= game.getSword().getSimbolo();
+				if (game.getHero().getPos().equals(pos))
+					maze+= game.getHero().getSymbol();
+				else if (game.getDragon().getPos().equals(pos))
+					maze+= game.getDragon().getSymbol();
+				else if (game.getSword().getPos().equals(pos) && !game.getSword().isPicked())
+					maze+= game.getSword().getSymbol();
 				else
 					maze += game.getLab().getTab()[i][j];
 			}
@@ -34,26 +38,15 @@ public class Jogo {
 	
 	public static boolean validMove(char input){
 		
-		//char a = Character.toLowerCase(input);
-		
-		// Movimento - E ou e (Esquerda), D ou d (Direita), C ou c (Cima), B ou b (Baixo)
-		
+		// Movement - (L)eft, (R)ight, (U)p, (D)own		
 		switch (input){
-		case 'E':
+		case 'L':
 			return true;
-		case 'e':
+		case 'R':
 			return true;
-		case 'D':
-			return true;
-		case 'd':
-			return true;
-		case 'C':
-			return true;
-		case 'c':
+		case 'U':
 			return true;
 		case 'B':
-			return true;
-		case 'b':
 			return true;
 		default:
 			return false;
@@ -82,7 +75,7 @@ public class Jogo {
 				System.err.println("ERRO:: Input inválido! Tente novamente!");
 				}
 			
-			input = Character.toLowerCase(input);
+			input = Character.toUpperCase(input);
 			
 			if (validMove(input)){
 				game.update(input);
