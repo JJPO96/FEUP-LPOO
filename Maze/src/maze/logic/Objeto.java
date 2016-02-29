@@ -1,17 +1,14 @@
 package maze.logic;
 
 public class Objeto {
-	private int x;
-	private int y;
+	protected Coordenadas coords;
 	protected char simbolo;
 	
 	Objeto(){
-		this.x = 0;
-		this.y = 0;
+		coords = new Coordenadas(0, 0);
 	}
 	Objeto(int a, int b, char simbolo){
-		this.x = a;
-		this.y = b;
+		coords = new Coordenadas(a, b);
 		this.simbolo = simbolo;
 	}
 	
@@ -19,15 +16,11 @@ public class Objeto {
 		this.simbolo = simbolo;
 	}
 	
+	public Coordenadas getCoords(){
+		return coords;
+	}
+	
 	public char getSimbolo(){
 		return simbolo;
-	}
-	
-	public int getX(){
-		return x;
-	}
-	
-	public int getY(){
-		return y;
-	}	
+	}		
 }

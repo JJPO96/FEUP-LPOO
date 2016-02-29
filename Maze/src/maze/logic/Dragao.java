@@ -1,23 +1,32 @@
 package maze.logic;
 
 public class Dragao extends Objeto {
-	private boolean dormir;
+	private boolean sleeping;
+	private boolean alive;
 	
 	public Dragao(){
 		super();
-		super.setSimbolo('H');
-		setDormir(false);
+		this.simbolo = 'D';
+		this.sleeping = false;
 	}
 	
 	public Dragao(int x, int y, char simbolo) {
 		super(x, y, simbolo);
 	}
 
-	public boolean isDormir() {
-		return dormir;
+	public boolean isSleeping() {
+		return sleeping;
 	}
 
-	public void setDormir(boolean dormir) {
-		this.dormir = dormir;
+	public void setSleeping(boolean sleep) {
+		this.sleeping = sleep;
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 }

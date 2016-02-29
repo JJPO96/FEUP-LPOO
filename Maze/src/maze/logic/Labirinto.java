@@ -1,6 +1,9 @@
 package maze.logic;
 
 public class Labirinto {
+	
+	private static char path = ' ';
+	private static char exit = 'S';
 	private char[][] tabuleiro = {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ',' ','X'},
@@ -19,14 +22,24 @@ public class Labirinto {
 		return tabuleiro;
 	}
 	
-	public boolean setObjeto(Objeto elemento){
+	/**
+	 * Verifies if an element collides with other element/wall of the labyrinth
+	 * 
+	 * @param x coordinate of the element
+	 * @param y coordinate of the element
+	 * @return true if collides with some element
+	 */
+	
+	public boolean checkCollision(int x, int y){
+		// TODO - Falta corrigir (verificar caso de colisão com dragao/espada/saida)
 		
-		// Verifica se é possível colocar um elemento do jogo numa posição, caso ela esteja vazia
-		if(tabuleiro[elemento.getY()][elemento.getX()] == ' '){
-			tabuleiro[elemento.getY()][elemento.getX()] = elemento.getSimbolo();
-			return true;
-		}		
+		if (tabuleiro[y][x] == path)
+			return false;		
 		
-		return false;
+		return true;
 	}
+	
+	/*public boolean checkExit(Coordenadas pos){
+		// TODO -  VERIFICAR SE O HEROI CHEGOU À SAIDA
+	}*/
 }
