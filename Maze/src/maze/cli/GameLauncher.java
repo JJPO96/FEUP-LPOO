@@ -33,7 +33,7 @@ public class GameLauncher {
 	}
 
 	public static void gameEnd(Maze game){
-		if (game.getHero().getAlive())
+		if (game.getHero().isAlive())
 			System.out.println("VITORY!");
 		else
 			System.out.println("DEFEAT!");

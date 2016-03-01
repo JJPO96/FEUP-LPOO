@@ -5,6 +5,9 @@ public class Hero extends GameElement{
 	private boolean alive = true;
 	private boolean armed = false;
 	
+	/**
+	 * Hero's constructor
+	 */
 	public Hero(){
 		super();
 		this.symbol = 'H';
@@ -18,15 +21,28 @@ public class Hero extends GameElement{
 		this.alive = alive;
 	}
 	
-	public boolean getAlive(){
+	/**
+	 * Verifies is the Hero is alive
+	 * 
+	 * @return if Hero is alive
+	 */
+	public boolean isAlive(){
 		return alive;
 	}
 	
+	/**
+	 * Sets hero is armed mode
+	 */
 	public void setArmed(){
 		armed = true;
 		symbol = 'A';
 	}
 	
+	/**
+	 * Verifies if the Hero is armed
+	 * 
+	 * @return if hero is armed
+	 */
 	public boolean isArmed(){
 		return armed;
 	}

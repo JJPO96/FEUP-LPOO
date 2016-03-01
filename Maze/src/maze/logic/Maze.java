@@ -54,11 +54,8 @@ public class Maze {
 				if (i == 0 && j == 0)
 					continue;
 				else{
-					if (dragon.getPos().getX() == a+i && dragon.getPos().getY()== b+j){
-						System.out.println("drago perto");
-						return true;
-					}
-						
+					if (dragon.getPos().getX() == a+i && dragon.getPos().getY()== b+j)
+						return true;						
 				}
 			}
 		}
@@ -82,21 +79,11 @@ public class Maze {
 	 */
 	public void checkDragon(){
 		
-		for (int i = -1; i < 2; i++){
-			for (int j = -1; j < 2; j++){
-				if (i == 0 && j == 0)
-					continue;
-				else{
-					if (dragon.getPos().getX() == hero.pos.x+i && dragon.getPos().getY()== hero.pos.y+j){
-						if (hero.isArmed())
-							dragon.setAlive(false);
-						else{
-							hero.setAlive(false);
-							running = false;
-						}							
-					}					
-				}
-			}
+		if (hero.isArmed())
+			dragon.setAlive(false);
+		else{
+			hero.setAlive(false);
+			running = false;
 		}
 	}
 
@@ -109,8 +96,10 @@ public class Maze {
 	}	
 
 	public void updateHero(int a, int b){
+		
+		boolean hasDragonnear = isDragonnear(hero.pos.x+a, hero.pos.y+b);
 
-		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || isDragonnear(hero.pos.x+a, hero.pos.y+b)){			
+		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || hasDragonnear){			
 			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){				
 				if(gameBoard.checkExit(hero.pos.x+a, hero.pos.y+b)){
 					if(!dragon.isAlive()){
@@ -122,7 +111,8 @@ public class Maze {
 				else{
 					hero.pos.updatePos(a, b);
 					checkSword();
-					checkDragon();
+					if (hasDragonnear)
+						checkDragon();
 				}
 			}
 		}
@@ -191,9 +181,10 @@ public class Maze {
 	 */
 	public void update(char input){
 
-		//TODO - Implementar as funções de atualização necessarias das alineas seguintes
+		//TODO - Implementar as funções de atualização necessarias das alineas seguintes da ficha
 
 		moveHero(input);
+		// criar moveDragon()
 
 	}
 }
