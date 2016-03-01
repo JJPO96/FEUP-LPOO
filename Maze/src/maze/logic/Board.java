@@ -2,9 +2,9 @@ package maze.logic;
 
 public class Board {
 
-	private static char path = ' ';
-	private static char wall = 'X';
-	private static char exit = 'S';
+	private static final char path = ' ';
+	private static final char wall = 'X';
+	private static final char exit = 'S';
 	private char[][] board = {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X',' ',' ',' ',' ',' ',' ',' ',' ','X'},
