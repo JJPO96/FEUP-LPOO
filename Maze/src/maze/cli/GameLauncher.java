@@ -20,8 +20,12 @@ public class GameLauncher {
 
 				if (game.getHero().getPos().equals(pos))
 					maze+= game.getHero().getSymbol();
-				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos))
-					maze+= game.getDragon().getSymbol();
+				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos) && game.getDragon().getPos().equals(game.getSword().getPos()))
+					maze += 'F';
+				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos)&& game.getDragon().isSleeping())
+					maze+= 'd';
+				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos)&& !game.getDragon().isSleeping())
+					maze+= 'D';
 				else if (game.getSword().getPos().equals(pos) && !game.getSword().isPicked())
 					maze+= game.getSword().getSymbol();
 				else
@@ -41,7 +45,7 @@ public class GameLauncher {
 	 */
 	public static void gameEnd(Maze game){
 		if (game.getHero().isAlive())
-			System.out.println("VITORY!");
+			System.out.println("VICTORY!");
 		else
 			System.out.println("DEFEAT!");
 	}
@@ -78,7 +82,10 @@ public class GameLauncher {
 		char input = ' ';
 		
 		Maze game = new Maze();		
-		game.init();		
+		System.out.println("Select game mode. 0 to 2");
+		int mode = scan.nextInt();
+		scan.nextLine();
+		game.init(mode);
 		printMaze(game);
 		
 		while(game.isRunning()){			
@@ -107,7 +114,7 @@ public class GameLauncher {
 		Scanner scan = new Scanner(System.in);
 		char input = ' ';
 		
-		System.out.println("<< WELLCOME TO THE MAZE >>\n");
+		System.out.println("<< WELCOME TO THE MAZE >>\n");
 		
 		while (!done){			
 			System.out.println("\n<< STARTING MENU >>\n");

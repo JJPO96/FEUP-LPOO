@@ -1,5 +1,7 @@
 package maze.logic;
 
+import java.util.Random;
+
 public class Maze {
 
 	private Board gameBoard;
@@ -7,6 +9,7 @@ public class Maze {
 	private Dragon dragon;
 	private Sword sword;
 	private boolean running;
+	private int mode; // 0 for static dragon,1 for moving dragon and 2 for moving/sleeping dragon
 
 	/**
 	 * Maze's construtor
@@ -17,16 +20,15 @@ public class Maze {
 		this.dragon = new Dragon(1, 3, 'D');
 		this.sword = new Sword(1, 8, 'E');
 		this.running = false;
+		this.mode = 0;
 	};
 
 	/**
 	 * Initializes the game in the mode selected
 	 */
-	public void init(){
-
-		// TODO - adicionar modo de jogo escolhido através do menu de seleção inicial 
-		// (ainda nao implementado - colocar parametro no argumento)
-
+	public void init(int m){
+		this.mode = m;
+		
 		this.running = true;
 	}
 
@@ -121,6 +123,20 @@ public class Maze {
 			hero.pos.updatePos(a, b);
 		}
 	}
+	
+	public boolean updateDragon(int a, int b){
+		if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
+			dragon.pos.updatePos(a, b);
+			
+		}else return false;
+		
+		boolean hasDragonnear = isDragonnear(hero.pos.x, hero.pos.y);
+		
+		checkSword();
+		if (hasDragonnear)
+			checkDragon();
+		return true;
+	}
 
 	/**
 	 * Moves the Hero if posible and updates his state
@@ -144,6 +160,62 @@ public class Maze {
 			break;
 		default:
 			break;
+		}
+	}
+	
+	public void moveDragon(){
+		Random rn = new Random();
+
+		int x; // 0 up, 1 down, 2 left and 3 right
+		
+		if (this.getMode() == 1){
+			x = rn.nextInt(4);
+			switch(x){
+			case 0:
+				updateDragon(-1, 0);
+				break;
+			case 1:
+				updateDragon(1, 0);
+				break;
+			case 2:
+				updateDragon(0, -1);
+				break;
+			case 3:
+				updateDragon(0, 1);
+				break;
+			default:
+				break;
+			}
+		}else if(this.getMode() == 2){
+			if(dragon.isSleeping() == true){
+				if(rn.nextInt(2) == 0)
+					dragon.setSleeping(false);
+				else
+					dragon.setSleeping(true);
+			}else{
+				x = rn.nextInt(4);
+				switch(x){
+				case 0:
+					updateDragon(-1, 0);
+					break;
+				case 1:
+					updateDragon(1, 0);
+					break;
+				case 2:
+					updateDragon(0, -1);
+					break;
+				case 3:
+					updateDragon(0, 1);
+					break;
+				default:
+					break;
+				}				
+				
+				if(rn.nextInt(2) == 0)
+					dragon.setSleeping(false);
+				else
+					dragon.setSleeping(true);
+			}
 		}
 	}
 
@@ -173,6 +245,10 @@ public class Maze {
 	public Sword getSword(){
 		return sword;
 	}
+	
+	public int getMode(){
+		return mode;
+	}
 
 	/**
 	 * Update game state according to the input command received from the user
@@ -184,7 +260,7 @@ public class Maze {
 		//TODO - Implementar as funções de atualização necessarias das alineas seguintes da ficha
 
 		moveHero(input);
-		// criar moveDragon()
+		moveDragon();
 
 	}
 }
