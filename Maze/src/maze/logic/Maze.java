@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Maze {
 
+	//public enum 
 	private Board gameBoard;
 	private Hero hero;
 	private Dragon dragon;
