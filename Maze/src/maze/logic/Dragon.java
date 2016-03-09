@@ -1,7 +1,5 @@
 package maze.logic;
 
-import java.util.Random;
-
 public class Dragon extends GameElement{
 
 	private boolean sleeping;

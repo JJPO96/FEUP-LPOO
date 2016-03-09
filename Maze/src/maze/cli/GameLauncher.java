@@ -2,9 +2,11 @@ package maze.cli;
 
 import java.util.Scanner;
 import maze.logic.*;
+import maze.logic.Maze.Direction;
+import maze.logic.Maze.Mode;
 
 public class GameLauncher {
-	
+
 	private static boolean done = false;
 
 	public static String convertString(Maze game){
@@ -49,9 +51,9 @@ public class GameLauncher {
 		else
 			System.out.println("DEFEAT!");
 	}
-	
+
 	public static void printMaze(Maze game){	
-		System.out.println(convertString(game));
+		System.out.println("\n"+convertString(game));
 	}
 
 	/**
@@ -77,71 +79,138 @@ public class GameLauncher {
 		}
 	}
 
-	public static void runGame(Scanner scan){
-		
-		char input = ' ';
-		
-		Maze game = new Maze();		
-		System.out.println("Select game mode. 0 to 2");
-		int mode = scan.nextInt();
-		scan.nextLine();
-		game.init(mode);
-		printMaze(game);
-		
-		while(game.isRunning()){			
+	/**
+	 * Selects game mode
+	 * 
+	 * @param scan to be used to get input from user
+	 * @return game mode selected
+	 */
+	public static Mode menuGameMode(Scanner scan){
+		Mode mode = null;
+
+		System.out.println("\n<< SELECT GAME MODE >>\n");
+		System.out.println("> 1 - EASY");
+		System.out.println("> 2 - INTERMEDIATE");
+		System.out.println("> 3 - EXPERT");
+		System.out.println();
+
+		int input = getUserInput(scan, 1, 3);	
+
+		switch (input){
+		case 1:
+			mode = Mode.BEGGINER;
+			break;
+		case 2:
+			mode = Mode.INTERMEDIATE;
+			break;
+		case 3:
+			mode = Mode.EXPERT;
+			break;
+		}
+
+		return mode;
+	}
+
+	public static int getUserInput(Scanner scan, int min, int max){
+
+		int input = 0;
+
+		do {
+
 			try{
-				input = scan.nextLine().charAt(0);
+				input = scan.nextInt();
+				if (input < min || input > max)
+					throw new IllegalArgumentException();
 			}
 
 			catch(Exception e) {
-				input = ' ';
-				System.err.println("ERROR:: Invalid option! Please try again.!");
+				scan.nextLine();
+				System.err.println("ERROR:: Invalid option! Please try again!");
+			} 
+		} while (input < min || input > max);
+
+		scan.nextLine();
+		
+		return input;
+	}
+	
+	public static Direction getMoveInput(Scanner scan){
+
+		char input = ' ';
+		Direction move = null;
+
+		do {
+			try{
+				input = scan.nextLine().charAt(0);
+				input = Character.toUpperCase(input);
+				if(!validMove(input))
+					throw new IllegalArgumentException();
 			}
 
-			input = Character.toUpperCase(input);
-
-			if (validMove(input)){
-				game.update(input);
-				printMaze(game);
-			}
+			catch(Exception e) {
+				System.err.println("ERROR:: Invalid option! Please try again!");
+			}			
+		} while (!validMove(input));
+		
+		switch (input){
+		case 'L':
+			move = Direction.LEFT;
+			break;
+		case 'R':
+			move = Direction.RIGHT;
+			break;
+		case 'U':
+			move = Direction.UP;
+			break;
+		case 'D':
+			move = Direction.DOWN;
+			break;
 		}
 		
+		return move;
+	}
+
+	public static void runGame(Scanner scan){
+
+		Maze game = new Maze(menuGameMode(scan));		
+		printMaze(game);
+
+		while(game.isRunning()){
+			game.update(getMoveInput(scan));
+			printMaze(game);
+		}
+
 		gameEnd(game);
 	}
-		
+	
+	public static void displaMainMenu(){
+		System.out.println("\n<< STARTING MENU >>\n");
+		System.out.println("> 1 - Start game");
+		System.out.println("> 2 - Exit");
+		System.out.println();
+	}
+
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
-		char input = ' ';
-		
-		System.out.println("<< WELCOME TO THE MAZE >>\n");
-		
-		while (!done){			
-			System.out.println("\n<< STARTING MENU >>\n");
-			System.out.println("> 1 - Start game");
-			System.out.println("> 2 - Exit");
-			
-			// TODO - Corrigir a leitura de inpu de char para inteiro
-			
-			try{
-				input = scan.nextLine().charAt(0);
-			}
+		int input = 0;
 
-			catch(Exception e) {
-				input = ' ';
-				System.err.println("ERROR:: Invalid option! Please try again.!");
-			}
-			
+		System.out.println("<< WELCOME TO THE MAZE >>\n");
+
+		while (!done){			
+			displaMainMenu();
+			input = getUserInput(scan, 1, 2);			
+
 			switch(input){
-			case '1':
+			case 1:
 				runGame(scan);
 				break;
-			case '2':
+			case 2:
 				done = true;
 				break;			
 			}
 		}
-		
+
 		System.out.println("EXITING...");
 		scan.close();
 	}

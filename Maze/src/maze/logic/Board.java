@@ -22,6 +22,10 @@ public class Board {
 	 */
 	public Board(){};
 	
+	public void setBoard(char[][] board){
+		this.board = board;
+	}
+	
 	/**
 	 * Return the maze's board
 	 * 

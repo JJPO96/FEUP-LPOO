@@ -4,32 +4,39 @@ import java.util.Random;
 
 public class Maze {
 
-	//public enum 
+	/* BEGGINER for static dragon, INTERMEDIATE moving/sleeping dragon 
+	   and EXPERT for only moving dragon */
+	public enum Mode {BEGGINER, INTERMEDIATE, EXPERT}; 
+	public enum Direction {LEFT, RIGHT, UP, DOWN};
 	private Board gameBoard;
 	private Hero hero;
 	private Dragon dragon;
 	private Sword sword;
 	private boolean running;
-	private int mode; // 0 for static dragon,1 for moving dragon and 2 for moving/sleeping dragon
+	private Mode mode;
 
 	/**
 	 * Maze's construtor
 	 */
-	public Maze(){
+	public Maze(Mode m){
 		this.gameBoard = new Board();
-		this.hero = new Hero(1, 1, 'H');
-		this.dragon = new Dragon(1, 3, 'D');
-		this.sword = new Sword(1, 8, 'E');
-		this.running = false;
-		this.mode = 0;
+		init(m);
+	};
+	
+	public Maze(char[][] board, Mode m){
+		this.gameBoard = new Board();
+		this.gameBoard.setBoard(board);		
+		init(m);
 	};
 
 	/**
 	 * Initializes the game in the mode selected
 	 */
-	public void init(int m){
-		this.mode = m;
-		
+	public void init(Mode m){
+		this.hero = new Hero(1, 1, 'H');
+		this.dragon = new Dragon(1, 3, 'D');
+		this.sword = new Sword(1, 8, 'E');
+		this.mode = m;		
 		this.running = true;
 	}
 
@@ -61,8 +68,7 @@ public class Maze {
 						return true;						
 				}
 			}
-		}
-		
+		}		
 		
 		return false;
 	}
@@ -80,11 +86,11 @@ public class Maze {
 	/**
 	 * Verifies if hero is adjacent to the dragon and if yes, updates Hero condition
 	 */
-	public void checkDragon(){
+	public void checkDragonFight(){
 		
 		if (hero.isArmed())
 			dragon.setAlive(false);
-		else{
+		else if (!dragon.isSleeping()&&!hero.isArmed()){
 			hero.setAlive(false);
 			running = false;
 		}
@@ -98,7 +104,7 @@ public class Maze {
 		return false;
 	}	
 
-	public void updateHero(int a, int b){
+	public void moveHero(int a, int b){
 		
 		boolean hasDragonnear = isDragonnear(hero.pos.x+a, hero.pos.y+b);
 
@@ -110,22 +116,22 @@ public class Maze {
 						running = false;
 					}
 				}
-
-				else{
+				
+				else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
 					hero.pos.updatePos(a, b);
 					checkSword();
 					if (hasDragonnear)
-						checkDragon();
+						checkDragonFight();
 				}
 			}
 		}
 
-		else{
+		else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
 			hero.pos.updatePos(a, b);
 		}
 	}
 	
-	public boolean updateDragon(int a, int b){
+	public boolean moveDragon(int a, int b){
 		if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
 			dragon.pos.updatePos(a, b);
 			
@@ -133,9 +139,10 @@ public class Maze {
 		
 		boolean hasDragonnear = isDragonnear(hero.pos.x, hero.pos.y);
 		
-		checkSword();
+		//checkSword();
 		if (hasDragonnear)
-			checkDragon();
+			checkDragonFight();
+		
 		return true;
 	}
 
@@ -144,79 +151,86 @@ public class Maze {
 	 * 
 	 * @param input with the direction the Hero will try to move
 	 */
-	public void moveHero(char input){
+	public void updateHero(Direction input){
 
 		switch (input){
-		case 'L':
-			updateHero(-1, 0);
+		case LEFT:
+			moveHero(-1, 0);
 			break;
-		case 'R':
-			updateHero(1, 0);
+		case RIGHT:
+			moveHero(1, 0);
 			break;
-		case 'U':
-			updateHero(0, -1);
+		case UP:
+			moveHero(0, -1);
 			break;
-		case 'D':
-			updateHero(0, 1);
+		case DOWN:
+			moveHero(0, 1);
 			break;
 		default:
 			break;
 		}
 	}
 	
-	public void moveDragon(){
+	public void updateDragon(){
 		Random rn = new Random();
-
-		int x; // 0 up, 1 down, 2 left and 3 right
+		int rand; // 0 up, 1 down, 2 left and 3 right		
 		
-		if (this.getMode() == 1){
-			x = rn.nextInt(4);
-			switch(x){
+		if(this.mode == Mode.INTERMEDIATE){
+			if(dragon.isSleeping() == true){
+				if(rn.nextInt(2) == 0){ // Dragons wakes up
+					dragon.setSleeping(false);
+					moveDragon(0, 0);
+				}
+				else
+					dragon.setSleeping(true); // Dragon sleeps
+			}else{
+				rand = rn.nextInt(5);
+				
+				switch(rand){
+				case 0:
+					moveDragon(-1, 0);
+					break;
+				case 1:
+					moveDragon(1, 0);
+					break;
+				case 2:
+					moveDragon(0, -1);
+					break;
+				case 3:
+					moveDragon(0, 1);
+					break;
+				case 4:
+					dragon.setSleeping(true); // Dragon sleeps
+					break;
+				default:
+					break;
+				}
+			}		
+		}
+		
+		else if (this.mode == Mode.EXPERT){
+			rand = rn.nextInt(4);
+			
+			switch(rand){
 			case 0:
-				updateDragon(-1, 0);
+				moveDragon(-1, 0);
 				break;
 			case 1:
-				updateDragon(1, 0);
+				moveDragon(1, 0);
 				break;
 			case 2:
-				updateDragon(0, -1);
+				moveDragon(0, -1);
 				break;
 			case 3:
-				updateDragon(0, 1);
+				moveDragon(0, 1);
 				break;
 			default:
 				break;
 			}
-		}else if(this.getMode() == 2){
-			if(dragon.isSleeping() == true){
-				if(rn.nextInt(2) == 0)
-					dragon.setSleeping(false);
-				else
-					dragon.setSleeping(true);
-			}else{
-				x = rn.nextInt(4);
-				switch(x){
-				case 0:
-					updateDragon(-1, 0);
-					break;
-				case 1:
-					updateDragon(1, 0);
-					break;
-				case 2:
-					updateDragon(0, -1);
-					break;
-				case 3:
-					updateDragon(0, 1);
-					break;
-				default:
-					break;
-				}				
-				
-				if(rn.nextInt(2) == 0)
-					dragon.setSleeping(false);
-				else
-					dragon.setSleeping(true);
-			}
+		}
+		
+		else{
+			moveDragon(0, 0);
 		}
 	}
 
@@ -247,7 +261,7 @@ public class Maze {
 		return sword;
 	}
 	
-	public int getMode(){
+	public Mode getMode(){
 		return mode;
 	}
 
@@ -256,12 +270,8 @@ public class Maze {
 	 * 
 	 * @param input with the direction in which the Hero will try to move
 	 */
-	public void update(char input){
-
-		//TODO - Implementar as funções de atualização necessarias das alineas seguintes da ficha
-
-		moveHero(input);
-		moveDragon();
-
+	public void update(Direction input){
+		updateHero(input);
+		updateDragon();
 	}
 }
