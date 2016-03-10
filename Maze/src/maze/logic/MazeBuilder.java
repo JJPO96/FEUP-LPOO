@@ -8,10 +8,11 @@ public class MazeBuilder implements IMazeBuilder {
 	private static final char path = ' ';
 	private static final char wall = 'X';
 	private static final char exit = 'S';
+	private static final char guide = '+';
 	private char[][] maze;
 	private char[][] suportMaze;
 	private Stack<Position> pathCell;
-	private char guideCell;
+	private Position guideCell;
 	private Position exitCell;
 
 	@Override
@@ -37,24 +38,47 @@ public class MazeBuilder implements IMazeBuilder {
 			}
 		}
 		
+		setExitandGuideCell(size);
+		
 		return maze;
 	}
 	
-	// O labirinto está completo quando todas as células vazias estão visitadas
+	//TODO O labirinto está completo quando todas as células vazias estão visitadas
 	// (stack fica vazia)
 	
-	public void setExit(){
+	public void setExitandGuideCell(int size){
 		Random rand = new Random();
+		int coordExit = rand.nextInt(size);
 		int randNumber = rand.nextInt(4);
 		
+		while(coordExit%2 == 0){
+			coordExit = rand.nextInt(size);
+		}
+		
 		switch(randNumber){
-		case 0: // Top border
+		case 0: // Up border
+			maze[0][coordExit]=exit;
+			exitCell = new Position(coordExit, 0);
+			maze[1][coordExit]=guide;
+			guideCell = new Position(coordExit, 1);
 			break;
-		case 1: // Bottom border
+		case 1: // Down border
+			maze[size-1][coordExit]=exit;
+			exitCell = new Position(coordExit, size-1);
+			maze[size-2][coordExit]=guide;
+			guideCell = new Position(coordExit, size-2);
 			break;
 		case 2: // Left Border
+			maze[coordExit][0]=exit;
+			exitCell = new Position(0, coordExit);
+			maze[coordExit][1]=guide;
+			guideCell = new Position(1, coordExit);
 			break;
 		case 3: // Right Border
+			maze[coordExit][size-1]=exit;
+			exitCell = new Position(size-1, coordExit);
+			maze[coordExit][size-2]=guide;
+			guideCell = new Position(size-2, coordExit);
 			break;
 		}
 	}
