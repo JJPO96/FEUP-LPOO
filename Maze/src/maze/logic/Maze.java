@@ -31,30 +31,32 @@ public class Maze {
 		this.mode = m;		
 		this.running = true;
 		init();
-	};
-	
-	public Maze(char[][] board, Mode m, Hero hero, Dragon dragon, Sword sword){
-		this.gameBoard = new Board();
-		this.gameBoard.setBoard(board);
-		this.mode = m;		
-		this.running = true;
-		initPosElements(hero, dragon, sword);
-	};
+	};	
 
 	/**
 	 * Initializes the game in the mode selected
 	 */
 	public void init(){
-		this.hero = new Hero(1, 1, 'H');
-		this.dragon = new Dragon(1, 3, 'D');
-		this.sword = new Sword(1, 8, 'E');		
-	}
-	
-	public void initPosElements(Hero hero, Dragon dragon, Sword sword){
-		this.hero = hero;
-		this.dragon = dragon;
-		this.sword = sword;
-	}
+		
+		for (int i = 0; i < gameBoard.getBoard().length; i++){
+			for (int j = 0; j < gameBoard.getBoard()[i].length; j++){
+				if (gameBoard.getBoard()[i][j] == 'H'){
+					gameBoard.getBoard()[i][j] = ' ';
+					hero = new Hero(j, i, 'H');
+				}
+				
+				else if (gameBoard.getBoard()[i][j] == 'D'){
+					gameBoard.getBoard()[i][j] = ' ';
+					dragon = new Dragon(j, i, 'D');
+				}
+				
+				else if (gameBoard.getBoard()[i][j] == 'E'){
+					gameBoard.getBoard()[i][j] = ' ';
+					sword = new Sword(j, i, 'E');
+				}
+			}
+		}	
+	}	
 
 	/**
 	 * Verifies if the game is still running
@@ -63,10 +65,6 @@ public class Maze {
 	 */
 	public boolean isRunning() {
 		return running;
-	}
-
-	public void setRunning(boolean running) {
-		this.running = running;
 	}
 
 	public Board getgameBoard(){		

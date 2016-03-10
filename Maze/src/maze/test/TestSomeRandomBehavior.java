@@ -6,7 +6,7 @@ import maze.logic.*;
 import maze.logic.Maze.Direction;
 import maze.logic.Maze.Mode;
 
-public class TestSomeRandomBehavior {
+/*public class TestSomeRandomBehavior {
 	char [][] m1 = {{'X', 'X', 'X', 'X', 'X'},
 			{'X', ' ', ' ', ' ', 'S'},
 			{'X', ' ', 'X', ' ', 'X'},
@@ -27,4 +27,4 @@ public class TestSomeRandomBehavior {
 	
 	//TODO É PRECISO FAZER MAIS TESTES PARA COBRIR CASOS EM QUE O DRAGÃO
 	// PODE DORMIR OU MOVER/DORMIR
-}
+}*/

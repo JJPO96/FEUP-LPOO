@@ -6,7 +6,7 @@ import maze.logic.*;
 import maze.logic.Maze.Direction;
 import maze.logic.Maze.Mode;
 
-public class TestMazeWithStaticDragon {
+/*public class TestMazeWithStaticDragon {
 	char [][] m1 = {{'X', 'X', 'X', 'X', 'X'},
 					{'X', ' ', ' ', ' ', 'S'},
 					{'X', ' ', 'X', ' ', 'X'},
@@ -98,5 +98,5 @@ public class TestMazeWithStaticDragon {
 		assertEquals(true, maze.getHero().isAlive());
 		assertEquals(false, maze.getDragon().isAlive());
 	}
-}
+}*/
 
