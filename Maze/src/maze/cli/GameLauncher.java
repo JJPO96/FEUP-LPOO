@@ -213,6 +213,10 @@ public class GameLauncher {
 
 		System.out.println("EXITING...");
 		scan.close();
+		
+		/*MazeBuilder maze = new MazeBuilder();
+		maze.buildMaze(9);
+		System.out.println(maze);*/
 	}
 }
 
