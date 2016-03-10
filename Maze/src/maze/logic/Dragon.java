@@ -5,12 +5,6 @@ public class Dragon extends GameElement{
 	private boolean sleeping;
 	private boolean alive = true;
 	
-	public Dragon(){
-		super();
-		this.symbol = 'D';
-		this.sleeping = false;
-	}
-	
 	public Dragon(int x, int y, char symbol) {
 		super(x, y, symbol);
 	}

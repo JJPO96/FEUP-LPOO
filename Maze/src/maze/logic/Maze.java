@@ -20,24 +20,40 @@ public class Maze {
 	 */
 	public Maze(Mode m){
 		this.gameBoard = new Board();
-		init(m);
+		this.mode = m;		
+		this.running = true;
+		init();
 	};
 	
 	public Maze(char[][] board, Mode m){
 		this.gameBoard = new Board();
-		this.gameBoard.setBoard(board);		
-		init(m);
+		this.gameBoard.setBoard(board);
+		this.mode = m;		
+		this.running = true;
+		init();
+	};
+	
+	public Maze(char[][] board, Mode m, Hero hero, Dragon dragon, Sword sword){
+		this.gameBoard = new Board();
+		this.gameBoard.setBoard(board);
+		this.mode = m;		
+		this.running = true;
+		initPosElements(hero, dragon, sword);
 	};
 
 	/**
 	 * Initializes the game in the mode selected
 	 */
-	public void init(Mode m){
+	public void init(){
 		this.hero = new Hero(1, 1, 'H');
 		this.dragon = new Dragon(1, 3, 'D');
-		this.sword = new Sword(1, 8, 'E');
-		this.mode = m;		
-		this.running = true;
+		this.sword = new Sword(1, 8, 'E');		
+	}
+	
+	public void initPosElements(Hero hero, Dragon dragon, Sword sword){
+		this.hero = hero;
+		this.dragon = dragon;
+		this.sword = sword;
 	}
 
 	/**

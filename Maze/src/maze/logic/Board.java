@@ -66,4 +66,18 @@ public class Board {
 	public boolean checkExit(int x, int y){		
 		return board[y][x]== exit;
 	}
+		
+	public Position getExitPos(){
+		
+		Position pos = null;
+				
+		for (int i = 0; i < board.length; i++){
+			for (int j = 0; j < board[i].length; j++){
+				if (board[i][j] == exit)
+					pos = new Position (j, i);
+			}
+		}
+		
+		return pos;
+	}
 }

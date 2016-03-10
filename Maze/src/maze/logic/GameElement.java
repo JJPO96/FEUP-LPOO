@@ -4,11 +4,7 @@ public class GameElement {
 
 	protected Position pos;
 	protected char symbol;
-	
-	GameElement(){
-		pos = new Position(0, 0);
-	}
-	
+			
 	GameElement(int x, int y, char symbol){
 		pos = new Position(x, y);
 		this.symbol = symbol;

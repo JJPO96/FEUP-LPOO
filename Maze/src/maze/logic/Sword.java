@@ -3,11 +3,6 @@ package maze.logic;
 public class Sword extends GameElement{
 
 	private boolean picked = false;
-
-	public Sword(){
-		super();
-		this.symbol = 'E';
-	}
 	
 	public Sword(int x, int y, char symbol) {
 		super(x, y, symbol);
