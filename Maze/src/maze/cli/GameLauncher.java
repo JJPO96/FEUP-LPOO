@@ -46,7 +46,7 @@ public class GameLauncher {
 	 * @param game
 	 */
 	public static void gameEnd(Maze game){
-		if (game.getHero().isAlive())
+		if (game.isMazeOpen())
 			System.out.println("VICTORY!");
 		else
 			System.out.println("DEFEAT!");

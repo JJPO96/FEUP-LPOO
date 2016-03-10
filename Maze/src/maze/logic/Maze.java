@@ -13,6 +13,7 @@ public class Maze {
 	private Dragon dragon;
 	private Sword sword;
 	private boolean running;
+	private boolean mazeOpen;
 	private Mode mode;
 
 	/**
@@ -22,6 +23,7 @@ public class Maze {
 		this.gameBoard = new Board();
 		this.mode = m;		
 		this.running = true;
+		this.setMazeOpen(false);
 		init();
 	};
 	
@@ -30,11 +32,12 @@ public class Maze {
 		this.gameBoard.setBoard(board);
 		this.mode = m;		
 		this.running = true;
+		this.setMazeOpen(false);
 		init();
 	};	
 
 	/**
-	 * Initializes the game in the mode selected
+	 * Initializes the elements of the game
 	 */
 	public void init(){
 		
@@ -115,6 +118,7 @@ public class Maze {
 
 		if (gameBoard.checkCollision(x, y) || posTemp.equals(sword.pos))
 			return true;
+		
 		return false;
 	}	
 
@@ -128,6 +132,7 @@ public class Maze {
 					if(!dragon.isAlive()){
 						hero.pos.updatePos(a, b);
 						running = false;
+						mazeOpen = true;
 					}
 				}
 				
@@ -139,8 +144,13 @@ public class Maze {
 				}
 			}
 		}
-
+		
 		else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
+			hero.pos.updatePos(a, b);
+		}
+		
+		// Hero can move to the dragon's position if the dragon is dead
+		else if ((hero.pos.x+a == dragon.pos.x )&& (hero.pos.y+b == dragon.pos.y) && !dragon.isAlive()){
 			hero.pos.updatePos(a, b);
 		}
 	}
@@ -153,7 +163,6 @@ public class Maze {
 		
 		boolean hasDragonnear = isDragonnear(hero.pos.x, hero.pos.y);
 		
-		//checkSword();
 		if (hasDragonnear)
 			checkDragonFight();
 		
@@ -280,12 +289,20 @@ public class Maze {
 	}
 
 	/**
-	 * Update game state according to the input command received from the user
+	 * Updates game state according to the input command received from the user
 	 * 
 	 * @param input with the direction in which the Hero will try to move
 	 */
 	public void update(Direction input){
 		updateHero(input);
 		updateDragon();
+	}
+
+	public boolean isMazeOpen() {
+		return mazeOpen;
+	}
+
+	public void setMazeOpen(boolean mazeOpen) {
+		this.mazeOpen = mazeOpen;
 	}
 }
