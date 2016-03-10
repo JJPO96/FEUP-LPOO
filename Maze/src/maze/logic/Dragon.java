@@ -1,5 +1,7 @@
 package maze.logic;
 
+import maze.logic.Maze.Token;
+
 public class Dragon extends GameElement{
 
 	private boolean sleeping;
@@ -15,6 +17,11 @@ public class Dragon extends GameElement{
 
 	public void setSleeping(boolean sleep) {
 		this.sleeping = sleep;
+		
+		if (sleeping)
+			this.symbol = Token.DRAGONSLEEP.getSymbol();
+		else
+			this.symbol = Token.DRAGON.getSymbol();
 	}
 
 	public boolean isAlive() {

@@ -6,15 +6,33 @@ public class Maze {
 
 	/* BEGGINER for static dragon, INTERMEDIATE moving/sleeping dragon 
 	   and EXPERT for only moving dragon */
-	public enum Mode {BEGGINER, INTERMEDIATE, EXPERT}; 
+	public enum Mode {BEGGINER, INTERMEDIATE, EXPERT};
+
+	/* Directions that hero can take */
 	public enum Direction {LEFT, RIGHT, UP, DOWN};
+
+	/* Tokens to be used in the game */
+	public enum Token {HERO('H'), HEROARMED('A'), DRAGON('D'), DRAGONSLEEP('d'), SWORD('E'),
+		DRAGSWORD('F'), PATH(' '), WALL('X'), EXIT('S'), GUIDE('+');
+
+		private final char symbol;
+
+		Token(char symbol){
+			this.symbol = symbol;
+		}
+
+		public char getSymbol() {
+			return symbol;
+		}
+	};
+
 	private Board gameBoard;
 	private Hero hero;
 	private Dragon dragon;
 	private Sword sword;
 	private boolean running;
 	private boolean mazeOpen;
-	private Mode mode;
+	private Mode mode;	
 
 	/**
 	 * Maze's construtor
@@ -26,7 +44,7 @@ public class Maze {
 		this.setMazeOpen(false);
 		init();
 	};
-	
+
 	public Maze(char[][] board, Mode m){
 		this.gameBoard = new Board();
 		this.gameBoard.setBoard(board);
@@ -40,22 +58,22 @@ public class Maze {
 	 * Initializes the elements of the game
 	 */
 	public void init(){
-		
+
 		for (int i = 0; i < gameBoard.getBoard().length; i++){
 			for (int j = 0; j < gameBoard.getBoard()[i].length; j++){
-				if (gameBoard.getBoard()[i][j] == 'H'){
-					gameBoard.getBoard()[i][j] = ' ';
-					hero = new Hero(j, i, 'H');
+				if (gameBoard.getBoard()[i][j] == Token.HERO.getSymbol()){
+					gameBoard.getBoard()[i][j] = Token.PATH.getSymbol();
+					hero = new Hero(j, i, Token.HERO.getSymbol());
 				}
-				
-				else if (gameBoard.getBoard()[i][j] == 'D'){
-					gameBoard.getBoard()[i][j] = ' ';
-					dragon = new Dragon(j, i, 'D');
+
+				else if (gameBoard.getBoard()[i][j] == Token.DRAGON.getSymbol()){
+					gameBoard.getBoard()[i][j] = Token.PATH.getSymbol();
+					dragon = new Dragon(j, i, Token.DRAGON.getSymbol());
 				}
-				
-				else if (gameBoard.getBoard()[i][j] == 'E'){
-					gameBoard.getBoard()[i][j] = ' ';
-					sword = new Sword(j, i, 'E');
+
+				else if (gameBoard.getBoard()[i][j] == Token.SWORD.getSymbol()){
+					gameBoard.getBoard()[i][j] = Token.PATH.getSymbol();
+					sword = new Sword(j, i, Token.SWORD.getSymbol());
 				}
 			}
 		}	
@@ -73,9 +91,9 @@ public class Maze {
 	public Board getgameBoard(){		
 		return gameBoard;
 	}
-	
+
 	public boolean isDragonnear(int a, int b){
-		
+
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
 				if (i == 0 && j == 0 || (a+i!=a && b+i!=b))
@@ -86,7 +104,7 @@ public class Maze {
 				}
 			}
 		}		
-		
+
 		return false;
 	}
 
@@ -104,7 +122,7 @@ public class Maze {
 	 * Verifies if hero is adjacent to the dragon and if yes, updates Hero condition
 	 */
 	public void checkDragonFight(){
-		
+
 		if (hero.isArmed())
 			dragon.setAlive(false);
 		else if (!dragon.isSleeping()&&!hero.isArmed()){
@@ -118,12 +136,12 @@ public class Maze {
 
 		if (gameBoard.checkCollision(x, y) || posTemp.equals(sword.pos))
 			return true;
-		
+
 		return false;
 	}	
 
 	public void moveHero(int a, int b){
-		
+
 		boolean hasDragonnear = isDragonnear(hero.pos.x+a, hero.pos.y+b);
 
 		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || hasDragonnear){			
@@ -135,7 +153,7 @@ public class Maze {
 						mazeOpen = true;
 					}
 				}
-				
+
 				else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
 					hero.pos.updatePos(a, b);
 					checkSword();
@@ -144,28 +162,28 @@ public class Maze {
 				}
 			}
 		}
-		
+
 		else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
 			hero.pos.updatePos(a, b);
 		}
-		
+
 		// Hero can move to the dragon's position if the dragon is dead
 		else if ((hero.pos.x+a == dragon.pos.x )&& (hero.pos.y+b == dragon.pos.y) && !dragon.isAlive()){
 			hero.pos.updatePos(a, b);
 		}
 	}
-	
+
 	public boolean moveDragon(int a, int b){
 		if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
 			dragon.pos.updatePos(a, b);
-			
+
 		}else return false;
-		
+
 		boolean hasDragonnear = isDragonnear(hero.pos.x, hero.pos.y);
-		
+
 		if (hasDragonnear)
 			checkDragonFight();
-		
+
 		return true;
 	}
 
@@ -193,11 +211,11 @@ public class Maze {
 			break;
 		}
 	}
-	
+
 	public void updateDragon(){
 		Random rn = new Random();
 		int rand; // 0 up, 1 down, 2 left and 3 right		
-		
+
 		if(this.mode == Mode.INTERMEDIATE){
 			if(dragon.isSleeping() == true){
 				if(rn.nextInt(2) == 0){ // Dragons wakes up
@@ -208,7 +226,7 @@ public class Maze {
 					dragon.setSleeping(true); // Dragon sleeps
 			}else{
 				rand = rn.nextInt(5);
-				
+
 				switch(rand){
 				case 0:
 					moveDragon(-1, 0);
@@ -230,10 +248,10 @@ public class Maze {
 				}
 			}		
 		}
-		
+
 		else if (this.mode == Mode.EXPERT){
 			rand = rn.nextInt(4);
-			
+
 			switch(rand){
 			case 0:
 				moveDragon(-1, 0);
@@ -251,7 +269,7 @@ public class Maze {
 				break;
 			}
 		}
-		
+
 		else{
 			moveDragon(0, 0);
 		}
@@ -283,7 +301,7 @@ public class Maze {
 	public Sword getSword(){
 		return sword;
 	}
-	
+
 	public Mode getMode(){
 		return mode;
 	}

@@ -4,6 +4,7 @@ import java.util.Scanner;
 import maze.logic.*;
 import maze.logic.Maze.Direction;
 import maze.logic.Maze.Mode;
+import maze.logic.Maze.Token;
 
 public class GameLauncher {
 
@@ -23,11 +24,9 @@ public class GameLauncher {
 				if (game.getHero().getPos().equals(pos))
 					maze+= game.getHero().getSymbol();
 				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos) && game.getDragon().getPos().equals(game.getSword().getPos()))
-					maze += 'F';
-				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos)&& game.getDragon().isSleeping())
-					maze+= 'd';
-				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos)&& !game.getDragon().isSleeping())
-					maze+= 'D';
+					maze += Token.DRAGSWORD.getSymbol();
+				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos))
+					maze+= game.getDragon().getSymbol();
 				else if (game.getSword().getPos().equals(pos) && !game.getSword().isPicked())
 					maze+= game.getSword().getSymbol();
 				else

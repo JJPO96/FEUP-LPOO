@@ -1,10 +1,9 @@
 package maze.logic;
 
+import maze.logic.Maze.Token;
+
 public class Board {
 
-	private static final char path = ' ';
-	private static final char wall = 'X';
-	private static final char exit = 'S';
 	private char[][] board = {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X','H',' ',' ',' ',' ',' ',' ',' ','X'},
@@ -43,7 +42,7 @@ public class Board {
 	 * @return true if collides with some element of the maze
 	 */
 	public boolean checkCollision(int x, int y){				
-		return board[y][x] != path;
+		return board[y][x] != Token.PATH.getSymbol();
 	}
 	
 	/**
@@ -54,7 +53,7 @@ public class Board {
 	 * @return true if collides with the maze's wall
 	 */
 	public boolean checkWall(int x, int y){				
-		return board[y][x] == wall;
+		return board[y][x] == Token.WALL.getSymbol();
 	}
 	
 	/**
@@ -64,7 +63,7 @@ public class Board {
 	 * @return true if Hero has arived to the mazes's exit
 	 */
 	public boolean checkExit(int x, int y){		
-		return board[y][x]== exit;
+		return board[y][x]== Token.EXIT.getSymbol();
 	}
 		
 	public Position getExitPos(){
@@ -73,7 +72,7 @@ public class Board {
 				
 		for (int i = 0; i < board.length; i++){
 			for (int j = 0; j < board[i].length; j++){
-				if (board[i][j] == exit)
+				if (board[i][j] == Token.EXIT.getSymbol())
 					pos = new Position (j, i);
 			}
 		}

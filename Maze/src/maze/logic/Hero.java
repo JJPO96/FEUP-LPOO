@@ -1,5 +1,7 @@
 package maze.logic;
 
+import maze.logic.Maze.Token;
+
 public class Hero extends GameElement{
 
 	private boolean alive = true;
@@ -30,7 +32,7 @@ public class Hero extends GameElement{
 	 */
 	public void setArmed(){
 		armed = true;
-		symbol = 'A';
+		symbol = Token.HEROARMED.getSymbol();
 	}
 	
 	/**
