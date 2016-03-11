@@ -39,7 +39,7 @@ public class MazeBuilder implements IMazeBuilder {
 
 			else{ // There are no neighboor cells unvisited
 				pathCell.pop();
-				
+
 				if (!pathCell.empty()){
 					maze[guideCell.getY()*2+1][guideCell.getX()*2+1]=Token.PATH.getSymbol();
 					guideCell = pathCell.peek();
@@ -48,6 +48,8 @@ public class MazeBuilder implements IMazeBuilder {
 		}
 
 		maze[guideCell.getY()*2+1][guideCell.getX()*2+1]=Token.PATH.getSymbol();
+		
+		addGameElements();
 
 		return maze;
 	}
@@ -229,15 +231,62 @@ public class MazeBuilder implements IMazeBuilder {
 		}
 	}
 
-	// TODO METODO PARA TESTAR
+	void addHero(Random rand){
+		int randPosX;
+		int randPosY;
+		do{
+			randPosX = rand.nextInt(maze.length-1)+1;
+			randPosY = rand.nextInt(maze.length-1)+1;
+			
+			if (maze[randPosY][randPosX]==Token.PATH.getSymbol()){
+				maze[randPosY][randPosX] = Token.HERO.getSymbol();
+				break;
+			}
+				
+			
 
-	public String printvisistedMaze(){
-		StringBuilder s = new StringBuilder();
-		for (char [] line : visitedMaze) {
-			s.append(Arrays.toString(line));
-			s.append("\n");
-		}
-		return s.toString();
+		}while(true);
+	}
+
+	void addDragon(Random rand){
+		int randPosX;
+		int randPosY;
+		do{
+			randPosX = rand.nextInt(maze.length-1)+1;
+			randPosY = rand.nextInt(maze.length-1)+1;
+			
+			if (maze[randPosY][randPosX]==Token.PATH.getSymbol()){
+				if (maze[randPosY][randPosX+1]!=Token.HERO.getSymbol()&&maze[randPosY][randPosX-1]!=Token.HERO.getSymbol()
+						&&maze[randPosY+1][randPosX]!=Token.HERO.getSymbol()&&maze[randPosY-1][randPosX]!=Token.HERO.getSymbol()){
+					maze[randPosY][randPosX] = Token.DRAGON.getSymbol();
+					break;
+				}				
+			}	
+
+		}while(true);
+	}
+
+	void addSword(Random rand){
+		int randPosX;
+		int randPosY;
+		do{
+			randPosX = rand.nextInt(maze.length-1)+1;
+			randPosY = rand.nextInt(maze.length-1)+1;
+			
+			if (maze[randPosY][randPosX]==Token.PATH.getSymbol()){
+				maze[randPosY][randPosX] = Token.SWORD.getSymbol();
+				break;
+			}			
+
+		}while(true);
+	}
+
+	public void addGameElements(){
+		Random rand = new Random();
+		
+		addHero(rand);
+		addDragon(rand);
+		addSword(rand);		
 	}
 
 	public String toString(){

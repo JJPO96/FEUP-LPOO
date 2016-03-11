@@ -1,6 +1,6 @@
 package maze.test;
 
-/*import static org.junit.Assert.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.Arrays;
 import java.util.Random;
@@ -153,4 +153,4 @@ public class TestMazeBuilder {
 		}
 		return s.toString();
 	}
-}*/
+}
