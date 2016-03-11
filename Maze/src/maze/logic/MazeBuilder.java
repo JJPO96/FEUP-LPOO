@@ -18,6 +18,7 @@ public class MazeBuilder implements IMazeBuilder {
 		// TODO  É PRECISO FAZER ESTE MÉTODO
 
 		maze = new char[size][size];
+		pathCell = new Stack<Position>();
 
 		for (int i = 0; i < maze.length; i++){
 			for (int j = 0; j < maze[i].length; j++){
@@ -32,7 +33,7 @@ public class MazeBuilder implements IMazeBuilder {
 
 		for (int i = 0; i < suportMaze.length; i++){
 			for (int j = 0; j < suportMaze[i].length; j++){
-				suportMaze[i][j]='.';
+				suportMaze[i][j]=Token.UNVISITED.getSymbol();
 			}
 		}
 
