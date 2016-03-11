@@ -1,24 +1,60 @@
 package maze.logic;
 
+import java.util.Arrays; // TODO - APAGAR CASO NAO SE USE
 import java.util.Random;
 import java.util.Stack;
 
+import maze.logic.Maze.Direction;
 import maze.logic.Maze.Token;
 
 public class MazeBuilder implements IMazeBuilder {
 
 	private char[][] maze;
-	private char[][] suportMaze;
+	private char[][] visitedMaze;
 	private Stack<Position> pathCell;
 	private Position guideCell;
 	private Position exitCell;
+	private int size;
+	private Direction guideDirection;
 
 	@Override
 	public char[][] buildMaze(int size) throws IllegalArgumentException {
 		// TODO  É PRECISO FAZER ESTE MÉTODO
 
-		maze = new char[size][size];
+		this.size = size;		
+
+		initMaze();		
+		setExitandGuideCell();
+		initVisitedMaze();
 		pathCell = new Stack<Position>();
+		pathCell.push(guideCell);
+
+		while(!pathCell.empty()){
+			if (hasNeighboorCellsUnvisited()){ // Checks if there are neighboor cells unvisited
+				generateRandDirection();
+				if(validDirection()){
+					moveGuideCell();
+				}
+			}
+
+			else{ // There are no neighboor cells unvisited
+				pathCell.pop();
+				
+				if (!pathCell.empty()){
+					maze[guideCell.getY()*2+1][guideCell.getX()*2+1]=Token.PATH.getSymbol();
+					guideCell = pathCell.peek();
+				}				
+			}
+		}
+
+		maze[guideCell.getY()*2+1][guideCell.getX()*2+1]=Token.PATH.getSymbol();
+
+		return maze;
+	}
+
+	public void initMaze(){
+
+		maze = new char[size][size];		
 
 		for (int i = 0; i < maze.length; i++){
 			for (int j = 0; j < maze[i].length; j++){
@@ -28,24 +64,23 @@ public class MazeBuilder implements IMazeBuilder {
 					maze[i][j] = Token.PATH.getSymbol();
 			}
 		}
+	}
 
-		suportMaze = new char[(size-1)/2][(size-1)/2];
+	public void initVisitedMaze(){
 
-		for (int i = 0; i < suportMaze.length; i++){
-			for (int j = 0; j < suportMaze[i].length; j++){
-				suportMaze[i][j]=Token.UNVISITED.getSymbol();
+
+		visitedMaze = new char[(size-1)/2][(size-1)/2];
+
+		for (int i = 0; i < visitedMaze.length; i++){
+			for (int j = 0; j < visitedMaze[i].length; j++){
+				visitedMaze[i][j]=Token.UNVISITED.getSymbol();
 			}
 		}
 
-		setExitandGuideCell(size);
-
-		return maze;
+		visitedMaze[guideCell.getY()][guideCell.getX()]=Token.GUIDE.getSymbol();
 	}
 
-	//TODO O labirinto está completo quando todas as células vazias estão visitadas
-	// (stack fica vazia)
-
-	public void setExitandGuideCell(int size){
+	public void setExitandGuideCell(){
 		Random rand = new Random();
 		int coordExit = rand.nextInt(size);
 		int randNumber = rand.nextInt(4);
@@ -59,31 +94,150 @@ public class MazeBuilder implements IMazeBuilder {
 			maze[0][coordExit]=Token.EXIT.getSymbol();
 			exitCell = new Position(coordExit, 0);
 			maze[1][coordExit]=Token.GUIDE.getSymbol();
-			guideCell = new Position(coordExit, 1);
+			guideCell = new Position((coordExit-1)/2, 0);
 			break;
 		case 1: // Down border
 			maze[size-1][coordExit]=Token.EXIT.getSymbol();
 			exitCell = new Position(coordExit, size-1);
 			maze[size-2][coordExit]=Token.GUIDE.getSymbol();
-			guideCell = new Position(coordExit, size-2);
+			guideCell = new Position((coordExit-1)/2, (size-3)/2);
 			break;
 		case 2: // Left Border
 			maze[coordExit][0]=Token.EXIT.getSymbol();
 			exitCell = new Position(0, coordExit);
 			maze[coordExit][1]=Token.GUIDE.getSymbol();
-			guideCell = new Position(1, coordExit);
+			guideCell = new Position(0, (coordExit-1)/2);
 			break;
 		case 3: // Right Border
 			maze[coordExit][size-1]=Token.EXIT.getSymbol();
 			exitCell = new Position(size-1, coordExit);
 			maze[coordExit][size-2]=Token.GUIDE.getSymbol();
-			guideCell = new Position(size-2, coordExit);
+			guideCell = new Position((size-3)/2, (coordExit-1)/2);
 			break;
-		}
+		}		
 	}
 
 	public char[][] getMaze(){
 		return maze;
+	}
+
+	/**
+	 * Generate a random direction to move the guideCell
+	 */
+	public void generateRandDirection(){
+
+		Random rand = new Random();
+		int randDirection = rand.nextInt(4); // 0 left, 1 rigth, 2, up, 3, down
+
+		switch(randDirection){
+		case 0:
+			guideDirection = Direction.LEFT;
+			break;
+		case 1:
+			guideDirection = Direction.RIGHT;
+			break;
+		case 2:
+			guideDirection = Direction.UP;
+			break;
+		case 3:
+			guideDirection = Direction.DOWN;
+			break;		
+		}
+	}
+
+	public boolean hasNeighboorCellsUnvisited(){
+
+		if (guideCell.getY()>=0 && guideCell.getX()+1 >= 0 && guideCell.getY()<visitedMaze.length && guideCell.getX()+1 < visitedMaze.length)
+			if (visitedMaze[guideCell.getY()][guideCell.getX()+1]==Token.UNVISITED.getSymbol())
+				return true;
+		if (guideCell.getY()>=0 && guideCell.getX()-1 >= 0 && guideCell.getY()<visitedMaze.length && guideCell.getX()-1 < visitedMaze.length)
+			if (visitedMaze[guideCell.getY()][guideCell.getX()-1]==Token.UNVISITED.getSymbol())
+				return true;
+		if (guideCell.getY()+1>=0 && guideCell.getX() >= 0 && guideCell.getY()+1<visitedMaze.length && guideCell.getX() < visitedMaze.length)
+			if (visitedMaze[pathCell.peek().getY()+1][pathCell.peek().getX()]==Token.UNVISITED.getSymbol())
+				return true;
+		if (guideCell.getY()-1>=0 && guideCell.getX() >= 0 && guideCell.getY()-1<visitedMaze.length && guideCell.getX() < visitedMaze.length)
+			if (visitedMaze[guideCell.getY()-1][guideCell.getX()]==Token.UNVISITED.getSymbol())
+				return true;
+
+		return false;
+	}
+
+	public boolean validDirection(){
+
+		switch(guideDirection){
+		case LEFT:
+			if (guideCell.getY()>=0 && guideCell.getX()-1 >= 0 && guideCell.getY() < visitedMaze.length && guideCell.getX()-1 < visitedMaze.length)
+				if(visitedMaze[guideCell.getY()][guideCell.getX()-1]==Token.UNVISITED.getSymbol())
+					return true;
+			break;
+		case RIGHT:
+			if(guideCell.getY()>=0 && guideCell.getX()+1 >= 0 && guideCell.getY() < visitedMaze.length && guideCell.getX()+1 < visitedMaze.length)
+				if(visitedMaze[guideCell.getY()][guideCell.getX()+1]==Token.UNVISITED.getSymbol())
+					return true;
+			break;
+		case UP:
+			if (guideCell.getY()-1>=0 && guideCell.getX() >= 0 && guideCell.getY()-1<visitedMaze.length && guideCell.getX() < visitedMaze.length)
+				if(visitedMaze[guideCell.getY()-1][guideCell.getX()]==Token.UNVISITED.getSymbol())
+					return true;
+			break;
+		case DOWN:
+			if (guideCell.getY()+1>=0 && guideCell.getX() >= 0 && guideCell.getY()+1<visitedMaze.length && guideCell.getX() < visitedMaze.length)
+				if(visitedMaze[guideCell.getY()+1][guideCell.getX()]==Token.UNVISITED.getSymbol())
+					return true;
+			break;
+		}
+
+		return false;
+	}
+
+	public void moveGuideCell(){
+
+		switch(guideDirection){
+		case LEFT:
+			visitedMaze[guideCell.getY()][guideCell.getX()-1] = Token.VISITED.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1-1] = Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1-2] = Token.GUIDE.getSymbol();
+			guideCell = new Position(guideCell.getX()-1, guideCell.getY());
+			pathCell.push(guideCell);
+			break;
+		case RIGHT:
+			visitedMaze[guideCell.getY()][guideCell.getX()+1] = Token.VISITED.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1+1] = Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1+2] = Token.GUIDE.getSymbol();
+			guideCell = new Position(guideCell.getX()+1, guideCell.getY());
+			pathCell.push(guideCell);
+			break;
+		case UP:
+			visitedMaze[guideCell.getY()-1][guideCell.getX()] = Token.VISITED.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1-1][(guideCell.getX()*2)+1] = Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1-2][(guideCell.getX()*2)+1] = Token.GUIDE.getSymbol();
+			guideCell = new Position(guideCell.getX(), guideCell.getY()-1);
+			pathCell.push(guideCell);
+			break;
+		case DOWN:
+			visitedMaze[guideCell.getY()+1][guideCell.getX()] = Token.VISITED.getSymbol();
+			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1+1][(guideCell.getX()*2)+1] = Token.PATH.getSymbol();
+			maze[(guideCell.getY()*2)+1+2][(guideCell.getX()*2)+1] = Token.GUIDE.getSymbol();
+			guideCell = new Position(guideCell.getX(), guideCell.getY()+1);
+			pathCell.push(guideCell);			
+			break;
+		}
+	}
+
+	// TODO METODO PARA TESTAR
+
+	public String printvisistedMaze(){
+		StringBuilder s = new StringBuilder();
+		for (char [] line : visitedMaze) {
+			s.append(Arrays.toString(line));
+			s.append("\n");
+		}
+		return s.toString();
 	}
 
 	public String toString(){

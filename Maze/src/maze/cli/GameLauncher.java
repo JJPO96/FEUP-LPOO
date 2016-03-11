@@ -214,8 +214,9 @@ public class GameLauncher {
 		scan.close();
 		
 		/*MazeBuilder maze = new MazeBuilder();
-		maze.buildMaze(9);
-		System.out.println(maze);*/
+		maze.buildMaze(21);
+		System.out.println(maze);
+		System.out.println(maze.printvisistedMaze());*/
 	}
 }
 

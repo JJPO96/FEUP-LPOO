@@ -51,4 +51,8 @@ public class Position {
 	    // Compares x and y values from both objects
 	    return this.x == posTemp.getX() && this.y == posTemp.getY();
 	}
+	
+	public String toString(){		
+		return "Coord x: " + x +"\n" + "Coord y: "+y;
+	}
 }
