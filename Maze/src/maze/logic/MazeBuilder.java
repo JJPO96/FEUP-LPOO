@@ -1,6 +1,5 @@
 package maze.logic;
 
-import java.util.Arrays; // TODO - APAGAR CASO NAO SE USE
 import java.util.Random;
 import java.util.Stack;
 
@@ -19,7 +18,7 @@ public class MazeBuilder implements IMazeBuilder {
 
 	@Override
 	public char[][] buildMaze(int size) throws IllegalArgumentException {
-		// TODO  É PRECISO FAZER ESTE MÉTODO
+		// TODO  FALTA ACRESCENTAR POSSIBILIDADE DE MAIS DE UM DRAGÃO
 
 		this.size = size;		
 
@@ -241,9 +240,7 @@ public class MazeBuilder implements IMazeBuilder {
 			if (maze[randPosY][randPosX]==Token.PATH.getSymbol()){
 				maze[randPosY][randPosX] = Token.HERO.getSymbol();
 				break;
-			}
-				
-			
+			}		
 
 		}while(true);
 	}

@@ -38,14 +38,16 @@ public class Maze {
 	 * Maze's construtor
 	 */
 	public Maze(Mode m){
+		MazeBuilder mazeRandom = new MazeBuilder();
 		this.gameBoard = new Board();
+		this.gameBoard.setBoard(mazeRandom.buildMaze(11));
 		this.mode = m;		
 		this.running = true;
 		this.setMazeOpen(false);
 		init();
 	};
 
-	public Maze(char[][] board, Mode m){
+	public Maze(char[][] board, Mode m){		
 		this.gameBoard = new Board();
 		this.gameBoard.setBoard(board);
 		this.mode = m;		
