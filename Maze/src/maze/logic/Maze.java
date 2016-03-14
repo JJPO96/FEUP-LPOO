@@ -1,6 +1,7 @@
 package maze.logic;
 
 import java.util.Random;
+import java.util.Vector;
 
 public class Maze {
 
@@ -36,11 +37,13 @@ public class Maze {
 
 	/**
 	 * Maze's construtor
+	 * @param mazeSize 
+	 * @param dragons 
 	 */
-	public Maze(Mode m){
+	public Maze(Mode m, int dragons, int mazeSize){
 		MazeBuilder mazeRandom = new MazeBuilder();
 		this.gameBoard = new Board();
-		this.gameBoard.setBoard(mazeRandom.buildMaze(11));
+		this.gameBoard.setBoard(mazeRandom.buildMaze(mazeSize,dragons));
 		this.mode = m;		
 		this.running = true;
 		this.setMazeOpen(false);
@@ -95,7 +98,7 @@ public class Maze {
 	}
 
 	public boolean isDragonnear(int a, int b){
-
+		
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
 				if (i == 0 && j == 0 || (a+i!=a && b+i!=b))

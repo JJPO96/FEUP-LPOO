@@ -14,10 +14,12 @@ public class MazeBuilder implements IMazeBuilder {
 	private Position guideCell;
 	private Position exitCell;
 	private int size;
+	private int dragons;
 	private Direction guideDirection;
+	
 
 	@Override
-	public char[][] buildMaze(int size) throws IllegalArgumentException {
+	public char[][] buildMaze(int size,int dragons) throws IllegalArgumentException {
 		// TODO  FALTA ACRESCENTAR POSSIBILIDADE DE MAIS DE UM DRAGÃO
 
 		this.size = size;		
@@ -48,7 +50,7 @@ public class MazeBuilder implements IMazeBuilder {
 
 		maze[guideCell.getY()*2+1][guideCell.getX()*2+1]=Token.PATH.getSymbol();
 		
-		addGameElements();
+		addGameElements(dragons);
 
 		return maze;
 	}
@@ -245,22 +247,24 @@ public class MazeBuilder implements IMazeBuilder {
 		}while(true);
 	}
 
-	void addDragon(Random rand){
+	void addDragons(Random rand,int dragons){
 		int randPosX;
 		int randPosY;
-		do{
-			randPosX = rand.nextInt(maze.length-1)+1;
-			randPosY = rand.nextInt(maze.length-1)+1;
-			
-			if (maze[randPosY][randPosX]==Token.PATH.getSymbol()){
-				if (maze[randPosY][randPosX+1]!=Token.HERO.getSymbol()&&maze[randPosY][randPosX-1]!=Token.HERO.getSymbol()
-						&&maze[randPosY+1][randPosX]!=Token.HERO.getSymbol()&&maze[randPosY-1][randPosX]!=Token.HERO.getSymbol()){
-					maze[randPosY][randPosX] = Token.DRAGON.getSymbol();
-					break;
-				}				
-			}	
+		for(int i = 0;i < dragons;i++){
+			do{
+				randPosX = rand.nextInt(maze.length-1)+1;
+				randPosY = rand.nextInt(maze.length-1)+1;
 
-		}while(true);
+				if (maze[randPosY][randPosX]==Token.PATH.getSymbol()){
+					if (maze[randPosY][randPosX+1]!=Token.HERO.getSymbol()&&maze[randPosY][randPosX-1]!=Token.HERO.getSymbol()
+							&&maze[randPosY+1][randPosX]!=Token.HERO.getSymbol()&&maze[randPosY-1][randPosX]!=Token.HERO.getSymbol()){
+						maze[randPosY][randPosX] = Token.DRAGON.getSymbol();
+						break;
+					}				
+				}	
+
+			}while(true);
+		}
 	}
 
 	void addSword(Random rand){
@@ -278,11 +282,11 @@ public class MazeBuilder implements IMazeBuilder {
 		}while(true);
 	}
 
-	public void addGameElements(){
+	public void addGameElements(int dragons){
 		Random rand = new Random();
 		
 		addHero(rand);
-		addDragon(rand);
+		addDragons(rand,dragons);
 		addSword(rand);		
 	}
 

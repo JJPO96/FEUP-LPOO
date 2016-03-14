@@ -168,10 +168,27 @@ public class GameLauncher {
 		
 		return move;
 	}
+	
+	public static int getNumberDragons(Scanner scan){
 
-	public static void runGame(Scanner scan){
+		System.out.println("\nChoose number of Dragons!\n");
+		int ret;
+		ret = scan.nextInt();
+		
+		return ret;
+	}
 
-		Maze game = new Maze(menuGameMode(scan));		
+	public static int getMazeSize(Scanner scan){
+		System.out.println("\nChoose Maze Size!\n");
+		int ret;
+		ret = scan.nextInt();
+		
+		return ret;
+	}
+	
+	public static void runGame(Scanner scan, int dragons, int mazeSize){
+
+		Maze game = new Maze(menuGameMode(scan),dragons,mazeSize);		
 		printMaze(game);
 
 		while(game.isRunning()){
@@ -193,16 +210,19 @@ public class GameLauncher {
 
 		Scanner scan = new Scanner(System.in);
 		int input = 0;
-
+		int dragons;
+		int mazeSize;
 		System.out.println("<< WELCOME TO THE MAZE >>\n");
 
 		while (!done){			
 			displaMainMenu();
 			input = getUserInput(scan, 1, 2);			
-
+			dragons = getNumberDragons(scan);
+			mazeSize = getMazeSize(scan);
+			
 			switch(input){
 			case 1:
-				runGame(scan);
+				runGame(scan,dragons,mazeSize);
 				break;
 			case 2:
 				done = true;
