@@ -29,7 +29,7 @@ public class Maze {
 
 	private Board gameBoard;
 	private Hero hero;
-	private Dragon dragon;
+	private Vector<Dragon> dragons;
 	private Sword sword;
 	private boolean running;
 	private boolean mazeOpen;
@@ -73,7 +73,7 @@ public class Maze {
 
 				else if (gameBoard.getBoard()[i][j] == Token.DRAGON.getSymbol()){
 					gameBoard.getBoard()[i][j] = Token.PATH.getSymbol();
-					dragon = new Dragon(j, i, Token.DRAGON.getSymbol());
+					dragons.add(new Dragon(j, i, Token.DRAGON.getSymbol()));
 				}
 
 				else if (gameBoard.getBoard()[i][j] == Token.SWORD.getSymbol()){
@@ -97,20 +97,22 @@ public class Maze {
 		return gameBoard;
 	}
 
-	public boolean isDragonnear(int a, int b){
-		
+	public Vector<Integer> isDragonnear(int a, int b){
+		Vector<Integer> ret = new Vector<Integer>();
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
 				if (i == 0 && j == 0 || (a+i!=a && b+i!=b))
 					continue;
 				else{
-					if (dragon.getPos().getX() == a+i && dragon.getPos().getY()== b+j)
-						return true;						
+					for(int k= 0;i < dragons.size();k++){
+						if (dragons.get(k).getPos().getX() == a+i && dragons.get(k).getPos().getY()== b+j)
+							ret.add(k);
+					}
 				}
 			}
 		}		
 
-		return false;
+		return ret;
 	}
 
 	public void checkSword(){
@@ -126,13 +128,14 @@ public class Maze {
 	/**
 	 * Verifies if hero is adjacent to the dragon and if yes, updates Hero condition
 	 */
-	public void checkDragonFight(){
-
-		if (hero.isArmed())
-			dragon.setAlive(false);
-		else if (!dragon.isSleeping()&&!hero.isArmed()){
-			hero.setAlive(false);
-			running = false;
+	public void checkDragonFight(Vector<Integer> indVec){
+		for(int i:indVec){
+			if (hero.isArmed())
+				dragons.get(i).setAlive(false);
+			else if (!dragons.get(i).isSleeping()&&!hero.isArmed()){
+				hero.setAlive(false);
+				running = false;
+			}
 		}
 	}
 
@@ -146,13 +149,15 @@ public class Maze {
 	}	
 
 	public void moveHero(int a, int b){
-
-		boolean hasDragonnear = isDragonnear(hero.pos.x+a, hero.pos.y+b);
-
+		boolean hasDragonnear = false;
+		if (isDragonnear(hero.pos.x+a, hero.pos.y+b).size() > 0)
+			hasDragonnear = true;
+		
 		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || hasDragonnear){			
+			
 			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){				
 				if(gameBoard.checkExit(hero.pos.x+a, hero.pos.y+b)){
-					if(!dragon.isAlive()){
+					if(!hasDragonsAlive()){
 						hero.pos.updatePos(a, b);
 						running = false;
 						mazeOpen = true;
@@ -176,6 +181,13 @@ public class Maze {
 		else if ((hero.pos.x+a == dragon.pos.x )&& (hero.pos.y+b == dragon.pos.y) && !dragon.isAlive()){
 			hero.pos.updatePos(a, b);
 		}
+	}
+
+	private boolean hasDragonsAlive() {
+		for(Dragon x : dragons)
+			if (x.isAlive())
+				return true;
+		return false;
 	}
 
 	public boolean moveDragon(int a, int b){
