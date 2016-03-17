@@ -183,25 +183,44 @@ public class Maze {
 		}
 	}
 
-	private boolean hasDragonsAlive() {
+	public boolean hasDragonsAlive() {
 		for(Dragon x : dragons)
 			if (x.isAlive())
 				return true;
 		return false;
 	}
+	
+	// TODO: Verifica se uma posição já está ocupada por outro dragão. Um drão só se pode poder para uma posição que não esteja ocupada
+	public boolean occupiedByDragon(int a,int b){
+		for(Dragon dragon : dragons){
+			if(dragon.getPos().getX()==a && dragon.getPos().getY() == b)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean moveDragon(int a, int b, int i){
+		Dragon dragon = dragons.get(i);
+		
+		if (!occupiedByDragon(a, b)){
+			boolean hasDragonnear = false;
+			if (isDragonnear(hero.pos.x+a, hero.pos.y+b).size() > 0)
+				hasDragonnear = true;
+			
+			if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
+				dragon.pos.updatePos(a, b);
 
-	public boolean moveDragon(int a, int b){
-		if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
-			dragon.pos.updatePos(a, b);
+			}else return false;
+			Vector<Integer> tempVec = new Vector<Integer>();
+			tempVec.add(i);
+			if (hasDragonnear)
+				checkDragonFight(tempVec);
 
-		}else return false;
-
-		boolean hasDragonnear = isDragonnear(hero.pos.x, hero.pos.y);
-
-		if (hasDragonnear)
-			checkDragonFight();
-
-		return true;
+			return true;			
+		}
+		
+		return false;
 	}
 
 	/**
@@ -231,64 +250,67 @@ public class Maze {
 
 	public void updateDragon(){
 		Random rn = new Random();
+		Dragon dragon;
 		int rand; // 0 up, 1 down, 2 left and 3 right		
+		for(int i = 0; i < dragons.size();i++) {
+			dragon = dragons.get(i);
+			if(this.mode == Mode.INTERMEDIATE){
+				if(dragon.isSleeping() == true){
+					if(rn.nextInt(2) == 0){ // Dragons wakes up
+						dragon.setSleeping(false);
+						moveDragon(0, 0, i);
+					}
+					else
+						dragon.setSleeping(true); // Dragon sleeps
+				}else{
+					rand = rn.nextInt(5);
 
-		if(this.mode == Mode.INTERMEDIATE){
-			if(dragon.isSleeping() == true){
-				if(rn.nextInt(2) == 0){ // Dragons wakes up
-					dragon.setSleeping(false);
-					moveDragon(0, 0);
-				}
-				else
-					dragon.setSleeping(true); // Dragon sleeps
-			}else{
-				rand = rn.nextInt(5);
+					switch(rand){
+					case 0:
+						moveDragon(-1, 0, i);
+						break;
+					case 1:
+						moveDragon(1, 0, i);
+						break;
+					case 2:
+						moveDragon(0, -1, i);
+						break;
+					case 3:
+						moveDragon(0, 1, i);
+						break;
+					case 4:
+						dragon.setSleeping(true); // Dragon sleeps
+						break;
+					default:
+						break;
+					}
+				}		
+			}
+
+			else if (this.mode == Mode.EXPERT){
+				rand = rn.nextInt(4);
 
 				switch(rand){
 				case 0:
-					moveDragon(-1, 0);
+					moveDragon(-1, 0, i);
 					break;
 				case 1:
-					moveDragon(1, 0);
+					moveDragon(1, 0, i);
 					break;
 				case 2:
-					moveDragon(0, -1);
+					moveDragon(0, -1, i);
 					break;
 				case 3:
-					moveDragon(0, 1);
-					break;
-				case 4:
-					dragon.setSleeping(true); // Dragon sleeps
+					moveDragon(0, 1, i);
 					break;
 				default:
 					break;
 				}
-			}		
-		}
-
-		else if (this.mode == Mode.EXPERT){
-			rand = rn.nextInt(4);
-
-			switch(rand){
-			case 0:
-				moveDragon(-1, 0);
-				break;
-			case 1:
-				moveDragon(1, 0);
-				break;
-			case 2:
-				moveDragon(0, -1);
-				break;
-			case 3:
-				moveDragon(0, 1);
-				break;
-			default:
-				break;
 			}
-		}
 
-		else{
-			moveDragon(0, 0);
+			else{
+				moveDragon(0, 0, i);
+			}
 		}
 	}
 
@@ -306,8 +328,8 @@ public class Maze {
 	 * 
 	 * @return dragon
 	 */
-	public Dragon getDragon(){
-		return dragon;
+	public Vector<Dragon> getDragon(){
+		return dragons;
 	}
 
 	/**

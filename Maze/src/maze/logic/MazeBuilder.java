@@ -248,6 +248,7 @@ public class MazeBuilder implements IMazeBuilder {
 	}
 
 	void addDragons(Random rand,int dragons){
+		//TODO  checks collisions
 		int randPosX;
 		int randPosY;
 		for(int i = 0;i < dragons;i++){
