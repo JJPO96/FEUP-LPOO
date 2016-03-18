@@ -99,24 +99,25 @@ public class Maze {
 		return gameBoard;
 	}
 
-	public Vector<Integer> hasDragonNear(int a, int b){
-		Vector<Integer> ret = new Vector<Integer>();
+	public Vector<Dragon> hasDragonNear(int a, int b){
+		Vector<Dragon> dragonsNear = new Vector<Dragon>();
+
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
 				if (i == 0 && j == 0 || (a+i!=a && b+i!=b))
 					continue;
 				else{
-					for(int k= 0;k < dragons.size();k++){
-						if (dragons.get(k).getPos().getX() == a+j && dragons.get(k).getPos().getY()== b+i)
-							ret.add(k);
+					for(int k= 0; k < dragons.size();k++){
+						if (dragons.get(k).getPos().getX() == a+i && dragons.get(k).getPos().getY()== b+j)
+							dragonsNear.add(dragons.get(k));
 					}
 				}
 			}
 		}
-		
-		System.out.println(ret.size());
 
-		return ret;
+		System.out.println(dragonsNear.size());
+
+		return dragonsNear;
 	}
 
 	public void checkSword(){
@@ -129,17 +130,12 @@ public class Maze {
 		}
 	}
 
-	/**
-	 * Verifies if hero is adjacent to the dragon and if yes, updates Hero condition
-	 * 
-	 * @param indVec Vector with indices od the Dragons near Hero
-	 */
-	public void checkDragonFight(Vector<Integer> indVec){
+	public void checkDragonFight(Vector<Dragon> dragonsNear){
 		System.out.println("checkdragonfight");
-		for(Integer i: indVec){
+		for(Dragon dragon: dragonsNear){
 			if (hero.isArmed())
-				dragons.get(i).setAlive(false);
-			else if (!dragons.get(i).isSleeping()&&!hero.isArmed()){
+				dragon.setAlive(false);
+			else if (!dragon.isSleeping()&&!hero.isArmed()){
 				hero.setAlive(false);
 				running = false;
 			}
@@ -157,11 +153,11 @@ public class Maze {
 
 	public void moveHero(int a, int b){
 
-		Vector<Integer> dragonsNear = new Vector<Integer>();
+		Vector<Dragon> dragonsNear = new Vector<Dragon>();
 		dragonsNear = hasDragonNear(hero.pos.x+a, hero.pos.y+b);
 
 		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || dragonsNear.size() > 0){
-			
+
 			System.out.println("checkcollion");
 
 			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){
@@ -182,11 +178,11 @@ public class Maze {
 						System.out.println("hasdragonnear");
 						checkDragonFight(dragonsNear);
 					}
-						
+
 				}
 			}
 		}
-		
+
 		else 
 			if (occupiedByDragon(hero.pos.x+a, hero.pos.y+b)){
 				if (!dragonIsAlive(hero.pos.x+a, hero.pos.y+b))
@@ -195,16 +191,16 @@ public class Maze {
 			else
 				hero.pos.updatePos(a, b);
 	}
-	
+
 	public boolean dragonIsAlive(int a, int b){
-		
+
 		//TODO: CRIAR FUNÇÃO QUE COMPARA POSIÇÕES DIRETAMENTE (USANDO POS)
-		
+
 		for (Dragon dragon: dragons)
 			if (dragon.getPos().getX() == a && dragon.getPos().getY() == b)
 				if (dragon.isAlive())
 					return true;
-		
+
 		return false;
 	}
 
@@ -221,7 +217,7 @@ public class Maze {
 
 		return false;
 	}	
-	
+
 	/**
 	 * Verifies if a position in the maze is already occupied by a dragon 
 	 * 
@@ -239,19 +235,23 @@ public class Maze {
 	}
 
 	public boolean moveDragon(int a, int b, int i){
+		boolean hasDragonnear = false;
 		Dragon dragon = dragons.get(i);
 
 		if (!occupiedByDragon(a, b)){
-			boolean hasDragonnear = false;
+
 			if (hasDragonNear(hero.pos.x+a, hero.pos.y+b).size() > 0)
 				hasDragonnear = true;
 
 			if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
 				dragon.pos.updatePos(a, b);
 
-			}else return false;
-			Vector<Integer> tempVec = new Vector<Integer>();
-			tempVec.add(i);
+			}
+			else
+				return false;
+
+			Vector<Dragon> tempVec = new Vector<Dragon>();
+			tempVec.add(dragon);
 			if (hasDragonnear)
 				checkDragonFight(tempVec);
 
@@ -367,12 +367,12 @@ public class Maze {
 	 * @return a dragon
 	 */
 	public Dragon getDragon(int a, int b){
-		
+
 		for (Dragon dragon: dragons)
 			if (dragon.getPos().getX()==a && dragon.getPos().getY() == b)
 				return dragon;
-		
-		
+
+
 		return null;
 	}
 

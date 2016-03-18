@@ -19,11 +19,14 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
 
 public class GameLauncerGui {
 
 	private JFrame frmTitulo;
 	private final Action action = new SwingAction();
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -60,7 +63,7 @@ public class GameLauncerGui {
 		frmTitulo.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(27, 11, 130, 239);
+		panel.setBounds(180, 11, 130, 239);
 		frmTitulo.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -90,6 +93,27 @@ public class GameLauncerGui {
 		});
 		comboBox.setBounds(20, 145, 87, 33);
 		panel.add(comboBox);
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnSair.setBounds(10, 57, 89, 23);
+		frmTitulo.getContentPane().add(btnSair);
+		
+		textField = new JTextField();
+		textField.setForeground(Color.BLACK);
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setText("888");
+		textField.setBounds(145, 261, 86, 20);
+		frmTitulo.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblBoto = new JLabel("Bot\u00E3o");
+		lblBoto.setBounds(72, 264, 46, 14);
+		frmTitulo.getContentPane().add(lblBoto);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
