@@ -133,6 +133,7 @@ public class Maze {
 	 * @param indVec Vector with indices od the Dragons near Hero
 	 */
 	public void checkDragonFight(Vector<Integer> indVec){
+		System.out.println("checkdragonfight");
 		for(int i: indVec){
 			if (hero.isArmed())
 				dragons.get(i).setAlive(false);
