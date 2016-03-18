@@ -17,6 +17,7 @@ public class MazeBuilder implements IMazeBuilder {
 	private int numDragons = 3;
 	private Direction guideDirection;
 	
+	// TODO: VERIFICAR AO CRIAR NOVO LABIRINTO SE É POSSÍVEL GANHAR O JOGO
 
 	@Override
 	public char[][] buildMaze(int size, int numDragons) throws IllegalArgumentException {

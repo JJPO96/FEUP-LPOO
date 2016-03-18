@@ -107,12 +107,14 @@ public class Maze {
 					continue;
 				else{
 					for(int k= 0;k < dragons.size();k++){
-						if (dragons.get(k).getPos().getX() == a+i && dragons.get(k).getPos().getY()== b+j)
+						if (dragons.get(k).getPos().getX() == a+j && dragons.get(k).getPos().getY()== b+i)
 							ret.add(k);
 					}
 				}
 			}
-		}		
+		}
+		
+		System.out.println(ret.size());
 
 		return ret;
 	}
@@ -134,7 +136,7 @@ public class Maze {
 	 */
 	public void checkDragonFight(Vector<Integer> indVec){
 		System.out.println("checkdragonfight");
-		for(int i: indVec){
+		for(Integer i: indVec){
 			if (hero.isArmed())
 				dragons.get(i).setAlive(false);
 			else if (!dragons.get(i).isSleeping()&&!hero.isArmed()){
@@ -158,9 +160,12 @@ public class Maze {
 		Vector<Integer> dragonsNear = new Vector<Integer>();
 		dragonsNear = hasDragonNear(hero.pos.x+a, hero.pos.y+b);
 
-		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || dragonsNear.size() > 0){			
+		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || dragonsNear.size() > 0){
+			
+			System.out.println("checkcollion");
 
-			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){				
+			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){
+				System.out.println("!checkwall");
 				if(gameBoard.checkExit(hero.pos.x+a, hero.pos.y+b)){
 					if(!hasDragonsAlive()){
 						hero.pos.updatePos(a, b);
@@ -170,10 +175,14 @@ public class Maze {
 				}
 
 				else if (!occupiedByDragon(hero.pos.x+a, hero.pos.y+b)){
+					System.out.println("!ifoccupiedbydragon");
 					hero.pos.updatePos(a, b);
 					checkSword();
-					if (dragonsNear.size() > 0)
+					if (dragonsNear.size() > 0){
+						System.out.println("hasdragonnear");
 						checkDragonFight(dragonsNear);
+					}
+						
 				}
 			}
 		}
