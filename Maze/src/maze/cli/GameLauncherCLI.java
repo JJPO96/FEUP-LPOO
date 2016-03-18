@@ -4,60 +4,18 @@ import java.util.Scanner;
 import maze.logic.*;
 import maze.logic.Maze.Direction;
 import maze.logic.Maze.Mode;
-import maze.logic.Maze.Token;
 
-public class GameLauncher {
+public class GameLauncherCLI {
 
 	private static boolean done = false;
-
-	public static String convertString(Maze game){
-		
-		// TODO - usar POS em vez de coordendas x, y
-
-		Position pos = new Position(0, 0);
-
-		String maze = "";
-
-		for (int i = 0; i < game.getgameBoard().getBoard().length; i++){
-			for ( int j = 0; j < game.getgameBoard().getBoard()[i].length; j++){
-				pos.setX(j);
-				pos.setY(i);
-
-				if (game.getHero().getPos().equals(pos))
-					maze+= game.getHero().getSymbol();
-				else if(game.dragonIsAlive(j, i)){
-					if (pos.equals(game.getSword().getPos()))
-							maze += Token.DRAGSWORD.getSymbol();
-					else
-						maze+= game.getDragon(j, i).getSymbol();
-				}				
-				
-				else if (game.getSword().getPos().equals(pos) && !game.getSword().isPicked())
-					maze+= game.getSword().getSymbol();
-				else
-					maze += game.getgameBoard().getBoard()[i][j];
-			}
-
-			maze += "\n";
-		}		
-
-		return maze;		
-	}
-
+	
 	/**
-	 * Prints game's end message
+	 * Prints the maze in text format
 	 * 
-	 * @param game
+	 * @param game instance of Maze
 	 */
-	public static void gameEnd(Maze game){
-		if (game.isMazeOpen())
-			System.out.println("VICTORY!");
-		else
-			System.out.println("DEFEAT!");
-	}
-
-	public static void printMaze(Maze game){	
-		System.out.println("\n"+convertString(game));
+	public static void printMaze(Maze game){
+		System.out.println("\n"+game.toString());
 	}
 
 	/**
@@ -214,6 +172,18 @@ public class GameLauncher {
 		System.out.println("> 2 - Exit");
 		System.out.println();
 	}
+	
+	/**
+	 * Prints game's end message
+	 * 
+	 * @param game
+	 */
+	public static void gameEnd(Maze game){
+		if (game.isMazeOpen())
+			System.out.println("VICTORY!");
+		else
+			System.out.println("DEFEAT!");
+	}
 
 	public static void main(String[] args) {
 
@@ -241,12 +211,8 @@ public class GameLauncher {
 
 		System.out.println("EXITING...");
 		scan.close();
-		
-		/*MazeBuilder maze = new MazeBuilder();
-		maze.buildMaze(21);
-		System.out.println(maze);
-		System.out.println(maze.printvisistedMaze());*/
 	}
 }
+
 
 

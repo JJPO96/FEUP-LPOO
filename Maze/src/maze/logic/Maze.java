@@ -3,6 +3,8 @@ package maze.logic;
 import java.util.Random;
 import java.util.Vector;
 
+import maze.logic.Maze.Token;
+
 public class Maze {
 
 	/* BEGGINER for static dragon, INTERMEDIATE moving/sleeping dragon 
@@ -37,6 +39,7 @@ public class Maze {
 
 	/**
 	 * Maze's construtor
+	 * 
 	 * @param mazeSize 
 	 * @param dragons 
 	 */
@@ -48,7 +51,7 @@ public class Maze {
 		this.gameBoard.setBoard(mazeRandom.buildMaze(mazeSize, numDragons));
 		this.mode = m;		
 		this.running = true;
-		this.setMazeOpen(false);
+		this.mazeOpen = false;
 		init();
 	};
 
@@ -57,7 +60,7 @@ public class Maze {
 		this.gameBoard.setBoard(board);
 		this.mode = m;		
 		this.running = true;
-		this.setMazeOpen(false);
+		this.mazeOpen = false;
 		init();
 	};	
 
@@ -95,7 +98,7 @@ public class Maze {
 		return running;
 	}
 
-	public Board getgameBoard(){		
+	public Board getGameBoard(){		
 		return gameBoard;
 	}
 
@@ -166,7 +169,7 @@ public class Maze {
 					if(!hasDragonsAlive()){
 						hero.pos.updatePos(a, b);
 						running = false;
-						mazeOpen = true;
+						mazeOpen = false;
 					}
 				}
 
@@ -286,7 +289,7 @@ public class Maze {
 		}
 	}
 
-	public void updateDragon(){
+	public void updateDragons(){
 		Random rn = new Random();
 		Dragon dragon;
 		int rand; // 0 up, 1 down, 2 left and 3 right		
@@ -355,7 +358,7 @@ public class Maze {
 	/**
 	 * Returns Hero object of the game
 	 * 
-	 * @return hero
+	 * @return the Hero
 	 */
 	public Hero getHero(){
 		return hero;
@@ -379,31 +382,67 @@ public class Maze {
 	/**
 	 * Returns Sword object of the game
 	 * 
-	 * @return sword
+	 * @return the Sword
 	 */
 	public Sword getSword(){
 		return sword;
 	}
 
-	public Mode getMode(){
-		return mode;
-	}
-
 	/**
-	 * Updates game state according to the input command received from the user
+	 * Updates game state
 	 * 
-	 * @param input with the direction in which the Hero will try to move
+	 * @param input received from the User
 	 */
 	public void update(Direction input){
 		updateHero(input);
-		updateDragon();
+		updateDragons();
 	}
-
+	
+	/**
+	 * Verifies if the Maze is open (Hero arrived to the exit)
+	 * 
+	 * @return true if the Maze is open
+	 */
 	public boolean isMazeOpen() {
 		return mazeOpen;
-	}
+	}	
+	
+	/**
+	 * Converts the Maze in a string to be used to represent it in text mode
+	 * 
+	 * @return the Maze as a string
+	 */
+	@Override
+	public String toString(){
+		Position pos = new Position(0, 0);
 
-	public void setMazeOpen(boolean mazeOpen) {
-		this.mazeOpen = mazeOpen;
-	}
+		String mazeString = "";
+
+		for (int i = 0; i < gameBoard.getBoard().length; i++){
+			for ( int j = 0; j < gameBoard.getBoard()[i].length; j++){
+				pos.setX(j);
+				pos.setY(i);
+				
+				mazeString+=" ";
+
+				if (hero.getPos().equals(pos))
+					mazeString+= hero.getSymbol();
+				else if(dragonIsAlive(j, i)){
+					if (pos.equals(sword.getPos()))
+						mazeString += Token.DRAGSWORD.getSymbol();
+					else
+						mazeString+= getDragon(j, i).getSymbol();
+				}				
+				
+				else if (sword.getPos().equals(pos) && !sword.isPicked())
+					mazeString+= sword.getSymbol();
+				else
+					mazeString += gameBoard.getBoard()[i][j];
+			}
+
+			mazeString += "\n";
+		}		
+
+		return mazeString;		
+	}	
 }
