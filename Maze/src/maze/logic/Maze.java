@@ -29,7 +29,7 @@ public class Maze {
 
 	private Board gameBoard;
 	private Hero hero;
-	private Vector<Dragon> dragons;
+	private Vector<Dragon> dragons = new Vector<Dragon>();
 	private Sword sword;
 	private boolean running;
 	private boolean mazeOpen;
@@ -40,12 +40,12 @@ public class Maze {
 	 * @param mazeSize 
 	 * @param dragons 
 	 */
-	public Maze(Mode m, int dragons, int mazeSize){
-		
+	public Maze(Mode m, int numDragons, int mazeSize){
+
 		// TODO: FALTA COLOCAR NO CONSTRUTOR DO MAZEBUILDER O NUMERO DE DRAGOES
 		MazeBuilder mazeRandom = new MazeBuilder();
 		this.gameBoard = new Board();
-		this.gameBoard.setBoard(mazeRandom.buildMaze(mazeSize,dragons));
+		this.gameBoard.setBoard(mazeRandom.buildMaze(mazeSize, numDragons));
 		this.mode = m;		
 		this.running = true;
 		this.setMazeOpen(false);
@@ -106,7 +106,7 @@ public class Maze {
 				if (i == 0 && j == 0 || (a+i!=a && b+i!=b))
 					continue;
 				else{
-					for(int k= 0;i < dragons.size();k++){
+					for(int k= 0;k < dragons.size();k++){
 						if (dragons.get(k).getPos().getX() == a+i && dragons.get(k).getPos().getY()== b+j)
 							ret.add(k);
 					}
@@ -153,12 +153,12 @@ public class Maze {
 	}	
 
 	public void moveHero(int a, int b){
-		
+
 		Vector<Integer> dragonsNear = new Vector<Integer>();
 		dragonsNear = hasDragonNear(hero.pos.x+a, hero.pos.y+b);
-		
+
 		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || dragonsNear.size() > 0){			
-			
+
 			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){				
 				if(gameBoard.checkExit(hero.pos.x+a, hero.pos.y+b)){
 					if(!hasDragonsAlive()){
@@ -168,7 +168,7 @@ public class Maze {
 					}
 				}
 
-				else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
+				else if (!occupiedByDragon(hero.pos.x+a, hero.pos.y+b)){
 					hero.pos.updatePos(a, b);
 					checkSword();
 					if (dragonsNear.size() > 0)
@@ -177,43 +177,65 @@ public class Maze {
 			}
 		}
 		
-		// Hero can move if there is no dragon on the new position
-		else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
-			hero.pos.updatePos(a, b);
-		}
-
-		// Hero can move to the dragon's position if the dragon is dead
-		else if ((hero.pos.x+a == dragon.pos.x )&& (hero.pos.y+b == dragon.pos.y) && !dragon.isAlive()){
-			hero.pos.updatePos(a, b);
-		}
+		else 
+			if (occupiedByDragon(hero.pos.x+a, hero.pos.y+b)){
+				if (!dragonIsAlive(hero.pos.x+a, hero.pos.y+b))
+					hero.pos.updatePos(a, b);
+			}
+			else
+				hero.pos.updatePos(a, b);
 	}
+	
+	public boolean dragonIsAlive(int a, int b){
+		
+		//TODO: CRIAR FUNÇÃO QUE COMPARA POSIÇÕES DIRETAMENTE (USANDO POS)
+		
+		for (Dragon dragon: dragons)
+			if (dragon.getPos().getX() == a && dragon.getPos().getY() == b)
+				if (dragon.isAlive())
+					return true;
+		
+		return false;
+	}
+
+	/**
+	 * Verifies if there is some dragon alive
+	 * 
+	 * @return a boolean which is true in casse there is some dragon alive
+	 */
 
 	public boolean hasDragonsAlive() {
 		for(Dragon dragon : dragons)
 			if (dragon.isAlive())
 				return true;
-		
+
 		return false;
-	}
+	}	
 	
-	// TODO: Verifica se uma posição já está ocupada por outro dragão. Um drão só se pode poder para uma posição que não esteja ocupada
+	/**
+	 * Verifies if a position in the maze is already occupied by a dragon 
+	 * 
+	 * @param a coord x of position
+	 * @param b coord y of position
+	 * @return
+	 */
 	public boolean occupiedByDragon(int a,int b){
 		for(Dragon dragon : dragons){
 			if(dragon.getPos().getX()==a && dragon.getPos().getY() == b)
 				return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean moveDragon(int a, int b, int i){
 		Dragon dragon = dragons.get(i);
-		
+
 		if (!occupiedByDragon(a, b)){
 			boolean hasDragonnear = false;
-			if (isDragonnear(hero.pos.x+a, hero.pos.y+b).size() > 0)
+			if (hasDragonNear(hero.pos.x+a, hero.pos.y+b).size() > 0)
 				hasDragonnear = true;
-			
+
 			if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
 				dragon.pos.updatePos(a, b);
 
@@ -225,7 +247,7 @@ public class Maze {
 
 			return true;			
 		}
-		
+
 		return false;
 	}
 
@@ -330,12 +352,18 @@ public class Maze {
 	}
 
 	/**
-	 * Returns Dragon object of the game
+	 * Return a dragon in a determinated position
 	 * 
-	 * @return dragon
+	 * @return a dragon
 	 */
-	public Vector<Dragon> getDragon(){
-		return dragons;
+	public Dragon getDragon(int a, int b){
+		
+		for (Dragon dragon: dragons)
+			if (dragon.getPos().getX()==a && dragon.getPos().getY() == b)
+				return dragon;
+		
+		
+		return null;
 	}
 
 	/**

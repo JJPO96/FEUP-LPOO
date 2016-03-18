@@ -14,15 +14,18 @@ public class MazeBuilder implements IMazeBuilder {
 	private Position guideCell;
 	private Position exitCell;
 	private int size;
-	private int dragons;
+	private int numDragons = 3;
 	private Direction guideDirection;
 	
 
 	@Override
-	public char[][] buildMaze(int size,int dragons) throws IllegalArgumentException {
+	public char[][] buildMaze(int size, int numDragons) throws IllegalArgumentException {
 		// TODO  FALTA ACRESCENTAR POSSIBILIDADE DE MAIS DE UM DRAGÃO
+		// TODO: LANÇAR THROW EM CASA DO TAMANHO PRETENDIDO SER PAR OU MENOR QUE UM DETERMINADO NUMERO OU
+		// NUMERO DE DRAGOES MENOR QUE 1
 
-		this.size = size;		
+		this.size = size;
+		this.numDragons = numDragons;
 
 		initMaze();		
 		setExitandGuideCell();
@@ -50,7 +53,7 @@ public class MazeBuilder implements IMazeBuilder {
 
 		maze[guideCell.getY()*2+1][guideCell.getX()*2+1]=Token.PATH.getSymbol();
 		
-		addGameElements(dragons);
+		addGameElements();
 
 		return maze;
 	}
@@ -247,11 +250,10 @@ public class MazeBuilder implements IMazeBuilder {
 		}while(true);
 	}
 
-	void addDragons(Random rand,int dragons){
-		//TODO  checks collisions
+	void addDragons(Random rand){
 		int randPosX;
 		int randPosY;
-		for(int i = 0;i < dragons;i++){
+		for(int i = 0;i < numDragons;i++){
 			do{
 				randPosX = rand.nextInt(maze.length-1)+1;
 				randPosY = rand.nextInt(maze.length-1)+1;
@@ -283,11 +285,11 @@ public class MazeBuilder implements IMazeBuilder {
 		}while(true);
 	}
 
-	public void addGameElements(int dragons){
+	public void addGameElements(){
 		Random rand = new Random();
 		
 		addHero(rand);
-		addDragons(rand,dragons);
+		addDragons(rand);
 		addSword(rand);		
 	}
 

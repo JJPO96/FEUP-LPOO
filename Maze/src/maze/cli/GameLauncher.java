@@ -11,6 +11,8 @@ public class GameLauncher {
 	private static boolean done = false;
 
 	public static String convertString(Maze game){
+		
+		// TODO - usar POS em vez de coordendas x, y
 
 		Position pos = new Position(0, 0);
 
@@ -23,10 +25,13 @@ public class GameLauncher {
 
 				if (game.getHero().getPos().equals(pos))
 					maze+= game.getHero().getSymbol();
-				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos) && game.getDragon().getPos().equals(game.getSword().getPos()))
-					maze += Token.DRAGSWORD.getSymbol();
-				else if (game.getDragon().isAlive() && game.getDragon().getPos().equals(pos))
-					maze+= game.getDragon().getSymbol();
+				else if(game.dragonIsAlive(j, i)){
+					if (pos.equals(game.getSword().getPos()))
+							maze += Token.DRAGSWORD.getSymbol();
+					else
+						maze+= game.getDragon(j, i).getSymbol();
+				}				
+				
 				else if (game.getSword().getPos().equals(pos) && !game.getSword().isPicked())
 					maze+= game.getSword().getSymbol();
 				else
@@ -170,6 +175,8 @@ public class GameLauncher {
 	}
 	
 	public static int getNumberDragons(Scanner scan){
+		
+		// TODO: COLOCAR MINIMO VALOR E MAXIMO VALOR CONSOANTE O TAMANHO DO TABULEIRO
 
 		System.out.println("\nChoose number of Dragons!\n");
 		int ret;
@@ -179,6 +186,8 @@ public class GameLauncher {
 	}
 
 	public static int getMazeSize(Scanner scan){
+		
+		// TODO: verificar se o valor dado é ímpar
 		System.out.println("\nChoose Maze Size!\n");
 		int ret;
 		ret = scan.nextInt();
@@ -199,7 +208,7 @@ public class GameLauncher {
 		gameEnd(game);
 	}
 	
-	public static void displaMainMenu(){
+	public static void displayMainMenu(){
 		System.out.println("\n<< STARTING MENU >>\n");
 		System.out.println("> 1 - Start game");
 		System.out.println("> 2 - Exit");
@@ -215,13 +224,13 @@ public class GameLauncher {
 		System.out.println("<< WELCOME TO THE MAZE >>\n");
 
 		while (!done){			
-			displaMainMenu();
-			input = getUserInput(scan, 1, 2);			
-			dragons = getNumberDragons(scan);
-			mazeSize = getMazeSize(scan);
+			displayMainMenu();
+			input = getUserInput(scan, 1, 2);	
 			
 			switch(input){
-			case 1:
+			case 1:		
+				dragons = getNumberDragons(scan);
+				mazeSize = getMazeSize(scan);
 				runGame(scan,dragons,mazeSize);
 				break;
 			case 2:
