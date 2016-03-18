@@ -41,6 +41,8 @@ public class Maze {
 	 * @param dragons 
 	 */
 	public Maze(Mode m, int dragons, int mazeSize){
+		
+		// TODO: FALTA COLOCAR NO CONSTRUTOR DO MAZEBUILDER O NUMERO DE DRAGOES
 		MazeBuilder mazeRandom = new MazeBuilder();
 		this.gameBoard = new Board();
 		this.gameBoard.setBoard(mazeRandom.buildMaze(mazeSize,dragons));
@@ -97,7 +99,7 @@ public class Maze {
 		return gameBoard;
 	}
 
-	public Vector<Integer> isDragonnear(int a, int b){
+	public Vector<Integer> hasDragonNear(int a, int b){
 		Vector<Integer> ret = new Vector<Integer>();
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
@@ -127,9 +129,11 @@ public class Maze {
 
 	/**
 	 * Verifies if hero is adjacent to the dragon and if yes, updates Hero condition
+	 * 
+	 * @param indVec Vector with indices od the Dragons near Hero
 	 */
 	public void checkDragonFight(Vector<Integer> indVec){
-		for(int i:indVec){
+		for(int i: indVec){
 			if (hero.isArmed())
 				dragons.get(i).setAlive(false);
 			else if (!dragons.get(i).isSleeping()&&!hero.isArmed()){
@@ -149,11 +153,11 @@ public class Maze {
 	}	
 
 	public void moveHero(int a, int b){
-		boolean hasDragonnear = false;
-		if (isDragonnear(hero.pos.x+a, hero.pos.y+b).size() > 0)
-			hasDragonnear = true;
 		
-		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || hasDragonnear){			
+		Vector<Integer> dragonsNear = new Vector<Integer>();
+		dragonsNear = hasDragonNear(hero.pos.x+a, hero.pos.y+b);
+		
+		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || dragonsNear.size() > 0){			
 			
 			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){				
 				if(gameBoard.checkExit(hero.pos.x+a, hero.pos.y+b)){
@@ -167,12 +171,13 @@ public class Maze {
 				else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
 					hero.pos.updatePos(a, b);
 					checkSword();
-					if (hasDragonnear)
-						checkDragonFight();
+					if (dragonsNear.size() > 0)
+						checkDragonFight(dragonsNear);
 				}
 			}
 		}
-
+		
+		// Hero can move if there is no dragon on the new position
 		else if ((hero.pos.x+a!=dragon.pos.x )|| (hero.pos.y+b!=dragon.pos.y)){
 			hero.pos.updatePos(a, b);
 		}
@@ -184,9 +189,10 @@ public class Maze {
 	}
 
 	public boolean hasDragonsAlive() {
-		for(Dragon x : dragons)
-			if (x.isAlive())
+		for(Dragon dragon : dragons)
+			if (dragon.isAlive())
 				return true;
+		
 		return false;
 	}
 	
