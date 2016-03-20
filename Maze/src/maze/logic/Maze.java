@@ -11,7 +11,7 @@ public class Maze {
 	   and EXPERT for only moving dragon */
 	public enum Mode {BEGGINER, INTERMEDIATE, EXPERT};
 
-	/* Directions that hero can take */
+	/* Directions that the Hero can take */
 	public enum Direction {LEFT, RIGHT, UP, DOWN};
 
 	/* Tokens to be used in the game */
@@ -38,23 +38,29 @@ public class Maze {
 	private Mode mode;	
 
 	/**
-	 * Maze's construtor
+	 * Maze's Construtor
 	 * 
-	 * @param mazeSize 
-	 * @param dragons 
+	 * @param mode of the Game
+	 * @param size of the Maze
+	 * @param numDragons number of Dragons of the Maze
 	 */
-	public Maze(Mode m, int numDragons, int mazeSize){
+	public Maze(Mode mode, int numDragons, int size){
 
-		// TODO: FALTA COLOCAR NO CONSTRUTOR DO MAZEBUILDER O NUMERO DE DRAGOES
 		MazeBuilder mazeRandom = new MazeBuilder();
 		this.gameBoard = new Board();
-		this.gameBoard.setBoard(mazeRandom.buildMaze(mazeSize, numDragons));
-		this.mode = m;		
+		this.gameBoard.setBoard(mazeRandom.buildMaze(size, numDragons));
+		this.mode = mode;		
 		this.running = true;
 		this.mazeOpen = false;
 		init();
 	};
 
+	/**
+	 * Maze's Construtor
+	 * 
+	 * @param board of the Maze
+	 * @param numDragons number of Dragons of the Maze
+	 */
 	public Maze(char[][] board, Mode m){		
 		this.gameBoard = new Board();
 		this.gameBoard.setBoard(board);
@@ -90,184 +96,20 @@ public class Maze {
 	}	
 
 	/**
-	 * Verifies if the game is still running
+	 * Updates game's state
 	 * 
-	 * @return true if is running
+	 * @param input received from the User
 	 */
-	public boolean isRunning() {
-		return running;
-	}
-
-	public Board getGameBoard(){		
-		return gameBoard;
-	}
-
-	public Vector<Dragon> hasDragonNear(int a, int b){
-		Vector<Dragon> dragonsNear = new Vector<Dragon>();
-
-		for (int i = -1; i < 2; i++){
-			for (int j = -1; j < 2; j++){
-				if (i == 0 && j == 0 || (a+i!=a && b+i!=b))
-					continue;
-				else{
-					for(int k= 0; k < dragons.size();k++){
-						if (dragons.get(k).getPos().getX() == a+i && dragons.get(k).getPos().getY()== b+j)
-							dragonsNear.add(dragons.get(k));
-					}
-				}
-			}
-		}
-
-		System.out.println(dragonsNear.size());
-
-		return dragonsNear;
-	}
-
-	public void checkSword(){
-
-		if (hero.pos.equals(sword.pos)){
-			if (!sword.isPicked()){
-				hero.setArmed();
-				sword.setPicked();
-			}
-		}
-	}
-
-	public void checkDragonFight(Vector<Dragon> dragonsNear){
-		System.out.println("checkdragonfight");
-		for(Dragon dragon: dragonsNear){
-			if (hero.isArmed())
-				dragon.setAlive(false);
-			else if (!dragon.isSleeping()&&!hero.isArmed()){
-				hero.setAlive(false);
-				running = false;
-			}
-		}
-	}
-
-	public boolean checkCollision(int x, int y){
-		Position posTemp = new Position(x, y);
-
-		if (gameBoard.checkCollision(x, y) || posTemp.equals(sword.pos))
-			return true;
-
-		return false;
-	}	
-
-	public void moveHero(int a, int b){
-
-		Vector<Dragon> dragonsNear = new Vector<Dragon>();
-		dragonsNear = hasDragonNear(hero.pos.x+a, hero.pos.y+b);
-
-		if(checkCollision(hero.pos.x+a, hero.pos.y+b) || dragonsNear.size() > 0){
-
-			System.out.println("checkcollion");
-
-			if(!gameBoard.checkWall(hero.pos.x+a, hero.pos.y+b)){
-				System.out.println("!checkwall");
-				if(gameBoard.checkExit(hero.pos.x+a, hero.pos.y+b)){
-					if(!hasDragonsAlive()){
-						hero.pos.updatePos(a, b);
-						running = false;
-						mazeOpen = false;
-					}
-				}
-
-				else if (!occupiedByDragon(hero.pos.x+a, hero.pos.y+b)){
-					System.out.println("!ifoccupiedbydragon");
-					hero.pos.updatePos(a, b);
-					checkSword();
-					if (dragonsNear.size() > 0){
-						System.out.println("hasdragonnear");
-						checkDragonFight(dragonsNear);
-					}
-
-				}
-			}
-		}
-
-		else 
-			if (occupiedByDragon(hero.pos.x+a, hero.pos.y+b)){
-				if (!dragonIsAlive(hero.pos.x+a, hero.pos.y+b))
-					hero.pos.updatePos(a, b);
-			}
-			else
-				hero.pos.updatePos(a, b);
-	}
-
-	public boolean dragonIsAlive(int a, int b){
-
-		//TODO: CRIAR FUNÇÃO QUE COMPARA POSIÇÕES DIRETAMENTE (USANDO POS)
-
-		for (Dragon dragon: dragons)
-			if (dragon.getPos().getX() == a && dragon.getPos().getY() == b)
-				if (dragon.isAlive())
-					return true;
-
-		return false;
+	public void update(Direction input){
+		
+		updateHero(input);		
+		updateDragons();
 	}
 
 	/**
-	 * Verifies if there is some dragon alive
+	 * Updates the state of the Hero
 	 * 
-	 * @return a boolean which is true in casse there is some dragon alive
-	 */
-
-	public boolean hasDragonsAlive() {
-		for(Dragon dragon : dragons)
-			if (dragon.isAlive())
-				return true;
-
-		return false;
-	}	
-
-	/**
-	 * Verifies if a position in the maze is already occupied by a dragon 
-	 * 
-	 * @param a coord x of position
-	 * @param b coord y of position
-	 * @return
-	 */
-	public boolean occupiedByDragon(int a,int b){
-		for(Dragon dragon : dragons){
-			if(dragon.getPos().getX()==a && dragon.getPos().getY() == b)
-				return true;
-		}
-
-		return false;
-	}
-
-	public boolean moveDragon(int a, int b, int i){
-		boolean hasDragonnear = false;
-		Dragon dragon = dragons.get(i);
-
-		if (!occupiedByDragon(a, b)){
-
-			if (hasDragonNear(hero.pos.x+a, hero.pos.y+b).size() > 0)
-				hasDragonnear = true;
-
-			if(!gameBoard.checkWall(dragon.pos.x+a, dragon.pos.y+b)&&!dragon.isSleeping()){
-				dragon.pos.updatePos(a, b);
-
-			}
-			else
-				return false;
-
-			Vector<Dragon> tempVec = new Vector<Dragon>();
-			tempVec.add(dragon);
-			if (hasDragonnear)
-				checkDragonFight(tempVec);
-
-			return true;			
-		}
-
-		return false;
-	}
-
-	/**
-	 * Moves the Hero if posible and updates his state
-	 * 
-	 * @param input with the direction the Hero will try to move
+	 * @param input with the direction
 	 */
 	public void updateHero(Direction input){
 
@@ -289,38 +131,40 @@ public class Maze {
 		}
 	}
 
+	/**
+	 * Updates the state of the Dragons
+	 */
 	public void updateDragons(){
-		Random rn = new Random();
-		Dragon dragon;
-		int rand; // 0 up, 1 down, 2 left and 3 right		
+		Random rand = new Random();
+		int randNumber;
+
 		for(int i = 0; i < dragons.size();i++) {
-			dragon = dragons.get(i);
 			if(this.mode == Mode.INTERMEDIATE){
-				if(dragon.isSleeping() == true){
-					if(rn.nextInt(2) == 0){ // Dragons wakes up
-						dragon.setSleeping(false);
-						moveDragon(0, 0, i);
+				if(dragons.get(i).isSleeping() == true){
+					if(rand.nextInt(2) == 0){ // Dragons wakes up
+						dragons.get(i).setSleeping(false);
+						moveDragon(0, 0, dragons.get(i));
 					}
 					else
-						dragon.setSleeping(true); // Dragon sleeps
+						dragons.get(i).setSleeping(true); // Dragon falls asleep
 				}else{
-					rand = rn.nextInt(5);
+					randNumber = rand.nextInt(5);
 
-					switch(rand){
-					case 0:
-						moveDragon(-1, 0, i);
+					switch(randNumber){
+					case 0: // Moves UP the Dragon
+						moveDragon(-1, 0, dragons.get(i));
 						break;
-					case 1:
-						moveDragon(1, 0, i);
+					case 1: // Moves DOWN the Dragon
+						moveDragon(1, 0, dragons.get(i));
 						break;
-					case 2:
-						moveDragon(0, -1, i);
+					case 2: // Moves LEFT the Dragon
+						moveDragon(0, -1, dragons.get(i));
 						break;
-					case 3:
-						moveDragon(0, 1, i);
+					case 3: // Moves RIGHT the Dragon
+						moveDragon(0, 1, dragons.get(i));
 						break;
-					case 4:
-						dragon.setSleeping(true); // Dragon sleeps
+					case 4: // Dragon falls asleep
+						dragons.get(i).setSleeping(true);
 						break;
 					default:
 						break;
@@ -329,20 +173,20 @@ public class Maze {
 			}
 
 			else if (this.mode == Mode.EXPERT){
-				rand = rn.nextInt(4);
+				randNumber = rand.nextInt(4);
 
-				switch(rand){
+				switch(randNumber){
 				case 0:
-					moveDragon(-1, 0, i);
+					moveDragon(-1, 0, dragons.get(i));
 					break;
 				case 1:
-					moveDragon(1, 0, i);
+					moveDragon(1, 0, dragons.get(i));
 					break;
 				case 2:
-					moveDragon(0, -1, i);
+					moveDragon(0, -1, dragons.get(i));
 					break;
 				case 3:
-					moveDragon(0, 1, i);
+					moveDragon(0, 1, dragons.get(i));
 					break;
 				default:
 					break;
@@ -350,33 +194,92 @@ public class Maze {
 			}
 
 			else{
-				moveDragon(0, 0, i);
+				moveDragon(0, 0, dragons.get(i));
 			}
 		}
 	}
 
 	/**
-	 * Returns Hero object of the game
+	 * Moves the Hero
+	 * 
+	 * @param x variation of position
+	 * @param y variation of position
+	 */
+	public void moveHero(int x, int y){
+
+		Vector<Dragon> hasDragonsNear = new Vector<Dragon>();
+		hasDragonsNear = dragonsNear(hero.pos.x+x, hero.pos.y+y);
+		Position pos = new Position(hero.pos.x+x, hero.pos.y+y);
+
+		if(checkCollision(hero.pos.x+x, hero.pos.y+y) || hasDragonsNear.size() > 0){
+			if(!gameBoard.checkWall(hero.pos.x+x, hero.pos.y+y)){
+				if(gameBoard.checkExit(hero.pos.x+x, hero.pos.y+y)){
+					if(!hasDragonsAlive()){
+						hero.pos.updatePos(x, y);
+						running = false;
+						mazeOpen = true;
+					}
+				}
+
+				else if (!(checkDragon(pos) instanceof Dragon)){
+					hero.pos.updatePos(x, y);
+					checkSword();
+					if (hasDragonsNear.size() > 0){
+						checkDragonFight(hasDragonsNear);
+					}
+				}
+			}
+		}
+
+		else if (checkDragon(pos) instanceof Dragon){
+			if (!checkDragon(pos).isAlive())
+				hero.pos.updatePos(x, y);
+		}
+
+		else
+			hero.pos.updatePos(x, y);
+	}
+
+	/**
+	 * Moves the Dragon
+	 * 
+	 * @param x variation of position
+	 * @param y variation of position
+	 * @param dragon to be moved
+	 */
+	public void moveDragon(int x, int y, Dragon dragon){
+
+		Vector<Dragon> tempVec = new Vector<Dragon>();
+		Position pos = new Position(dragon.pos.x+x, dragon.pos.y+y); // New possible position of the Dragon
+
+		if (!(checkDragon(pos) instanceof Dragon)){ // If the position is not ocupied already by another dragon
+			if(!gameBoard.checkCollision(dragon.pos.x+x, dragon.pos.y+y) && !dragon.isSleeping()){
+				dragon.pos.updatePos(x, y);
+
+				tempVec.add(dragon);
+
+				if (heroNear(pos))
+					checkDragonFight(tempVec);				
+			}						
+		}
+	}
+
+	/**
+	 * Returns the Maze's board
+	 * 
+	 * @return the board
+	 */
+	public Board getGameBoard(){		
+		return gameBoard;
+	}
+
+	/**
+	 * Returns the Hero of the game
 	 * 
 	 * @return the Hero
 	 */
 	public Hero getHero(){
 		return hero;
-	}
-
-	/**
-	 * Return a dragon in a determinated position
-	 * 
-	 * @return a dragon
-	 */
-	public Dragon getDragon(int a, int b){
-
-		for (Dragon dragon: dragons)
-			if (dragon.getPos().getX()==a && dragon.getPos().getY() == b)
-				return dragon;
-
-
-		return null;
 	}
 
 	/**
@@ -389,15 +292,136 @@ public class Maze {
 	}
 
 	/**
-	 * Updates game state
+	 * Verifies if a position is ocupied by a Dragon
 	 * 
-	 * @param input received from the User
+	 * @param pos of the Dragon
+	 * @return a Dragon if the position is ocupied by a dragon or otherwise null
 	 */
-	public void update(Direction input){
-		updateHero(input);
-		updateDragons();
+	public Dragon checkDragon(Position pos){
+
+		for (Dragon dragon: dragons)
+			if (dragon.getPos().equals(pos))
+				return dragon;
+
+		return null;
 	}
-	
+
+	/**
+	 * Verifies if there is some dragon alive
+	 * 
+	 * @return a boolean which is true in casse there is some dragon alive
+	 */
+	public boolean hasDragonsAlive() {
+		for(Dragon dragon : dragons)
+			if (dragon.isAlive())
+				return true;
+
+		return false;
+	}	
+
+	/**
+	 * Verifies if the Hero is adjacent to a Dragon
+	 * 
+	 * @param pos position of the Dragon
+	 * @return true if the Hero is adjacent to the Draggon
+	 */
+	public boolean heroNear(Position pos){
+		
+		for (int i = -1; i < 2; i++){
+			for (int j = -1; j < 2; j++){
+				if (i == 0 && j == 0 || (pos.x+i!=pos.x && pos.y+j!=pos.y))
+					continue;
+				else{
+					if (hero.getPos().getX() == pos.x+i && hero.getPos().getY()== pos.y+j)
+						return true;						
+				}
+			}
+		}		
+
+		return false;
+	}
+
+	/**
+	 * Returns the dragons adjacents to Hero
+	 * 
+	 * @param x coordinate of the Hero
+	 * @param y coordinate of the Hero
+	 * @return the dragons
+	 */
+	public Vector<Dragon> dragonsNear(int x, int y){
+		
+		Vector<Dragon> dragonsNear = new Vector<Dragon>();
+
+		for (int i = -1; i < 2; i++){
+			for (int j = -1; j < 2; j++){
+				if (i == 0 && j == 0 || (x+i!=x && y+j!=y))
+					continue;
+				else{
+					for (int k = 0; k < dragons.size(); k++){
+						if (dragons.get(k).getPos().getX() == x+i && dragons.get(k).getPos().getY() == y+j && dragons.get(k).isAlive())
+							dragonsNear.add(dragons.get(k));						
+					}
+				}					
+			}
+		}
+
+		return dragonsNear;
+	}
+
+	/**
+	 * Hero trys pick the Sword
+	 */
+	public void checkSword(){
+
+		if (hero.pos.equals(sword.pos)){
+			if (!sword.isPicked()){
+				hero.setArmed();
+				sword.setPicked();
+			}
+		}
+	}
+
+	/**
+	 * Hero faces a Dragon/Dragons
+	 * 
+	 * @param dragonsNear of the Hero that can atack/be atacked
+	 */
+	public void checkDragonFight(Vector<Dragon> dragonsNear){
+		for(Dragon dragon: dragonsNear){
+			if (hero.isArmed())
+				dragon.setAlive(false);
+			else if (dragon.isAlive() && !dragon.isSleeping() && !hero.isArmed()){
+				hero.setAlive(false);
+				running = false;
+			}
+		}
+	}
+
+	/**
+	 * Checks collision of a game's element
+	 * 
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @return true if the game's element collides
+	 */
+	public boolean checkCollision(int x, int y){
+		Position posTemp = new Position(x, y);
+
+		if (gameBoard.checkCollision(x, y) || posTemp.equals(sword.pos))
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Verifies if the game is still running
+	 * 
+	 * @return true if the game is still running
+	 */
+	public boolean isRunning() {
+		return running;
+	}
+
 	/**
 	 * Verifies if the Maze is open (Hero arrived to the exit)
 	 * 
@@ -406,7 +430,7 @@ public class Maze {
 	public boolean isMazeOpen() {
 		return mazeOpen;
 	}	
-	
+
 	/**
 	 * Converts the Maze in a string to be used to represent it in text mode
 	 * 
@@ -414,26 +438,27 @@ public class Maze {
 	 */
 	@Override
 	public String toString(){
-		Position pos = new Position(0, 0);
 
+		Position pos = new Position();
 		String mazeString = "";
 
 		for (int i = 0; i < gameBoard.getBoard().length; i++){
 			for ( int j = 0; j < gameBoard.getBoard()[i].length; j++){
 				pos.setX(j);
 				pos.setY(i);
-				
-				mazeString+=" ";
+
+				mazeString+=" "; // Spacing between elements
 
 				if (hero.getPos().equals(pos))
 					mazeString+= hero.getSymbol();
-				else if(dragonIsAlive(j, i)){
-					if (pos.equals(sword.getPos()))
+
+				else if(checkDragon(pos) instanceof Dragon && checkDragon(pos).isAlive()){
+					if (pos.equals(sword.getPos()) && !sword.isPicked())
 						mazeString += Token.DRAGSWORD.getSymbol();
 					else
-						mazeString+= getDragon(j, i).getSymbol();
+						mazeString+= checkDragon(pos).getSymbol();
 				}				
-				
+
 				else if (sword.getPos().equals(pos) && !sword.isPicked())
 					mazeString+= sword.getSymbol();
 				else

@@ -6,6 +6,14 @@ public class Position {
 	protected int y;
 
 	/**
+	 * Position's Contructor
+	 */
+	public Position(){
+		this.x = 0;
+		this.y= 0;
+	}
+	
+	/**
 	 * Position's Constructor
 	 * 
 	 * @param x coordinate

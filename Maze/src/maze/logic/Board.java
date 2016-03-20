@@ -46,7 +46,7 @@ public class Board {
 	}
 	
 	/**
-	 * Verifies if Hero collides with the maze's wall
+	 * Verifies if an element of the game collides with the maze's wall
 	 * 
 	 * @param x coordinate of the element
 	 * @param y coordinate of the element
@@ -57,24 +57,33 @@ public class Board {
 	}
 	
 	/**
-	 * Verifies if Hero has has arrived to the exit of the maze
+	 * Verifies the Exit of the Maze is present at the coordinate parameters
 	 * 
-	 * @param pos position of the Hero in the maze
+	 * @param x coordinate
+	 * @param y coordinate
 	 * @return true if Hero has arived to the mazes's exit
 	 */
 	public boolean checkExit(int x, int y){		
 		return board[y][x]== Token.EXIT.getSymbol();
 	}
-		
+	
+	/**
+	 * Returns the position of the Exit of the Maze
+	 * 
+	 * @return position of the Exit
+	 */	
 	public Position getExitPos(){
 		
-		Position pos = null;
-				
+		Position pos = new Position();
+		
 		for (int i = 0; i < board.length; i++){
-			for (int j = 0; j < board[i].length; j++){
-				if (board[i][j] == Token.EXIT.getSymbol())
-					pos = new Position (j, i);
-			}
+			for (int j = 0; j < board[i].length; j++)
+				if (board[i][j] == Token.EXIT.getSymbol()){
+					pos.setX(j);
+					pos.setY(i);
+					
+					return pos;
+				}
 		}
 		
 		return pos;
