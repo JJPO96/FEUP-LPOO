@@ -75,7 +75,7 @@ public class TestMazeWithStaticDragon {
 		// Confirms that the Hero is alive
 		assertEquals(true, maze.getHero().isAlive());
 		
-		// Confirms that the Hero isalive
+		// Confirms that the Hero is alive
 		assertEquals(true, maze.hasDragonsAlive());
 		
 		// Confirms that the Hero is not starting armed
@@ -88,7 +88,7 @@ public class TestMazeWithStaticDragon {
 		// Confirms that the Hero picked the sword
 		assertEquals(true, maze.getHero().isArmed());
 		
-		// Confirms that the Hero is still aive after fighting against the Dragon with the Sword
+		// Confirms that the Hero is still alive after fighting against the Dragon with the Sword
 		assertEquals(true, maze.getHero().isAlive());
 		
 		// Confirms that the Dragon is dead
@@ -137,7 +137,7 @@ public class TestMazeWithStaticDragon {
 		// Confirms that the Hero exit the Maze
 		assertEquals(true, maze.isMazeOpen());
 		
-		// Verifies the Game has finished
+		// Confirms that the Game has finished
 		assertEquals(false, maze.isRunning());
 	}
 	
