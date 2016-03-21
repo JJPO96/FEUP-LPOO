@@ -99,9 +99,10 @@ public class Maze {
 	 * @param input received from the User
 	 */
 	public void update(Direction input){
-		
+
 		updateHero(input);		
 		updateDragons();
+		System.out.println("x: "+hero.getPos().getX()+"   y: "+hero.getPos().getY());
 	}
 
 	/**
@@ -211,7 +212,7 @@ public class Maze {
 
 		/* Verifies if the Hero collides with some element of the Maze or
 		if there are any dragon adjancet to the new position of the Hero */
-		
+
 		if(checkCollision(hero.pos.x+x, hero.pos.y+y) || hasDragonsNear.size() > 0){
 			if(!gameBoard.checkWall(hero.pos.x+x, hero.pos.y+y)){
 				if(gameBoard.checkExit(hero.pos.x+x, hero.pos.y+y)){
@@ -221,7 +222,7 @@ public class Maze {
 						mazeOpen = true;
 					}
 				}
-				
+
 				// Verifies if the new position is not occupied by a Dragon
 				else if (!(checkDragon(pos) instanceof Dragon)){
 					hero.pos.updatePos(x, y);
@@ -232,7 +233,7 @@ public class Maze {
 				}
 			}
 		}
-		
+
 		// Verifies if the new position is occupied by a Dragon
 		else if (checkDragon(pos) instanceof Dragon){
 			if (!checkDragon(pos).isAlive())
@@ -255,16 +256,14 @@ public class Maze {
 		Vector<Dragon> tempVec = new Vector<Dragon>();
 		Position pos = new Position(dragon.pos.x+x, dragon.pos.y+y); // New possible position of the Dragon
 
-		if (!(checkDragon(pos) instanceof Dragon)){ // If the position is not ocupied already by another dragon
-			if(!gameBoard.checkCollision(dragon.pos.x+x, dragon.pos.y+y) && !dragon.isSleeping()){
-				dragon.pos.updatePos(x, y);
+		// Checks if the position is not already occupied
+		if (!(checkDragon(pos) instanceof Dragon) && !pos.equals(hero.getPos()) && !gameBoard.checkCollision(dragon.pos.x+x, dragon.pos.y+y))
+			dragon.getPos().updatePos(x, y);
+		
+		tempVec.add(dragon);
 
-				tempVec.add(dragon);
-
-				if (heroNear(pos))
-					checkDragonFight(tempVec);				
-			}						
-		}
+		if (heroNear(dragon.getPos())) // If the Hero is on an adjacent cell, the Dragon fights the Hero 
+			checkDragonFight(tempVec);	
 	}
 
 	/**
@@ -293,7 +292,7 @@ public class Maze {
 	public Sword getSword(){
 		return sword;
 	}
-	
+
 	/**
 	 * Returns the Maze's Dragons
 	 * 
@@ -338,7 +337,7 @@ public class Maze {
 	 * @return true if the Hero is adjacent to the Draggon
 	 */
 	public boolean heroNear(Position pos){
-		
+
 		for (int i = -1; i < 2; i++){
 			for (int j = -1; j < 2; j++){
 				if (i == 0 && j == 0 || (pos.x+i!=pos.x && pos.y+j!=pos.y))
@@ -361,7 +360,7 @@ public class Maze {
 	 * @return the dragons
 	 */
 	public Vector<Dragon> getDragonsNear(int x, int y){
-		
+
 		Vector<Dragon> dragonsNear = new Vector<Dragon>();
 
 		for (int i = -1; i < 2; i++){
@@ -410,7 +409,7 @@ public class Maze {
 	}
 
 	/**
-	 * Checks collision of a game's element
+	 * Checks collision of a game's element with the Wall od Exit of the Maze
 	 * 
 	 * @param x coordinate
 	 * @param y coordinate
@@ -451,7 +450,7 @@ public class Maze {
 	public Mode getMode(){
 		return mode;
 	}
-	
+
 	/**
 	 * Converts the Maze in a string to be used to represent it in text mode
 	 * 
