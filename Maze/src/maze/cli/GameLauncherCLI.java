@@ -51,22 +51,22 @@ public class GameLauncherCLI {
 		Mode mode = null;
 
 		System.out.println("\n<< SELECT GAME MODE >>\n");
-		System.out.println("> 1 - EASY");
-		System.out.println("> 2 - INTERMEDIATE");
-		System.out.println("> 3 - EXPERT");
+		System.out.println("> 1 - STATIC DRAGONS");
+		System.out.println("> 2 - MOVING DRAGONS");
+		System.out.println("> 3 - MOVING AND SLEEPING DRAGONS");
 		System.out.println();
 
 		int input = getUserInput(scan, 1, 3);	
 
 		switch (input){
 		case 1:
-			mode = Mode.BEGGINER;
+			mode = Mode.STATIC;
 			break;
 		case 2:
-			mode = Mode.INTERMEDIATE;
+			mode = Mode.MOVING;
 			break;
 		case 3:
-			mode = Mode.EXPERT;
+			mode = Mode.MOVINGSLEEPING;
 			break;
 		}
 

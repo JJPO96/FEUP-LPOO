@@ -3,13 +3,11 @@ package maze.logic;
 import java.util.Random;
 import java.util.Vector;
 
-import maze.logic.Maze.Token;
-
 public class Maze {
 
-	/* BEGGINER for static dragon, INTERMEDIATE moving/sleeping dragon 
-	   and EXPERT for only moving dragon */
-	public enum Mode {BEGGINER, INTERMEDIATE, EXPERT};
+	/* STATIC for static dragons, MOVING for moving dragons 
+	   and MOVINGSLEEPING for moving and sleeping dragons*/
+	public enum Mode {STATIC, MOVING, MOVINGSLEEPING};
 
 	/* Directions that the Hero can take */
 	public enum Direction {LEFT, RIGHT, UP, DOWN};
@@ -139,7 +137,7 @@ public class Maze {
 		int randNumber;
 
 		for(int i = 0; i < dragons.size();i++) {
-			if(this.mode == Mode.INTERMEDIATE){
+			if(this.mode == Mode.MOVINGSLEEPING){
 				if(dragons.get(i).isSleeping() == true){
 					if(rand.nextInt(2) == 0){ // Dragons wakes up
 						dragons.get(i).setSleeping(false);
@@ -172,7 +170,7 @@ public class Maze {
 				}		
 			}
 
-			else if (this.mode == Mode.EXPERT){
+			else if (this.mode == Mode.MOVING){
 				randNumber = rand.nextInt(4);
 
 				switch(randNumber){
@@ -208,9 +206,12 @@ public class Maze {
 	public void moveHero(int x, int y){
 
 		Vector<Dragon> hasDragonsNear = new Vector<Dragon>();
-		hasDragonsNear = dragonsNear(hero.pos.x+x, hero.pos.y+y);
+		hasDragonsNear = getDragonsNear(hero.pos.x+x, hero.pos.y+y);
 		Position pos = new Position(hero.pos.x+x, hero.pos.y+y);
 
+		/* Verifies if the Hero collides with some element of the Maze or
+		if there are any dragon adjancet to the new position of the Hero */
+		
 		if(checkCollision(hero.pos.x+x, hero.pos.y+y) || hasDragonsNear.size() > 0){
 			if(!gameBoard.checkWall(hero.pos.x+x, hero.pos.y+y)){
 				if(gameBoard.checkExit(hero.pos.x+x, hero.pos.y+y)){
@@ -220,17 +221,19 @@ public class Maze {
 						mazeOpen = true;
 					}
 				}
-
+				
+				// Verifies if the new position is not occupied by a Dragon
 				else if (!(checkDragon(pos) instanceof Dragon)){
 					hero.pos.updatePos(x, y);
 					checkSword();
-					if (hasDragonsNear.size() > 0){
-						checkDragonFight(hasDragonsNear);
+					if (hasDragonsNear.size() > 0){ 
+						checkDragonFight(hasDragonsNear); // Starts confrontations between the Hero and any adjancet Dragon
 					}
 				}
 			}
 		}
-
+		
+		// Verifies if the new position is occupied by a Dragon
 		else if (checkDragon(pos) instanceof Dragon){
 			if (!checkDragon(pos).isAlive())
 				hero.pos.updatePos(x, y);
@@ -290,6 +293,15 @@ public class Maze {
 	public Sword getSword(){
 		return sword;
 	}
+	
+	/**
+	 * Returns the Maze's Dragons
+	 * 
+	 * @return dragons
+	 */
+	public Vector<Dragon> getDragons(){
+		return dragons;
+	}
 
 	/**
 	 * Verifies if a position is ocupied by a Dragon
@@ -342,13 +354,13 @@ public class Maze {
 	}
 
 	/**
-	 * Returns the dragons adjacents to Hero
+	 * Returns the adjacent Dragons to the Hero
 	 * 
 	 * @param x coordinate of the Hero
 	 * @param y coordinate of the Hero
 	 * @return the dragons
 	 */
-	public Vector<Dragon> dragonsNear(int x, int y){
+	public Vector<Dragon> getDragonsNear(int x, int y){
 		
 		Vector<Dragon> dragonsNear = new Vector<Dragon>();
 
@@ -431,6 +443,15 @@ public class Maze {
 		return mazeOpen;
 	}	
 
+	/**
+	 * Returns Game's mode
+	 * 
+	 * @return mode
+	 */
+	public Mode getMode(){
+		return mode;
+	}
+	
 	/**
 	 * Converts the Maze in a string to be used to represent it in text mode
 	 * 

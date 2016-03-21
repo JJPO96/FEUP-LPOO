@@ -3,28 +3,81 @@ package maze.test;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import maze.logic.*;
-import maze.logic.Maze.Direction;
 import maze.logic.Maze.Mode;
 
-/*public class TestSomeRandomBehavior {
+public class TestSomeRandomBehavior {
 	char [][] m1 = {{'X', 'X', 'X', 'X', 'X'},
-			{'X', ' ', ' ', ' ', 'S'},
-			{'X', ' ', 'X', ' ', 'X'},
-			{'X', ' ', ' ', ' ', 'X'},
-			{'X', 'X', 'X', 'X', 'X'}};
-	
-	Hero hero = new Hero(3, 1, 'H');
-	Dragon dragon = new Dragon(3, 3, 'D');
-	Sword sword = new Sword(1, 3, 'E');
+					{'X', ' ', ' ', 'H', 'S'},
+					{'X', ' ', 'X', ' ', 'X'},
+					{'X', 'E', ' ', 'D', 'X'},
+					{'X', 'X', 'X', 'X', 'X'}};
 
-	@Test
-	public void testModes() {
-		Maze mazeOne = new Maze(m1, Mode.INTERMEDIATE, hero, dragon, sword);
-		assertEquals(Mode.INTERMEDIATE, mazeOne.getMode());
-		Maze mazeTwo = new Maze(m1, Mode.EXPERT, hero, dragon, sword);
-		assertEquals(Mode.EXPERT, mazeTwo.getMode());
+	
+	@Test(timeout=1000)
+	public void testDragonMovingMode() {
+
+		Maze maze = new Maze(m1, Mode.MOVING);
+
+		// Confirms that the Maze is initialized in the correct mode selected
+		assertEquals(Mode.MOVING, maze.getMode());		
+		
+		// Saves Dragon initial position
+		Position startingPos = new Position (maze.getDragons().get(0).getPos().getX(), maze.getDragons().get(0).getPos().getY());
+			
+		// Confirms that the Hero is alive at the start of the Game
+		assertEquals(true, maze.getHero().isAlive());
+		
+		boolean move = false, killHero = false;
+		
+		while (!move || !killHero) {
+
+			maze.updateDragons();			
+
+			// Verifies if the Dragon has moved
+			if (!maze.getDragons().get(0).getPos().equals(startingPos))
+				move = true;
+			
+			// Verifies if the Dragon has killed the Hero
+			else if (!maze.getHero().isAlive())
+				killHero = true;
+		}
 	}
 	
-	//TODO É PRECISO FAZER MAIS TESTES PARA COBRIR CASOS EM QUE O DRAGÃO
-	// PODE DORMIR OU MOVER/DORMIR
-}*/
+	
+	@Test(timeout=1000)
+	public void testDragonMovingSleepingMode() {
+
+		Maze maze = new Maze(m1, Mode.MOVINGSLEEPING);
+
+		// Confirms that the Maze is initialized in the correct mode selected
+		assertEquals(Mode.MOVINGSLEEPING, maze.getMode());		
+		
+		// Saves Dragon initial position
+		Position startingPos = new Position (maze.getDragons().get(0).getPos().getX(), maze.getDragons().get(0).getPos().getY());
+		
+		// Confirms that Dragon is not sleeping at the start of the Game
+		assertEquals(false, maze.getDragons().get(0).isSleeping());
+		
+		// Confirms that the Hero is alive at the start of the Game
+		assertEquals(true, maze.getHero().isAlive());
+		
+		boolean move = false, sleep = false, killHero = false;
+		
+		while (!move || !sleep || !killHero) {
+
+			maze.updateDragons();			
+
+			// Verifies if the Dragon has moved
+			if (!maze.getDragons().get(0).getPos().equals(startingPos))
+				move = true;
+			
+			// Verifies if the Dragon has falles asleep
+			else if (maze.getDragons().get(0).isSleeping())
+				sleep = true;
+			
+			// Verifies if the Dragon has killed the Hero
+			else if (!maze.getHero().isAlive())
+				killHero = true;
+		}
+	}
+}

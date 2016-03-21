@@ -25,8 +25,7 @@ public class MazeBuilder implements IMazeBuilder {
 	 * @param numDragons of the Maze
 	 */
 	@Override
-	public char[][] buildMaze(int size, int numDragons) throws IllegalArgumentException {
-		// TODO  FALTA ACRESCENTAR POSSIBILIDADE DE MAIS DE UM DRAGÃO
+	public char[][] buildMaze(int size, int numDragons) {
 		// TODO: LANÇAR THROW EM CASA DO TAMANHO PRETENDIDO SER PAR OU MENOR QUE UM DETERMINADO NUMERO OU
 		// NUMERO DE DRAGOES MENOR QUE 1
 
@@ -132,15 +131,6 @@ public class MazeBuilder implements IMazeBuilder {
 			guideCell = new Position((size-3)/2, (coordExit-1)/2);
 			break;
 		}		
-	}
-
-	/**
-	 * Returns the Maze
-	 * 
-	 * @return the maze
-	 */
-	public char[][] getMaze(){
-		return maze;
 	}
 	
 	/**
