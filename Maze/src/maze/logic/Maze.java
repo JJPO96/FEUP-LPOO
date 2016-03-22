@@ -207,7 +207,6 @@ public class Maze {
 
 		// Verifies if the Hero collides with some element of the Maze
 		if (!checkCollision(hero.getPos().x+x, hero.getPos().y+y)){
-			System.out.println("x: "+x+"   y: "+y);
 			hero.getPos().updatePos(x, y);			
 			checkSword(); // Verifies if the Hero is in the same posiion of the Sword
 		}

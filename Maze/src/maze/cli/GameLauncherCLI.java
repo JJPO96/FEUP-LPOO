@@ -8,21 +8,28 @@ import maze.logic.Maze.Mode;
 public class GameLauncherCLI {
 
 	private static boolean done = false;
+	private static final int minSize = 5;
+	private static final int maxSize = 29;
+	private static final int minNumDragons = 1;
+	private static final String title = "\n   _____  _     _____   _      ____  ____  _____\n  /__ __\\/ \\ /|/  __/  / \\__/|/  _ \\/_   \\/  __/\n    / \\  | |_|||  \\    | |\\/||| / \\| /   /|  \\  \n    | |  | | |||  /_   | |  ||| |-||/   /_|  /_ \n    \\_/  \\_/ \\|\\____\\  \\_/  \\|\\_/ \\|\\____/\\____\\\n";
+	private static final String youWin = "  ___  _ ____  _       _      _  _      _ \n  \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n   \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n   / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n  /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
+	private static final String gameOver = "   _____ ____  _      _____   ____  _     _____ ____  _ \n  /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n  | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n  | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n  \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
 	
 	/**
-	 * Prints the maze in text format
+	 * Calculates the maximum number of dragons for a certain Maze's size
 	 * 
-	 * @param game instance of Maze
+	 * @param size fot he Maze
+	 * @return the number of dragons
 	 */
-	public static void printMaze(Maze game){
-		System.out.println("\n"+game.toString());
+	public static int calculateMaxNumberDragons(int size){		
+		return minNumDragons+(size-minSize)/2;
 	}
 
 	/**
 	 * Verifies if the move command is valid
 	 * 
 	 * @param input which is the move command made by the user
-	 * @return if the move was valid or not
+	 * @return true if the move was valid
 	 */
 	public static boolean validMove(char input){
 
@@ -50,11 +57,10 @@ public class GameLauncherCLI {
 	public static Mode menuGameMode(Scanner scan){
 		Mode mode = null;
 
-		System.out.println("\n<< SELECT GAME MODE >>\n");
-		System.out.println("> 1 - STATIC DRAGONS");
-		System.out.println("> 2 - MOVING DRAGONS");
-		System.out.println("> 3 - MOVING AND SLEEPING DRAGONS");
-		System.out.println();
+		System.out.println("\n		<< SELECT GAME MODE >>\n");
+		System.out.println("		>> 1 - STATIC DRAGONS");
+		System.out.println("		>> 2 - MOVING DRAGONS");
+		System.out.println("		>> 3 - MOVING AND SLEEPING DRAGONS\n");;
 
 		int input = getUserInput(scan, 1, 3);	
 
@@ -73,6 +79,14 @@ public class GameLauncherCLI {
 		return mode;
 	}
 
+	/**
+	 * Reads the user input
+	 * 
+	 * @param scan to be used to get input from user
+	 * @param min value
+	 * @param max value
+	 * @return user input
+	 */
 	public static int getUserInput(Scanner scan, int min, int max){
 
 		int input = 0;
@@ -96,6 +110,12 @@ public class GameLauncherCLI {
 		return input;
 	}
 	
+	/**
+	 * Gets the movement directions
+	 * 
+	 * @param scan to be used to read the user input
+	 * @return direction
+	 */
 	public static Direction getMoveInput(Scanner scan){
 
 		char input = ' ';
@@ -132,41 +152,63 @@ public class GameLauncherCLI {
 		return move;
 	}
 	
-	public static int getNumberDragons(Scanner scan){
-
-		System.out.println("\nChoose number of Dragons!\n");
-		int ret;
-		ret = scan.nextInt();
+	/**
+	 * Returns the number of dragons of the Maze selected by the user
+	 * 
+	 * @param scan to be used to read the user input
+	 * @param mazeSize
+	 * @return number of dragons
+	 */
+	public static int getNumberDragons(Scanner scan, int mazeSize){
 		
-		return ret;
+		System.out.println("\n		>> Choose number of Dragons!\n");
+		int numDragons = getUserInput(scan, minNumDragons, calculateMaxNumberDragons(mazeSize));
+		
+		return numDragons;
 	}
 
+	/**
+	 * Returns the Maze's size selected by the user
+	 * 
+	 * @param scan to be used to read the user input
+	 * @return Maze's size
+	 */
 	public static int getMazeSize(Scanner scan){
 		
-		System.out.println("\nChoose Maze Size!\n");
-		int ret;
-		ret = scan.nextInt();
+		System.out.println("\n		>> Choose Maze Size (Min: "+minSize+" - Max: "+maxSize+"):\n");
+		int mazeSize = getUserInput(scan, minSize, maxSize);
 		
-		return ret;
+		return mazeSize;
 	}
 	
-	public static void runGame(Scanner scan, int dragons, int mazeSize){
+	/**
+	 * Runs the Game
+	 * 
+	 * @param scan to be used to read the user input
+	 */
+	public static void runGame(Scanner scan){
 
+		int mazeSize = getMazeSize(scan);		
+		int dragons = getNumberDragons(scan, mazeSize);		
+		
 		Maze game = new Maze(menuGameMode(scan),dragons,mazeSize);		
-		printMaze(game);
+		System.out.println("\n"+game);
 
 		while(game.isRunning()){
 			game.update(getMoveInput(scan));
-			printMaze(game);
+			System.out.println("\n"+game);
 		}
 
 		gameEnd(game);
 	}
 	
+	/**
+	 * Displys the Main Menu
+	 */
 	public static void displayMainMenu(){
-		System.out.println("\n<< STARTING MENU >>\n");
-		System.out.println("> 1 - Start game");
-		System.out.println("> 2 - Exit");
+		System.out.println("\n		<< STARTING MENU >>\n");
+		System.out.println("		>> 1 - Start game");
+		System.out.println("		>> 2 - Exit");
 		System.out.println();
 	}
 	
@@ -177,28 +219,24 @@ public class GameLauncherCLI {
 	 */
 	public static void gameEnd(Maze game){
 		if (game.isMazeOpen())
-			System.out.println("VICTORY!");
+			System.out.println(youWin);
 		else
-			System.out.println("DEFEAT!");
+			System.out.println(gameOver);
 	}
 
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
 		int input = 0;
-		int dragons;
-		int mazeSize;
-		System.out.println("<< WELCOME TO THE MAZE >>\n");
-
+		System.out.println(title);
+		
 		while (!done){			
 			displayMainMenu();
 			input = getUserInput(scan, 1, 2);	
 			
 			switch(input){
-			case 1:		
-				dragons = getNumberDragons(scan);
-				mazeSize = getMazeSize(scan);
-				runGame(scan,dragons,mazeSize);
+			case 1:			
+				runGame(scan);
 				break;
 			case 2:
 				done = true;

@@ -200,7 +200,7 @@ public class GameLauncherGUI {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				auxButton(0,drAlive);
-				textArea.setText(maze.toString());
+				textArea.setText(maze.toString());				
 			}
 		});
 		btnUp.setBounds(445, 180, 100, 25);
