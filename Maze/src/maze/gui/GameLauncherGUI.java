@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+
+import java.awt.Button;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -20,10 +22,9 @@ import maze.logic.Maze.Mode;
 
 import javax.swing.JTextArea;
 import javax.swing.JProgressBar;
-import javax.swing.JTextPane;
 import java.awt.Font;
-
-
+import java.awt.Label;
+import java.awt.TextArea;
 
 public class GameLauncherGUI {
 
@@ -31,12 +32,16 @@ public class GameLauncherGUI {
 	private JTextField textDim;
 	private JTextField textNrDrag;
 	private Maze maze;
-	private int drAlive = 0;
-	private int dragons;
-	private int intAuxBut;
+	private static int numDragonsAlive = 0;
+	private static int dragons;
+	private static int status;
 	private JTextField textField;
-	private static final String youWin = "  ___  _ ____  _       _      _  _      _ \n  \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n   \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n   / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n  /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
-	private static final String gameOver = "   _____ ____  _      _____   ____  _     _____ ____  _ \n  /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n  | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n  | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n  \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
+	private static final String youWin = "\n\n\n\n\n\n\n\n\n\n\n              ___  _ ____  _       _      _  _      _ \n              \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n               \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n               / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n              /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
+	private static final String gameOver = "\n\n\n\n\n\n\n\n\n\n\n        _____ ____  _      _____   ____  _     _____ ____  _ \n       /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n       | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n       | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n       \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
+	private static final double minSize = 5;
+	private static final int maxSize = 27;
+	private static final int minNumDragons = 1;
+	private static final double maxFontSize = 54;
 	
 	/**
 	 *Direction buttons auxiliary function
@@ -56,32 +61,25 @@ public class GameLauncherGUI {
 	 *  6 - hero exited the maze //
 	 */
 	
-	public int auxButton(int button,int drAlive){ 
-		switch (button){
-		case 0:
-			maze.update(Direction.UP);
-			break;
-		case 1:
-			maze.update(Direction.DOWN);
-			break;
-		case 2:
-			maze.update(Direction.LEFT);
-			break;
-		case 3:
-			maze.update(Direction.RIGHT);
-			break;
-		}
-		int tempDrAlive = 0;
+	/**
+	 * Get the current status of the Game
+	 * 
+	 * @param numDragonsAlive
+	 * @return the status
+	 */
+	public int getStatus(int numDragonsAlive){ 
+		
+		int tempnumDragonsAlive = 0;
 		for(Dragon dr : maze.getDragons())
 			if(dr.isAlive())
-				tempDrAlive++;
+				tempnumDragonsAlive++;
 	
 		if(maze.hasDragonsAlive()){
 			 if(maze.getHero().isAlive()){
 				 if(maze.getHero().isArmed())
 					 return 3;
-				 else if(tempDrAlive < drAlive){
-					 drAlive -= 1; 
+				 else if(tempnumDragonsAlive < numDragonsAlive){
+					 numDragonsAlive -= 1; 
 					 return 4;
 				 }else
 					 return 1;
@@ -94,6 +92,61 @@ public class GameLauncherGUI {
 			else
 				return 5;
 		}
+	}
+	
+	public void updateStatus(TextArea textArea, Button btnUp, Button btnDown, Button btnLeft, Button btnRight,Label lblGameState, JProgressBar progressBar){
+		if(status == 6){
+			lblGameState.setText("YOU WON!!!!");
+			btnUp.setEnabled(false);
+			btnDown.setEnabled(false);
+			btnLeft.setEnabled(false);
+			btnRight.setEnabled(false);
+			textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
+			textArea.setText(youWin);
+			textArea.setBackground(new Color(30,140,30));
+		}else if(status == 5){
+			lblGameState.setText("All dragons killed!!!!");
+			textArea.setText(maze.toString());
+		}else if(status == 4){
+			lblGameState.setText("You killed one dragon!");
+			numDragonsAlive--;
+			textArea.setText(maze.toString());
+		}else if(status == 3){
+			lblGameState.setText("You are armed!");
+			textField.setBackground(new Color(30,30,140));
+			textField.setText("Armed");
+			textArea.setText(maze.toString());
+		}else if(status == 2){
+			btnUp.setEnabled(false);
+			btnDown.setEnabled(false);
+			btnLeft.setEnabled(false);
+			btnRight.setEnabled(false);
+			textField.setBackground(new Color(140,30,30));
+			textField.setText("Dead");
+			lblGameState.setText("GAME OVER");
+			textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
+			textArea.setText(gameOver);
+			textArea.setBackground(new Color(140,30,30));
+		}else
+			textArea.setText(maze.toString());
+		
+		int temp = 0;
+		for(Dragon x : maze.getDragons())
+			if(x.isAlive())
+				temp++; 
+		double z = (dragons - temp);
+		int y = (int)(100*(z/dragons));
+		progressBar.setValue(y);
+	}
+	
+	/**
+	 * Calculates the font size to use to print the Maze
+	 * 
+	 * @param mazeSize
+	 * @return the font size
+	 */
+	public static int calculateFontSize(int mazeSize){
+		return (int) (maxFontSize/ (mazeSize/minSize));
 	}
 	
 	/**
@@ -131,7 +184,7 @@ public class GameLauncherGUI {
 		frmTitulo = new JFrame();
 		frmTitulo.setTitle("Maze");
 		frmTitulo.setResizable(false);
-		frmTitulo.setBounds(100, 100, 630, 520);
+		frmTitulo.setBounds(100, 100, 630, 530);
 		frmTitulo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTitulo.getContentPane().setLayout(null);
 			
@@ -156,7 +209,7 @@ public class GameLauncherGUI {
 		textDim = new JTextField();
 		textDim.setBounds(175, 25, 125, 20);
 		textDim.setHorizontalAlignment(SwingConstants.CENTER);
-		textDim.setText("21");
+		textDim.setText("11");
 		frmTitulo.getContentPane().add(textDim);
 		textDim.setColumns(10);
 		
@@ -173,10 +226,9 @@ public class GameLauncherGUI {
 		modeSlct.addItem("Moving");
 		modeSlct.addItem("Moving and Sleepy");
 		frmTitulo.getContentPane().add(modeSlct);
-		
+	
 		JTextArea textArea = new JTextArea();
-		textArea.setFont(new Font("Courier New", Font.PLAIN, 13));
-		textArea.setBounds(35, 152, 345, 318);
+		textArea.setBounds(35, 152, 345, 328);
 		textArea.setEditable(false);
 		frmTitulo.getContentPane().add(textArea);
 		
@@ -226,36 +278,39 @@ public class GameLauncherGUI {
 		
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				intAuxBut = auxButton(0,drAlive);
+				maze.update(Direction.UP);
+				status = getStatus(numDragonsAlive);
 				
-				if(intAuxBut == 6){
+				if(status == 6){
 					lblGameState.setText("YOU WIN!!!!");
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
 					btnRight.setEnabled(false);
-					textArea.setText("\n\n\n\n\n"+youWin);
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
+					textArea.setText(youWin);
 					textArea.setBackground(new Color(30,140,30));
-				}else if(intAuxBut == 5){
+				}else if(status == 5){
 					lblGameState.setText("All dragons killed!!!!");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 4){
+				}else if(status == 4){
 					lblGameState.setText("You killed one dragon!");
-					drAlive--;
+					numDragonsAlive--;
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 3){
+				}else if(status == 3){
 					lblGameState.setText("You are armed!");
 					textField.setBackground(new Color(30,30,140));
 					textField.setText("Armed");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 2){
+				}else if(status == 2){
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
 					btnRight.setEnabled(false);
 					textField.setBackground(new Color(140,30,30));
 					textField.setText("Dead");
-					lblGameState.setText("GAME OVER");
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
+					lblGameState.setText("Game Over");
 					textArea.setText(gameOver);
 					textArea.setBackground(new Color(140,30,30));
 				}else
@@ -271,29 +326,31 @@ public class GameLauncherGUI {
 		});
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				intAuxBut = auxButton(1,drAlive);
+				maze.update(Direction.DOWN);
+				status = getStatus(numDragonsAlive);
 
-				if(intAuxBut == 6){
+				if(status == 6){
 					lblGameState.setText("YOU WON!!!!");
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
 					btnRight.setEnabled(false);
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
 					textArea.setText(youWin);
 					textArea.setBackground(new Color(30,140,30));
-				}else if(intAuxBut == 5){
+				}else if(status == 5){
 					lblGameState.setText("All dragons killed!!!!");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 4){
+				}else if(status == 4){
 					lblGameState.setText("You killed one dragon!");
-					drAlive--;
+					numDragonsAlive--;
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 3){
+				}else if(status == 3){
 					lblGameState.setText("You are armed!");
 					textField.setBackground(new Color(30,30,140));
 					textField.setText("Armed");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 2){
+				}else if(status == 2){
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
@@ -301,6 +358,7 @@ public class GameLauncherGUI {
 					textField.setBackground(new Color(140,30,30));
 					textField.setText("Dead");
 					lblGameState.setText("GAME OVER");
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
 					textArea.setText(gameOver);
 					textArea.setBackground(new Color(140,30,30));
 				}else
@@ -316,29 +374,31 @@ public class GameLauncherGUI {
 		});
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				intAuxBut = auxButton(2,drAlive);
+				maze.update(Direction.LEFT);
+				status = getStatus(numDragonsAlive);
 
-				if(intAuxBut == 6){
+				if(status == 6){
 					lblGameState.setText("YOU WON!!!!");
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
 					btnRight.setEnabled(false);
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
 					textArea.setText(youWin);
 					textArea.setBackground(new Color(30,140,30));
-				}else if(intAuxBut == 5){
+				}else if(status == 5){
 					lblGameState.setText("All dragons killed!!!!");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 4){
+				}else if(status == 4){
 					lblGameState.setText("You killed one dragon!");
-					drAlive--;
+					numDragonsAlive--;
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 3){
+				}else if(status == 3){
 					lblGameState.setText("You are armed!");
 					textField.setBackground(new Color(30,30,140));
 					textField.setText("Armed");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 2){
+				}else if(status == 2){
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
@@ -346,6 +406,7 @@ public class GameLauncherGUI {
 					textField.setBackground(new Color(140,30,30));
 					textField.setText("Dead");
 					lblGameState.setText("GAME OVER");
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
 					textArea.setText(gameOver);
 					textArea.setBackground(new Color(140,30,30));
 				}else
@@ -361,29 +422,31 @@ public class GameLauncherGUI {
 		});
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				intAuxBut = auxButton(3,drAlive);
+				maze.update(Direction.RIGHT);
+				status = getStatus(numDragonsAlive);
 				
-				if(intAuxBut == 6){
+				if(status == 6){
 					lblGameState.setText("YOU WON!!!!");
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
 					btnRight.setEnabled(false);
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
 					textArea.setText(youWin);
 					textArea.setBackground(new Color(30,140,30));
-				}else if(intAuxBut == 5){
+				}else if(status == 5){
 					lblGameState.setText("All dragons killed!!!!");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 4){
+				}else if(status == 4){
 					lblGameState.setText("You killed one dragon!");
-					drAlive--;
+					numDragonsAlive--;
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 3){
+				}else if(status == 3){
 					lblGameState.setText("You are armed!");
 					textField.setBackground(new Color(30,30,140));
 					textField.setText("Armed");
 					textArea.setText(maze.toString());
-				}else if(intAuxBut == 2){
+				}else if(status == 2){
 					btnUp.setEnabled(false);
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
@@ -391,6 +454,7 @@ public class GameLauncherGUI {
 					textField.setBackground(new Color(140,30,30));
 					textField.setText("Dead");
 					lblGameState.setText("GAME OVER");
+					textArea.setFont(new Font("Courier New", Font.PLAIN, 9));
 					textArea.setText(gameOver);
 					textArea.setBackground(new Color(140,30,30));
 				}else
@@ -415,6 +479,7 @@ public class GameLauncherGUI {
 				textArea.setBackground(new Color(255,255,255));
 				textField.setBackground(new Color(30,140,30));
 				textField.setText("Alive");
+				
 				Mode mode = null;
 				String strMode = modeSlct.getSelectedItem().toString();
 				if(strMode == "Static")
@@ -426,14 +491,21 @@ public class GameLauncherGUI {
 				
 				int dim = Integer.parseInt(textDim.getText());
 				dragons = Integer.parseInt(textNrDrag.getText());
-				drAlive = dragons;
-				maze = new Maze(mode,dragons,dim);
-
+				numDragonsAlive = dragons;
+				
+				// Creating a new Maze
+				maze = new Maze(mode, dragons, dim);
+				
+				textArea.setFont(new Font("Courier New", Font.PLAIN, calculateFontSize(dim)));
+				frmTitulo.getContentPane().add(textArea);
 				textArea.setText(maze.toString());
+				
+				// Enabling command buttons
 				btnUp.setEnabled(true);
 				btnDown.setEnabled(true);
 				btnLeft.setEnabled(true);
 				btnRight.setEnabled(true);
+				
 				progressBar.setValue(0);
 				lblGameState.setText("Game Running");				
 			}

@@ -9,7 +9,7 @@ public class GameLauncherCLI {
 
 	private static boolean done = false;
 	private static final int minSize = 5;
-	private static final int maxSize = 29;
+	private static final int maxSize = 27;
 	private static final int minNumDragons = 1;
 	private static final String title = "\n   _____  _     _____   _      ____  ____  _____\n  /__ __\\/ \\ /|/  __/  / \\__/|/  _ \\/_   \\/  __/\n    / \\  | |_|||  \\    | |\\/||| / \\| /   /|  \\  \n    | |  | | |||  /_   | |  ||| |-||/   /_|  /_ \n    \\_/  \\_/ \\|\\____\\  \\_/  \\|\\_/ \\|\\____/\\____\\\n";
 	private static final String youWin = "  ___  _ ____  _       _      _  _      _ \n  \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n   \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n   / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n  /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
