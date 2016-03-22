@@ -13,10 +13,8 @@ public class MazeBuilder implements IMazeBuilder {
 	private Stack<Position> pathCell;
 	private Position guideCell;
 	private int size;
-	private int numDragons = 3;
+	private int numDragons;
 	private Direction guideDirection;
-	
-	// TODO: VERIFICAR AO CRIAR NOVO LABIRINTO SE É POSSÍVEL GANHAR O JOGO
 
 	/**
 	 * Builds a Maze
@@ -26,8 +24,6 @@ public class MazeBuilder implements IMazeBuilder {
 	 */
 	@Override
 	public char[][] buildMaze(int size, int numDragons) {
-		// TODO: LANÇAR THROW EM CASA DO TAMANHO PRETENDIDO SER PAR OU MENOR QUE UM DETERMINADO NUMERO OU
-		// NUMERO DE DRAGOES MENOR QUE 1
 
 		this.size = size;
 		this.numDragons = numDragons;

@@ -26,15 +26,15 @@ public class GameLauncherCLI {
 	 */
 	public static boolean validMove(char input){
 
-		// Movement - (L)eft, (R)ight, (U)p, (D)own		
+		// Movement - (A) - left, (D) - Right, (W) - Top, (S) - Down		
 		switch (input){
-		case 'L':
-			return true;
-		case 'R':
-			return true;
-		case 'U':
+		case 'A':
 			return true;
 		case 'D':
+			return true;
+		case 'W':
+			return true;
+		case 'S':
 			return true;
 		default:
 			return false;
@@ -115,16 +115,16 @@ public class GameLauncherCLI {
 		} while (!validMove(input));
 		
 		switch (input){
-		case 'L':
+		case 'A':
 			move = Direction.LEFT;
 			break;
-		case 'R':
+		case 'D':
 			move = Direction.RIGHT;
 			break;
-		case 'U':
+		case 'W':
 			move = Direction.UP;
 			break;
-		case 'D':
+		case 'S':
 			move = Direction.DOWN;
 			break;
 		}
@@ -133,8 +133,6 @@ public class GameLauncherCLI {
 	}
 	
 	public static int getNumberDragons(Scanner scan){
-		
-		// TODO: COLOCAR MINIMO VALOR E MAXIMO VALOR CONSOANTE O TAMANHO DO TABULEIRO
 
 		System.out.println("\nChoose number of Dragons!\n");
 		int ret;
@@ -145,7 +143,6 @@ public class GameLauncherCLI {
 
 	public static int getMazeSize(Scanner scan){
 		
-		// TODO: verificar se o valor dado é ímpar
 		System.out.println("\nChoose Maze Size!\n");
 		int ret;
 		ret = scan.nextInt();
