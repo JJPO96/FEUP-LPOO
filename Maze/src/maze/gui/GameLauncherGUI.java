@@ -20,6 +20,8 @@ import maze.logic.Maze.Mode;
 
 import javax.swing.JTextArea;
 import javax.swing.JProgressBar;
+import javax.swing.JTextPane;
+import java.awt.Font;
 
 
 
@@ -87,7 +89,7 @@ public class GameLauncherGUI {
 				 return 2;
 				 
 		}else{
-			if(maze.getHero().getPos().getX() == maze.getGameBoard().getExitPos().getX() && maze.getHero().getPos().getY() == maze.getGameBoard().getExitPos().getY())
+			if(maze.isMazeOpen())
 				return 6;
 			else
 				return 5;
@@ -129,7 +131,7 @@ public class GameLauncherGUI {
 		frmTitulo = new JFrame();
 		frmTitulo.setTitle("Maze");
 		frmTitulo.setResizable(false);
-		frmTitulo.setBounds(100, 100, 630, 400);
+		frmTitulo.setBounds(100, 100, 630, 520);
 		frmTitulo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTitulo.getContentPane().setLayout(null);
 			
@@ -146,15 +148,15 @@ public class GameLauncherGUI {
 		lblTypeDrag.setBounds(35, 105, 135, 25);
 		frmTitulo.getContentPane().add(lblTypeDrag);
 		
-		JLabel lblGameState = new JLabel("Create you Maze.");
-		lblGameState.setBounds(387, 327, 220, 20);
+		JLabel lblGameState = new JLabel("Create your Maze.");
+		lblGameState.setBounds(390, 417, 220, 20);
 		lblGameState.setHorizontalAlignment(SwingConstants.CENTER);
 		frmTitulo.getContentPane().add(lblGameState);
 		
 		textDim = new JTextField();
 		textDim.setBounds(175, 25, 125, 20);
 		textDim.setHorizontalAlignment(SwingConstants.CENTER);
-		textDim.setText("11");
+		textDim.setText("21");
 		frmTitulo.getContentPane().add(textDim);
 		textDim.setColumns(10);
 		
@@ -173,7 +175,8 @@ public class GameLauncherGUI {
 		frmTitulo.getContentPane().add(modeSlct);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(35, 136, 341, 215);
+		textArea.setFont(new Font("Courier New", Font.PLAIN, 13));
+		textArea.setBounds(35, 152, 345, 318);
 		textArea.setEditable(false);
 		frmTitulo.getContentPane().add(textArea);
 		
@@ -188,35 +191,35 @@ public class GameLauncherGUI {
 		JProgressBar progressBar = new JProgressBar(0,100);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		progressBar.setBounds(420, 136, 150, 20);
+		progressBar.setBounds(420, 320, 150, 20);
 		frmTitulo.getContentPane().add(progressBar);
 		
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setForeground(new Color(0, 0, 0));
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setBounds(420, 177, 150, 20);
+		textField.setBounds(420, 364, 150, 20);
 		frmTitulo.getContentPane().add(textField);
 		textField.setColumns(10);
 		frmTitulo.getContentPane().add(btnExit);
 	
 		JButton btnUp = new JButton("UP");
-		btnUp.setBounds(446, 220, 100, 25);
+		btnUp.setBounds(446, 152, 100, 25);
 		btnUp.setEnabled(false);
 		frmTitulo.getContentPane().add(btnUp);
 		
 		JButton btnDown = new JButton("DOWN");
-		btnDown.setBounds(446, 290, 100, 25);
+		btnDown.setBounds(446, 252, 100, 25);
 		btnDown.setEnabled(false);
 		frmTitulo.getContentPane().add(btnDown);
 		
 		JButton btnLeft = new JButton("LEFT");
-		btnLeft.setBounds(386, 255, 100, 25);
+		btnLeft.setBounds(390, 202, 100, 25);
 		btnLeft.setEnabled(false);
 		frmTitulo.getContentPane().add(btnLeft);
 		
 		JButton btnRight = new JButton("RIGHT");
-		btnRight.setBounds(506, 255, 100, 25);
+		btnRight.setBounds(510, 202, 100, 25);
 		btnRight.setEnabled(false);
 		frmTitulo.getContentPane().add(btnRight);
 
@@ -231,7 +234,7 @@ public class GameLauncherGUI {
 					btnDown.setEnabled(false);
 					btnLeft.setEnabled(false);
 					btnRight.setEnabled(false);
-					textArea.setText(youWin);
+					textArea.setText("\n\n\n\n\n"+youWin);
 					textArea.setBackground(new Color(30,140,30));
 				}else if(intAuxBut == 5){
 					lblGameState.setText("All dragons killed!!!!");
