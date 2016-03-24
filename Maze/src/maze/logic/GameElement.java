@@ -16,16 +16,7 @@ public class GameElement {
 		pos = new Position(x, y);
 		this.symbol = symbol;
 	}
-	
-	/**
-	 * Sets the symbol of the element of the game
-	 * 
-	 * @param symbol to be used by an element of the game
-	 */
-	public void setSymbol(char symbol){
-		this.symbol = symbol;
-	}
-	
+		
 	/**
 	 * Returns the position of an element of the Game
 	 * 	
