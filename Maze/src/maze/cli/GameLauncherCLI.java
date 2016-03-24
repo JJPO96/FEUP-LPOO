@@ -8,23 +8,11 @@ import maze.logic.Maze.Mode;
 public class GameLauncherCLI {
 
 	private static boolean done = false;
-	private static final int minSize = 5;
 	private static final int maxSize = 27;
-	private static final int minNumDragons = 1;
 	private static final String title = "\n   _____  _     _____   _      ____  ____  _____\n  /__ __\\/ \\ /|/  __/  / \\__/|/  _ \\/_   \\/  __/\n    / \\  | |_|||  \\    | |\\/||| / \\| /   /|  \\  \n    | |  | | |||  /_   | |  ||| |-||/   /_|  /_ \n    \\_/  \\_/ \\|\\____\\  \\_/  \\|\\_/ \\|\\____/\\____\\\n";
 	private static final String youWin = "  ___  _ ____  _       _      _  _      _ \n  \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n   \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n   / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n  /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
 	private static final String gameOver = "   _____ ____  _      _____   ____  _     _____ ____  _ \n  /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n  | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n  | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n  \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
 	
-	/**
-	 * Calculates the maximum number of dragons for a certain Maze's size
-	 * 
-	 * @param size fot he Maze
-	 * @return the number of dragons
-	 */
-	public static int calculateMaxNumberDragons(int size){		
-		return minNumDragons+(size-minSize)/2;
-	}
-
 	/**
 	 * Verifies if the move command is valid
 	 * 
@@ -101,7 +89,7 @@ public class GameLauncherCLI {
 
 			catch(Exception e) {
 				scan.nextLine();
-				System.err.println("ERROR:: Invalid option! Please try again!");
+				System.err.println("\nERROR:: Invalid option! Please try again!\n");
 			} 
 		} while (input < min || input > max);
 
@@ -130,7 +118,7 @@ public class GameLauncherCLI {
 			}
 
 			catch(Exception e) {
-				System.err.println("ERROR:: Invalid option! Please try again!");
+				System.err.println("ERROR:: Invalid value! Please try again!");
 			}			
 		} while (!validMove(input));
 		
@@ -161,8 +149,15 @@ public class GameLauncherCLI {
 	 */
 	public static int getNumberDragons(Scanner scan, int mazeSize){
 		
-		System.out.println("\n		>> Choose number of Dragons!\n");
-		int numDragons = getUserInput(scan, minNumDragons, calculateMaxNumberDragons(mazeSize));
+		int numMaxDragons = Maze.calculateMaxNumberDragons(mazeSize, Maze.minSize, Maze.minNumDragons);
+		
+		if (Maze.minNumDragons == numMaxDragons){
+			System.out.println("\n		>> For the Maze size selected the maximum number of Dragons allowed is 1.\n");
+			return numMaxDragons;
+		}			
+		
+		System.out.println("\n		>> Choose the number of Dragons (Min: "+Maze.minNumDragons+" and Max: "+numMaxDragons+")!\n");
+		int numDragons = getUserInput(scan, Maze.minNumDragons, numMaxDragons);
 		
 		return numDragons;
 	}
@@ -175,10 +170,37 @@ public class GameLauncherCLI {
 	 */
 	public static int getMazeSize(Scanner scan){
 		
-		System.out.println("\n		>> Choose Maze Size (Min: "+minSize+" - Max: "+maxSize+"):\n");
-		int mazeSize = getUserInput(scan, minSize, maxSize);
+		System.out.println("\n		>> Choose Maze Size (Must be an odd number between "+Maze.minSize+" and "+maxSize+"):\n");
+		int mazeSize = getUserInput(scan, Maze.minSize, maxSize);
+		
+		while (mazeSize % 2 == 0){ // The maze size can't be an even number
+			System.err.println("ERROR:: Invalid value! Can't be an even number! Please try again!");
+			mazeSize = getUserInput(scan, Maze.minSize, maxSize);
+		}
 		
 		return mazeSize;
+	}
+		
+	/**
+	 * Displys the Main Menu
+	 */
+	public static void displayMainMenu(){
+		System.out.println("\n		<< STARTING MENU >>\n");
+		System.out.println("		>> 1 - Start game");
+		System.out.println("		>> 2 - Exit");
+		System.out.println();
+	}
+	
+	/**
+	 * Prints game's end message
+	 * 
+	 * @param game
+	 */
+	public static void gameEnd(Maze game){
+		if (game.isMazeOpen())
+			System.out.println(youWin);
+		else
+			System.out.println(gameOver);
 	}
 	
 	/**
@@ -200,28 +222,6 @@ public class GameLauncherCLI {
 		}
 
 		gameEnd(game);
-	}
-	
-	/**
-	 * Displys the Main Menu
-	 */
-	public static void displayMainMenu(){
-		System.out.println("\n		<< STARTING MENU >>\n");
-		System.out.println("		>> 1 - Start game");
-		System.out.println("		>> 2 - Exit");
-		System.out.println();
-	}
-	
-	/**
-	 * Prints game's end message
-	 * 
-	 * @param game
-	 */
-	public static void gameEnd(Maze game){
-		if (game.isMazeOpen())
-			System.out.println(youWin);
-		else
-			System.out.println(gameOver);
 	}
 
 	public static void main(String[] args) {

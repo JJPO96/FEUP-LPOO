@@ -148,5 +148,13 @@ public class TestMazeWithStaticDragon {
 		// Confirms that the toString() method is correctly working for the class Maze
 		assertEquals(" X X X X X\n X     H S\n X   X   X\n X E   D X\n X X X X X\n", maze + "");		
 	}
+	
+	@Test
+	public void testMazeConstructor(){
+		Maze maze = new Maze(Maze.Mode.STATIC, 1, 21);
+		assertEquals(Maze.Mode.STATIC, maze.getMode());
+		assertEquals(1, maze.getDragons().size());
+		assertEquals(21, maze.getGameBoard().getBoard().length);
+	}
 }
 

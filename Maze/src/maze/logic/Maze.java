@@ -33,7 +33,11 @@ public class Maze {
 	private Sword sword;
 	private boolean running;
 	private boolean mazeOpen;
-	private Mode mode;	
+	private Mode mode;
+	
+	// Static values to be used by the CLI and GUI to make valid mazes
+	public static final int minSize = 5;
+	public static final int minNumDragons = 1;
 
 	/**
 	 * Maze's Construtor
@@ -41,8 +45,10 @@ public class Maze {
 	 * @param mode of the Game
 	 * @param size of the Maze
 	 * @param numDragons number of Dragons of the Maze
+	 * @throws InvalidMazeSize 
+	 * @throws InvalidNumDragons 
 	 */
-	public Maze(Mode mode, int numDragons, int size){
+	public Maze(Mode mode, int numDragons, int size) {
 
 		MazeBuilder mazeRandom = new MazeBuilder();
 		this.gameBoard = new Board();
@@ -415,6 +421,16 @@ public class Maze {
 	 */
 	public Mode getMode(){
 		return mode;
+	}
+	
+	/**
+	 * Calculates the maximum number of dragons for a certain Maze's size
+	 * 
+	 * @param size of the Maze
+	 * @return the number of dragons
+	 */
+	public static int calculateMaxNumberDragons(int size, int minSize, int minNumDragons){		
+		return minNumDragons+(size-minSize)/2;
 	}
 
 	/**
