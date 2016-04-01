@@ -26,8 +26,9 @@ public class MazeGame extends JPanel {
 	private BufferedImage sword;
 	private BufferedImage wall;
 	private BufferedImage path;
+	private BufferedImage pathShadow;
 	private BufferedImage exit;
-	private int x=10, y=10, width=45, height=45;
+	private int x=0, y=0, width=45, height=45;
 
 	public MazeGame() {		
 
@@ -108,6 +109,8 @@ public class MazeGame extends JPanel {
 			sword = ImageIO.read(new File("res/sword.png"));
 			wall = ImageIO.read(new File("res/wall.png"));
 			path = ImageIO.read(new File("res/path.png"));
+			pathShadow = ImageIO.read(new File("res/pathShadow.png"));
+			exit = ImageIO.read(new File("res/exit.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -125,15 +128,17 @@ public class MazeGame extends JPanel {
 
 		Position pos = new Position();
 
-
-
 		for (int i = 0; i < maze.getGameBoard().getBoard().length; i++){
 			for (int j = 0; j < maze.getGameBoard().getBoard()[i].length; j++){
 				pos.setX(j);
 				pos.setY(i);
 				
-				if (maze.getGameBoard().getBoard()[j][i] == 'X')
+				if (maze.getGameBoard().getBoard()[i][j] == 'X')
 					g.drawImage(wall, x, y, x + w, y + h, 0, 0, wall.getWidth(), wall.getHeight(), null);
+				else if (maze.getGameBoard().getBoard()[i][j] == 'S')
+					g.drawImage(exit, x, y, x + w, y + h, 0, 0, exit.getWidth(), exit.getHeight(), null);
+				else if (maze.getGameBoard().getBoard()[i][j-1] == 'X')
+					g.drawImage(pathShadow, x, y, x + w, y + h, 0, 0, pathShadow.getWidth(), pathShadow.getHeight(), null);
 				else
 					g.drawImage(path, x, y, x + w, y + h, 0, 0, path.getWidth(), path.getHeight(), null);
 
@@ -155,12 +160,12 @@ public class MazeGame extends JPanel {
 				x+=width;
 			}
 
-			x = 10;
+			x = 0;
 			y+=height;
 		}		
 
-		x = 10;
-		y = 10;
+		x = 0;
+		y = 0;
 	}
 
 }
