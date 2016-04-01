@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import maze.logic.Position;
 import maze.logic.Dragon;
 import maze.logic.Maze;
-import maze.logic.Maze.Token;
 
 public class MazeGame extends JPanel {
 
@@ -132,6 +131,11 @@ public class MazeGame extends JPanel {
 			for (int j = 0; j < maze.getGameBoard().getBoard()[i].length; j++){
 				pos.setX(j);
 				pos.setY(i);
+				
+				if (maze.getGameBoard().getBoard()[j][i] == 'X')
+					g.drawImage(wall, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+				else
+					g.drawImage(path, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
 
 				if (maze.getHero().getPos().equals(pos))
 					g.drawImage(hero, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
@@ -147,49 +151,13 @@ public class MazeGame extends JPanel {
 
 				else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
 					g.drawImage(sword, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-				else if (maze.getGameBoard().getBoard()[j][i] == 'X')
-					g.drawImage(wall, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-				else
-					g.drawImage(path, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
 
 				x+=width;
 			}
 
 			x = 10;
 			y+=height;
-		}
-
-		/*for (int i = 0; i < maze.getGameBoard().getBoard().length; i++){
-			for (int j = 0; j < maze.getGameBoard().getBoard()[i].length; j++){
-				pos.setX(j);
-				pos.setY(i);
-
-				if (maze.getGameBoard().getBoard()[j][i] == 'X')
-					g.drawImage(wall, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-				else
-					g.drawImage(path, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-
-				/*if (maze.getHero().getPos().equals(pos))
-					g.drawImage(hero, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-
-				else if(maze.checkDragon(pos) instanceof Dragon && maze.checkDragon(pos).isAlive()){
-					if (pos.equals(maze.getSword().getPos()) && !maze.getSword().isPicked()) // TODO Corrigir dragsword
-						g.drawImage(sword, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-					else if (maze.checkDragon(pos).isSleeping())
-						g.drawImage(dragonSleeping, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-					else
-						g.drawImage(dragon, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-				}				
-
-				else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
-					g.drawImage(sword, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
-
-
-			}
-
-			x = 10;
-			y+=height;
-		}*/
+		}		
 
 		x = 10;
 		y = 10;
