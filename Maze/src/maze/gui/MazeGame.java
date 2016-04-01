@@ -133,24 +133,24 @@ public class MazeGame extends JPanel {
 				pos.setY(i);
 				
 				if (maze.getGameBoard().getBoard()[j][i] == 'X')
-					g.drawImage(wall, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+					g.drawImage(wall, x, y, x + w, y + h, 0, 0, wall.getWidth(), wall.getHeight(), null);
 				else
-					g.drawImage(path, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+					g.drawImage(path, x, y, x + w, y + h, 0, 0, path.getWidth(), path.getHeight(), null);
 
 				if (maze.getHero().getPos().equals(pos))
 					g.drawImage(hero, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
 
 				else if(maze.checkDragon(pos) instanceof Dragon && maze.checkDragon(pos).isAlive()){
-					if (pos.equals(maze.getSword().getPos()) && !maze.getSword().isPicked()) // TODO Corrigir dragsword
-						g.drawImage(sword, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+					if (pos.equals(maze.getSword().getPos()) && !maze.getSword().isPicked()) // TODO Corrigir sword para dragsword
+						g.drawImage(sword, x, y, x + w, y + h, 0, 0, sword.getWidth(), sword.getHeight(), null);
 					else if (maze.checkDragon(pos).isSleeping())
-						g.drawImage(dragonSleeping, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+						g.drawImage(dragonSleeping, x, y, x + w, y + h, 0, 0, dragonSleeping.getWidth(), dragonSleeping.getHeight(), null);
 					else
-						g.drawImage(dragon, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+						g.drawImage(dragon, x, y, x + w, y + h, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
 				}				
 
 				else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
-					g.drawImage(sword, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+					g.drawImage(sword, x, y, x + w, y + h, 0, 0, sword.getWidth(), sword.getHeight(), null);
 
 				x+=width;
 			}
