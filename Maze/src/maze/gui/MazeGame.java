@@ -1,15 +1,11 @@
 package maze.gui;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import maze.logic.Position;
@@ -19,21 +15,22 @@ import maze.logic.Maze;
 public class MazeGame extends JPanel {
 
 	private Maze maze;
-	private BufferedImage hero;
-	private BufferedImage heroSword;
-	private BufferedImage dragon;
-	private BufferedImage dragonSleeping;
-	private BufferedImage sword;
-	private BufferedImage wall;
-	private BufferedImage path;
-	private BufferedImage pathShadow;
-	private BufferedImage exit;
+	private Image hero;
+	private Image heroArmed;
+	private Image dragon;
+	private Image dragonSleeping;
+	private Image sword;
+	private Image wall;
+	private Image wallGrass;
+	private Image path;
+	private Image pathShadow;
+	private Image exit;
 	private int x=0, y=0, width, height;
 
 	public MazeGame() {		
 
-		try{ // TODO - REMOVERO VALOR DE 600, PARA O MESO SER RECEBIDO DIRETAMENTE DO JPANEL
-			maze = new Maze(Maze.Mode.STATIC, 1, 9);
+		try{ // TODO - REMOVER O VALOR DE 600, PARA O MESMO SER RECEBIDO DIRETAMENTE DO JPANEL
+			maze = new Maze(Maze.Mode.STATIC, 1, 41);
 			width = 600/maze.getGameBoard().getBoard().length;
 			height = 600/maze.getGameBoard().getBoard().length;
 		} catch(Exception e){
@@ -42,41 +39,13 @@ public class MazeGame extends JPanel {
 
 		loadImages();
 
-		addMouseListener(new MouseListener(){
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				//x = e.getX();
-				//y = e.getY();
-				//repaint();
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}	
-		});
-
 		addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-
-			}
+			public void keyTyped(KeyEvent e) {}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				//System.out.println("x=" + x);
+				
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_LEFT: 
 					maze.update(Maze.Direction.LEFT);
@@ -105,29 +74,46 @@ public class MazeGame extends JPanel {
 	}
 
 	public void loadImages(){
-		try {
-			hero =  ImageIO.read(new File("res/hero.png"));
-			dragon = ImageIO.read(new File("res/dragon.png"));
-			dragonSleeping = ImageIO.read(new File("res/dragonsleeping.png"));
-			sword = ImageIO.read(new File("res/sword.png"));
-			wall = ImageIO.read(new File("res/wall.png"));
-			path = ImageIO.read(new File("res/path.png"));
-			pathShadow = ImageIO.read(new File("res/pathShadow.png"));
-			exit = ImageIO.read(new File("res/exit.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+					
+			ImageIcon image;
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/hero.png"));
+			hero = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/hero_armed.png"));
+			heroArmed = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/dragon.png"));
+			dragon = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/dragon.png"));
+			dragon = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/dragonsleeping.png"));
+			dragonSleeping = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/sword.png"));
+			sword = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/wall.png"));
+			wall = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/wallGrass.png"));
+			wallGrass = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/path.png"));
+			path = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/pathShadow.png"));
+			pathShadow = image.getImage();
+			
+			image  =  new ImageIcon(this.getClass().getResource("res/exit.png"));
+			exit = image.getImage();		
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		int w = width;
-		int h = height;
-		
-		//int sizeSquareH= panel.getWidth() / size;
-		//int sizeSquareV = panel.getHeight() / size;
 
 		Position pos = new Position();
 
@@ -135,30 +121,38 @@ public class MazeGame extends JPanel {
 			for (int j = 0; j < maze.getGameBoard().getBoard()[i].length; j++){
 				pos.setX(j);
 				pos.setY(i);
-				
+				// TODO -  trocar os simbolos 'X' para getsymbol
 				if (maze.getGameBoard().getBoard()[i][j] == 'X')
-					g.drawImage(wall, x, y, x + w, y + h, 0, 0, wall.getWidth(), wall.getHeight(), null);
+					if (i == maze.getGameBoard().getBoard().length-1)
+						g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wall.getHeight(null), null);
+					else if (i < maze.getGameBoard().getBoard().length-1 && maze.getGameBoard().getBoard()[i+1][j]!='X')
+						g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wallGrass.getHeight(null), null);
+					else
+						g.drawImage(wallGrass, x, y, x + width, y + height, 0, 0, wallGrass.getWidth(null), wallGrass.getHeight(null), null);
 				else if (maze.getGameBoard().getBoard()[i][j] == 'S')
-					g.drawImage(exit, x, y, x + w, y + h, 0, 0, exit.getWidth(), exit.getHeight(), null);
-				else if (maze.getGameBoard().getBoard()[i][j-1] == 'X')
-					g.drawImage(pathShadow, x, y, x + w, y + h, 0, 0, pathShadow.getWidth(), pathShadow.getHeight(), null);
+					g.drawImage(exit, x, y, x + width, y + height, 0, 0, exit.getWidth(null), exit.getHeight(null), null);
+				else if (maze.getGameBoard().getBoard()[i][j-1] == 'X') // Display shadow on one side
+					g.drawImage(pathShadow, x, y, x + width, y + height, 0, 0, pathShadow.getWidth(null), pathShadow.getHeight(null), null);
 				else
-					g.drawImage(path, x, y, x + w, y + h, 0, 0, path.getWidth(), path.getHeight(), null);
+					g.drawImage(path, x, y, x + width, y + height, 0, 0, path.getWidth(null), path.getHeight(null), null);
 
 				if (maze.getHero().getPos().equals(pos))
-					g.drawImage(hero, x, y, x + w, y + h, 0, 0, hero.getWidth(), hero.getHeight(), null);
+					if (maze.getHero().isArmed())
+						g.drawImage(heroArmed, x, y, x + width, y + height, 0, 0, heroArmed.getWidth(null), heroArmed.getHeight(null), null);
+					else
+						g.drawImage(hero, x, y, x + width, y + height, 0, 0, hero.getWidth(null), hero.getHeight(null), null);
 
 				else if(maze.checkDragon(pos) instanceof Dragon && maze.checkDragon(pos).isAlive()){
 					if (pos.equals(maze.getSword().getPos()) && !maze.getSword().isPicked()) // TODO Corrigir sword para dragsword
-						g.drawImage(sword, x, y, x + w, y + h, 0, 0, sword.getWidth(), sword.getHeight(), null);
+						g.drawImage(sword, x, y, x + width, y + height, 0, 0, sword.getWidth(null), sword.getHeight(null), null);
 					else if (maze.checkDragon(pos).isSleeping())
-						g.drawImage(dragonSleeping, x, y, x + w, y + h, 0, 0, dragonSleeping.getWidth(), dragonSleeping.getHeight(), null);
+						g.drawImage(dragonSleeping, x, y, x + width, y + height, 0, 0, dragonSleeping.getWidth(null), dragonSleeping.getHeight(null), null);
 					else
-						g.drawImage(dragon, x, y, x + w, y + h, 0, 0, dragon.getWidth(), dragon.getHeight(), null);
+						g.drawImage(dragon, x, y, x + width, y + height, 0, 0, dragon.getWidth(null), dragon.getHeight(null), null);
 				}				
 
 				else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
-					g.drawImage(sword, x, y, x + w, y + h, 0, 0, sword.getWidth(), sword.getHeight(), null);
+					g.drawImage(sword, x, y, x + width, y + height, 0, 0, sword.getWidth(null), sword.getHeight(null), null);
 
 				x+=width;
 			}
@@ -170,5 +164,4 @@ public class MazeGame extends JPanel {
 		x = 0;
 		y = 0;
 	}
-
 }
