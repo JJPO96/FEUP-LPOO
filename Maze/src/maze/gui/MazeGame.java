@@ -28,12 +28,14 @@ public class MazeGame extends JPanel {
 	private BufferedImage path;
 	private BufferedImage pathShadow;
 	private BufferedImage exit;
-	private int x=0, y=0, width=45, height=45;
+	private int x=0, y=0, width, height;
 
 	public MazeGame() {		
 
-		try{
-			maze = new Maze(Maze.Mode.STATIC, 1, 11);
+		try{ // TODO - REMOVERO VALOR DE 600, PARA O MESO SER RECEBIDO DIRETAMENTE DO JPANEL
+			maze = new Maze(Maze.Mode.STATIC, 1, 9);
+			width = 600/maze.getGameBoard().getBoard().length;
+			height = 600/maze.getGameBoard().getBoard().length;
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -49,7 +51,8 @@ public class MazeGame extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				//x = e.getX();
 				//y = e.getY();
-				//repaint();				
+				//repaint();
+				
 			}
 
 			@Override

@@ -46,8 +46,8 @@ public class GameLaunchertesting {
 		frmGraphicsDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		MazeGame panel = new MazeGame();
-		panel.setBounds(0, 0, 500, 500);
-		panel.setPreferredSize(new Dimension(500, 500));
+		panel.setBounds(0, 0, 600, 600);
+		panel.setPreferredSize(new Dimension(600, 600));
 		frmGraphicsDemo.getContentPane().add(panel, BorderLayout.CENTER);
 
 		frmGraphicsDemo.pack();
