@@ -36,7 +36,7 @@ public class GameLauncherGUI {
 	private JTextField textField;
 	private static final String youWin = "\n\n\n\n\n\n\n\n\n\n\n                 ___  _ ____  _       _      _  _      _ \n                 \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n                  \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n                  / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n                 /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
 	private static final String gameOver = "\n\n\n\n\n\n\n\n\n\n\n           _____ ____  _      _____   ____  _     _____ ____  _ \n          /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n          | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n          | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n          \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
-	private static final double maxFontSize = 62;
+	private static final double maxFontSize = 34;
 	
 	/**
 	 * Status values
