@@ -2,6 +2,9 @@ package maze.test;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import maze.exception.InvalidMazeSize;
+import maze.exception.InvalidNumDragons;
 import maze.logic.*;
 import maze.logic.Maze.Direction;
 import maze.logic.Maze.Mode;
@@ -150,11 +153,23 @@ public class TestMazeWithStaticDragon {
 	}
 	
 	@Test
-	public void testMazeConstructor(){
+	public void testMazeConstructor() throws InvalidMazeSize, InvalidNumDragons{
 		Maze maze = new Maze(Maze.Mode.STATIC, 1, 21);
 		assertEquals(Maze.Mode.STATIC, maze.getMode());
 		assertEquals(1, maze.getDragons().size());
 		assertEquals(21, maze.getGameBoard().getBoard().length);
+	}
+	
+	@Test(expected=InvalidMazeSize.class)
+	public void testInvalidMazeSize() throws InvalidMazeSize, InvalidNumDragons {
+		@SuppressWarnings("unused")
+		Maze maze = new Maze(Maze.Mode.STATIC, 1, 4);
+	}
+	
+	@Test(expected=InvalidNumDragons.class)
+	public void testInvalidNumDragons() throws InvalidMazeSize, InvalidNumDragons {
+		@SuppressWarnings("unused")
+		Maze maze = new Maze(Maze.Mode.STATIC, 9, 11);
 	}
 }
 

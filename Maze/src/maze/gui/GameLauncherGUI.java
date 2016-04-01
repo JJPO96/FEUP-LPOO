@@ -31,12 +31,12 @@ public class GameLauncherGUI {
 	private Maze maze;
 	private static int numDragonsAlive = 0;
 	private static int numDragons;
+	private static int mazeSize;
 	private static int status;
 	private JTextField textField;
-	private static final String youWin = "\n\n\n\n\n\n\n\n\n\n\n              ___  _ ____  _       _      _  _      _ \n              \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n               \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n               / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n              /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
-	private static final String gameOver = "\n\n\n\n\n\n\n\n\n\n\n        _____ ____  _      _____   ____  _     _____ ____  _ \n       /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n       | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n       | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n       \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
-	private static final int maxSize = 27;
-	private static final double maxFontSize = 54;
+	private static final String youWin = "\n\n\n\n\n\n\n\n\n\n\n                 ___  _ ____  _       _      _  _      _ \n                 \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n                  \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n                  / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n                 /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
+	private static final String gameOver = "\n\n\n\n\n\n\n\n\n\n\n           _____ ____  _      _____   ____  _     _____ ____  _ \n          /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n          | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n          | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n          \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
+	private static final double maxFontSize = 62;
 	
 	/**
 	 * Status values
@@ -138,54 +138,14 @@ public class GameLauncherGUI {
 		int y = (int)(100*(z/numDragons));
 		progressBar.setValue(y);
 	}
-	
-	/**
-	 * Returns the Maze's size selected by the user
-	 * 
-	 * @param scan to be used to read the user input
-	 * @return Maze's size
-	 */
-	/*public static int getMazeSize(Scanner scan){
 		
-		int mazeSize = getUserInput(scan, minSize, maxSize);
-		
-		while (mazeSize % 2 == 0){ // The maze size can't be an even number
-			System.err.println("ERROR:: Invalid value! Can't be an even number! Please try again!");
-			mazeSize = getUserInput(scan, minSize, maxSize);
-		}
-		
-		return mazeSize;
-	}*/
-	
-	/**
-	 * Returns the number of dragons of the Maze selected by the user
-	 * 
-	 * @param scan to be used to read the user input
-	 * @param mazeSize
-	 * @return number of dragons
-	 */
-	/*public static int getNumberDragons(int mazeSize){
-		
-		int numMaxDragons = calculateMaxNumberDragons(mazeSize);
-		
-		if (minNumDragons == numMaxDragons){
-			System.out.println("\n		>> For the Maze size selected the maximum number of Dragons is 1.\n");
-			return numMaxDragons;
-		}			
-		
-		System.out.println("\n		>> Choose number of Dragons(Min: "+minNumDragons+" and Max: "+numMaxDragons+"!\n");
-		int numDragons = getUserInput(scan, minNumDragons, calculateMaxNumberDragons(mazeSize));
-		
-		return numDragons;
-	}*/	
-	
 	/**
 	 * Calculates the font size to use to print the Maze
 	 * 
 	 * @param mazeSize
 	 * @return the font size
 	 */
-	public static int calculateFontSize(int mazeSize){
+	public static int calculateFontSize(){
 		return (int) (maxFontSize/ (mazeSize/(double)Maze.minSize));
 	}
 	
@@ -224,7 +184,7 @@ public class GameLauncherGUI {
 		frmTitulo = new JFrame();
 		frmTitulo.setTitle("Maze");
 		frmTitulo.setResizable(false);
-		frmTitulo.setBounds(100, 100, 630, 550);
+		frmTitulo.setBounds(100, 100, 750, 600);
 		frmTitulo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Makes the window appears at a centered position on the screen
@@ -245,7 +205,7 @@ public class GameLauncherGUI {
 		frmTitulo.getContentPane().add(lblTypeDrag);
 		
 		JLabel lblGameState = new JLabel("Create your Maze.");
-		lblGameState.setBounds(35, 491, 566, 20);
+		lblGameState.setBounds(94, 540, 566, 20);
 		lblGameState.setHorizontalAlignment(SwingConstants.CENTER);
 		frmTitulo.getContentPane().add(lblGameState);
 		
@@ -271,12 +231,12 @@ public class GameLauncherGUI {
 		frmTitulo.getContentPane().add(modeSlct);
 	
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(35, 152, 345, 328);
+		textArea.setBounds(35, 152, 403, 377);
 		textArea.setEditable(false);
 		frmTitulo.getContentPane().add(textArea);
 		
 		JButton btnExit = new JButton("Exit");
-		btnExit.setBounds(420, 80, 150, 35);
+		btnExit.setBounds(510, 90, 150, 35);
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -286,35 +246,35 @@ public class GameLauncherGUI {
 		JProgressBar progressBar = new JProgressBar(0,100);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		progressBar.setBounds(420, 377, 150, 20);
+		progressBar.setBounds(510, 375, 150, 20);
 		frmTitulo.getContentPane().add(progressBar);
 		
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setForeground(new Color(0, 0, 0));
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setBounds(420, 419, 150, 20);
+		textField.setBounds(510, 417, 150, 20);
 		frmTitulo.getContentPane().add(textField);
 		textField.setColumns(10);
 		frmTitulo.getContentPane().add(btnExit);
 	
 		JButton btnUp = new JButton("UP");
-		btnUp.setBounds(446, 152, 100, 25);
+		btnUp.setBounds(537, 152, 100, 25);
 		btnUp.setEnabled(false);
 		frmTitulo.getContentPane().add(btnUp);
 		
 		JButton btnDown = new JButton("DOWN");
-		btnDown.setBounds(446, 252, 100, 25);
+		btnDown.setBounds(537, 252, 100, 25);
 		btnDown.setEnabled(false);
 		frmTitulo.getContentPane().add(btnDown);
 		
 		JButton btnLeft = new JButton("LEFT");
-		btnLeft.setBounds(390, 202, 100, 25);
+		btnLeft.setBounds(470, 202, 100, 25);
 		btnLeft.setEnabled(false);
 		frmTitulo.getContentPane().add(btnLeft);
 		
 		JButton btnRight = new JButton("RIGHT");
-		btnRight.setBounds(510, 202, 100, 25);
+		btnRight.setBounds(611, 202, 100, 25);
 		btnRight.setEnabled(false);
 		frmTitulo.getContentPane().add(btnRight);
 
@@ -350,7 +310,8 @@ public class GameLauncherGUI {
 		});
 		
 		JButton btnNewMaze = new JButton("New Maze");
-		btnNewMaze.setBounds(420, 35, 150, 35);
+		btnNewMaze.setBounds(510, 34, 150, 35);
+		
 		btnNewMaze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -365,27 +326,18 @@ public class GameLauncherGUI {
 				else if(strMode == "Moving and Sleepy")
 					mode = Mode.MOVINGSLEEPING;				
 				
-				try{					
-					int mazeSize = Integer.parseInt(textDim.getText());
-					
-					// Verifies if the size selected is valid
-					if (mazeSize < Maze.minSize || mazeSize > maxSize || mazeSize%2==0)
-						throw new InvalidMazeSize (Maze.minSize, maxSize);
-					
-					numDragons = Integer.parseInt(textNrDrag.getText());
-					int numMaxDragons = Maze.calculateMaxNumberDragons(mazeSize, Maze.minSize, Maze.minNumDragons);					
-					
-					// Verifies if the number of dragons choosen is valid
-					if (numDragons < Maze.minNumDragons || numDragons > numMaxDragons)
-						throw new InvalidNumDragons(Maze.minNumDragons, numMaxDragons);					
+				try{
+					// Reads user's inputs
+					mazeSize = Integer.parseInt(textDim.getText());					
+					numDragons = Integer.parseInt(textNrDrag.getText());					
 					
 					// Creating a new Maze
 					maze = new Maze(mode, numDragons, mazeSize);
 					numDragonsAlive = numDragons;
 					
-					textArea.setFont(new Font("Courier New", Font.PLAIN, calculateFontSize(mazeSize)));
+					textArea.setFont(new Font("Courier New", Font.BOLD, calculateFontSize()));
 					frmTitulo.getContentPane().add(textArea);
-					textArea.setText(maze.toString());
+					textArea.setText(maze.toString());					
 					
 					// Enabling command buttons
 					btnUp.setEnabled(true);
@@ -414,7 +366,6 @@ public class GameLauncherGUI {
 				}						
 			}
 		});
-		
 		
 		frmTitulo.getContentPane().add(btnNewMaze);
 	}

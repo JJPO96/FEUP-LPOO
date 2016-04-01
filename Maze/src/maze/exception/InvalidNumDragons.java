@@ -1,16 +1,20 @@
 package maze.exception;
 
-public class InvalidMazeSize extends Exception {
-	
+public class InvalidNumDragons extends Exception {
+
 	private int min;
 	private int max;
 	
-	public InvalidMazeSize(int minsize, int maxsize) {
-		this.min = minsize;
-		this.max = maxsize;
+	public InvalidNumDragons(int min, int max) {
+		this.min = min;
+		this.max = max;
 	}
 
 	public String getMessage(){
-		return "The Maze Size must be an odd number between "+min+" and "+max+"!";
+		
+		if (this.min == this.max)
+			return "The Number of Dragons for this Maze size must be "+min+"!";
+		
+		return "The Number of Dragons for this Maze size must be between "+min+" and "+max+"!";
 	}
 }

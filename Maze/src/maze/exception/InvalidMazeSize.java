@@ -1,4 +1,4 @@
-package maze.gui;
+package maze.exception;
 
 public class InvalidMazeSize extends Exception {
 	

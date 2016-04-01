@@ -3,6 +3,9 @@ package maze.logic;
 import java.util.Random;
 import java.util.Vector;
 
+import maze.exception.InvalidMazeSize;
+import maze.exception.InvalidNumDragons;
+
 public class Maze {
 
 	/* STATIC for static dragons, MOVING for moving dragons 
@@ -14,7 +17,7 @@ public class Maze {
 
 	/* Tokens to be used in the game */
 	public enum Token {HERO('H'), HEROARMED('A'), DRAGON('D'), DRAGONSLEEP('d'), SWORD('E'),
-		DRAGSWORD('F'), PATH(' '), WALL('X'), EXIT('S'), GUIDE('+'), VISITED('+'), UNVISITED('.');
+		DRAGSWORD('F'), PATH(' '), WALL('X'), EXIT('S'), GUIDE('+'),VISITED('+'), UNVISITED('.');
 
 		private final char symbol;
 
@@ -36,8 +39,10 @@ public class Maze {
 	private Mode mode;
 	
 	// Static values to be used by the CLI and GUI to make valid mazes
-	public static final int minSize = 5;
+	public static final int minSize = 9;
+	public static final int maxSize = 41;
 	public static final int minNumDragons = 1;
+	public static int maxNumDragons;
 
 	/**
 	 * Maze's Construtor
@@ -48,10 +53,18 @@ public class Maze {
 	 * @throws InvalidMazeSize 
 	 * @throws InvalidNumDragons 
 	 */
-	public Maze(Mode mode, int numDragons, int size) {
-
-		MazeBuilder mazeRandom = new MazeBuilder();
-		this.gameBoard = new Board();
+	public Maze(Mode mode, int numDragons, int size) throws InvalidMazeSize, InvalidNumDragons {
+		
+		if (size < minSize || size > maxSize || size % 2 == 0)
+			throw new InvalidMazeSize(minSize, maxSize);
+		
+		maxNumDragons = calculateMaxNumberDragons(size, minSize, minNumDragons);
+		
+		if (numDragons < minNumDragons || numDragons > maxNumDragons)
+			throw new InvalidNumDragons(minNumDragons, maxNumDragons);
+		
+		MazeBuilder mazeRandom = new MazeBuilder();		
+		this.gameBoard = new Board();		
 		this.gameBoard.setBoard(mazeRandom.buildMaze(size, numDragons));
 		this.mode = mode;		
 		this.running = true;

@@ -9,9 +9,10 @@ import maze.logic.Maze.Token;
 public class MazeBuilder implements IMazeBuilder {
 
 	private char[][] maze;
-	private char[][] visitedMaze;
+	private boolean[][] visitedMaze;
 	private Stack<Position> pathCell;
 	private Position guideCell;
+	Position heroPos;
 	private int size;
 	private int numDragons;
 	private Direction guideDirection;
@@ -30,7 +31,7 @@ public class MazeBuilder implements IMazeBuilder {
 
 		initMaze();		
 		setExitandGuideCell();
-		initVisitedMaze();
+		initVisitedMaze((size-1)/2, guideCell);
 		pathCell = new Stack<Position>();
 		pathCell.push(guideCell);
 
@@ -78,19 +79,22 @@ public class MazeBuilder implements IMazeBuilder {
 
 	/**
 	 * Creates an Array to track the visited cells of the Maze
+	 * 
+	 * @param visSize size of the Visited board to create
+	 * @param pos initial position to be marked as visited
 	 */
-	public void initVisitedMaze(){
+	public void initVisitedMaze(int visSize, Position pos){
 
 
-		visitedMaze = new char[(size-1)/2][(size-1)/2];
+		visitedMaze = new boolean[visSize][visSize];
 
 		for (int i = 0; i < visitedMaze.length; i++){
 			for (int j = 0; j < visitedMaze[i].length; j++){
-				visitedMaze[i][j]=Token.UNVISITED.getSymbol();
+				visitedMaze[i][j]=false;
 			}
 		}
 
-		visitedMaze[guideCell.getY()][guideCell.getX()]=Token.GUIDE.getSymbol();
+		visitedMaze[pos.getY()][pos.getX()]=true;
 	}
 
 	/**
@@ -139,7 +143,7 @@ public class MazeBuilder implements IMazeBuilder {
 	public boolean isCellUnvisited(int x, int y){
 
 		if (guideCell.getY()+y>=0 && guideCell.getX()+x >= 0 && guideCell.getY()+y<visitedMaze.length && guideCell.getX()+x < visitedMaze.length)
-			if (visitedMaze[guideCell.getY()+y][guideCell.getX()+x]==Token.UNVISITED.getSymbol())
+			if (visitedMaze[guideCell.getY()+y][guideCell.getX()+x]==false)
 				return true;
 
 		return false;
@@ -218,7 +222,7 @@ public class MazeBuilder implements IMazeBuilder {
 
 		switch(guideDirection){
 		case LEFT:
-			visitedMaze[guideCell.getY()][guideCell.getX()-1] = Token.VISITED.getSymbol();
+			visitedMaze[guideCell.getY()][guideCell.getX()-1] = true;
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1-1] = Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1-2] = Token.GUIDE.getSymbol();
@@ -226,7 +230,7 @@ public class MazeBuilder implements IMazeBuilder {
 			pathCell.push(guideCell);
 			break;
 		case RIGHT:
-			visitedMaze[guideCell.getY()][guideCell.getX()+1] = Token.VISITED.getSymbol();
+			visitedMaze[guideCell.getY()][guideCell.getX()+1] = true;
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1+1] = Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1+2] = Token.GUIDE.getSymbol();
@@ -234,7 +238,7 @@ public class MazeBuilder implements IMazeBuilder {
 			pathCell.push(guideCell);
 			break;
 		case UP:
-			visitedMaze[guideCell.getY()-1][guideCell.getX()] = Token.VISITED.getSymbol();
+			visitedMaze[guideCell.getY()-1][guideCell.getX()] = true;
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1-1][(guideCell.getX()*2)+1] = Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1-2][(guideCell.getX()*2)+1] = Token.GUIDE.getSymbol();
@@ -242,7 +246,7 @@ public class MazeBuilder implements IMazeBuilder {
 			pathCell.push(guideCell);
 			break;
 		case DOWN:
-			visitedMaze[guideCell.getY()+1][guideCell.getX()] = Token.VISITED.getSymbol();
+			visitedMaze[guideCell.getY()+1][guideCell.getX()] = true;
 			maze[(guideCell.getY()*2)+1][(guideCell.getX()*2)+1]=Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1+1][(guideCell.getX()*2)+1] = Token.PATH.getSymbol();
 			maze[(guideCell.getY()*2)+1+2][(guideCell.getX()*2)+1] = Token.GUIDE.getSymbol();
@@ -253,6 +257,60 @@ public class MazeBuilder implements IMazeBuilder {
 	}
 
 	/**
+	 * Verifies if the Dragon's position doesn't prevent the Hero from having a valid path to the sword
+	 * 
+	 * @return true id the position is valid
+	 */
+	public boolean isValidDragonPos()
+	{
+		initVisitedMaze(size, heroPos);
+		return findPathtoSword(heroPos.getX(), heroPos.getY());
+	}
+
+	/**
+	 * Verifies if the sword is at the given coordinates, if not search in neightboor cells 
+	 * 
+	 * @param x coordinate of the Hero
+	 * @param y coordinate of the Hero
+	 * @return true if find a path to the Sword
+	 */
+	public boolean findPathtoSword(int x, int y){;
+
+	if(maze[y][x] == Maze.Token.SWORD.getSymbol())
+		return true;
+
+	// Right
+	if(maze[y][x+1] != Token.EXIT.getSymbol() && maze[y][x+1] != Token.WALL.getSymbol() && maze[y][x+1] != Token.DRAGON.getSymbol() && visitedMaze[y][x+1] == false){
+		visitedMaze[y][x+1] = true;
+		if(findPathtoSword(x + 1, y))
+			return true;
+	}
+
+	// Down
+	if(maze[y+1][x] != Token.EXIT.getSymbol() && maze[y+1][x] != Token.WALL.getSymbol() && maze[y+1][x] != Token.DRAGON.getSymbol() && visitedMaze[y+1][x] == false){
+		visitedMaze[y+1][x] = true;
+		if(findPathtoSword(x, y+1))
+			return true;
+	}
+
+	// Left
+	if(maze[y][x-1] != Token.EXIT.getSymbol() && maze[y][x-1] != Token.WALL.getSymbol() && maze[y][x-1] != Token.DRAGON.getSymbol() && visitedMaze[y][x-1] == false){
+		visitedMaze[y][x-1] = true;
+		if(findPathtoSword(x-1, y))
+			return true;
+	}
+
+	// Up
+	if(maze[y-1][x] != Token.EXIT.getSymbol() && maze[y-1][x] != Token.WALL.getSymbol() && maze[y-1][x] != Token.DRAGON.getSymbol() && visitedMaze[y-1][x] == false){
+		visitedMaze[y-1][x] = true;
+		if(findPathtoSword(x, y-1))
+			return true;
+	}
+
+	return false;
+	}
+
+	/**
 	 * Add a Hero to the Maze
 	 * 
 	 * @param rand to generate random positions
@@ -260,6 +318,7 @@ public class MazeBuilder implements IMazeBuilder {
 	void addHero(Random rand){
 		int randPosX;
 		int randPosY;
+
 		do{
 			randPosX = rand.nextInt(maze.length-1)+1;
 			randPosY = rand.nextInt(maze.length-1)+1;
@@ -270,6 +329,8 @@ public class MazeBuilder implements IMazeBuilder {
 			}		
 
 		}while(true);
+
+		heroPos = new Position(randPosX, randPosY);
 	}
 
 	/**
@@ -280,18 +341,35 @@ public class MazeBuilder implements IMazeBuilder {
 	void addDragons(Random rand){
 		int randPosX;
 		int randPosY;
+
 		for(int i = 0;i < numDragons;i++){
 			do{
 				randPosX = rand.nextInt(maze.length-1)+1;
 				randPosY = rand.nextInt(maze.length-1)+1;
 
 				if (maze[randPosY][randPosX]==Token.PATH.getSymbol()){
-					if (maze[randPosY][randPosX+1]!=Token.HERO.getSymbol()&&maze[randPosY][randPosX-1]!=Token.HERO.getSymbol()
-							&&maze[randPosY+1][randPosX]!=Token.HERO.getSymbol()&&maze[randPosY-1][randPosX]!=Token.HERO.getSymbol()){
+					if (maze[randPosY][randPosX+1]!=Token.HERO.getSymbol() && maze[randPosY][randPosX-1]!=Token.HERO.getSymbol()
+							&& maze[randPosY+1][randPosX]!=Token.HERO.getSymbol() && maze[randPosY-1][randPosX]!=Token.HERO.getSymbol()){
 						maze[randPosY][randPosX] = Token.DRAGON.getSymbol();
-						break;
+						
+						/* The following verification is only aplied for playable mazes, with the minimum size required,
+						   where the Dragon position must be checked, so the Hero has always a valid path to the sword 
+						   (important for STATIC mode, because if a Dragon id in th path between the Hero and the Sword, the
+						   game can not be finished, even if the Hero finds the Exit of the Maze) */
+						
+						if (size>=Maze.minSize){							
+							
+							if (!isValidDragonPos()){ // Verifies if the Dragon's position the Hero from having a valid path to the sword
+								maze[randPosY][randPosX]=Token.PATH.getSymbol();
+							}
+							else{
+								break;
+							}
+						}
+						else
+							break;
 					}				
-				}	
+				}
 
 			}while(true);
 		}
@@ -324,7 +402,7 @@ public class MazeBuilder implements IMazeBuilder {
 		Random rand = new Random();
 
 		addHero(rand);
-		addDragons(rand);
 		addSword(rand);		
+		addDragons(rand);
 	}
 }

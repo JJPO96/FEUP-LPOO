@@ -1,6 +1,9 @@
 package maze.cli;
 
 import java.util.Scanner;
+
+import maze.exception.InvalidMazeSize;
+import maze.exception.InvalidNumDragons;
 import maze.logic.*;
 import maze.logic.Maze.Direction;
 import maze.logic.Maze.Mode;
@@ -8,7 +11,7 @@ import maze.logic.Maze.Mode;
 public class GameLauncherCLI {
 
 	private static boolean done = false;
-	private static final int maxSize = 27;
+	private static Maze game;
 	private static final String title = "\n   _____  _     _____   _      ____  ____  _____\n  /__ __\\/ \\ /|/  __/  / \\__/|/  _ \\/_   \\/  __/\n    / \\  | |_|||  \\    | |\\/||| / \\| /   /|  \\  \n    | |  | | |||  /_   | |  ||| |-||/   /_|  /_ \n    \\_/  \\_/ \\|\\____\\  \\_/  \\|\\_/ \\|\\____/\\____\\\n";
 	private static final String youWin = "  ___  _ ____  _       _      _  _      _ \n  \\  \\///  _ \\/ \\ /\\  / \\  /|/ \\/ \\  /|/ \\\n   \\  / | / \\|| | ||  | |  ||| || |\\ ||| |\n   / /  | \\_/|| \\_/|  | |/\\||| || | \\||\\_/\n  /_/   \\____/\\____/  \\_/  \\|\\_/\\_/  \\|(_)";
 	private static final String gameOver = "   _____ ____  _      _____   ____  _     _____ ____  _ \n  /  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\/ \\\n  | |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|| |\n  | |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\\_/\n  \\____\\\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\\\_/\\_\\(_)";
@@ -170,25 +173,39 @@ public class GameLauncherCLI {
 	 */
 	public static int getMazeSize(Scanner scan){
 		
-		System.out.println("\n		>> Choose Maze Size (Must be an odd number between "+Maze.minSize+" and "+maxSize+"):\n");
-		int mazeSize = getUserInput(scan, Maze.minSize, maxSize);
+		System.out.println("\n		>> Choose Maze Size (Must be an odd number between "+Maze.minSize+" and "+Maze.maxSize+"):\n");
+		int mazeSize = getUserInput(scan, Maze.minSize, Maze.maxSize);
 		
 		while (mazeSize % 2 == 0){ // The maze size can't be an even number
 			System.err.println("ERROR:: Invalid value! Can't be an even number! Please try again!");
-			mazeSize = getUserInput(scan, Maze.minSize, maxSize);
+			mazeSize = getUserInput(scan, Maze.minSize, Maze.maxSize);
 		}
 		
 		return mazeSize;
 	}
 		
 	/**
-	 * Displys the Main Menu
+	 * Displays the Main Menu
 	 */
 	public static void displayMainMenu(){
 		System.out.println("\n		<< STARTING MENU >>\n");
 		System.out.println("		>> 1 - Start game");
 		System.out.println("		>> 2 - Exit");
 		System.out.println();
+	}
+	
+	/**
+	 * Prints movement instructions
+	 */
+	public static void printInstructions(){
+		System.out.println("\n		>> Keys for Movement: (A) - left, (D) - Right, (W) - Top, (S) - Down");
+	}
+	
+	/**
+	 * Prints game in text mode
+	 */
+	public static void printGame(){
+		System.out.println("\n"+game);
 	}
 	
 	/**
@@ -201,30 +218,34 @@ public class GameLauncherCLI {
 			System.out.println(youWin);
 		else
 			System.out.println(gameOver);
-	}
+	}	
 	
 	/**
 	 * Runs the Game
 	 * 
 	 * @param scan to be used to read the user input
+	 * @throws InvalidNumDragons 
+	 * @throws InvalidMazeSize 
 	 */
-	public static void runGame(Scanner scan){
+	public static void runGame(Scanner scan) throws InvalidMazeSize, InvalidNumDragons{
 
 		int mazeSize = getMazeSize(scan);		
 		int dragons = getNumberDragons(scan, mazeSize);		
 		
-		Maze game = new Maze(menuGameMode(scan),dragons,mazeSize);		
-		System.out.println("\n"+game);
+		game = new Maze(menuGameMode(scan),dragons,mazeSize);
+		
+		printInstructions();
+		printGame();
 
 		while(game.isRunning()){
 			game.update(getMoveInput(scan));
-			System.out.println("\n"+game);
+			printGame();
 		}
 
 		gameEnd(game);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InvalidMazeSize, InvalidNumDragons {
 
 		Scanner scan = new Scanner(System.in);
 		int input = 0;
