@@ -29,17 +29,18 @@ public class MazeGame extends JPanel {
 	private Image background;
 	private int x=0, y=0, width, height;
 
-	public MazeGame() {		
+	public MazeGame(int w, int h) {	// TODO - MUDAR CONSTRUTOR	
 
-		try{ // TODO - REMOVER O VALOR DE 600, PARA O MESMO SER RECEBIDO DIRETAMENTE DO JPANEL
-			maze = new Maze(Maze.Mode.MOVINGSLEEPING, 1, 9);
-			width = 600/maze.getGameBoard().getBoard().length;
-			height = 600/maze.getGameBoard().getBoard().length;
+		try{
+			maze = new Maze(Maze.Mode.MOVINGSLEEPING, 1, 19);
+			width = w/maze.getGameBoard().getBoard().length;
+			height = h/maze.getGameBoard().getBoard().length;
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
 
 		loadImages();
+		setFocusable(true);
 
 		addKeyListener(new KeyListener() {
 			@Override
@@ -66,7 +67,10 @@ public class MazeGame extends JPanel {
 					break;
 				}
 				
-				repaint();					
+				repaint();
+				
+				if (!maze.isRunning())
+					setFocusable(false);
 			}
 
 			@Override
@@ -128,7 +132,7 @@ public class MazeGame extends JPanel {
 				pos.setY(i);
 				
 				// Wall
-				if (maze.getGameBoard().getBoard()[i][j] == 'X')
+				if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.WALL.getSymbol())
 					if (i == maze.getGameBoard().getBoard().length-1)
 						g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wall.getHeight(null), null);
 					else if (i < maze.getGameBoard().getBoard().length-1 && maze.getGameBoard().getBoard()[i+1][j]!=Maze.Token.WALL.getSymbol())
@@ -178,6 +182,6 @@ public class MazeGame extends JPanel {
 		}		
 		
 		x = 0;
-		y = 0;
+		y =5;
 	}
 }
