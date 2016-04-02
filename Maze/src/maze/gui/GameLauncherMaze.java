@@ -1,13 +1,19 @@
 package maze.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.Color;
 
 public class GameLauncherMaze {
 
@@ -47,54 +53,59 @@ public class GameLauncherMaze {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		/*frame = new JFrame();
+				
+		frame = new JFrame();
+		frame.setBackground(Color.WHITE);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
 		frame.setTitle("Maze");
 		frame.setBounds(100, 100, 600, 670);
-		frame.setPreferredSize(new Dimension(600, 670));
-		
+		frame.setPreferredSize(new Dimension(600, 670));		
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-			
-		gamePanel = new MazeGame(gamePanelSize , gamePanelSize );
-		gamePanel.setBounds(0, 41, 594 , 600 );
-		gamePanel.setPreferredSize(new Dimension(gamePanelSize , gamePanelSize ));
-		gamePanel.requestFocus();
-		frame.getContentPane().add(gamePanel);
-		gamePanel.setLayout(null);
 		
-		
+		gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
+		gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
+		gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
+		frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
+		gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+			// TODO - CRIAR NOVO JOGO A PARTIR DAQUI
+				// AS CONFIGURAÇÕES DE JOGO TERÁ DE IR BUSCAR AO "OPTIONS" QUE PODE SER MUDADO NESSE MESMO BOTAO
 				
 				
 			}
 		});
-		btnNewGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
+		btnNewGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnNewGame.setBounds(1, 0, 98, 40);
 		frame.getContentPane().add(btnNewGame);
 		
 		btnCreateGame = new JButton("Create Game");
-		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
+		btnCreateGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO - CRIAR UMA NOVA JFRAME SEPARADA PARA CRIAR JOGO MANUALMENTE
+			}
+		});
+		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnCreateGame.setBounds(99, 0, 98, 40);
 		frame.getContentPane().add(btnCreateGame);
 		
 		btnOptions = new JButton("Options");
-		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
+		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnOptions.setBounds(197, 0, 98, 40);
 		frame.getContentPane().add(btnOptions);
 		
 		btnSaveGame = new JButton("Save Game");
-		btnSaveGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
+		btnSaveGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnSaveGame.setBounds(295, 0, 98, 40);
 		frame.getContentPane().add(btnSaveGame);
 		
 		btnLoadGame = new JButton("Load Game");
-		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
+		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnLoadGame.setBounds(393, 0, 98, 40);
 		frame.getContentPane().add(btnLoadGame);
 		
@@ -105,31 +116,13 @@ public class GameLauncherMaze {
 				System.exit(0);
 			}
 		});
-		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
+		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnExit.setBounds(491, 0, 100, 40);
 		frame.getContentPane().add(btnExit);
+		
 
-		frame.pack();
-		
-		frame.setVisible(true);*/
-		
-		frame = new JFrame();
-		frame.setTitle("Maze");
-		frame.setBounds(100, 100, 600, 655);
-		
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
-		gamePanel.setBounds(0, 0, gamePanelSize, gamePanelSize);
-		gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
-		frame.getContentPane().add(gamePanel);
-
-		frame.pack();
-		
-		frame.setVisible(true);
-		
+		frame.pack();		
+		frame.setVisible(true);		
 		gamePanel.requestFocus();
 	}
 }
