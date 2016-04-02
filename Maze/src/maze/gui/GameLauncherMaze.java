@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.Color;
+import maze.gui.CreateManualMaze;
 
 public class GameLauncherMaze {
 
@@ -44,11 +46,17 @@ public class GameLauncherMaze {
 
 	/**
 	 * Create the application.
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
-	public GameLauncherMaze() {
+	public GameLauncherMaze() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		initialize();
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -125,4 +133,6 @@ public class GameLauncherMaze {
 		frame.setVisible(true);		
 		gamePanel.requestFocus();
 	}
+
+
 }

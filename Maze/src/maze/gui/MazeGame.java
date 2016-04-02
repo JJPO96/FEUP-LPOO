@@ -184,4 +184,8 @@ public class MazeGame extends JPanel {
 		x = 0;
 		y =5;
 	}
+
+	public void setMaze(Maze maze2) {
+		this.maze = maze2;
+	}
 }
