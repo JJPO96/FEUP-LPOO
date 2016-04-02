@@ -96,6 +96,16 @@ public class GameLauncherMaze {
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO - CRIAR UMA NOVA JFRAME SEPARADA PARA CRIAR JOGO MANUALMENTE
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							CreateManualMaze window = new CreateManualMaze(1,11);
+							window.frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
