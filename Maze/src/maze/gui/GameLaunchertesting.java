@@ -40,10 +40,13 @@ public class GameLaunchertesting {
 	private void initialize() {
 		frmGraphicsDemo = new JFrame();
 		frmGraphicsDemo.setTitle("Maze");
+		frmGraphicsDemo.setBounds(100, 100, 600, 655);
 		// TODO - REMOVER SE NAO USADO
 		//frmGraphicsDemo.setBounds(100, 100, 600, 400);
 		//frmGraphicsDemo.setPreferredSize(new Dimension(600, 400));
+		
 		frmGraphicsDemo.setResizable(false);
+		frmGraphicsDemo.setLocationRelativeTo(null);
 		frmGraphicsDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		MazeGame panel = new MazeGame();

@@ -17,7 +17,7 @@ public class Maze {
 
 	/* Tokens to be used in the game */
 	public enum Token {HERO('H'), HEROARMED('A'), DRAGON('D'), DRAGONSLEEP('d'), SWORD('E'),
-		DRAGSWORD('F'), PATH(' '), WALL('X'), EXIT('S'), GUIDE('+'),VISITED('+'), UNVISITED('.');
+		DRAGSWORD('F'), PATH(' '), WALL('X'), EXIT('S'), GUIDE('+');
 
 		private final char symbol;
 
