@@ -29,10 +29,10 @@ public class MazeGame extends JPanel {
 	
 	private int x=0, y=0, width, height;
 
-	public MazeGame(int w, int h) {	// TODO - MUDAR CONSTRUTOR	
+	public MazeGame(Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	// TODO - MUDAR CONSTRUTOR	
 
 		try{
-			maze = new Maze(Maze.Mode.MOVINGSLEEPING, 1, 19);
+			maze = new Maze(mode, numDragons, mazeSize);
 			width = w/maze.getGameBoard().getBoard().length;
 			height = h/maze.getGameBoard().getBoard().length;
 		} catch(Exception e){

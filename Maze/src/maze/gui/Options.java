@@ -1,10 +1,12 @@
 package maze.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -30,24 +32,13 @@ public class Options extends JDialog {
 	private Maze.Mode mode;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			Options dialog = new Options();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);			
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Create the dialog.
 	 */
 	public Options() {
 		setTitle("Options");
 		setResizable(false);
+		pack();
+		setLocationRelativeTo(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Options.class.getResource("/maze/gui/res/dragon.png")));
 		this.setModal(true);
 		setBounds(100, 100, 300, 250);
@@ -72,7 +63,7 @@ public class Options extends JDialog {
 		textDimension.setHorizontalAlignment(SwingConstants.CENTER);
 		textDimension.setText("11");
 		mazeSize = Integer.parseInt(textDimension.getText());	
-		textDimension.setBounds(156, 18, 117, 20);
+		textDimension.setBounds(129, 18, 144, 20);
 		contentPanel.add(textDimension);
 		textDimension.setColumns(10);
 		
@@ -81,13 +72,13 @@ public class Options extends JDialog {
 		numberDragons = Integer.parseInt(textNumDragons.getText());
 		textNumDragons.setHorizontalAlignment(SwingConstants.CENTER);
 		textNumDragons.setColumns(10);
-		textNumDragons.setBounds(156, 75, 117, 20);
+		textNumDragons.setBounds(129, 75, 144, 20);
 		contentPanel.add(textNumDragons);
 		
 		JComboBox<String> modeSelect = new JComboBox<String>();
 		modeSelect.setModel(new DefaultComboBoxModel<String>(new String[] {"Static", "Moving", "Moving and Sleeping"}));
 		modeSelect.setSelectedIndex(0);		
-		modeSelect.setBounds(156, 136, 117, 20);
+		modeSelect.setBounds(129, 136, 144, 20);
 		contentPanel.add(modeSelect);
 		
 		String strMode = modeSelect.getSelectedItem().toString();
@@ -101,8 +92,16 @@ public class Options extends JDialog {
 		JButton btnApply = new JButton("Apply");
 		btnApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				// TODO
+				mazeSize = Integer.parseInt(textDimension.getText());
+				numberDragons = Integer.parseInt(textNumDragons.getText());
+				String strMode = modeSelect.getSelectedItem().toString();
+				if(strMode == "Static")
+					mode = Mode.STATIC;
+				else if(strMode == "Moving")
+					mode = Mode.MOVING;
+				else if(strMode == "Moving and Sleepy")
+					mode = Mode.MOVINGSLEEPING;
+				closeDialog();
 			}
 		});
 		btnApply.setBounds(10, 187, 89, 23);
@@ -110,9 +109,8 @@ public class Options extends JDialog {
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			
-				// TODO
+			public void actionPerformed(ActionEvent e) {			
+				closeDialog();
 			}
 		});
 		btnBack.setBounds(184, 187, 89, 23);
@@ -130,5 +128,9 @@ public class Options extends JDialog {
 
 	public Maze.Mode getMode() {
 		return mode;
+	}
+	
+	public void closeDialog(){
+		this.dispose();
 	}
 }

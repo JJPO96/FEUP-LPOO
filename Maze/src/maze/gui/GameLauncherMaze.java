@@ -105,7 +105,7 @@ public class GameLauncherMaze {
 			public void actionPerformed(ActionEvent e) {
 			// TODO - CRIAR NOVO JOGO A PARTIR DAQUI
 				// AS CONFIGURAÇÕES DE JOGO TERÁ DE IR BUSCAR AO "OPTIONS" QUE PODE SER MUDADO NESSE MESMO BOTAO
-				gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
+				gamePanel = new MazeGame(options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
 				gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 				gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
 				frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
