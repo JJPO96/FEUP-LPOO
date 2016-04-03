@@ -24,6 +24,7 @@ public class GameLauncherMaze {
 	private JFrame frame;
 	private JPanel backgroundPanel;
 	private MazeGame gamePanel;
+	private MazeCreator mazeCreatorPanel = new MazeCreator();
 	private Image background;
 	private static final int gamePanelSize = 600;
 	
@@ -120,7 +121,7 @@ public class GameLauncherMaze {
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO - DECIDIR ENTRE CRIAR JFRME À PARTE OU USAR A MESMA
-				/*EventQueue.invokeLater(new Runnable() {
+				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
 							CreateManualMaze window = new CreateManualMaze(1,11);
@@ -129,17 +130,17 @@ public class GameLauncherMaze {
 							e.printStackTrace();
 						}
 					}
-				});*/
+				});
 				
-				JPanel panel = new MazeCreator(gamePanelSize, gamePanelSize, 1, 11);
-				panel.setBounds(1, 41, gamePanelSize, gamePanelSize);
-				panel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
-				frame.getContentPane().add(panel, BorderLayout.SOUTH);
-				panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-				panel.repaint();
-				panel.setFocusable(true);
-				panel.requestFocus();
-				panel.setVisible(true);
+				/*JPanel mazeCreatorPanel = new MazeCreator(gamePanelSize, gamePanelSize, 1, 11);
+				mazeCreatorPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
+				mazeCreatorPanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
+				frame.getContentPane().add(mazeCreatorPanel, BorderLayout.SOUTH);
+				mazeCreatorPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				mazeCreatorPanel.repaint();
+				mazeCreatorPanel.setFocusable(true);
+				mazeCreatorPanel.requestFocus();
+				mazeCreatorPanel.setVisible(true);*/
 			}
 		});
 		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));

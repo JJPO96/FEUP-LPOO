@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import maze.logic.Maze;
+import maze.logic.MazeBuilder;
 
 public class MazeCreator extends JPanel  implements MouseListener{
 
@@ -23,6 +24,7 @@ public class MazeCreator extends JPanel  implements MouseListener{
 	private int x=0, y=0, width, height,size;
 	private char tempMaze[][]; 
 
+	public MazeCreator(){};
 	
 	public MazeCreator(int w, int h, int dragons, int size) {	// TODO - MUDAR CONSTRUTOR	
 		
@@ -119,7 +121,7 @@ public class MazeCreator extends JPanel  implements MouseListener{
 		}		
 
 		x = 0;
-		y =5;
+		y = 0;
 	}
 
 
