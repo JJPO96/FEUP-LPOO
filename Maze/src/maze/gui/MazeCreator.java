@@ -23,8 +23,6 @@ public class MazeCreator extends JPanel  implements MouseListener{
 	private Image exit;
 	private int x=0, y=0, width, height,size;
 	private char tempMaze[][]; 
-
-	public MazeCreator(){};
 	
 	public MazeCreator(int w, int h, int dragons, int size) {	// TODO - MUDAR CONSTRUTOR	
 		

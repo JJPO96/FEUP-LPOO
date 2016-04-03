@@ -227,7 +227,7 @@ public class GameLauncherGUI {
 		modeSlct.setBounds(175, 105, 125, 20);
 		modeSlct.addItem("Static");
 		modeSlct.addItem("Moving");
-		modeSlct.addItem("Moving and Sleepy");
+		modeSlct.addItem("Moving and Sleeping");
 		frmTitulo.getContentPane().add(modeSlct);
 	
 		JTextArea textArea = new JTextArea();

@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.ColorUIResource;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -24,7 +23,8 @@ public class GameLauncherMaze {
 	private JFrame frame;
 	private JPanel backgroundPanel;
 	private MazeGame gamePanel;
-	private MazeCreator mazeCreatorPanel = new MazeCreator();
+	private MazeCreator mazeCreatorPanel;
+	private Options options;
 	private Image background;
 	private static final int gamePanelSize = 600;
 	
@@ -78,6 +78,8 @@ public class GameLauncherMaze {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		options = new Options();
 		
 		// TODO - REMOVER SE NAO USADO
 		ImageIcon image;
@@ -148,6 +150,12 @@ public class GameLauncherMaze {
 		frame.getContentPane().add(btnCreateGame);
 		
 		btnOptions = new JButton("Options");
+		btnOptions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				options.setVisible(true);
+				options.setLocationRelativeTo(null);
+			}
+		});
 		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnOptions.setBounds(197, 0, 98, 40);
 		frame.getContentPane().add(btnOptions);
