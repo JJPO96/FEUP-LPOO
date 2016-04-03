@@ -16,10 +16,11 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class CreateManualMaze {
 
-	public JFrame frame;
+	public JFrame frmMazeCreator;
 	private JComboBox comboBox;
 	private MazeCreator panel;
 	private static final int gamePanelSize = 600;
@@ -40,21 +41,21 @@ public class CreateManualMaze {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(int dragons,int size) {
-		frame = new JFrame();
-		frame.setBackground(Color.WHITE);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
-		frame.setTitle("Maze");
-		frame.setBounds(100, 100, 600, 670);
-		frame.setPreferredSize(new Dimension(600, 670));		
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmMazeCreator = new JFrame();
+		frmMazeCreator.setBackground(Color.WHITE);
+		frmMazeCreator.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
+		frmMazeCreator.setTitle("Maze Creator");
+		frmMazeCreator.setBounds(100, 100, 600, 670);
+		frmMazeCreator.setPreferredSize(new Dimension(600, 670));		
+		frmMazeCreator.setResizable(false);
+		frmMazeCreator.setLocationRelativeTo(null);
+		frmMazeCreator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmMazeCreator.getContentPane().setLayout(null);
 		
 		panel = new MazeCreator(gamePanelSize, gamePanelSize,dragons,size,this);
 		panel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 		panel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
-		frame.getContentPane().add(panel, BorderLayout.SOUTH);
+		frmMazeCreator.getContentPane().add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panel.repaint();
 		panel.setFocusable(true);
@@ -62,23 +63,37 @@ public class CreateManualMaze {
 		
 		
 		JLabel lblTypeOfElement = new JLabel("Type of Element");
-		lblTypeOfElement.setBounds(191, 16, 89, 14);
-		frame.getContentPane().add(lblTypeOfElement);
+		lblTypeOfElement.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
+		lblTypeOfElement.setBounds(140, 5, 90, 30);
+		frmMazeCreator.getContentPane().add(lblTypeOfElement);
 		
 		comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Wall", "Exit", "Hero", "Dragon", "Sword"}));
-		comboBox.setBounds(290, 14, 77, 20);
-		frame.getContentPane().add(comboBox);
+		comboBox.setBounds(225, 5, 90, 30);
+		frmMazeCreator.getContentPane().add(comboBox);
 		panel.requestFocus();
 		
 		JButton btnSaveMaze = new JButton("Save Maze");
+		btnSaveMaze.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnSaveMaze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		btnSaveMaze.setBounds(65, 11, 89, 23);
-		frame.getContentPane().add(btnSaveMaze);
+		btnSaveMaze.setBounds(35, 5, 90, 30);
+		frmMazeCreator.getContentPane().add(btnSaveMaze);
+		
+		JLabel lblTypeOfDragon = new JLabel("Type of Dragon");
+		lblTypeOfDragon.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
+		lblTypeOfDragon.setBounds(370, 5, 90, 30);
+		frmMazeCreator.getContentPane().add(lblTypeOfDragon);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Static", "Moving", "Moving and Sleeping"}));
+		comboBox_1.setBounds(455, 5, 120, 30);
+		frmMazeCreator.getContentPane().add(comboBox_1);
 		
 	}
 	

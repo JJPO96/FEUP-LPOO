@@ -127,7 +127,7 @@ public class GameLauncherMaze {
 					public void run() {
 						try {
 							CreateManualMaze window = new CreateManualMaze(options.getNumberDragons(),options.getMazeSize());
-							window.frame.setVisible(true);
+							window.frmMazeCreator.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
