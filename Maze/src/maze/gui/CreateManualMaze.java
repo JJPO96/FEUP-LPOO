@@ -49,6 +49,9 @@ public class CreateManualMaze {
 		panel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel.repaint();
+		panel.setFocusable(true);
+		panel.requestFocus();
 		
 		
 	}

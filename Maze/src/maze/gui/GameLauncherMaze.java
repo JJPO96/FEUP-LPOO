@@ -8,8 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
@@ -20,8 +22,11 @@ import maze.gui.CreateManualMaze;
 public class GameLauncherMaze {
 
 	private JFrame frame;
+	private JPanel backgroundPanel;
 	private MazeGame gamePanel;
+	private Image background;
 	private static final int gamePanelSize = 600;
+	
 	private JButton btnNewGame;
 	private JButton btnCreateGame;
 	private JButton btnOptions;
@@ -73,19 +78,38 @@ public class GameLauncherMaze {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
+		// TODO - REMOVER SE NAO USADO
+		ImageIcon image;
+		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
+		background = image.getImage();
+		
+		/*backgroundPanel = new JPanel();
+		backgroundPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
+		backgroundPanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
+		frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
+		backgroundPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		backgroundPanel.setVisible(true);*/
+		
+		/*gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
 		gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 		gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
 		frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
 		gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		gamePanel.setVisible(false);*/
 		
 		btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			// TODO - CRIAR NOVO JOGO A PARTIR DAQUI
 				// AS CONFIGURAÇÕES DE JOGO TERÁ DE IR BUSCAR AO "OPTIONS" QUE PODE SER MUDADO NESSE MESMO BOTAO
-				
-				
+				gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
+				gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
+				gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
+				frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
+				gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				gamePanel.repaint();
+				gamePanel.setFocusable(true);
+				gamePanel.requestFocus();
 			}
 		});
 		btnNewGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
@@ -95,8 +119,8 @@ public class GameLauncherMaze {
 		btnCreateGame = new JButton("Create Game");
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO - CRIAR UMA NOVA JFRAME SEPARADA PARA CRIAR JOGO MANUALMENTE
-				EventQueue.invokeLater(new Runnable() {
+				// TODO - DECIDIR ENTRE CRIAR JFRME À PARTE OU USAR A MESMA
+				/*EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
 							CreateManualMaze window = new CreateManualMaze(1,11);
@@ -105,7 +129,17 @@ public class GameLauncherMaze {
 							e.printStackTrace();
 						}
 					}
-				});
+				});*/
+				
+				JPanel panel = new MazeCreator(gamePanelSize, gamePanelSize, 1, 11);
+				panel.setBounds(1, 41, gamePanelSize, gamePanelSize);
+				panel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
+				frame.getContentPane().add(panel, BorderLayout.SOUTH);
+				panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				panel.repaint();
+				panel.setFocusable(true);
+				panel.requestFocus();
+				panel.setVisible(true);
 			}
 		});
 		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
@@ -136,13 +170,9 @@ public class GameLauncherMaze {
 		});
 		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnExit.setBounds(491, 0, 100, 40);
-		frame.getContentPane().add(btnExit);
-		
+		frame.getContentPane().add(btnExit);		
 
 		frame.pack();		
-		frame.setVisible(true);		
-		gamePanel.requestFocus();
+		frame.setVisible(true);
 	}
-
-
 }

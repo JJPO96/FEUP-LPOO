@@ -2,43 +2,32 @@ package maze.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import maze.logic.Position;
-import maze.logic.Dragon;
 import maze.logic.Maze;
 
-public class MazeCreator extends JPanel  /*implements MouseListener, MouseMotionListener */{
+public class MazeCreator extends JPanel  implements MouseListener{
 
+	private static final long serialVersionUID = 1L;
 	private Image hero;
-	private Image heroArmed;
 	private Image dragon;
-	private Image dragonSleeping;
 	private Image sword;
 	private Image wall;
 	private Image wallGrass;
 	private Image path;
 	private Image pathShadow;
 	private Image exit;
-	private Image exitOpen;
-	private Image background;
-	private int x=0, y=0, width, height;
+	private int x=0, y=0, width, height,size;
 	private char tempMaze[][]; 
 
 	
 	public MazeCreator(int w, int h, int dragons, int size) {	// TODO - MUDAR CONSTRUTOR	
-		/*
+		
 		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
-		 */
+		
 		tempMaze = new char[size][size];
 		for (int i = 0; i < tempMaze.length; i++){
 			for (int j = 0; j < tempMaze[i].length; j++){
@@ -47,55 +36,14 @@ public class MazeCreator extends JPanel  /*implements MouseListener, MouseMotion
 		}
 		width = w/tempMaze.length;
 		height = h/tempMaze.length;
+		this.size = size;
 		loadImages();
 		setFocusable(true);
-
+	
 		repaint();
 	}
 	
-/*
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	*/
 	public void loadImages(){
 
 		ImageIcon image;
@@ -103,14 +51,8 @@ public class MazeCreator extends JPanel  /*implements MouseListener, MouseMotion
 		image  =  new ImageIcon(this.getClass().getResource("res/hero.png"));
 		hero = image.getImage();
 
-		image  =  new ImageIcon(this.getClass().getResource("res/hero_armed.png"));
-		heroArmed = image.getImage();
-
 		image  =  new ImageIcon(this.getClass().getResource("res/dragon.png"));
 		dragon = image.getImage();
-
-		image  =  new ImageIcon(this.getClass().getResource("res/dragon_sleeping.png"));
-		dragonSleeping = image.getImage();
 
 		image  =  new ImageIcon(this.getClass().getResource("res/sword.png"));
 		sword = image.getImage();
@@ -129,12 +71,6 @@ public class MazeCreator extends JPanel  /*implements MouseListener, MouseMotion
 
 		image  =  new ImageIcon(this.getClass().getResource("res/exit.png"));
 		exit = image.getImage();
-
-		image  =  new ImageIcon(this.getClass().getResource("res/exit_open.png"));
-		exitOpen = image.getImage();
-		
-		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
-		background = image.getImage();
 	}
 	
 	@Override
@@ -184,6 +120,53 @@ public class MazeCreator extends JPanel  /*implements MouseListener, MouseMotion
 
 		x = 0;
 		y =5;
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		float tempX = e.getX();
+		float tempY = e.getY();
+
+		int iX = (int) (tempX/width);
+		int iY = (int) (tempY/height);
+		
+		if(!(iX == 0 || iY == 0 || iX == (size-1) || iY == (size-1))){
+			if (tempMaze[iY][iX] != 'X')
+				tempMaze[iY][iX] = 'X';
+			else tempMaze[iY][iX] = ' ';
+		}
+		System.out.println("X =" + iX);
+		System.out.println("Y =" + iY);
+		
+		repaint();
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

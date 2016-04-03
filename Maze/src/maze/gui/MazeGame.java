@@ -26,7 +26,7 @@ public class MazeGame extends JPanel {
 	private Image pathShadow;
 	private Image exit;
 	private Image exitOpen;
-	private Image background;
+	
 	private int x=0, y=0, width, height;
 
 	public MazeGame(int w, int h) {	// TODO - MUDAR CONSTRUTOR	
@@ -114,10 +114,7 @@ public class MazeGame extends JPanel {
 		exit = image.getImage();
 
 		image  =  new ImageIcon(this.getClass().getResource("res/exit_open.png"));
-		exitOpen = image.getImage();
-		
-		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
-		background = image.getImage();
+		exitOpen = image.getImage();		
 	}
 
 	@Override
@@ -171,8 +168,6 @@ public class MazeGame extends JPanel {
 					else
 						g.drawImage(dragon, x, y, x + width, y + height, 0, 0, dragon.getWidth(null), dragon.getHeight(null), null);
 				}				
-				
-				
 
 				x+=width;
 			}
@@ -182,6 +177,6 @@ public class MazeGame extends JPanel {
 		}		
 		
 		x = 0;
-		y =5;
+		y = 0;
 	}
 }
