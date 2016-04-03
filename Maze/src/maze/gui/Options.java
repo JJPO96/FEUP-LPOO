@@ -35,11 +35,10 @@ public class Options extends JDialog {
 	 * Create the dialog.
 	 */
 	public Options() {
-		setTitle("Options");
-		setResizable(false);
-		pack();
-		setLocationRelativeTo(null);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Options.class.getResource("/maze/gui/res/dragon.png")));
+		this.setTitle("Options");
+		this.setResizable(false);
+		this.pack();
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Options.class.getResource("/maze/gui/res/dragon.png")));
 		this.setModal(true);
 		setBounds(100, 100, 300, 250);
 		getContentPane().setLayout(new BorderLayout());
@@ -109,7 +108,22 @@ public class Options extends JDialog {
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
+				textDimension.setText(""+mazeSize);
+				textNumDragons.setText(""+numberDragons);
+				
+				switch(mode){
+				case STATIC:
+					modeSelect.setSelectedIndex(0);
+					break;
+				case MOVING:
+					modeSelect.setSelectedIndex(1);
+					break;
+				case MOVINGSLEEPING:
+					modeSelect.setSelectedIndex(2);
+					break;
+					}
+				
 				closeDialog();
 			}
 		});
