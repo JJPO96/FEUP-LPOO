@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import maze.logic.Maze;
 import maze.logic.MazeBuilder;
+import maze.gui.CreateManualMaze;
 
 public class MazeCreator extends JPanel  implements MouseListener{
 
@@ -21,10 +22,12 @@ public class MazeCreator extends JPanel  implements MouseListener{
 	private Image path;
 	private Image pathShadow;
 	private Image exit;
-	private int x=0, y=0, width, height,size;
+	private int x=0, y=0, width, height,size,placedDragons = 0,totalDragons;
 	private char tempMaze[][]; 
+	CreateManualMaze manMaze;
+	boolean swordPlaced = false,heroPlaced = false, exitPlaced = false;
 	
-	public MazeCreator(int w, int h, int dragons, int size) {	// TODO - MUDAR CONSTRUTOR	
+	public MazeCreator(int w, int h, int dragons, int size,CreateManualMaze manMaze) {	// TODO - MUDAR CONSTRUTOR	
 		
 		this.addMouseListener(this);
 		
@@ -36,7 +39,9 @@ public class MazeCreator extends JPanel  implements MouseListener{
 		}
 		width = w/tempMaze.length;
 		height = h/tempMaze.length;
+		this.manMaze = manMaze;
 		this.size = size;
+		totalDragons = dragons;
 		loadImages();
 		setFocusable(true);
 	
@@ -127,7 +132,12 @@ public class MazeCreator extends JPanel  implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		
 	}
-
+	
+	public boolean isBorder(int X,int Y){
+		if(X == 0 || Y == 0 || X == (size-1) || Y == (size-1))
+			return true;
+		return false;
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -137,15 +147,82 @@ public class MazeCreator extends JPanel  implements MouseListener{
 		int iX = (int) (tempX/width);
 		int iY = (int) (tempY/height);
 		
-		if(!(iX == 0 || iY == 0 || iX == (size-1) || iY == (size-1))){
-			if (tempMaze[iY][iX] != 'X')
-				tempMaze[iY][iX] = 'X';
-			else tempMaze[iY][iX] = ' ';
+		if(!(isBorder(iX,iY))||manMaze.getElement() == 1){
+			updateMaze(manMaze.getElement(),iX,iY);
 		}
 		System.out.println("X =" + iX);
 		System.out.println("Y =" + iY);
 		
 		repaint();
+	}
+
+	/*
+	 * 0 - "Wall", 
+	 * 1 - "Exit", 
+	 * 2 - "Hero", 
+	 * 3 - "Dragon", 
+	 * 4 - "Sword"
+	 * */
+	
+	private void updateMaze(int element,int x,int y) {
+		switch (element) {
+		case 0:
+			if(tempMaze[y][x] != 'X')
+				tempMaze[y][x] = 'X';
+			else tempMaze[y][x] = ' ';
+			break;
+		case 1:  
+			if(validExit(x,y)){
+				if(!exitPlaced && tempMaze[y][x] == 'X'){
+					{tempMaze[y][x] = 'S';
+					exitPlaced = true;}
+				}else{
+					if(exitPlaced && tempMaze[y][x] == 'S'){
+						tempMaze[y][x] = 'X';
+						exitPlaced = false;}
+				}
+			}break;
+		case 2:  
+			if(tempMaze[y][x] == ' '){
+				if(!heroPlaced){
+					tempMaze[y][x] = 'H';
+					heroPlaced = true;}
+			}else{
+				if(heroPlaced){
+					tempMaze[y][x] = ' ';
+					heroPlaced = false;}
+			}
+			break;
+		case 3:
+			if(tempMaze[y][x] == ' '){
+				if(placedDragons < totalDragons){
+					tempMaze[y][x] = 'D';
+					placedDragons++;}
+			}else if(tempMaze[y][x] == 'D'){
+				if(placedDragons > 0){
+					tempMaze[y][x] = ' ';
+					placedDragons--;}
+			}
+			break;
+		case 4:
+			if(tempMaze[y][x] == ' '){
+				if(!swordPlaced){
+					tempMaze[y][x] = 'E';
+					swordPlaced = true;}
+			}else{
+				if(swordPlaced){
+					tempMaze[y][x] = ' ';
+					swordPlaced = false;}
+			}
+			break;
+
+		}
+	}
+	
+	public boolean validExit(int tX, int tY){
+		if(((tX > 0 && tX < size-1) && ( tY == 0 || tY == size - 1)) || (((tY > 0 && tY < size-1) && ( tX == 0 || tX == size - 1))))
+			return true;
+		return false;
 	}
 
 

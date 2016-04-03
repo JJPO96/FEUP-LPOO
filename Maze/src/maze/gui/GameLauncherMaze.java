@@ -126,7 +126,7 @@ public class GameLauncherMaze {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							CreateManualMaze window = new CreateManualMaze(1,11);
+							CreateManualMaze window = new CreateManualMaze(options.getNumberDragons(),options.getMazeSize());
 							window.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
