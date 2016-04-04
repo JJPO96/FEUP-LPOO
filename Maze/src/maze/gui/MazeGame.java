@@ -68,6 +68,7 @@ public class MazeGame extends JPanel {
 						changeDirection = false;
 					direction = Maze.Direction.LEFT;
 					maze.update(Maze.Direction.LEFT);
+					repaint();
 					break;
 
 				case KeyEvent.VK_RIGHT:
@@ -77,6 +78,7 @@ public class MazeGame extends JPanel {
 						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
 					maze.update(Maze.Direction.RIGHT);
+					repaint();
 					break;
 
 				case KeyEvent.VK_UP:
@@ -85,7 +87,8 @@ public class MazeGame extends JPanel {
 					else
 						changeDirection = false;
 					direction = Maze.Direction.UP;
-					maze.update(Maze.Direction.UP); 
+					maze.update(Maze.Direction.UP);
+					repaint();
 					break;
 
 				case KeyEvent.VK_DOWN:
@@ -95,10 +98,9 @@ public class MazeGame extends JPanel {
 						changeDirection = false;
 					direction = Maze.Direction.DOWN;
 					maze.update(Maze.Direction.DOWN);
+					repaint();
 					break;
-				}
-				
-				repaint();
+				}				
 				
 				if (!maze.isRunning()){
 					setFocusable(false);
@@ -147,6 +149,7 @@ public class MazeGame extends JPanel {
 						changeDirection = false;
 					direction = Maze.Direction.LEFT;
 					maze.update(Maze.Direction.LEFT);
+					repaint();
 					break;
 
 				case KeyEvent.VK_RIGHT:
@@ -156,6 +159,7 @@ public class MazeGame extends JPanel {
 						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
 					maze.update(Maze.Direction.RIGHT);
+					repaint();
 					break;
 
 				case KeyEvent.VK_UP:
@@ -164,7 +168,8 @@ public class MazeGame extends JPanel {
 					else
 						changeDirection = false;
 					direction = Maze.Direction.UP;
-					maze.update(Maze.Direction.UP); 
+					maze.update(Maze.Direction.UP);
+					repaint();
 					break;
 
 				case KeyEvent.VK_DOWN:
@@ -174,10 +179,9 @@ public class MazeGame extends JPanel {
 						changeDirection = false;
 					direction = Maze.Direction.DOWN;
 					maze.update(Maze.Direction.DOWN);
+					repaint();
 					break;
 				}
-				
-				repaint();
 				
 				if (!maze.isRunning()){
 					

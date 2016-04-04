@@ -106,7 +106,7 @@ public class MazeCreator extends JPanel  implements MouseListener{
 
 				// Hero
 				if (tempMaze[i][j] == Maze.Token.HERO.getSymbol())
-					g.drawImage(hero, x, y, x + width, y + height, 0, 0, hero.getWidth(null), hero.getHeight(null), null);
+					g.drawImage(hero, x, y, x + width, y + height, 0, 102, 34, 136, null);
 
 				// Sword
 				else if (tempMaze[i][j] == Maze.Token.SWORD.getSymbol())
@@ -226,10 +226,7 @@ public class MazeCreator extends JPanel  implements MouseListener{
 			return true;
 		return false;
 	}
-	/*
-	 * if(ret && (tempMaze[tY][tX] == ' ') && (tempMaze[tY][tX] == ' ') && (tempMaze[tY][tX] == ' '))
-	 * 
-	 * */
+	
 	public boolean validPath(int tX, int tY){
 		boolean ret = true;
 		
@@ -243,32 +240,22 @@ public class MazeCreator extends JPanel  implements MouseListener{
 			ret = false;	
 		
 		if(ret && (tempMaze[tY-1][tX-1] != 'X') && (tempMaze[tY-1][tX] != 'X') && (tempMaze[tY][tX-1] != 'X'))
-			ret = false;	
-			
+			ret = false;			
 		
 		return ret;
 	}
 
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 
 
 	public char[][] getTempMaze() {
