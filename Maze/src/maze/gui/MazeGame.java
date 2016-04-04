@@ -78,6 +78,57 @@ public class MazeGame extends JPanel {
 			}			
 		});
 	}
+	
+	
+	public MazeGame(Maze.Mode mode, char[][] tempMaze, int w, int h) {	// TODO - MUDAR CONSTRUTOR	
+
+		try{
+			maze = new Maze(tempMaze,mode);
+			width = w/maze.getGameBoard().getBoard().length;
+			height = h/maze.getGameBoard().getBoard().length;
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+
+		loadImages();
+		setFocusable(true);
+
+		addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				switch(e.getKeyCode()){
+				case KeyEvent.VK_LEFT: 
+					maze.update(Maze.Direction.LEFT);
+					break;
+
+				case KeyEvent.VK_RIGHT: 
+					maze.update(Maze.Direction.RIGHT);
+					break;
+
+				case KeyEvent.VK_UP: 
+					maze.update(Maze.Direction.UP); 
+					break;
+
+				case KeyEvent.VK_DOWN: 
+					maze.update(Maze.Direction.DOWN);
+					break;
+				}
+				
+				repaint();
+				
+				if (!maze.isRunning())
+					setFocusable(false);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}			
+		});
+	}
 
 	public void loadImages(){
 
@@ -178,9 +229,5 @@ public class MazeGame extends JPanel {
 		
 		x = 0;
 		y = 0;
-	}
-	
-	public Maze getMaze(){
-		return maze;
 	}
 }
