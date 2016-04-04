@@ -1,5 +1,6 @@
 package maze.exception;
 
+@SuppressWarnings("serial")
 public class InvalidNumDragons extends Exception {
 
 	private int min;

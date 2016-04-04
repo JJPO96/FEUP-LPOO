@@ -14,6 +14,7 @@ import maze.logic.Position;
 import maze.logic.Dragon;
 import maze.logic.Maze;
 
+@SuppressWarnings("serial")
 public class MazeGame extends JPanel {
 		
 	private Image hero;
@@ -34,12 +35,17 @@ public class MazeGame extends JPanel {
 	private Maze maze;
 	private Maze.Direction direction = Maze.Direction.DOWN;
 	private boolean changeDirection = false;
-	private int currentFrame = 0;
+	private int currentFrame;
 	private int maximumFrame = 4;
 	private boolean showBackImage = true;
 	
 	private int x=0, y=0, width, height;
 
+	public MazeGame(){
+		loadImages();
+		repaint();
+	}
+	
 	public MazeGame(JFrame gameFrame, Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	
 
 		try{
@@ -47,6 +53,7 @@ public class MazeGame extends JPanel {
 			width = w/maze.getGameBoard().getBoard().length;
 			height = h/maze.getGameBoard().getBoard().length;
 			frame = gameFrame;
+			currentFrame = 0;
 			showBackImage = false;
 		} catch(Exception e){
 			System.out.println(e.getMessage());
@@ -105,16 +112,15 @@ public class MazeGame extends JPanel {
 				}				
 				
 				if (!maze.isRunning()){
+					repaint();
 					showBackImage = true;
 					setFocusable(false);
-					//setVisible(false);
 					if (!maze.getHero().isAlive())					
 						JOptionPane.showMessageDialog(frame, "Game Over!");
 					else
 						JOptionPane.showMessageDialog(frame, "You Win!");
 					
 					repaint();
-					//setVisible(false);
 				}
 			}
 
@@ -131,6 +137,8 @@ public class MazeGame extends JPanel {
 			maze = new Maze(tempMaze,mode);
 			width = w/maze.getGameBoard().getBoard().length;
 			height = h/maze.getGameBoard().getBoard().length;
+			currentFrame = 0;
+			showBackImage = false;
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -185,18 +193,18 @@ public class MazeGame extends JPanel {
 					maze.update(Maze.Direction.DOWN);
 					repaint();
 					break;
-				}
+				}				
 				
 				if (!maze.isRunning()){
-					
+					repaint();
+					showBackImage = true;
 					setFocusable(false);
-					setVisible(false);
 					if (!maze.getHero().isAlive())					
 						JOptionPane.showMessageDialog(frame, "Game Over!");
 					else
 						JOptionPane.showMessageDialog(frame, "You Win!");
 					
-					setVisible(false);
+					repaint();
 				}
 			}
 
