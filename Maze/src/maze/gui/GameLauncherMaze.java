@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -27,7 +28,7 @@ public class GameLauncherMaze {
 	private Options options;
 	private Image background;
 	private static final int gamePanelSize = 600;
-	
+
 	private JButton btnNewGame;
 	private JButton btnCreateGame;
 	private JButton btnOptions;
@@ -62,12 +63,12 @@ public class GameLauncherMaze {
 		initialize();
 	}
 
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-				
+
 		frame = new JFrame();
 		frame.setBackground(Color.WHITE);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
@@ -78,66 +79,76 @@ public class GameLauncherMaze {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		options = new Options();
-		
+
 		// TODO - REMOVER SE NAO USADO
 		ImageIcon image;
 		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
 		background = image.getImage();
-		
+
 		/*backgroundPanel = new JPanel();
 		backgroundPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 		backgroundPanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
 		frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
 		backgroundPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		backgroundPanel.setVisible(true);*/
-		
+
 		/*gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
 		gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 		gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
 		frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
 		gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		gamePanel.setVisible(false);*/
-		
+
 		btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			// TODO - CRIAR NOVO JOGO A PARTIR DAQUI
-				// AS CONFIGURAÇÕES DE JOGO TERÁ DE IR BUSCAR AO "OPTIONS" QUE PODE SER MUDADO NESSE MESMO BOTAO
-				gamePanel = new MazeGame(options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
-				gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
-				gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
-				frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
-				gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-				gamePanel.repaint();
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+
+				String message = "Do you want to start a new game?";
+				int input = JOptionPane.showConfirmDialog(frame, message);
+
+				if (input == JOptionPane.YES_OPTION){
+					gamePanel = new MazeGame(options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
+					gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
+					frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
+					gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+					gamePanel.repaint();
+					gamePanel.requestFocus();
+				}
 			}
 		});
 		btnNewGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnNewGame.setBounds(1, 0, 98, 40);
 		frame.getContentPane().add(btnNewGame);
-		
+
 		btnCreateGame = new JButton("Create Game");
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO - DECIDIR ENTRE CRIAR JFRME À PARTE OU USAR A MESMA
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							CreateManualMaze window = new CreateManualMaze(options.getNumberDragons(),options.getMazeSize(),options.getMode());
-							window.frmMazeCreator.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
+				// TODO - DECIDIR ENTRE CRIAR JFRAME À PARTE OU USAR A MESMA
+
+
+				String message = "Do you want to create a Maze?";
+				int input = JOptionPane.showConfirmDialog(frame, message);
+
+				if (input == JOptionPane.YES_OPTION){
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								CreateManualMaze window = new CreateManualMaze(options.getNumberDragons(),options.getMazeSize(),options.getMode());
+								window.frmMazeCreator.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
-					}
-				});
-				
+					});
+				}
+
+
 				if (gamePanel != null)
 					if (gamePanel.getMaze().isRunning())
 						gamePanel.requestFocus();
-				
+
 				// TODO - REMOVER ESTE CODIGO SE NAO USADO
 				/*JPanel mazeCreatorPanel = new MazeCreator(gamePanelSize, gamePanelSize, 1, 11);
 				mazeCreatorPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
@@ -153,13 +164,13 @@ public class GameLauncherMaze {
 		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnCreateGame.setBounds(99, 0, 98, 40);
 		frame.getContentPane().add(btnCreateGame);
-		
+
 		btnOptions = new JButton("Options");
 		btnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				options.setLocationRelativeTo(frame);
 				options.setVisible(true);
-				
+
 				if (gamePanel != null)
 					if (gamePanel.getMaze().isRunning())
 						gamePanel.requestFocus();
@@ -168,7 +179,7 @@ public class GameLauncherMaze {
 		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnOptions.setBounds(197, 0, 98, 40);
 		frame.getContentPane().add(btnOptions);
-		
+
 		btnSaveGame = new JButton("Save Game");
 		btnSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -180,7 +191,7 @@ public class GameLauncherMaze {
 		btnSaveGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnSaveGame.setBounds(295, 0, 98, 40);
 		frame.getContentPane().add(btnSaveGame);
-		
+
 		btnLoadGame = new JButton("Load Game");
 		btnLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -192,12 +203,15 @@ public class GameLauncherMaze {
 		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnLoadGame.setBounds(393, 0, 98, 40);
 		frame.getContentPane().add(btnLoadGame);
-		
+
 		btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO - CRIAR DIALOG A PERGUNTAR SE QUER REALMENTE SAIR
-				System.exit(0);
+				String message = "Are you sure you want to quit?";
+				int input = JOptionPane.showConfirmDialog(frame, message);
+
+				if (input == JOptionPane.YES_OPTION)
+					System.exit(0);
 			}
 		});
 		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
