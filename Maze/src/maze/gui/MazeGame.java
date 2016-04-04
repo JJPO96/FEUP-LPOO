@@ -78,6 +78,7 @@ public class MazeGame extends JPanel {
 				
 				if (!maze.isRunning()){
 					setFocusable(false);
+					//setVisible(false);
 					if (!maze.getHero().isAlive())					
 						JOptionPane.showMessageDialog(frame, "GAME OVER");
 					else
