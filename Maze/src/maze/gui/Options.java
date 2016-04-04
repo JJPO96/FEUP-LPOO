@@ -75,7 +75,7 @@ public class Options extends JDialog {
 		
 		sliderNumDragons = new JSlider(1, Maze.calculateMaxNumberDragons(sliderMazeSize.getValue()), 1);
 		numberDragons = sliderNumDragons.getValue();
-		sliderNumDragons.setMajorTickSpacing(2);
+		sliderNumDragons.setMajorTickSpacing(1);
 		sliderNumDragons.setValue(1);
 		sliderNumDragons.setSnapToTicks(true);
 		sliderNumDragons.setPaintTicks(true);

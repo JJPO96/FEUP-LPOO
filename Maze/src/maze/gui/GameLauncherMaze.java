@@ -86,20 +86,8 @@ public class GameLauncherMaze {
 		ImageIcon image;
 		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
 		background = image.getImage();
+		
 
-		/*backgroundPanel = new JPanel();
-		backgroundPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
-		backgroundPanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
-		frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
-		backgroundPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		backgroundPanel.setVisible(true);*/
-
-		/*gamePanel = new MazeGame(gamePanelSize, gamePanelSize);
-		gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
-		gamePanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
-		frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
-		gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		gamePanel.setVisible(false);*/
 
 		btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
@@ -109,7 +97,7 @@ public class GameLauncherMaze {
 				int input = JOptionPane.showConfirmDialog(frame, message);
 
 				if (input == JOptionPane.YES_OPTION){
-					gamePanel = new MazeGame(options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
+					gamePanel = new MazeGame(frame, options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
 					gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 					frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
 					gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -220,5 +208,9 @@ public class GameLauncherMaze {
 
 		frame.pack();		
 		frame.setVisible(true);
+	}
+	
+	public JFrame getFrame(){
+		return frame;
 	}
 }

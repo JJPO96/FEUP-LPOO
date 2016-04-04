@@ -1,11 +1,15 @@
 package maze.gui;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import maze.logic.Position;
@@ -13,7 +17,8 @@ import maze.logic.Dragon;
 import maze.logic.Maze;
 
 public class MazeGame extends JPanel {
-
+	
+	private JFrame frame;
 	private Maze maze;
 	private Image hero;
 	private Image heroArmed;
@@ -26,15 +31,17 @@ public class MazeGame extends JPanel {
 	private Image pathShadow;
 	private Image exit;
 	private Image exitOpen;
+	private Image background;
 	
 	private int x=0, y=0, width, height;
 
-	public MazeGame(Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	// TODO - MUDAR CONSTRUTOR	
+	public MazeGame(JFrame gameFrame, Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	// TODO - MUDAR CONSTRUTOR	
 
 		try{
 			maze = new Maze(mode, numDragons, mazeSize);
 			width = w/maze.getGameBoard().getBoard().length;
 			height = h/maze.getGameBoard().getBoard().length;
+			frame = gameFrame;
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -69,8 +76,15 @@ public class MazeGame extends JPanel {
 				
 				repaint();
 				
-				if (!maze.isRunning())
+				if (!maze.isRunning()){
 					setFocusable(false);
+					if (!maze.getHero().isAlive())					
+						JOptionPane.showMessageDialog(frame, "GAME OVER");
+					else
+						JOptionPane.showMessageDialog(frame, "YOU WIN!");
+					
+					setVisible(false);
+				}
 			}
 
 			@Override
@@ -121,7 +135,7 @@ public class MazeGame extends JPanel {
 				repaint();
 				
 				if (!maze.isRunning())
-					setFocusable(false);
+					setFocusable(false);					
 			}
 
 			@Override
