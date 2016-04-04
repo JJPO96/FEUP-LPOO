@@ -70,12 +70,12 @@ public class CreateManualMaze {
 		
 		
 		JLabel lblTypeOfElement = new JLabel("Type of Element");
-		lblTypeOfElement.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
+		lblTypeOfElement.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
 		lblTypeOfElement.setBounds(140, 5, 90, 30);
 		frmMazeCreator.getContentPane().add(lblTypeOfElement);
 		
 		comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
+		comboBox.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Wall", "Exit", "Hero", "Dragon", "Sword"}));
 		comboBox.setBounds(225, 5, 90, 30);
 		frmMazeCreator.getContentPane().add(comboBox);
@@ -83,7 +83,7 @@ public class CreateManualMaze {
 		
 		
 		JButton btnSaveMaze = new JButton("Save Maze");
-		btnSaveMaze.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
+		btnSaveMaze.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
 		btnSaveMaze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons));

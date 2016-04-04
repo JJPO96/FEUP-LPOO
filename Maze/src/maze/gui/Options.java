@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.Font;
 
 public class Options extends JDialog {
 
@@ -68,26 +69,28 @@ public class Options extends JDialog {
 		sliderMazeSize.setPaintTicks(true);
 		sliderMazeSize.setPaintLabels(true);
 		sliderMazeSize.setSnapToTicks(true);
-		sliderMazeSize.setBounds(145, 21, 170, 51);
+		sliderMazeSize.setBounds(145, 21, 189, 51);
 		sliderMazeSize.setMajorTickSpacing(10);
 		sliderMazeSize.setMinorTickSpacing(2);
 		contentPanel.add(sliderMazeSize);
 		
 		sliderNumDragons = new JSlider(1, Maze.calculateMaxNumberDragons(sliderMazeSize.getValue()), 1);
+		sliderNumDragons.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		numberDragons = sliderNumDragons.getValue();
-		sliderNumDragons.setMajorTickSpacing(1);
+		sliderNumDragons.setMajorTickSpacing(2);
 		sliderNumDragons.setValue(1);
 		sliderNumDragons.setSnapToTicks(true);
 		sliderNumDragons.setPaintTicks(true);
 		sliderNumDragons.setPaintLabels(true);
 		sliderNumDragons.setMinorTickSpacing(1);
-		sliderNumDragons.setBounds(145, 95, 170, 51);
+		sliderNumDragons.setBounds(145, 95, 189, 51);
 		contentPanel.add(sliderNumDragons);
 		
 		modeSelect = new JComboBox<String>();
+		modeSelect.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		modeSelect.setModel(new DefaultComboBoxModel<String>(new String[] {"Static", "Moving", "Moving and Sleeping"}));
 		modeSelect.setSelectedIndex(0);		
-		modeSelect.setBounds(145, 169, 170, 20);
+		modeSelect.setBounds(145, 169, 189, 20);
 		contentPanel.add(modeSelect);
 				
 		String strMode = modeSelect.getSelectedItem().toString();

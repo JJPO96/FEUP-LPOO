@@ -1,11 +1,10 @@
 package maze.gui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,9 +16,7 @@ import maze.logic.Dragon;
 import maze.logic.Maze;
 
 public class MazeGame extends JPanel {
-	
-	private JFrame frame;
-	private Maze maze;
+		
 	private Image hero;
 	private Image heroArmed;
 	private Image dragon;
@@ -30,8 +27,13 @@ public class MazeGame extends JPanel {
 	private Image path;
 	private Image pathShadow;
 	private Image exit;
+	private Image exitSemiOpen;
 	private Image exitOpen;
 	private Image background;
+ 
+	private JFrame frame;
+	private Maze maze;
+	private Maze.Direction direction = Maze.Direction.DOWN;
 	
 	private int x=0, y=0, width, height;
 
@@ -45,7 +47,7 @@ public class MazeGame extends JPanel {
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-
+		
 		loadImages();
 		setFocusable(true);
 
@@ -57,19 +59,23 @@ public class MazeGame extends JPanel {
 			public void keyPressed(KeyEvent e) {
 
 				switch(e.getKeyCode()){
-				case KeyEvent.VK_LEFT: 
+				case KeyEvent.VK_LEFT:
+					direction = Maze.Direction.LEFT;
 					maze.update(Maze.Direction.LEFT);
 					break;
 
-				case KeyEvent.VK_RIGHT: 
+				case KeyEvent.VK_RIGHT:
+					direction = Maze.Direction.RIGHT;
 					maze.update(Maze.Direction.RIGHT);
 					break;
 
-				case KeyEvent.VK_UP: 
+				case KeyEvent.VK_UP:
+					direction = Maze.Direction.UP;
 					maze.update(Maze.Direction.UP); 
 					break;
 
-				case KeyEvent.VK_DOWN: 
+				case KeyEvent.VK_DOWN:
+					direction = Maze.Direction.DOWN;
 					maze.update(Maze.Direction.DOWN);
 					break;
 				}
@@ -78,11 +84,11 @@ public class MazeGame extends JPanel {
 				
 				if (!maze.isRunning()){
 					setFocusable(false);
-					//setVisible(false);
+					setVisible(false);
 					if (!maze.getHero().isAlive())					
-						JOptionPane.showMessageDialog(frame, "GAME OVER");
+						JOptionPane.showMessageDialog(frame, "Game Over!");
 					else
-						JOptionPane.showMessageDialog(frame, "YOU WIN!");
+						JOptionPane.showMessageDialog(frame, "You Win!");
 					
 					setVisible(false);
 				}
@@ -116,27 +122,40 @@ public class MazeGame extends JPanel {
 			public void keyPressed(KeyEvent e) {
 
 				switch(e.getKeyCode()){
-				case KeyEvent.VK_LEFT: 
+				case KeyEvent.VK_LEFT:
+					direction = Maze.Direction.LEFT;
 					maze.update(Maze.Direction.LEFT);
 					break;
 
-				case KeyEvent.VK_RIGHT: 
+				case KeyEvent.VK_RIGHT:
+					direction = Maze.Direction.RIGHT;
 					maze.update(Maze.Direction.RIGHT);
 					break;
 
-				case KeyEvent.VK_UP: 
+				case KeyEvent.VK_UP:
+					direction = Maze.Direction.UP;
 					maze.update(Maze.Direction.UP); 
 					break;
 
-				case KeyEvent.VK_DOWN: 
+				case KeyEvent.VK_DOWN:
+					direction = Maze.Direction.DOWN;
 					maze.update(Maze.Direction.DOWN);
 					break;
 				}
 				
 				repaint();
 				
-				if (!maze.isRunning())
-					setFocusable(false);					
+				if (!maze.isRunning()){
+					
+					setFocusable(false);
+					setVisible(false);
+					if (!maze.getHero().isAlive())					
+						JOptionPane.showMessageDialog(frame, "Game Over!");
+					else
+						JOptionPane.showMessageDialog(frame, "You Win!");
+					
+					setVisible(false);
+				}
 			}
 
 			@Override
@@ -152,7 +171,7 @@ public class MazeGame extends JPanel {
 		image  =  new ImageIcon(this.getClass().getResource("res/hero.png"));
 		hero = image.getImage();
 
-		image  =  new ImageIcon(this.getClass().getResource("res/hero_armed.png"));
+		image  =  new ImageIcon(this.getClass().getResource("res/hero_armedsprite.png"));
 		heroArmed = image.getImage();
 
 		image  =  new ImageIcon(this.getClass().getResource("res/dragon.png"));
@@ -178,6 +197,9 @@ public class MazeGame extends JPanel {
 
 		image  =  new ImageIcon(this.getClass().getResource("res/exit.png"));
 		exit = image.getImage();
+		
+		image  =  new ImageIcon(this.getClass().getResource("res/exit_semiopen.png"));
+		exitSemiOpen = image.getImage();
 
 		image  =  new ImageIcon(this.getClass().getResource("res/exit_open.png"));
 		exitOpen = image.getImage();		
@@ -207,6 +229,8 @@ public class MazeGame extends JPanel {
 				else if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.EXIT.getSymbol())
 					if (maze.isMazeOpen())
 						g.drawImage(exitOpen, x, y, x + width, y + height, 0, 0, exitOpen.getWidth(null), exitOpen.getHeight(null), null);
+					else if (!maze.hasDragonsAlive())
+						g.drawImage(exitSemiOpen, x, y, x + width, y + height, 0, 0, exitSemiOpen.getWidth(null), exitSemiOpen.getHeight(null), null);
 					else						
 						g.drawImage(exit, x, y, x + width, y + height, 0, 0, exit.getWidth(null), exit.getHeight(null), null);
 				
@@ -219,9 +243,9 @@ public class MazeGame extends JPanel {
 				// Hero
 				if (maze.getHero().getPos().equals(pos))
 					if (maze.getHero().isArmed())
-						g.drawImage(heroArmed, x, y, x + width, y + height, 0, 0, heroArmed.getWidth(null), heroArmed.getHeight(null), null);
+						drawHero(g, heroArmed, x, y);
 					else
-						g.drawImage(hero, x, y, x + width, y + height, 0, 0, hero.getWidth(null), hero.getHeight(null), null);
+						drawHero(g, hero, x, y);
 				
 				// Sword
 				else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
@@ -246,6 +270,24 @@ public class MazeGame extends JPanel {
 		y = 0;
 	}
 	
+	public void drawHero(Graphics g, Image sprite, int x, int y){
+		
+		switch(direction){
+		case UP:
+			g.drawImage(sprite, x, y, x + width, y + height, 34, 0, 68, 34, null);
+			break;
+		case DOWN:
+			g.drawImage(sprite, x, y, x + width, y + height, 0, 0, 34, 34, null);
+			break;
+		case RIGHT:
+			g.drawImage(sprite, x, y, x + width, y + height, 68, 0, 102, 34, null);
+			break;
+		case LEFT:
+			g.drawImage(sprite, x, y, x + width, y + height, 102, 0, 135, 34, null);
+			break;
+		}
+	}
+		
 	public Maze getMaze(){
 		return maze;
 	}
