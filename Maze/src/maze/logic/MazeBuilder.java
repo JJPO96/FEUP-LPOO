@@ -6,6 +6,9 @@ import java.util.Stack;
 import maze.logic.Maze.Direction;
 import maze.logic.Maze.Token;
 
+/**
+ * Class that allow to build random mazes
+ */
 public class MazeBuilder implements IMazeBuilder {
 
 	private char[][] maze;

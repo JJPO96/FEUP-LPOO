@@ -2,6 +2,9 @@ package maze.logic;
 
 import maze.logic.Maze.Token;
 
+/**
+ * Class that inherits from Gameelement and  represents the Maze's Hero
+ */
 public class Hero extends GameElement{
 
 	private boolean alive = true;

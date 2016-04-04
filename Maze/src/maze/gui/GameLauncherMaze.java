@@ -75,8 +75,8 @@ public class GameLauncherMaze {
 		frmDragonsMaze.setBackground(Color.WHITE);
 		frmDragonsMaze.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
 		frmDragonsMaze.setTitle("Dragon's Maze");
-		frmDragonsMaze.setBounds(0, 0, 620, 670);
-		frmDragonsMaze.setPreferredSize(new Dimension(620, 670));		
+		frmDragonsMaze.setBounds(0, 0, 600, 660);
+		frmDragonsMaze.setPreferredSize(new Dimension(600, 660));		
 		frmDragonsMaze.setResizable(false);
 		frmDragonsMaze.setLocationRelativeTo(null);
 		frmDragonsMaze.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -227,7 +227,7 @@ public class GameLauncherMaze {
 			}
 		});
 		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
-		btnExit.setBounds(518, 0, 85, 40);
+		btnExit.setBounds(518, 0, 76, 40);
 		frmDragonsMaze.getContentPane().add(btnExit);		
 
 		frmDragonsMaze.pack();		

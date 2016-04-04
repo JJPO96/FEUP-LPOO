@@ -1,5 +1,8 @@
 package maze.logic;
 
+/**
+ * Class parent from which the game elements inherit
+ */
 public class GameElement {
 
 	protected Position pos;
