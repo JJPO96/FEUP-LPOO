@@ -21,7 +21,7 @@ import maze.gui.CreateManualMaze;
 
 public class GameLauncherMaze {
 
-	private JFrame frame;
+	private JFrame frmDragonsMaze;
 	private JPanel backgroundPanel;
 	private MazeGame gamePanel;
 	private MazeCreator mazeCreatorPanel;
@@ -69,16 +69,16 @@ public class GameLauncherMaze {
 	 */
 	private void initialize() {
 
-		frame = new JFrame();
-		frame.setBackground(Color.WHITE);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
-		frame.setTitle("Maze");
-		frame.setBounds(100, 100, 600, 670);
-		frame.setPreferredSize(new Dimension(600, 670));		
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmDragonsMaze = new JFrame();
+		frmDragonsMaze.setBackground(Color.WHITE);
+		frmDragonsMaze.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
+		frmDragonsMaze.setTitle("Dragon's Maze");
+		frmDragonsMaze.setBounds(100, 100, 600, 670);
+		frmDragonsMaze.setPreferredSize(new Dimension(600, 670));		
+		frmDragonsMaze.setResizable(false);
+		frmDragonsMaze.setLocationRelativeTo(null);
+		frmDragonsMaze.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDragonsMaze.getContentPane().setLayout(null);
 
 		options = new Options();
 
@@ -86,20 +86,19 @@ public class GameLauncherMaze {
 		ImageIcon image;
 		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
 		background = image.getImage();
-		
-
 
 		btnNewGame = new JButton("New Game");
+		btnNewGame.setToolTipText("Start a new game.");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				String message = "Do you want to start a new game?";
-				int input = JOptionPane.showConfirmDialog(frame, message);
+				int input = JOptionPane.showConfirmDialog(frmDragonsMaze, message);
 
 				if (input == JOptionPane.YES_OPTION){
-					gamePanel = new MazeGame(frame, options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
+					gamePanel = new MazeGame(frmDragonsMaze, options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
 					gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
-					frame.getContentPane().add(gamePanel, BorderLayout.SOUTH);
+					frmDragonsMaze.getContentPane().add(gamePanel, BorderLayout.SOUTH);
 					gamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 					gamePanel.repaint();
 					gamePanel.requestFocus();
@@ -108,16 +107,17 @@ public class GameLauncherMaze {
 		});
 		btnNewGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnNewGame.setBounds(1, 0, 98, 40);
-		frame.getContentPane().add(btnNewGame);
+		frmDragonsMaze.getContentPane().add(btnNewGame);
 
 		btnCreateGame = new JButton("Create Game");
+		btnCreateGame.setToolTipText("Create a personalized maze.");
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO - DECIDIR ENTRE CRIAR JFRAME À PARTE OU USAR A MESMA
 
 
 				String message = "Do you want to create a Maze?";
-				int input = JOptionPane.showConfirmDialog(frame, message);
+				int input = JOptionPane.showConfirmDialog(frmDragonsMaze, message);
 
 				if (input == JOptionPane.YES_OPTION){
 					EventQueue.invokeLater(new Runnable() {
@@ -151,12 +151,13 @@ public class GameLauncherMaze {
 		});
 		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnCreateGame.setBounds(99, 0, 98, 40);
-		frame.getContentPane().add(btnCreateGame);
+		frmDragonsMaze.getContentPane().add(btnCreateGame);
 
 		btnOptions = new JButton("Options");
+		btnOptions.setToolTipText("Game Options");
 		btnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				options.setLocationRelativeTo(frame);
+				options.setLocationRelativeTo(frmDragonsMaze);
 				options.setVisible(true);
 
 				if (gamePanel != null)
@@ -166,7 +167,7 @@ public class GameLauncherMaze {
 		});
 		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnOptions.setBounds(197, 0, 98, 40);
-		frame.getContentPane().add(btnOptions);
+		frmDragonsMaze.getContentPane().add(btnOptions);
 
 		btnSaveGame = new JButton("Save Game");
 		btnSaveGame.addActionListener(new ActionListener() {
@@ -178,7 +179,7 @@ public class GameLauncherMaze {
 		});
 		btnSaveGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnSaveGame.setBounds(295, 0, 98, 40);
-		frame.getContentPane().add(btnSaveGame);
+		frmDragonsMaze.getContentPane().add(btnSaveGame);
 
 		btnLoadGame = new JButton("Load Game");
 		btnLoadGame.addActionListener(new ActionListener() {
@@ -190,13 +191,14 @@ public class GameLauncherMaze {
 		});
 		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnLoadGame.setBounds(393, 0, 98, 40);
-		frame.getContentPane().add(btnLoadGame);
+		frmDragonsMaze.getContentPane().add(btnLoadGame);
 
 		btnExit = new JButton("Exit");
+		btnExit.setToolTipText("Exit Maze's Dragon.");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = "Are you sure you want to quit?";
-				int input = JOptionPane.showConfirmDialog(frame, message);
+				int input = JOptionPane.showConfirmDialog(frmDragonsMaze, message);
 
 				if (input == JOptionPane.YES_OPTION)
 					System.exit(0);
@@ -204,13 +206,13 @@ public class GameLauncherMaze {
 		});
 		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnExit.setBounds(491, 0, 100, 40);
-		frame.getContentPane().add(btnExit);		
+		frmDragonsMaze.getContentPane().add(btnExit);		
 
-		frame.pack();		
-		frame.setVisible(true);
+		frmDragonsMaze.pack();		
+		frmDragonsMaze.setVisible(true);
 	}
 	
 	public JFrame getFrame(){
-		return frame;
+		return frmDragonsMaze;
 	}
 }
