@@ -35,7 +35,7 @@ public class MazeGame extends JPanel {
 	private Maze.Direction direction = Maze.Direction.DOWN;
 	private boolean changeDirection = false;
 	private int currentFrame = 0;
-	private int maximumFrame = 3;
+	private int maximumFrame = 4;
 	
 	private int x=0, y=0, width, height;
 
@@ -189,7 +189,7 @@ public class MazeGame extends JPanel {
 		image  =  new ImageIcon(this.getClass().getResource("res/hero.png"));
 		hero = image.getImage();
 
-		image  =  new ImageIcon(this.getClass().getResource("res/hero_armedsprite.png"));
+		image  =  new ImageIcon(this.getClass().getResource("res/hero_armed.png"));
 		heroArmed = image.getImage();
 
 		image  =  new ImageIcon(this.getClass().getResource("res/dragon.png"));
@@ -296,34 +296,19 @@ public class MazeGame extends JPanel {
 		currentFrame++;
 		
 		if (currentFrame > maximumFrame)
-			currentFrame = 0;
-		
-		/*switch(direction){
-		case UP:
-			g.drawImage(sprite, x, y, x + width, y + height, 34, 0, 68, 34, null);
-			break;
-		case DOWN:
-			g.drawImage(sprite, x, y, x + width, y + height, 0, 0, 34, 34, null);
-			break;
-		case RIGHT:
-			g.drawImage(sprite, x, y, x + width, y + height, 68, 0, 102, 34, null);
-			break;
-		case LEFT:
-			g.drawImage(sprite, x, y, x + width, y + height, 102, 0, 135, 34, null);
-			break;
-		}*/
+			currentFrame = 0;	
 		
 		switch(direction){
 		case UP:
-			//g.drawImage(sprite, x, y, x + width, y + height, 34, 0, 68, 34, null);
+			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 68, 34 + currentFrame * 34, 102, null);
 			break;
 		case DOWN:
-			//g.drawImage(sprite, x, y, x + width, y + height, 0, 0, 34, 34, null);
-			break;
-		case RIGHT:
-			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
+			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 102, 34 + currentFrame * 34, 136, null);
 			break;
 		case LEFT:
+			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
+			break;
+		case RIGHT:
 			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
 			break;
 		}

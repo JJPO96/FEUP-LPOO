@@ -200,6 +200,10 @@ public class GameLauncherMaze {
 
 				if (input == JOptionPane.YES_OPTION)
 					System.exit(0);
+				
+				else if (gamePanel != null)
+					if (gamePanel.getMaze().isRunning())
+						gamePanel.requestFocus();
 			}
 		});
 		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
