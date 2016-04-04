@@ -90,14 +90,14 @@ public class CreateManualMaze {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons));
 				
-				/*
-				String message = "Do you want to start a new game?";
-				int input = JOptionPane.showConfirmDialog(frmDragonsMaze, message);
+				
+				String message = "Maze saved succesfully!";
+				int input = JOptionPane.showConfirmDialog(frmMazeCreator, message);
 
 				if (input == JOptionPane.YES_OPTION){
-
+					frmMazeCreator.dispose();
 						//o que quisers fazer se fizer "ok"
-				}*/
+				}
 				
 				if(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons)){
 					succesfull = true;
