@@ -74,7 +74,7 @@ public class GameLauncherMaze {
 		frmDragonsMaze.setLocationRelativeTo(null);
 		frmDragonsMaze.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDragonsMaze.getContentPane().setLayout(null);
-		
+
 		// Game's JPanel
 		gamePanel = new MazeGame();
 		gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);					
@@ -98,9 +98,9 @@ public class GameLauncherMaze {
 					gamePanel.repaint();
 					gamePanel.requestFocus();
 				}
-				
+
 				else if (gamePanel != null)
-					if (gamePanel.getMaze().isRunning())
+					if (gamePanel.getMaze() != null && gamePanel.getMaze().isRunning())
 						gamePanel.requestFocus();
 			}
 		});
@@ -123,7 +123,7 @@ public class GameLauncherMaze {
 								lastMazeCreated = new CreateManualMaze(options.getNumberDragons(),options.getMazeSize(),options.getMode());
 								lastMazeCreated.frmMazeCreator.setVisible(true);
 								btnLoadGame.setEnabled(true);
-								
+
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -132,7 +132,7 @@ public class GameLauncherMaze {
 				}
 
 				if (gamePanel != null)
-					if (gamePanel.getMaze().isRunning())
+					if (gamePanel.getMaze() != null && gamePanel.getMaze().isRunning())
 						gamePanel.requestFocus();
 			}
 		});
@@ -148,7 +148,7 @@ public class GameLauncherMaze {
 				options.setVisible(true);
 
 				if (gamePanel != null)
-					if (gamePanel.getMaze().isRunning())
+					if (gamePanel.getMaze() != null && gamePanel.getMaze().isRunning())
 						gamePanel.requestFocus();
 			}
 		});
@@ -184,7 +184,7 @@ public class GameLauncherMaze {
 					}
 
 					else if (gamePanel != null)
-						if (gamePanel.getMaze().isRunning())
+						if (gamePanel.getMaze() != null && gamePanel.getMaze().isRunning())
 							gamePanel.requestFocus();
 				}else{
 					JOptionPane.showMessageDialog(gamePanel, "No valid maze created");
@@ -195,7 +195,7 @@ public class GameLauncherMaze {
 		btnLoadGame.setBounds(414, 0, 103, 40);
 		frmDragonsMaze.getContentPane().add(btnLoadGame);
 		btnLoadGame.setEnabled(false);
-		
+
 		btnExit = new JButton("Exit");
 		btnExit.setToolTipText("Exit Maze's Dragon.");
 		btnExit.addActionListener(new ActionListener() {
@@ -205,9 +205,9 @@ public class GameLauncherMaze {
 
 				if (input == JOptionPane.YES_OPTION)
 					System.exit(0);
-				
+
 				else if (gamePanel != null)
-					if (gamePanel.getMaze().isRunning())
+					if (gamePanel.getMaze() != null && gamePanel.getMaze().isRunning())
 						gamePanel.requestFocus();
 			}
 		});
@@ -218,7 +218,7 @@ public class GameLauncherMaze {
 		frmDragonsMaze.pack();		
 		frmDragonsMaze.setVisible(true);
 	}
-	
+
 	public JFrame getFrame(){
 		return frmDragonsMaze;
 	}
