@@ -39,7 +39,7 @@ public class MazeGame extends JPanel {
 	
 	private int x=0, y=0, width, height;
 
-	public MazeGame(JFrame gameFrame, Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	// TODO - MUDAR CONSTRUTOR	
+	public MazeGame(JFrame gameFrame, Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	
 
 		try{
 			maze = new Maze(mode, numDragons, mazeSize);
@@ -119,7 +119,7 @@ public class MazeGame extends JPanel {
 	}
 	
 	
-	public MazeGame(Maze.Mode mode, char[][] tempMaze, int w, int h) {	// TODO - MUDAR CONSTRUTOR	
+	public MazeGame(Maze.Mode mode, char[][] tempMaze, int w, int h) {	
 
 		try{
 			maze = new Maze(tempMaze,mode);
