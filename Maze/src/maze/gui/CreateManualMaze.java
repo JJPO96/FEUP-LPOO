@@ -28,6 +28,7 @@ public class CreateManualMaze {
 	private JComboBox comboBox;
 	private MazeCreator panel;
 	private static final int gamePanelSize = 600;
+	private MazeGame mazeCreated;
 
 	/**
 	 * Create the application.
@@ -36,15 +37,15 @@ public class CreateManualMaze {
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
-	public CreateManualMaze(int dragons,int size) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public CreateManualMaze(int dragons,int size,Maze.Mode tempMode) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		initialize(dragons,size);
+		initialize(dragons,size,tempMode);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(int dragons,int size) {
+	private void initialize(int dragons,int size,Maze.Mode tempMode) {
 		frmMazeCreator = new JFrame();
 		frmMazeCreator.setBackground(Color.WHITE);
 		frmMazeCreator.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
@@ -65,7 +66,6 @@ public class CreateManualMaze {
 		panel.setFocusable(true);
 		
 		
-		
 		JLabel lblTypeOfElement = new JLabel("Type of Element");
 		lblTypeOfElement.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		lblTypeOfElement.setBounds(140, 5, 90, 30);
@@ -82,7 +82,7 @@ public class CreateManualMaze {
 		btnSaveMaze.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnSaveMaze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				mazeCreated = new MazeGame(tempMode,panel.getTempMaze(),gamePanelSize,gamePanelSize);
 			}
 		});
 		btnSaveMaze.setBounds(35, 5, 90, 30);
@@ -92,5 +92,9 @@ public class CreateManualMaze {
 	
 	public int getElement(){
 		return comboBox.getSelectedIndex();
+	}
+
+	public MazeGame getMazeCreated() {
+		return mazeCreated;
 	}
 }

@@ -168,9 +168,9 @@ public class MazeCreator extends JPanel  implements MouseListener{
 		switch (element) {
 		case 0:
 			System.out.println(validPath(tX,tY));
-			if(tempMaze[tY][tX] != 'X')
+			if(tempMaze[tY][tX] == ' ')
 				tempMaze[tY][tX] = 'X';
-			else if( validPath(tX,tY)){
+			else if( validPath(tX,tY) && tempMaze[tY][tX] == 'X'){
 				tempMaze[tY][tX] = ' ';}
 			break;
 		case 1:  
@@ -268,6 +268,11 @@ public class MazeCreator extends JPanel  implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	public char[][] getTempMaze() {
+		return tempMaze;
 	}
 
 }
