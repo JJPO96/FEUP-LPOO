@@ -189,7 +189,7 @@ public class MazeCreator extends JPanel  implements MouseListener{
 				if(!heroPlaced){
 					tempMaze[tY][tX] = 'H';
 					heroPlaced = true;}
-			}else{
+			}else if(tempMaze[tY][tX] == 'H'){
 				if(heroPlaced){
 					tempMaze[tY][tX] = ' ';
 					heroPlaced = false;}
@@ -211,7 +211,7 @@ public class MazeCreator extends JPanel  implements MouseListener{
 				if(!swordPlaced){
 					tempMaze[tY][tX] = 'E';
 					swordPlaced = true;}
-			}else{
+			}else if(tempMaze[tY][tX] == 'E'){
 				if(swordPlaced){
 					tempMaze[tY][tX] = ' ';
 					swordPlaced = false;}
@@ -233,16 +233,16 @@ public class MazeCreator extends JPanel  implements MouseListener{
 	public boolean validPath(int tX, int tY){
 		boolean ret = true;
 		
-		if(ret && (tempMaze[tY][tX+1] == ' ') && (tempMaze[tY+1][tX] == ' ') && (tempMaze[tY+1][tX+1] == ' '))
+		if(ret && (tempMaze[tY][tX+1] != 'X') && (tempMaze[tY+1][tX] != 'X') && (tempMaze[tY+1][tX+1] != 'X'))
 			ret = false;
 			
-		if(ret && (tempMaze[tY][tX-1] == ' ') && (tempMaze[tY+1][tX-1] == ' ') && (tempMaze[tY+1][tX] == ' '))
+		if(ret && (tempMaze[tY][tX-1] != 'X') && (tempMaze[tY+1][tX-1] != 'X') && (tempMaze[tY+1][tX] != 'X'))
 			ret = false;
 		
-		if(ret && (tempMaze[tY-1][tX] == ' ') && (tempMaze[tY-1][tX+1] == ' ') && (tempMaze[tY][tX+1] == ' '))
+		if(ret && (tempMaze[tY-1][tX] != 'X') && (tempMaze[tY-1][tX+1] != 'X') && (tempMaze[tY][tX+1] != 'X'))
 			ret = false;	
 		
-		if(ret && (tempMaze[tY-1][tX-1] == ' ') && (tempMaze[tY-1][tX] == ' ') && (tempMaze[tY][tX-1] == ' '))
+		if(ret && (tempMaze[tY-1][tX-1] != 'X') && (tempMaze[tY-1][tX] != 'X') && (tempMaze[tY][tX-1] != 'X'))
 			ret = false;	
 			
 		

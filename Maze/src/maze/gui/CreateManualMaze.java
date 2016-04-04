@@ -10,6 +10,10 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import maze.logic.Maze;
+import maze.logic.Maze.Mode;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -83,17 +87,6 @@ public class CreateManualMaze {
 		});
 		btnSaveMaze.setBounds(35, 5, 90, 30);
 		frmMazeCreator.getContentPane().add(btnSaveMaze);
-		
-		JLabel lblTypeOfDragon = new JLabel("Type of Dragon");
-		lblTypeOfDragon.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
-		lblTypeOfDragon.setBounds(370, 5, 90, 30);
-		frmMazeCreator.getContentPane().add(lblTypeOfDragon);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Static", "Moving", "Moving and Sleeping"}));
-		comboBox_1.setBounds(455, 5, 120, 30);
-		frmMazeCreator.getContentPane().add(comboBox_1);
 		
 	}
 	
