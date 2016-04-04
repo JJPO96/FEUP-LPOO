@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -34,6 +33,9 @@ public class MazeGame extends JPanel {
 	private JFrame frame;
 	private Maze maze;
 	private Maze.Direction direction = Maze.Direction.DOWN;
+	private boolean changeDirection = false;
+	private int currentFrame = 0;
+	private int maximumFrame = 3;
 	
 	private int x=0, y=0, width, height;
 
@@ -60,21 +62,37 @@ public class MazeGame extends JPanel {
 
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_LEFT:
+					if (direction != Maze.Direction.LEFT)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.LEFT;
 					maze.update(Maze.Direction.LEFT);
 					break;
 
 				case KeyEvent.VK_RIGHT:
+					if (direction != Maze.Direction.RIGHT)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
 					maze.update(Maze.Direction.RIGHT);
 					break;
 
 				case KeyEvent.VK_UP:
+					if (direction != Maze.Direction.UP)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.UP;
 					maze.update(Maze.Direction.UP); 
 					break;
 
 				case KeyEvent.VK_DOWN:
+					if (direction != Maze.Direction.DOWN)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.DOWN;
 					maze.update(Maze.Direction.DOWN);
 					break;
@@ -271,8 +289,16 @@ public class MazeGame extends JPanel {
 	}
 	
 	public void drawHero(Graphics g, Image sprite, int x, int y){
+
+		if (changeDirection == true)
+			currentFrame = 0;
 		
-		switch(direction){
+		currentFrame++;
+		
+		if (currentFrame > maximumFrame)
+			currentFrame = 0;
+		
+		/*switch(direction){
 		case UP:
 			g.drawImage(sprite, x, y, x + width, y + height, 34, 0, 68, 34, null);
 			break;
@@ -285,7 +311,24 @@ public class MazeGame extends JPanel {
 		case LEFT:
 			g.drawImage(sprite, x, y, x + width, y + height, 102, 0, 135, 34, null);
 			break;
+		}*/
+		
+		switch(direction){
+		case UP:
+			//g.drawImage(sprite, x, y, x + width, y + height, 34, 0, 68, 34, null);
+			break;
+		case DOWN:
+			//g.drawImage(sprite, x, y, x + width, y + height, 0, 0, 34, 34, null);
+			break;
+		case RIGHT:
+			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
+			break;
+		case LEFT:
+			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
+			break;
 		}
+		
+		
 	}
 		
 	public Maze getMaze(){
