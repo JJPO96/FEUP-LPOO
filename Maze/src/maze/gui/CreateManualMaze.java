@@ -87,18 +87,14 @@ public class CreateManualMaze {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons));
 				
-				
-				String message = "Maze saved succesfully!";
-				int input = JOptionPane.showConfirmDialog(frmMazeCreator, message);
-
-				if (input == JOptionPane.YES_OPTION){
-					frmMazeCreator.dispose();
-						//o que quisers fazer se fizer "ok"
-				}
-				
 				if(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons)){
-					succesfull = true;
-					JOptionPane.showMessageDialog(frmMazeCreator, "Maze Saved Succesfully");
+					Object[] options = { "OK"};
+					succesfull = true;int input = JOptionPane.showOptionDialog(null, "Maze Saved Succesfully!", "Save", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+					if(input == JOptionPane.OK_OPTION)
+					{
+						frmMazeCreator.dispose();
+					}
 					mazeCreated = new MazeGame(tempMode,panel.getTempMaze(),gamePanelSize,gamePanelSize);
 				}else{
 					JOptionPane.showMessageDialog(frmMazeCreator, "Invalid Maze!");
