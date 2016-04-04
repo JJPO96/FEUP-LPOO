@@ -355,7 +355,9 @@ public class MazeGame extends JPanel {
 							drawHero(g, heroArmed, x, y);
 						else{
 							if (direction == Direction.DOWN)
-								drawHero(g, hero, x, y+height/2);
+								drawHero(g, hero, x, y-height/2);
+							else if (direction == Direction.RIGHT)
+								drawHero(g, hero, x-width/2, y);
 							else
 								drawHero(g, hero, x, y);
 						}
@@ -398,13 +400,13 @@ public class MazeGame extends JPanel {
 			g.drawImage(sprite, i, j-frameCounter*height/2, i + width, j + height-frameCounter*height/2, currentFrame * 34, 68, 34 + currentFrame * 34, 102, null);
 			break;
 		case DOWN:
-			g.drawImage(sprite, i, j+frameCounter*height/2-height, i + width, j+frameCounter*height/2,currentFrame * 34, 102, 34 + currentFrame * 34, 136, null);
+			g.drawImage(sprite, i, j+frameCounter*height/2, i + width, j+height+frameCounter*height/2, currentFrame * 34, 102, 34 + currentFrame * 34, 136, null);
 			break;
 		case LEFT:
 			g.drawImage(sprite, i-frameCounter*width/2, j, i + width-frameCounter*width/2, j + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
 			break;
 		case RIGHT:
-			g.drawImage(sprite, i, j, i+width,j + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
+			g.drawImage(sprite, i+frameCounter*width/2, j, i+width+frameCounter*width/2,j + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
 			break;
 		}
 		
