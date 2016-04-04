@@ -141,21 +141,37 @@ public class MazeGame extends JPanel {
 
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_LEFT:
+					if (direction != Maze.Direction.LEFT)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.LEFT;
 					maze.update(Maze.Direction.LEFT);
 					break;
 
 				case KeyEvent.VK_RIGHT:
+					if (direction != Maze.Direction.RIGHT)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
 					maze.update(Maze.Direction.RIGHT);
 					break;
 
 				case KeyEvent.VK_UP:
+					if (direction != Maze.Direction.UP)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.UP;
 					maze.update(Maze.Direction.UP); 
 					break;
 
 				case KeyEvent.VK_DOWN:
+					if (direction != Maze.Direction.DOWN)
+						changeDirection = true;
+					else
+						changeDirection = false;
 					direction = Maze.Direction.DOWN;
 					maze.update(Maze.Direction.DOWN);
 					break;
