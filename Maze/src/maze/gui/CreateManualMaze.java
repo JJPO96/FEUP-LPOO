@@ -74,6 +74,7 @@ public class CreateManualMaze {
 		frmMazeCreator.getContentPane().add(lblTypeOfElement);
 		
 		comboBox = new JComboBox<String>();
+		comboBox.setToolTipText("Choose the element to put/remove in the maze");	
 		comboBox.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Wall", "Exit", "Hero", "Dragon", "Sword"}));
 		comboBox.setBounds(250, 5, 90, 30);

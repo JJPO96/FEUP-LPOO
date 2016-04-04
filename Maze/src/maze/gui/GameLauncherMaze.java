@@ -26,7 +26,6 @@ public class GameLauncherMaze {
 	private JButton btnNewGame;
 	private JButton btnCreateGame;
 	private JButton btnOptions;
-	private JButton btnSaveGame;
 	private JButton btnLoadGame;
 	private JButton btnExit;
 
@@ -105,7 +104,7 @@ public class GameLauncherMaze {
 			}
 		});
 		btnNewGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
-		btnNewGame.setBounds(1, 0, 103, 40);
+		btnNewGame.setBounds(1, 0, 129, 40);
 		frmDragonsMaze.getContentPane().add(btnNewGame);
 
 		btnCreateGame = new JButton("Create Game");
@@ -137,7 +136,7 @@ public class GameLauncherMaze {
 			}
 		});
 		btnCreateGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
-		btnCreateGame.setBounds(104, 0, 103, 40);
+		btnCreateGame.setBounds(130, 0, 130, 40);
 		frmDragonsMaze.getContentPane().add(btnCreateGame);
 
 		btnOptions = new JButton("Options");
@@ -153,22 +152,10 @@ public class GameLauncherMaze {
 			}
 		});
 		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
-		btnOptions.setBounds(208, 0, 103, 40);
+		btnOptions.setBounds(390, 0, 105, 40);
 		frmDragonsMaze.getContentPane().add(btnOptions);
 
-		btnSaveGame = new JButton("Save Game");
-		btnSaveGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (gamePanel != null)
-					if (gamePanel.getMaze().isRunning())
-						gamePanel.requestFocus();
-			}
-		});
-		btnSaveGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
-		btnSaveGame.setBounds(311, 0, 103, 40);
-		frmDragonsMaze.getContentPane().add(btnSaveGame);
-
-		btnLoadGame = new JButton("Load Game");
+		btnLoadGame = new JButton("Play Created Maze");
 		btnLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(lastMazeCreated.isSuccesfull()){
@@ -192,7 +179,7 @@ public class GameLauncherMaze {
 			}
 		});
 		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
-		btnLoadGame.setBounds(414, 0, 103, 40);
+		btnLoadGame.setBounds(260, 0, 130, 40);
 		frmDragonsMaze.getContentPane().add(btnLoadGame);
 		btnLoadGame.setEnabled(false);
 
@@ -212,7 +199,7 @@ public class GameLauncherMaze {
 			}
 		});
 		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
-		btnExit.setBounds(518, 0, 76, 40);
+		btnExit.setBounds(495, 0, 104, 40);
 		frmDragonsMaze.getContentPane().add(btnExit);		
 
 		frmDragonsMaze.pack();		
