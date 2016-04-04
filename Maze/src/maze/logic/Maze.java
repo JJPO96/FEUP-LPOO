@@ -50,8 +50,8 @@ public class Maze {
 	 * @param mode of the Game
 	 * @param size of the Maze
 	 * @param numDragons number of Dragons of the Maze
-	 * @throws InvalidMazeSize 
-	 * @throws InvalidNumDragons 
+	 * @throws InvalidMazeSize Exception Class for Invalid Size
+	 * @throws InvalidNumDragons Exception Class for Invalid number of Dragons
 	 */
 	public Maze(Mode mode, int numDragons, int size) throws InvalidMazeSize, InvalidNumDragons {
 		
@@ -76,7 +76,7 @@ public class Maze {
 	 * Maze's Construtor
 	 * 
 	 * @param board of the Maze
-	 * @param numDragons number of Dragons of the Maze
+	 * @param m Game's mode
 	 */
 	public Maze(char[][] board, Mode m){		
 		this.gameBoard = new Board();

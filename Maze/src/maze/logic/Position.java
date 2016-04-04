@@ -74,7 +74,7 @@ public class Position {
 	/**
 	 * Implementation of equals() function for Position objects (compares if 2 object have the same position)
 	 * 
-	 * @param coordinatess to be compared
+	 * @param pos position to be comparade
 	 * @return returns true if both objects have the same position
 	 */
 	@Override
