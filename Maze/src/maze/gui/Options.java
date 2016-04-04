@@ -40,7 +40,7 @@ public class Options extends JDialog {
 		this.setTitle("Options");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Options.class.getResource("/maze/gui/res/dragon.png")));
 		this.setModal(true);
-		setBounds(100, 100, 300, 300);
+		setBounds(100, 100, 350, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -55,7 +55,7 @@ public class Options extends JDialog {
 		contentPanel.add(labelNumDragons);
 		
 		JLabel labelTypeDragons = new JLabel("Type of Dragons");
-		labelTypeDragons.setBounds(10, 175, 109, 14);
+		labelTypeDragons.setBounds(10, 169, 109, 14);
 		contentPanel.add(labelTypeDragons);
 	
 		sliderMazeSize = new JSlider(11, 41, 21);
@@ -64,29 +64,30 @@ public class Options extends JDialog {
 				sliderNumDragons.setMaximum(Maze.calculateMaxNumberDragons(sliderMazeSize.getValue()));
 			}
 		});
-		mazeSize = sliderMazeSize.getValue();
+		mazeSize = sliderMazeSize.getValue();		
 		sliderMazeSize.setPaintTicks(true);
 		sliderMazeSize.setPaintLabels(true);
 		sliderMazeSize.setSnapToTicks(true);
-		sliderMazeSize.setBounds(133, 11, 140, 51);
+		sliderMazeSize.setBounds(145, 21, 170, 51);
 		sliderMazeSize.setMajorTickSpacing(10);
 		sliderMazeSize.setMinorTickSpacing(2);
 		contentPanel.add(sliderMazeSize);
 		
 		sliderNumDragons = new JSlider(1, Maze.calculateMaxNumberDragons(sliderMazeSize.getValue()), 1);
+		numberDragons = sliderNumDragons.getValue();
 		sliderNumDragons.setMajorTickSpacing(2);
 		sliderNumDragons.setValue(1);
 		sliderNumDragons.setSnapToTicks(true);
 		sliderNumDragons.setPaintTicks(true);
 		sliderNumDragons.setPaintLabels(true);
 		sliderNumDragons.setMinorTickSpacing(1);
-		sliderNumDragons.setBounds(133, 73, 140, 51);
+		sliderNumDragons.setBounds(145, 95, 170, 51);
 		contentPanel.add(sliderNumDragons);
 		
 		modeSelect = new JComboBox<String>();
 		modeSelect.setModel(new DefaultComboBoxModel<String>(new String[] {"Static", "Moving", "Moving and Sleeping"}));
 		modeSelect.setSelectedIndex(0);		
-		modeSelect.setBounds(129, 172, 144, 20);
+		modeSelect.setBounds(145, 169, 170, 20);
 		contentPanel.add(modeSelect);
 				
 		String strMode = modeSelect.getSelectedItem().toString();
@@ -140,7 +141,7 @@ public class Options extends JDialog {
 				closeDialog();
 			}
 		});
-		btnBack.setBounds(184, 237, 89, 23);
+		btnBack.setBounds(226, 237, 89, 23);
 		contentPanel.add(btnBack);		
 	}
 

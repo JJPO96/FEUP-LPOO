@@ -230,4 +230,8 @@ public class MazeGame extends JPanel {
 		x = 0;
 		y = 0;
 	}
+	
+	public Maze getMaze(){
+		return maze;
+	}
 }

@@ -134,9 +134,11 @@ public class GameLauncherMaze {
 					}
 				});
 				
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+				if (gamePanel != null)
+					if (gamePanel.getMaze().isRunning())
+						gamePanel.requestFocus();
 				
+				// TODO - REMOVER ESTE CODIGO SE NAO USADO
 				/*JPanel mazeCreatorPanel = new MazeCreator(gamePanelSize, gamePanelSize, 1, 11);
 				mazeCreatorPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 				mazeCreatorPanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
@@ -156,9 +158,11 @@ public class GameLauncherMaze {
 		btnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				options.setLocationRelativeTo(frame);
-				options.setVisible(true);				
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+				options.setVisible(true);
+				
+				if (gamePanel != null)
+					if (gamePanel.getMaze().isRunning())
+						gamePanel.requestFocus();
 			}
 		});
 		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
@@ -168,8 +172,9 @@ public class GameLauncherMaze {
 		btnSaveGame = new JButton("Save Game");
 		btnSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+				if (gamePanel != null)
+					if (gamePanel.getMaze().isRunning())
+						gamePanel.requestFocus();
 			}
 		});
 		btnSaveGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
@@ -179,8 +184,9 @@ public class GameLauncherMaze {
 		btnLoadGame = new JButton("Load Game");
 		btnLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+				if (gamePanel != null)
+					if (gamePanel.getMaze().isRunning())
+						gamePanel.requestFocus();
 			}
 		});
 		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
