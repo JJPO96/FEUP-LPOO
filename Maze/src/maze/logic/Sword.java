@@ -1,5 +1,8 @@
 package maze.logic;
 
+/**
+ * Class that inherits from Gameelement and represents the Maze's Sword
+ */
 public class Sword extends GameElement{
 
 	private boolean picked = false;

@@ -6,6 +6,9 @@ import java.util.Vector;
 import maze.exception.InvalidMazeSize;
 import maze.exception.InvalidNumDragons;
 
+/**
+ * Class that represents the Maze's game itself
+ */
 public class Maze {
 
 	/* STATIC for static dragons, MOVING for moving dragons 

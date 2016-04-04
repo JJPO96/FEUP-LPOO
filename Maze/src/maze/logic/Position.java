@@ -1,5 +1,8 @@
 package maze.logic;
 
+/**
+ * Class that represents a position of an element of the game
+ */
 public class Position {
 
 	protected int x;

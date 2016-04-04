@@ -2,6 +2,9 @@ package maze.logic;
 
 import maze.logic.Maze.Token;
 
+/**
+ * Class to handle the Game's board
+ */
 public class Board {
 
 	private char[][] board = {
