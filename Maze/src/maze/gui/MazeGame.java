@@ -307,9 +307,7 @@ public class MazeGame extends JPanel {
 	public void drawHero(Graphics g, Image sprite, int x, int y){
 
 		if (changeDirection == true)
-			currentFrame = 0;
-		
-		currentFrame++;
+			currentFrame = 0;		
 		
 		if (currentFrame > maximumFrame)
 			currentFrame = 0;	
@@ -329,7 +327,7 @@ public class MazeGame extends JPanel {
 			break;
 		}
 		
-		
+		currentFrame++;		
 	}
 		
 	public Maze getMaze(){
