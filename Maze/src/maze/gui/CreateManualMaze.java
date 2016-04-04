@@ -16,11 +16,14 @@ import maze.logic.Maze.Mode;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.JPanel;
+import maze.gui.TestCreateMaze;
 
 public class CreateManualMaze {
 
@@ -78,11 +81,20 @@ public class CreateManualMaze {
 		frmMazeCreator.getContentPane().add(comboBox);
 		panel.requestFocus();
 		
+		
 		JButton btnSaveMaze = new JButton("Save Maze");
 		btnSaveMaze.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
 		btnSaveMaze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mazeCreated = new MazeGame(tempMode,panel.getTempMaze(),gamePanelSize,gamePanelSize);
+				System.out.println(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons));
+				//TODO do panel of error and save successful
+				if(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons)){
+					JOptionPane.showMessageDialog(frmMazeCreator, "Maze Saved Succesfully");
+					mazeCreated = new MazeGame(tempMode,panel.getTempMaze(),gamePanelSize,gamePanelSize);
+				}else{
+					JOptionPane.showMessageDialog(frmMazeCreator, "Invalid Maze!");
+				}
+					
 			}
 		});
 		btnSaveMaze.setBounds(35, 5, 90, 30);
