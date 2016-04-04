@@ -12,7 +12,6 @@ import maze.logic.Maze;
 import maze.logic.Maze.Mode;
 
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
@@ -22,6 +21,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.Font;
 
+@SuppressWarnings("serial")
 public class Options extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

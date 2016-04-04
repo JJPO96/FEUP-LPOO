@@ -14,6 +14,7 @@ import maze.logic.Position;
 import maze.logic.Dragon;
 import maze.logic.Maze;
 
+@SuppressWarnings("serial")
 public class MazeGame extends JPanel {
 		
 	private Image hero;
@@ -34,11 +35,17 @@ public class MazeGame extends JPanel {
 	private Maze maze;
 	private Maze.Direction direction = Maze.Direction.DOWN;
 	private boolean changeDirection = false;
-	private int currentFrame = 0;
+	private int currentFrame;
 	private int maximumFrame = 4;
+	private boolean showBackImage = true;
 	
 	private int x=0, y=0, width, height;
 
+	public MazeGame(){
+		loadImages();
+		repaint();
+	}
+	
 	public MazeGame(JFrame gameFrame, Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	
 
 		try{
@@ -46,6 +53,8 @@ public class MazeGame extends JPanel {
 			width = w/maze.getGameBoard().getBoard().length;
 			height = h/maze.getGameBoard().getBoard().length;
 			frame = gameFrame;
+			currentFrame = 0;
+			showBackImage = false;
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -103,14 +112,15 @@ public class MazeGame extends JPanel {
 				}				
 				
 				if (!maze.isRunning()){
+					repaint();
+					showBackImage = true;
 					setFocusable(false);
-					setVisible(false);
 					if (!maze.getHero().isAlive())					
 						JOptionPane.showMessageDialog(frame, "Game Over!");
 					else
 						JOptionPane.showMessageDialog(frame, "You Win!");
 					
-					setVisible(false);
+					repaint();
 				}
 			}
 
@@ -127,6 +137,8 @@ public class MazeGame extends JPanel {
 			maze = new Maze(tempMaze,mode);
 			width = w/maze.getGameBoard().getBoard().length;
 			height = h/maze.getGameBoard().getBoard().length;
+			currentFrame = 0;
+			showBackImage = false;
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -181,18 +193,18 @@ public class MazeGame extends JPanel {
 					maze.update(Maze.Direction.DOWN);
 					repaint();
 					break;
-				}
+				}				
 				
 				if (!maze.isRunning()){
-					
+					repaint();
+					showBackImage = true;
 					setFocusable(false);
-					setVisible(false);
 					if (!maze.getHero().isAlive())					
 						JOptionPane.showMessageDialog(frame, "Game Over!");
 					else
 						JOptionPane.showMessageDialog(frame, "You Win!");
 					
-					setVisible(false);
+					repaint();
 				}
 			}
 
@@ -240,72 +252,80 @@ public class MazeGame extends JPanel {
 		exitSemiOpen = image.getImage();
 
 		image  =  new ImageIcon(this.getClass().getResource("res/exit_open.png"));
-		exitOpen = image.getImage();		
+		exitOpen = image.getImage();
+		
+		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
+		background = image.getImage();
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		Position pos = new Position();
+		if (showBackImage)
+			g.drawImage(background, 0, 0, 600, 600, 0, 0, background.getWidth(null), background.getHeight(null), null);
+			
+		else{
+			Position pos = new Position();
 
-		for (int i = 0; i < maze.getGameBoard().getBoard().length; i++){
-			for (int j = 0; j < maze.getGameBoard().getBoard()[i].length; j++){
-				pos.setX(j);
-				pos.setY(i);
-				
-				// Wall
-				if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.WALL.getSymbol())
-					if (i == maze.getGameBoard().getBoard().length-1)
-						g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wall.getHeight(null), null);
-					else if (i < maze.getGameBoard().getBoard().length-1 && maze.getGameBoard().getBoard()[i+1][j]!=Maze.Token.WALL.getSymbol())
-						g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wallGrass.getHeight(null), null);
+			for (int i = 0; i < maze.getGameBoard().getBoard().length; i++){
+				for (int j = 0; j < maze.getGameBoard().getBoard()[i].length; j++){
+					pos.setX(j);
+					pos.setY(i);
+					
+					// Wall
+					if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.WALL.getSymbol())
+						if (i == maze.getGameBoard().getBoard().length-1)
+							g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wall.getHeight(null), null);
+						else if (i < maze.getGameBoard().getBoard().length-1 && maze.getGameBoard().getBoard()[i+1][j]!=Maze.Token.WALL.getSymbol())
+							g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wallGrass.getHeight(null), null);
+						else
+							g.drawImage(wallGrass, x, y, x + width, y + height, 0, 0, wallGrass.getWidth(null), wallGrass.getHeight(null), null);
+					
+					// Exit
+					else if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.EXIT.getSymbol())
+						if (maze.isMazeOpen())
+							g.drawImage(exitOpen, x, y, x + width, y + height, 0, 0, exitOpen.getWidth(null), exitOpen.getHeight(null), null);
+						else if (!maze.hasDragonsAlive())
+							g.drawImage(exitSemiOpen, x, y, x + width, y + height, 0, 0, exitSemiOpen.getWidth(null), exitSemiOpen.getHeight(null), null);
+						else						
+							g.drawImage(exit, x, y, x + width, y + height, 0, 0, exit.getWidth(null), exit.getHeight(null), null);
+					
+					// Path
+					else if (maze.getGameBoard().getBoard()[i][j-1] == 'X') // Displays shadow on one side
+						g.drawImage(pathShadow, x, y, x + width, y + height, 0, 0, pathShadow.getWidth(null), pathShadow.getHeight(null), null);
 					else
-						g.drawImage(wallGrass, x, y, x + width, y + height, 0, 0, wallGrass.getWidth(null), wallGrass.getHeight(null), null);
-				
-				// Exit
-				else if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.EXIT.getSymbol())
-					if (maze.isMazeOpen())
-						g.drawImage(exitOpen, x, y, x + width, y + height, 0, 0, exitOpen.getWidth(null), exitOpen.getHeight(null), null);
-					else if (!maze.hasDragonsAlive())
-						g.drawImage(exitSemiOpen, x, y, x + width, y + height, 0, 0, exitSemiOpen.getWidth(null), exitSemiOpen.getHeight(null), null);
-					else						
-						g.drawImage(exit, x, y, x + width, y + height, 0, 0, exit.getWidth(null), exit.getHeight(null), null);
-				
-				// Path
-				else if (maze.getGameBoard().getBoard()[i][j-1] == 'X') // Displays shadow on one side
-					g.drawImage(pathShadow, x, y, x + width, y + height, 0, 0, pathShadow.getWidth(null), pathShadow.getHeight(null), null);
-				else
-					g.drawImage(path, x, y, x + width, y + height, 0, 0, path.getWidth(null), path.getHeight(null), null);
-				
-				// Hero
-				if (maze.getHero().getPos().equals(pos))
-					if (maze.getHero().isArmed())
-						drawHero(g, heroArmed, x, y);
-					else
-						drawHero(g, hero, x, y);
-				
-				// Sword
-				else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
-					g.drawImage(sword, x, y, x + width, y + height, 0, 0, sword.getWidth(null), sword.getHeight(null), null);
-				
-				// Dragon(s)
-				else if(maze.checkDragon(pos) instanceof Dragon && maze.checkDragon(pos).isAlive()){
-					if (maze.checkDragon(pos).isSleeping())
-						g.drawImage(dragonSleeping, x, y, x + width, y + height, 0, 0, dragonSleeping.getWidth(null), dragonSleeping.getHeight(null), null);
-					else
-						g.drawImage(dragon, x, y, x + width, y + height, 0, 0, dragon.getWidth(null), dragon.getHeight(null), null);
-				}				
+						g.drawImage(path, x, y, x + width, y + height, 0, 0, path.getWidth(null), path.getHeight(null), null);
+					
+					// Hero
+					if (maze.getHero().getPos().equals(pos))
+						if (maze.getHero().isArmed())
+							drawHero(g, heroArmed, x, y);
+						else
+							drawHero(g, hero, x, y);
+					
+					// Sword
+					else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
+						g.drawImage(sword, x, y, x + width, y + height, 0, 0, sword.getWidth(null), sword.getHeight(null), null);
+					
+					// Dragon(s)
+					else if(maze.checkDragon(pos) instanceof Dragon && maze.checkDragon(pos).isAlive()){
+						if (maze.checkDragon(pos).isSleeping())
+							g.drawImage(dragonSleeping, x, y, x + width, y + height, 0, 0, dragonSleeping.getWidth(null), dragonSleeping.getHeight(null), null);
+						else
+							g.drawImage(dragon, x, y, x + width, y + height, 0, 0, dragon.getWidth(null), dragon.getHeight(null), null);
+					}				
 
-				x+=width;
-			}
+					x+=width;
+				}
 
+				x = 0;
+				y+=height;
+			}		
+			
 			x = 0;
-			y+=height;
+			y = 0;
 		}		
-		
-		x = 0;
-		y = 0;
 	}
 	
 	public void drawHero(Graphics g, Image sprite, int x, int y){

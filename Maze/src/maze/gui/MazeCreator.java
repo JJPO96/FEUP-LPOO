@@ -8,10 +8,9 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import maze.logic.Maze;
-import maze.logic.MazeBuilder;
 import maze.gui.CreateManualMaze;
 
-public class MazeCreator extends JPanel  implements MouseListener{
+public class MazeCreator extends JPanel implements MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private Image hero;
