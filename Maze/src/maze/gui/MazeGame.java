@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import maze.logic.Position;
 import maze.logic.Dragon;
 import maze.logic.Maze;
+import maze.logic.Maze.Direction;
 
 @SuppressWarnings("serial")
 public class MazeGame extends JPanel {
@@ -35,6 +36,7 @@ public class MazeGame extends JPanel {
 	private Maze maze;
 	private Maze.Direction direction = Maze.Direction.DOWN;
 	private boolean changeDirection = false;
+	private int frameCounter = 0;
 	private int currentFrame;
 	private int maximumFrame = 4;
 	private boolean showBackImage = true;
@@ -71,42 +73,67 @@ public class MazeGame extends JPanel {
 
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_LEFT:
-					if (direction != Maze.Direction.LEFT)
+					if (direction != Maze.Direction.LEFT){
 						changeDirection = true;
+						frameCounter = 0;
+					}
+						
 					else
 						changeDirection = false;
 					direction = Maze.Direction.LEFT;
-					maze.update(Maze.Direction.LEFT);
+					
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.LEFT);
+					}
+						
 					repaint();
 					break;
 
 				case KeyEvent.VK_RIGHT:
-					if (direction != Maze.Direction.RIGHT)
+					if (direction != Maze.Direction.RIGHT){
 						changeDirection = true;
+						frameCounter = 0;
+					}
 					else
 						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
-					maze.update(Maze.Direction.RIGHT);
+					
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.RIGHT);
+					}
 					repaint();
 					break;
 
 				case KeyEvent.VK_UP:
-					if (direction != Maze.Direction.UP)
+					if (direction != Maze.Direction.UP){
 						changeDirection = true;
+						frameCounter = 0;
+					}
 					else
 						changeDirection = false;
 					direction = Maze.Direction.UP;
-					maze.update(Maze.Direction.UP);
+					
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.UP);
+					}
 					repaint();
 					break;
 
 				case KeyEvent.VK_DOWN:
-					if (direction != Maze.Direction.DOWN)
+					if (direction != Maze.Direction.DOWN){
 						changeDirection = true;
+						frameCounter = 0;
+					}
 					else
 						changeDirection = false;
 					direction = Maze.Direction.DOWN;
-					maze.update(Maze.Direction.DOWN);
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.DOWN);
+					}
 					repaint();
 					break;
 				}				
@@ -155,42 +182,67 @@ public class MazeGame extends JPanel {
 
 				switch(e.getKeyCode()){
 				case KeyEvent.VK_LEFT:
-					if (direction != Maze.Direction.LEFT)
+					if (direction != Maze.Direction.LEFT){
 						changeDirection = true;
+						frameCounter = 0;
+					}
+						
 					else
 						changeDirection = false;
 					direction = Maze.Direction.LEFT;
-					maze.update(Maze.Direction.LEFT);
+					
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.LEFT);
+					}
+						
 					repaint();
 					break;
 
 				case KeyEvent.VK_RIGHT:
-					if (direction != Maze.Direction.RIGHT)
+					if (direction != Maze.Direction.RIGHT){
 						changeDirection = true;
+						frameCounter = 0;
+					}
 					else
 						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
-					maze.update(Maze.Direction.RIGHT);
+					
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.RIGHT);
+					}
 					repaint();
 					break;
 
 				case KeyEvent.VK_UP:
-					if (direction != Maze.Direction.UP)
+					if (direction != Maze.Direction.UP){
 						changeDirection = true;
+						frameCounter = 0;
+					}
 					else
 						changeDirection = false;
 					direction = Maze.Direction.UP;
-					maze.update(Maze.Direction.UP);
+					
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.UP);
+					}
 					repaint();
 					break;
 
 				case KeyEvent.VK_DOWN:
-					if (direction != Maze.Direction.DOWN)
+					if (direction != Maze.Direction.DOWN){
 						changeDirection = true;
+						frameCounter = 0;
+					}
 					else
 						changeDirection = false;
 					direction = Maze.Direction.DOWN;
-					maze.update(Maze.Direction.DOWN);
+					if (frameCounter == 2){
+						frameCounter = 0;
+						maze.update(Maze.Direction.DOWN);
+					}
 					repaint();
 					break;
 				}				
@@ -301,8 +353,13 @@ public class MazeGame extends JPanel {
 					if (maze.getHero().getPos().equals(pos))
 						if (maze.getHero().isArmed())
 							drawHero(g, heroArmed, x, y);
-						else
-							drawHero(g, hero, x, y);
+						else{
+							if (direction == Direction.DOWN)
+								drawHero(g, hero, x, y+height/2);
+							else
+								drawHero(g, hero, x, y);
+						}
+							
 					
 					// Sword
 					else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
@@ -328,7 +385,7 @@ public class MazeGame extends JPanel {
 		}		
 	}
 	
-	public void drawHero(Graphics g, Image sprite, int x, int y){
+	public void drawHero(Graphics g, Image sprite, int i, int j){
 
 		if (changeDirection == true)
 			currentFrame = 0;		
@@ -338,19 +395,20 @@ public class MazeGame extends JPanel {
 		
 		switch(direction){
 		case UP:
-			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 68, 34 + currentFrame * 34, 102, null);
+			g.drawImage(sprite, i, j-frameCounter*height/2, i + width, j + height-frameCounter*height/2, currentFrame * 34, 68, 34 + currentFrame * 34, 102, null);
 			break;
 		case DOWN:
-			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 102, 34 + currentFrame * 34, 136, null);
+			g.drawImage(sprite, i, j+frameCounter*height/2-height, i + width, j+frameCounter*height/2,currentFrame * 34, 102, 34 + currentFrame * 34, 136, null);
 			break;
 		case LEFT:
-			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
+			g.drawImage(sprite, i-frameCounter*width/2, j, i + width-frameCounter*width/2, j + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
 			break;
 		case RIGHT:
-			g.drawImage(sprite, x, y, x + width, y + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
+			g.drawImage(sprite, i, j, i+width,j + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
 			break;
 		}
 		
+		frameCounter++;
 		currentFrame++;		
 	}
 		
