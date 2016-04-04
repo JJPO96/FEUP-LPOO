@@ -32,6 +32,8 @@ public class CreateManualMaze {
 	private MazeCreator panel;
 	private static final int gamePanelSize = 600;
 	private MazeGame mazeCreated;
+	private boolean succesfull = false;
+
 
 	/**
 	 * Create the application.
@@ -89,6 +91,7 @@ public class CreateManualMaze {
 				System.out.println(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons));
 				//TODO do panel of error and save successful
 				if(TestCreateMaze.mazeIsValid(panel.getTempMaze(),dragons)){
+					succesfull = true;
 					JOptionPane.showMessageDialog(frmMazeCreator, "Maze Saved Succesfully");
 					mazeCreated = new MazeGame(tempMode,panel.getTempMaze(),gamePanelSize,gamePanelSize);
 				}else{
@@ -108,5 +111,9 @@ public class CreateManualMaze {
 
 	public MazeGame getMazeCreated() {
 		return mazeCreated;
+	}
+	
+	public boolean isSuccesfull() {
+		return succesfull;
 	}
 }

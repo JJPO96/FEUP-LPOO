@@ -28,6 +28,8 @@ public class GameLauncherMaze {
 	private Options options;
 	private Image background;
 	private static final int gamePanelSize = 600;
+	private CreateManualMaze lastMazeCreated;
+	private boolean mazeCreated = false;
 
 	private JButton btnNewGame;
 	private JButton btnCreateGame;
@@ -121,8 +123,10 @@ public class GameLauncherMaze {
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							try {
-								CreateManualMaze window = new CreateManualMaze(options.getNumberDragons(),options.getMazeSize(),options.getMode());
-								window.frmMazeCreator.setVisible(true);
+								lastMazeCreated = new CreateManualMaze(options.getNumberDragons(),options.getMazeSize(),options.getMode());
+								lastMazeCreated.frmMazeCreator.setVisible(true);
+								btnLoadGame.setEnabled(true);
+								
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -182,15 +186,31 @@ public class GameLauncherMaze {
 		btnLoadGame = new JButton("Load Game");
 		btnLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (gamePanel != null)
-					if (gamePanel.getMaze().isRunning())
+				if(lastMazeCreated.isSuccesfull()){
+					String message = "Do you want to load last created maze?";
+					int input = JOptionPane.showConfirmDialog(frmDragonsMaze, message);
+
+					if (input == JOptionPane.YES_OPTION){
+						gamePanel = lastMazeCreated.getMazeCreated();
+						gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);					
+						frmDragonsMaze.getContentPane().add(gamePanel, BorderLayout.CENTER);
+						gamePanel.repaint();
 						gamePanel.requestFocus();
+					}
+
+					else if (gamePanel != null)
+						if (gamePanel.getMaze().isRunning())
+							gamePanel.requestFocus();
+				}else{
+					JOptionPane.showMessageDialog(gamePanel, "No valid maze created");
+				}
 			}
 		});
 		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 10));
 		btnLoadGame.setBounds(414, 0, 103, 40);
 		frmDragonsMaze.getContentPane().add(btnLoadGame);
-
+		btnLoadGame.setEnabled(false);
+		
 		btnExit = new JButton("Exit");
 		btnExit.setToolTipText("Exit Maze's Dragon.");
 		btnExit.addActionListener(new ActionListener() {
