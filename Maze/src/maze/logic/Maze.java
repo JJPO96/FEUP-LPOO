@@ -11,14 +11,19 @@ import maze.exception.InvalidNumDragons;
  */
 public class Maze {
 
-	/* STATIC for static dragons, MOVING for moving dragons 
-	   and MOVINGSLEEPING for moving and sleeping dragons*/
+	/**
+	 * STATIC for static dragons, MOVING for moving dragons and MOVINGSLEEPING for moving and sleeping dragons
+	 */
 	public enum Mode {STATIC, MOVING, MOVINGSLEEPING};
 
-	/* Directions that the Hero can take */
+	/**
+	 * Directions that the Hero can take
+	 */
 	public enum Direction {LEFT, RIGHT, UP, DOWN};
 
-	/* Tokens to be used in the game */
+	/**
+	 * Tokens to be used in the game
+	 */
 	public enum Token {HERO('H'), HEROARMED('A'), DRAGON('D'), DRAGONSLEEP('d'), SWORD('E'),
 		DRAGSWORD('F'), PATH(' '), WALL('X'), EXIT('S'), GUIDE('+');
 

@@ -73,8 +73,8 @@ public class GameLauncherMaze {
 		frmDragonsMaze.setBackground(Color.WHITE);
 		frmDragonsMaze.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
 		frmDragonsMaze.setTitle("Dragon's Maze");
-		frmDragonsMaze.setBounds(0, 0, 620, 670);
-		frmDragonsMaze.setPreferredSize(new Dimension(620, 670));		
+		frmDragonsMaze.setBounds(0, 0, 600, 670);
+		frmDragonsMaze.setPreferredSize(new Dimension(600, 670));		
 		frmDragonsMaze.setResizable(false);
 		frmDragonsMaze.setLocationRelativeTo(null);
 		frmDragonsMaze.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
