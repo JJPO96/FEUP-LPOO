@@ -58,7 +58,7 @@ public class Maze {
 		if (size < minSize || size > maxSize || size % 2 == 0)
 			throw new InvalidMazeSize(minSize, maxSize);
 		
-		maxNumDragons = calculateMaxNumberDragons(size, minSize, minNumDragons);
+		maxNumDragons = calculateMaxNumberDragons(size);
 		
 		if (numDragons < minNumDragons || numDragons > maxNumDragons)
 			throw new InvalidNumDragons(minNumDragons, maxNumDragons);
@@ -442,7 +442,7 @@ public class Maze {
 	 * @param size of the Maze
 	 * @return the number of dragons
 	 */
-	public static int calculateMaxNumberDragons(int size, int minSize, int minNumDragons){		
+	public static int calculateMaxNumberDragons(int size){		
 		return minNumDragons+(size-minSize)/2;
 	}
 

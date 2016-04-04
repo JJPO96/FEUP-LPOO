@@ -152,7 +152,7 @@ public class GameLauncherCLI {
 	 */
 	public static int getNumberDragons(Scanner scan, int mazeSize){
 		
-		int numMaxDragons = Maze.calculateMaxNumberDragons(mazeSize, Maze.minSize, Maze.minNumDragons);
+		int numMaxDragons = Maze.calculateMaxNumberDragons(mazeSize);
 		
 		if (Maze.minNumDragons == numMaxDragons){
 			System.out.println("\n		>> For the Maze size selected the maximum number of Dragons allowed is 1.\n");

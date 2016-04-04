@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
@@ -21,11 +18,9 @@ import maze.gui.CreateManualMaze;
 public class GameLauncherMaze {
 
 	private JFrame frame;
-	private JPanel backgroundPanel;
 	private MazeGame gamePanel;
 	private MazeCreator mazeCreatorPanel;
 	private Options options;
-	private Image background;
 	private static final int gamePanelSize = 600;
 	
 	private JButton btnNewGame;
@@ -42,6 +37,7 @@ public class GameLauncherMaze {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					@SuppressWarnings("unused")
 					GameLauncherMaze window = new GameLauncherMaze();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -80,12 +76,7 @@ public class GameLauncherMaze {
 		frame.getContentPane().setLayout(null);
 		
 		options = new Options();
-		
-		// TODO - REMOVER SE NAO USADO
-		ImageIcon image;
-		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
-		background = image.getImage();
-		
+				
 		/*backgroundPanel = new JPanel();
 		backgroundPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 		backgroundPanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
@@ -134,9 +125,12 @@ public class GameLauncherMaze {
 					}
 				});
 				
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+				if (gamePanel!= null)
+					if (gamePanel.getMaze().isRunning()){
+						gamePanel.requestFocus();
+					}
 				
+				// TODO - REMOVER ESTE CODIGO
 				/*JPanel mazeCreatorPanel = new MazeCreator(gamePanelSize, gamePanelSize, 1, 11);
 				mazeCreatorPanel.setBounds(1, 41, gamePanelSize, gamePanelSize);
 				mazeCreatorPanel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
@@ -156,9 +150,11 @@ public class GameLauncherMaze {
 		btnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				options.setLocationRelativeTo(frame);
-				options.setVisible(true);				
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+				options.setVisible(true);
+				if (gamePanel!= null)
+					if (gamePanel.getMaze().isRunning()){
+						gamePanel.requestFocus();
+					}			
 			}
 		});
 		btnOptions.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
@@ -179,8 +175,10 @@ public class GameLauncherMaze {
 		btnLoadGame = new JButton("Load Game");
 		btnLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gamePanel.setFocusable(true);
-				gamePanel.requestFocus();
+				if (gamePanel!= null)
+					if (gamePanel.getMaze().isRunning()){
+						gamePanel.requestFocus();
+					}
 			}
 		});
 		btnLoadGame.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
