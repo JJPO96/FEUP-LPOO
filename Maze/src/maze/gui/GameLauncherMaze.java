@@ -91,8 +91,9 @@ public class GameLauncherMaze {
 				int input = JOptionPane.showConfirmDialog(frmDragonsMaze, message);
 
 				if (input == JOptionPane.YES_OPTION){
+					gamePanel.setVisible(false);
+					frmDragonsMaze.getContentPane().remove(gamePanel);
 					gamePanel = new MazeGame(frmDragonsMaze, options.getMode(), options.getMazeSize(), options.getNumberDragons(), gamePanelSize, gamePanelSize);
-					gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);					
 					frmDragonsMaze.getContentPane().add(gamePanel, BorderLayout.CENTER);
 					gamePanel.repaint();
 					gamePanel.requestFocus();
@@ -156,6 +157,7 @@ public class GameLauncherMaze {
 		frmDragonsMaze.getContentPane().add(btnOptions);
 
 		btnLoadGame = new JButton("Play Created Maze");
+		btnLoadGame.setToolTipText("Play with your last created maze!");
 		btnLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(lastMazeCreated.isSuccesfull()){
@@ -163,8 +165,9 @@ public class GameLauncherMaze {
 					int input = JOptionPane.showConfirmDialog(frmDragonsMaze, message);
 
 					if (input == JOptionPane.YES_OPTION){
-						gamePanel = lastMazeCreated.getMazeCreated();
-						gamePanel.setBounds(1, 41, gamePanelSize, gamePanelSize);					
+						gamePanel.setVisible(false);
+						frmDragonsMaze.getContentPane().remove(gamePanel);
+						gamePanel = lastMazeCreated.getMazeCreated();					
 						frmDragonsMaze.getContentPane().add(gamePanel, BorderLayout.CENTER);
 						gamePanel.repaint();
 						gamePanel.requestFocus();
@@ -175,6 +178,7 @@ public class GameLauncherMaze {
 							gamePanel.requestFocus();
 				}else{
 					JOptionPane.showMessageDialog(gamePanel, "No valid maze created");
+					btnLoadGame.setEnabled(false);
 				}
 			}
 		});
@@ -199,13 +203,13 @@ public class GameLauncherMaze {
 			}
 		});
 		btnExit.setFont(new Font("Tempus Sans ITC", Font.BOLD, 9));
-		btnExit.setBounds(495, 0, 104, 40);
+		btnExit.setBounds(495, 0, 99, 40);
 		frmDragonsMaze.getContentPane().add(btnExit);		
 
 		frmDragonsMaze.pack();		
 		frmDragonsMaze.setVisible(true);
 	}
-
+	
 	public JFrame getFrame(){
 		return frmDragonsMaze;
 	}

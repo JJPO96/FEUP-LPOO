@@ -17,7 +17,7 @@ import maze.logic.Maze.Direction;
 
 @SuppressWarnings("serial")
 public class MazeGame extends JPanel {
-		
+
 	private Image hero;
 	private Image heroArmed;
 	private Image dragon;
@@ -31,7 +31,7 @@ public class MazeGame extends JPanel {
 	private Image exitSemiOpen;
 	private Image exitOpen;
 	private Image background;
- 
+
 	private JFrame frame;
 	private Maze maze;
 	private Maze.Direction direction = Maze.Direction.DOWN;
@@ -40,14 +40,14 @@ public class MazeGame extends JPanel {
 	private int currentFrame;
 	private int maximumFrame = 4;
 	private boolean showBackImage = true;
-	
+
 	private int x=0, y=0, width, height;
 
 	public MazeGame(){
 		loadImages();
 		repaint();
 	}
-	
+
 	public MazeGame(JFrame gameFrame, Maze.Mode mode, int mazeSize, int numDragons, int w, int h) {	
 
 		try{
@@ -61,6 +61,7 @@ public class MazeGame extends JPanel {
 			System.out.println(e.getMessage());
 		}
 		
+		this.setBounds((int)(600-mazeSize * width)/3, 41, mazeSize * width, mazeSize*height);
 		loadImages();
 		setFocusable(true);
 
@@ -77,16 +78,16 @@ public class MazeGame extends JPanel {
 						changeDirection = true;
 						frameCounter = 0;
 					}
-						
+
 					else
 						changeDirection = false;
 					direction = Maze.Direction.LEFT;
-					
+
 					if (frameCounter == 2){
 						frameCounter = 0;
 						maze.update(Maze.Direction.LEFT);
 					}
-						
+
 					repaint();
 					break;
 
@@ -98,7 +99,7 @@ public class MazeGame extends JPanel {
 					else
 						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
-					
+
 					if (frameCounter == 2){
 						frameCounter = 0;
 						maze.update(Maze.Direction.RIGHT);
@@ -114,7 +115,7 @@ public class MazeGame extends JPanel {
 					else
 						changeDirection = false;
 					direction = Maze.Direction.UP;
-					
+
 					if (frameCounter == 2){
 						frameCounter = 0;
 						maze.update(Maze.Direction.UP);
@@ -137,7 +138,7 @@ public class MazeGame extends JPanel {
 					repaint();
 					break;
 				}				
-				
+
 				if (!maze.isRunning()){
 					repaint();
 					showBackImage = true;
@@ -146,7 +147,7 @@ public class MazeGame extends JPanel {
 						JOptionPane.showMessageDialog(frame, "Game Over!");
 					else
 						JOptionPane.showMessageDialog(frame, "You Win!");
-					
+
 					repaint();
 				}
 			}
@@ -156,8 +157,8 @@ public class MazeGame extends JPanel {
 			}			
 		});
 	}
-	
-	
+
+
 	public MazeGame(Maze.Mode mode, char[][] tempMaze, int w, int h) {	
 
 		try{
@@ -169,7 +170,8 @@ public class MazeGame extends JPanel {
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-
+		
+		this.setBounds((int)(600-maze.getGameBoard().getBoard().length * width)/3, 41, maze.getGameBoard().getBoard().length * width, maze.getGameBoard().getBoard().length*height);
 		loadImages();
 		setFocusable(true);
 
@@ -186,16 +188,16 @@ public class MazeGame extends JPanel {
 						changeDirection = true;
 						frameCounter = 0;
 					}
-						
+
 					else
 						changeDirection = false;
 					direction = Maze.Direction.LEFT;
-					
+
 					if (frameCounter == 2){
 						frameCounter = 0;
 						maze.update(Maze.Direction.LEFT);
 					}
-						
+
 					repaint();
 					break;
 
@@ -207,7 +209,7 @@ public class MazeGame extends JPanel {
 					else
 						changeDirection = false;
 					direction = Maze.Direction.RIGHT;
-					
+
 					if (frameCounter == 2){
 						frameCounter = 0;
 						maze.update(Maze.Direction.RIGHT);
@@ -223,7 +225,7 @@ public class MazeGame extends JPanel {
 					else
 						changeDirection = false;
 					direction = Maze.Direction.UP;
-					
+
 					if (frameCounter == 2){
 						frameCounter = 0;
 						maze.update(Maze.Direction.UP);
@@ -246,17 +248,14 @@ public class MazeGame extends JPanel {
 					repaint();
 					break;
 				}				
-				
+
 				if (!maze.isRunning()){
-					repaint();
 					showBackImage = true;
 					setFocusable(false);
 					if (!maze.getHero().isAlive())					
 						JOptionPane.showMessageDialog(frame, "Game Over!");
 					else
 						JOptionPane.showMessageDialog(frame, "You Win!");
-					
-					repaint();
 				}
 			}
 
@@ -299,13 +298,13 @@ public class MazeGame extends JPanel {
 
 		image  =  new ImageIcon(this.getClass().getResource("res/exit.png"));
 		exit = image.getImage();
-		
+
 		image  =  new ImageIcon(this.getClass().getResource("res/exit_semiopen.png"));
 		exitSemiOpen = image.getImage();
 
 		image  =  new ImageIcon(this.getClass().getResource("res/exit_open.png"));
 		exitOpen = image.getImage();
-		
+
 		image  =  new ImageIcon(this.getClass().getResource("res/background.jpg"));
 		background = image.getImage();
 	}
@@ -316,7 +315,7 @@ public class MazeGame extends JPanel {
 		
 		if (showBackImage)
 			g.drawImage(background, 0, 0, 600, 600, 0, 0, background.getWidth(null), background.getHeight(null), null);
-			
+
 		else{
 			Position pos = new Position();
 
@@ -324,7 +323,7 @@ public class MazeGame extends JPanel {
 				for (int j = 0; j < maze.getGameBoard().getBoard()[i].length; j++){
 					pos.setX(j);
 					pos.setY(i);
-					
+
 					// Wall
 					if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.WALL.getSymbol())
 						if (i == maze.getGameBoard().getBoard().length-1)
@@ -333,7 +332,7 @@ public class MazeGame extends JPanel {
 							g.drawImage(wall, x, y, x + width, y + height, 0, 0, wall.getWidth(null), wallGrass.getHeight(null), null);
 						else
 							g.drawImage(wallGrass, x, y, x + width, y + height, 0, 0, wallGrass.getWidth(null), wallGrass.getHeight(null), null);
-					
+
 					// Exit
 					else if (maze.getGameBoard().getBoard()[i][j] == Maze.Token.EXIT.getSymbol())
 						if (maze.isMazeOpen())
@@ -342,31 +341,35 @@ public class MazeGame extends JPanel {
 							g.drawImage(exitSemiOpen, x, y, x + width, y + height, 0, 0, exitSemiOpen.getWidth(null), exitSemiOpen.getHeight(null), null);
 						else						
 							g.drawImage(exit, x, y, x + width, y + height, 0, 0, exit.getWidth(null), exit.getHeight(null), null);
-					
+
 					// Path
 					else if (maze.getGameBoard().getBoard()[i][j-1] == 'X') // Displays shadow on one side
 						g.drawImage(pathShadow, x, y, x + width, y + height, 0, 0, pathShadow.getWidth(null), pathShadow.getHeight(null), null);
 					else
 						g.drawImage(path, x, y, x + width, y + height, 0, 0, path.getWidth(null), path.getHeight(null), null);
-					
+
 					// Hero
 					if (maze.getHero().getPos().equals(pos))
 						if (maze.getHero().isArmed())
-							drawHero(g, heroArmed, x, y);
+							if (direction == Direction.DOWN)
+								drawHero(g, heroArmed, x, y-height/2, j, i);
+							else if (direction == Direction.RIGHT)
+								drawHero(g, heroArmed, x-width/2, y, j, i);
+							else
+								drawHero(g, heroArmed, x, y, j, i);
 						else{
 							if (direction == Direction.DOWN)
-								drawHero(g, hero, x, y-height/2);
+								drawHero(g, hero, x, y-height/2, j, i);
 							else if (direction == Direction.RIGHT)
-								drawHero(g, hero, x-width/2, y);
+								drawHero(g, hero, x-width/2, y, j, i);
 							else
-								drawHero(g, hero, x, y);
-						}
-							
-					
+								drawHero(g, hero, x, y, j, i);
+						}							
+
 					// Sword
 					else if (maze.getSword().getPos().equals(pos) && !maze.getSword().isPicked())
 						g.drawImage(sword, x, y, x + width, y + height, 0, 0, sword.getWidth(null), sword.getHeight(null), null);
-					
+
 					// Dragon(s)
 					else if(maze.checkDragon(pos) instanceof Dragon && maze.checkDragon(pos).isAlive()){
 						if (maze.checkDragon(pos).isSleeping())
@@ -381,39 +384,51 @@ public class MazeGame extends JPanel {
 				x = 0;
 				y+=height;
 			}		
-			
+
 			x = 0;
 			y = 0;
 		}		
 	}
-	
-	public void drawHero(Graphics g, Image sprite, int i, int j){
+
+	public void drawHero(Graphics g, Image sprite, int i, int j, int posx, int posy){
 
 		if (changeDirection == true)
 			currentFrame = 0;		
-		
+
 		if (currentFrame > maximumFrame)
-			currentFrame = 0;	
-		
+			currentFrame = 0;
+
 		switch(direction){
 		case UP:
-			g.drawImage(sprite, i, j-frameCounter*height/2, i + width, j + height-frameCounter*height/2, currentFrame * 34, 68, 34 + currentFrame * 34, 102, null);
+			if(maze.getGameBoard().getBoard()[posy-1][posx] == Maze.Token.WALL.getSymbol() || currentFrame == 0)
+				g.drawImage(sprite, i, j, i + width, j + height, 0, 68, 34, 102, null);
+			else				
+				g.drawImage(sprite, i, j-frameCounter*height/2, i + width, j + height-frameCounter*height/2, currentFrame * 34, 68, 34 + currentFrame * 34, 102, null);
 			break;
 		case DOWN:
-			g.drawImage(sprite, i, j+frameCounter*height/2, i + width, j+height+frameCounter*height/2, currentFrame * 34, 102, 34 + currentFrame * 34, 136, null);
+			if(maze.getGameBoard().getBoard()[posy+1][posx] == Maze.Token.WALL.getSymbol() || currentFrame == 0)
+				g.drawImage(sprite, i, j+height/2, i + width, j + height+height/2, 0, 102, 34, 136, null);
+			else
+				g.drawImage(sprite, i, j+frameCounter*height/2, i + width, j+height+frameCounter*height/2, currentFrame * 34, 102, 34 + currentFrame * 34, 136, null);
 			break;
 		case LEFT:
-			g.drawImage(sprite, i-frameCounter*width/2, j, i + width-frameCounter*width/2, j + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
+			if(maze.getGameBoard().getBoard()[posy][posx-1] == Maze.Token.WALL.getSymbol() || currentFrame == 0)
+				g.drawImage(sprite, i, j, i + width, j + height, 0, 0, 34, 34, null);
+			else
+				g.drawImage(sprite, i-frameCounter*width/2, j, i + width-frameCounter*width/2, j + height, currentFrame * 34, 0, 34 + currentFrame * 34, 34, null);
 			break;
 		case RIGHT:
-			g.drawImage(sprite, i+frameCounter*width/2, j, i+width+frameCounter*width/2,j + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
+			if(maze.getGameBoard().getBoard()[posy][posx+1] == Maze.Token.WALL.getSymbol() || currentFrame == 0)
+				g.drawImage(sprite, i+width/2, j, i + width+width/2, j + height, 0, 34, 34, 68, null);
+			else
+				g.drawImage(sprite, i+frameCounter*width/2, j, i+width+frameCounter*width/2,j + height, currentFrame * 34, 34, 34 + currentFrame * 34, 68, null);
 			break;
 		}
-		
+
 		frameCounter++;
 		currentFrame++;		
 	}
-		
+	
 	public Maze getMaze(){
 		return maze;
 	}

@@ -52,16 +52,14 @@ public class CreateManualMaze {
 		frmMazeCreator.setBackground(Color.WHITE);
 		frmMazeCreator.setIconImage(Toolkit.getDefaultToolkit().getImage(GameLauncherMaze.class.getResource("/maze/gui/res/dragon.png")));
 		frmMazeCreator.setTitle("Maze Creator");
-		frmMazeCreator.setBounds(100, 100, 600, 670);
-		frmMazeCreator.setPreferredSize(new Dimension(600, 670));		
+		frmMazeCreator.setBounds(100, 100, 600, 660);
+		frmMazeCreator.setPreferredSize(new Dimension(600, 660));		
 		frmMazeCreator.setResizable(false);
 		frmMazeCreator.setLocationRelativeTo(null);
 		frmMazeCreator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMazeCreator.getContentPane().setLayout(null);
 		
 		panel = new MazeCreator(gamePanelSize, gamePanelSize,dragons,size,this);
-		panel.setBounds(1, 41, gamePanelSize, gamePanelSize);
-		panel.setPreferredSize(new Dimension(gamePanelSize, gamePanelSize));
 		frmMazeCreator.getContentPane().add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panel.repaint();

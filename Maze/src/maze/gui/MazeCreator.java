@@ -41,6 +41,7 @@ public class MazeCreator extends JPanel implements MouseListener{
 		this.manMaze = manMaze;
 		this.size = size;
 		totalDragons = dragons;
+		this.setBounds((int)(w-size * width)/3, 41, size * width, size*height);
 		loadImages();
 		setFocusable(true);
 	
