@@ -167,7 +167,7 @@ public class GameLauncherMaze {
 					if (input == JOptionPane.YES_OPTION){
 						gamePanel.setVisible(false);
 						frmDragonsMaze.getContentPane().remove(gamePanel);
-						gamePanel = lastMazeCreated.getMazeCreated();					
+						gamePanel = lastMazeCreated.getMazeCreated();
 						frmDragonsMaze.getContentPane().add(gamePanel, BorderLayout.CENTER);
 						gamePanel.repaint();
 						gamePanel.requestFocus();
