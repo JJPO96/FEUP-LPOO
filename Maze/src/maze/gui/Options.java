@@ -98,7 +98,7 @@ public class Options extends JDialog {
 			mode = Mode.STATIC;
 		else if(strMode == "Moving")
 			mode = Mode.MOVING;
-		else if(strMode == "Moving and Sleepy")
+		else if(strMode == "Moving and Sleeping")
 			mode = Mode.MOVINGSLEEPING;
 		
 		JButton btnApply = new JButton("Apply");
@@ -112,7 +112,7 @@ public class Options extends JDialog {
 					mode = Mode.STATIC;
 				else if(strMode == "Moving")
 					mode = Mode.MOVING;
-				else if(strMode == "Moving and Sleepy")
+				else if(strMode == "Moving and Sleeping")
 					mode = Mode.MOVINGSLEEPING;
 				
 				closeDialog();

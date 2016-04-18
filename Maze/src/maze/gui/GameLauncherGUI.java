@@ -323,8 +323,9 @@ public class GameLauncherGUI {
 					mode = Mode.STATIC;
 				else if(strMode == "Moving")
 					mode = Mode.MOVING;
-				else if(strMode == "Moving and Sleepy")
-					mode = Mode.MOVINGSLEEPING;				
+					
+				else if(strMode == "Moving and Sleeping")
+					mode = Mode.MOVINGSLEEPING;			
 				
 				try{
 					// Reads user's inputs
