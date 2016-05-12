@@ -25,6 +25,7 @@ public class BlockBoy extends Game {
 
 	@Override
 	public void render () {
-		super.render();
+		// Renders the screen active at the time
+        super.render();
 	}
 }
