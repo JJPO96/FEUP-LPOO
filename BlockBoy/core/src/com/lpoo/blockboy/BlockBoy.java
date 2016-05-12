@@ -3,7 +3,6 @@ package com.lpoo.blockboy;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lpoo.blockboy.gui.*;
-import com.lpoo.blockboy.screens.PlayScreen;
 
 public class BlockBoy extends Game {
 
@@ -14,7 +13,6 @@ public class BlockBoy extends Game {
 		batch = new SpriteBatch();
 
 		// TODO - MUDAR PARA O MENU SCREEN NA VERSAO FINAL PARA MOSTRAR MENU
-        //setScreen(new GameScreen(this));
         setScreen(new GameScreen(this));
 	}
 

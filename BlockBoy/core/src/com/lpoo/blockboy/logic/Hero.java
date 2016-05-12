@@ -1,6 +1,10 @@
 package com.lpoo.blockboy.logic;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.lpoo.blockboy.gui.GameScreen;
 
 /**
@@ -12,6 +16,7 @@ public class Hero extends GameElement {
     private State currentState;
     private State previousState;
     private boolean carryBock = false;
+    public Body b2body;
 
     /**
      * Hero's constructor
@@ -22,11 +27,22 @@ public class Hero extends GameElement {
         super(screen);
         currentState = State.STANDING;
         previousState = State.STANDING;
+
+        // Create the body of the Hero
+        initElement();
     }
 
     @Override
     public void initElement() {
-
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(32/ GameScreen.PPM, 64/ GameScreen.PPM);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(16 / GameScreen.PPM);
+        fdef.shape = shape;
+        b2body.createFixture(fdef);
     }
 
     @Override

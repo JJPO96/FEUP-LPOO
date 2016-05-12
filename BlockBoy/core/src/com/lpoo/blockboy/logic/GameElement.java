@@ -23,8 +23,7 @@ public abstract class GameElement extends Sprite {
      */
     public GameElement(GameScreen screen){
         this.screen = screen;
-        // TODO - CORRIGIR
-        //this.world = screen.getWorld();
+        this.world = screen.getWorld();
     }
 
     public abstract void initElement();

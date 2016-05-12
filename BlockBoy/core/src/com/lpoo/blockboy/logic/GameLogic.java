@@ -1,5 +1,8 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.physics.box2d.World;
+import com.lpoo.blockboy.gui.GameScreen;
+
 import java.util.ArrayList;
 
 /**
@@ -12,7 +15,14 @@ public class GameLogic {
     private ArrayList<Block> blocks;
     private Boolean running = true;
 
-    public GameLogic(){}
+    private GameScreen screen;
+    private World world;
+
+    public GameLogic(GameScreen screen){
+        // TODO - implementar aqui a logica do jogo
+        this.screen = screen;
+        this.world = screen.getWorld();
+    }
 
     public void update(){}
 
