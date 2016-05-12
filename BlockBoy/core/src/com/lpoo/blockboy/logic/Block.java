@@ -14,7 +14,7 @@ public class Block extends GameElement {
      *
      * @param screen where the block will be displayed
      */
-    Block (GameScreen screen){
+    public Block (GameScreen screen){
         super(screen);
     }
 

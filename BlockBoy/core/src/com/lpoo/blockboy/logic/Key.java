@@ -14,7 +14,7 @@ public class Key extends GameElement {
      *
      * @param screen where the key will be displayed
      */
-    Key (GameScreen screen){
+    public Key (GameScreen screen){
         super(screen);
     }
 

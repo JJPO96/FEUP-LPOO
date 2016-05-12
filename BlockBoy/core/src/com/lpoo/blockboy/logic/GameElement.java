@@ -15,16 +15,16 @@ public abstract class GameElement extends Sprite {
     protected World world;
     protected Body body;
     protected GameScreen screen;
-    Map map;
 
     /**
      * GameElement's Constructor
      *
      * @param screen where the element will be displayed
      */
-    GameElement(GameScreen screen){
+    public GameElement(GameScreen screen){
         this.screen = screen;
-        this.world = screen.getWorld();
+        // TODO - CORRIGIR
+        //this.world = screen.getWorld();
     }
 
     public abstract void initElement();

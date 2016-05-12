@@ -3,6 +3,7 @@ package com.lpoo.blockboy;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lpoo.blockboy.gui.*;
+import com.lpoo.blockboy.screens.PlayScreen;
 
 public class BlockBoy extends Game {
 

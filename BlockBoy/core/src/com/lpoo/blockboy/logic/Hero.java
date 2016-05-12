@@ -8,7 +8,7 @@ import com.lpoo.blockboy.gui.GameScreen;
  */
 public class Hero extends GameElement {
 
-    private enum State {STANDING, RUNNING, JUMPING, FALLING, CARRYBLOCK}
+    private enum State {STANDING, RUNNING, JUMPING, FALLING}
     private State currentState;
     private State previousState;
     private boolean carryBock = false;
@@ -18,7 +18,7 @@ public class Hero extends GameElement {
      *
      * @param screen where the Hero will be displayed
      */
-    Hero (GameScreen screen){
+    public Hero (GameScreen screen){
         super(screen);
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -33,6 +33,8 @@ public class Hero extends GameElement {
     public void update() {
 
     }
+
+    public void run(){}
 
     public void jump(){
         if (currentState != State.JUMPING ) {
