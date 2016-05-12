@@ -1,5 +1,7 @@
 package com.lpoo.blockboy.logic;
 
+import com.lpoo.blockboy.gui.GameScreen;
+
 /**
  * Class that represents a key
  */
@@ -10,11 +12,20 @@ public class Key extends GameElement {
     /**
      * Key's constructor
      *
-     * @param x coordinate of the key
-     * @param y coordinate of the key
+     * @param screen where the key will be displayed
      */
-    Key(int x, int y){
-        super(x, y);
+    Key (GameScreen screen){
+        super(screen);
+    }
+
+    @Override
+    public void initElement() {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 
     /**

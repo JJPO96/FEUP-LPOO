@@ -1,22 +1,47 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.math.Vector2;
+import com.lpoo.blockboy.gui.GameScreen;
+
 /**
  * Class that represents the hero of the game
  */
 public class Hero extends GameElement {
 
+    private enum State {STANDING, RUNNING, JUMPING, FALLING, CARRYBLOCK}
+    private State currentState;
+    private State previousState;
     private boolean carryBock = false;
 
     /**
      * Hero's constructor
      *
-     * @param x coordinate of the Hero
-     * @param y coordinate of the Hero
+     * @param screen where the Hero will be displayed
      */
-    Hero (int x, int y){
-        super(x, y);
+    Hero (GameScreen screen){
+        super(screen);
+        currentState = State.STANDING;
+        previousState = State.STANDING;
     }
 
+    @Override
+    public void initElement() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    public void jump(){
+        if (currentState != State.JUMPING ) {
+            body.applyLinearImpulse(new Vector2(0, 2f), body.getWorldCenter(), true);
+            currentState = State.JUMPING;
+        }
+    }
+
+    // TODO - DECIDIR SE ESTAS FUNÇÕES SÃO OU NAO REUTILIZAVEIS USANDO-SE MAQUINA DE ESTADOS
     /**
      * Changes the Hero state about carrying the box
      *

@@ -1,5 +1,7 @@
 package com.lpoo.blockboy.logic;
 
+import com.lpoo.blockboy.gui.GameScreen;
+
 /**
  * Class that represents a block
  */
@@ -8,13 +10,22 @@ public class Block extends GameElement {
     private boolean picked = false;
 
     /**
-     * Box's constructor
+     * Block's constructor
      *
-     * @param x coordinate of the key
-     * @param y coordinate of the key
+     * @param screen where the block will be displayed
      */
-    Block(int x, int y){
-        super(x, y);
+    Block (GameScreen screen){
+        super(screen);
+    }
+
+    @Override
+    public void initElement() {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 
     /**
