@@ -57,14 +57,14 @@ public class GameScreen implements Screen {
         return world;
     }
 
-    public void handInput(float deltaTime){
+    public void input(float deltaTime){
         // TODO - CORRIGIR PARA OS INPUTS CORRETOS
         if (Gdx.input.isTouched())
             gameCam.position.x+=50*deltaTime;
     }
 
     public void update (float deltaTime){
-        handInput(deltaTime);
+        input(deltaTime);
         gameCam.update();
         mapRenderer.setView(gameCam);
     }
