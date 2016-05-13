@@ -16,7 +16,6 @@ public class Hero extends GameElement {
     private State currentState;
     private State previousState;
     private boolean carryBock = false;
-    public Body b2body;
 
     /**
      * Hero's constructor
@@ -29,20 +28,24 @@ public class Hero extends GameElement {
         previousState = State.STANDING;
 
         // Create the body of the Hero
-        initElement();
+        init();
     }
 
+    /**
+     * Initializes the hero and creates its body
+     */
     @Override
-    public void initElement() {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(32/ GameScreen.PPM, 64/ GameScreen.PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
+    public void init() {
+        // TODO - CORRIGIR POSIÇAO INICILA DO HEROI CONSOANTE O MAPA ESCOLHIDO
+        bodyDef = new BodyDef();
+        bodyDef.position.set(200/ GameScreen.PPM, 64/ GameScreen.PPM);
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bodyDef);
+        fixtureDef = new FixtureDef();
+        shape = new CircleShape();
         shape.setRadius(16 / GameScreen.PPM);
-        fdef.shape = shape;
-        b2body.createFixture(fdef);
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
     }
 
     @Override
@@ -50,13 +53,19 @@ public class Hero extends GameElement {
 
     }
 
-    public void run(){}
+    public void run(float dist){
+        body.applyLinearImpulse(new Vector2(dist, 0), body.getWorldCenter(), true);
+        currentState = State.RUNNING;
+    }
 
     public void jump(){
         if (currentState != State.JUMPING ) {
-            body.applyLinearImpulse(new Vector2(0, 2f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
+
+        // TODO - REMOVER/CORRIGIR - HEROI SEM ISTO NAO SALTA NA VERTICAL QD ESTÁ PARADO
+        currentState = State.STANDING;
     }
 
     // TODO - DECIDIR SE ESTAS FUNÇÕES SÃO OU NAO REUTILIZAVEIS USANDO-SE MAQUINA DE ESTADOS

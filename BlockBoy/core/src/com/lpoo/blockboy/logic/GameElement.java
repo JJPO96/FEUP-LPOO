@@ -2,8 +2,10 @@ package com.lpoo.blockboy.logic;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.lpoo.blockboy.gui.GameScreen;
 
@@ -12,9 +14,15 @@ import com.lpoo.blockboy.gui.GameScreen;
  */
 public abstract class GameElement extends Sprite {
 
-    protected World world;
-    protected Body body;
+    // Screen
     protected GameScreen screen;
+
+    // Box2d variables
+    protected Body body;
+    protected BodyDef bodyDef;
+    protected FixtureDef fixtureDef;
+    protected CircleShape shape;
+    protected World world;
 
     /**
      * GameElement's Constructor
@@ -26,7 +34,10 @@ public abstract class GameElement extends Sprite {
         this.world = screen.getWorld();
     }
 
-    public abstract void initElement();
+    /**
+     * Initializes an element of the game and creates its body
+     */
+    public abstract void init();
 
     public abstract void update();
 

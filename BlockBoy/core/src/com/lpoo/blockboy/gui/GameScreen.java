@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.Rectangle;
 import com.lpoo.blockboy.BlockBoy;
+import com.lpoo.blockboy.logic.GameLogic;
 import com.lpoo.blockboy.logic.Hero;
 
 /**
@@ -34,6 +35,7 @@ public class GameScreen implements Screen {
     public static final float PPM = 100;
 
     private BlockBoy game;
+    private GameLogic gameLogic;
 
     // Box2d variables
     private World world;
@@ -48,17 +50,16 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
 
-    // Game Elements
-    private Hero player;
-
-
     public GameScreen(BlockBoy game){
         this.game = game;
+
         // Creates a camera to follow the hero
         this.gameCam = new OrthographicCamera();
+
         // This enables to keep aspect ratio despite of screen size
         gamePort = new FitViewport(VWIDTH / GameScreen.PPM, VHEIGHT / GameScreen.PPM, gameCam);
 
+        // Prepares the map to be rendered
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("levels/level1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / GameScreen.PPM);
@@ -67,75 +68,21 @@ public class GameScreen implements Screen {
         // Create a Box2D world, setting no gravity in X axis, -9.8 gravity in Y axis
         world = new World(new Vector2(0, -9.8f), true);
 
-        // TODO - Passar para uma função dentro da logica de jogo
-        player = new Hero(this);
+        // Creates an instance of logic of the game itself
+        gameLogic = new GameLogic(this);
 
         boxDebug = new Box2DDebugRenderer();
-
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-
-        for (MapObject object: map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ GameScreen.PPM, (rect.getY()+rect.getHeight()/2)/ GameScreen.PPM);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ GameScreen.PPM, rect.getHeight()/2/ GameScreen.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        for (MapObject object: map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ GameScreen.PPM, (rect.getY()+rect.getHeight()/2)/ GameScreen.PPM);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ GameScreen.PPM, rect.getHeight()/2/ GameScreen.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        for (MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ GameScreen.PPM, (rect.getY()+rect.getHeight()/2)/ GameScreen.PPM);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ GameScreen.PPM, rect.getHeight()/2/ GameScreen.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        for (MapObject object: map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ GameScreen.PPM, (rect.getY()+rect.getHeight()/2)/ GameScreen.PPM);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ GameScreen.PPM, rect.getHeight()/2/ GameScreen.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        for (MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ GameScreen.PPM, (rect.getY()+rect.getHeight()/2)/ GameScreen.PPM);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ GameScreen.PPM, rect.getHeight()/2/ GameScreen.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
     }
 
     public void handleInput(float delta){
         // TODO - PASSAR AS KEYS DO INPUT PARA ALGO DETETAVEL PELO TLM
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-            player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
-            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            gameLogic.getHero().jump();
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
+            gameLogic.getHero().run(0.1f);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && gameLogic.getHero().getBody().getLinearVelocity().x >= -2)
+            gameLogic.getHero().run(-0.1f);
+
     }
 
     public void update(float delta){
@@ -144,7 +91,8 @@ public class GameScreen implements Screen {
 
         // TODO - MAKE CAMERA FOLLOW HERO ALSO IN Y AXIS
         // Makes the camera follow the hero
-        gameCam.position.x = player.b2body.getPosition().x;
+        gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;
+        gameCam.position.y = gameLogic.getHero().getBody().getPosition().y;
 
         gameCam.update();
         // Tells renderer to only draw what the camera can see
@@ -153,6 +101,10 @@ public class GameScreen implements Screen {
 
     public World getWorld(){
         return world;
+    }
+
+    public TiledMap getMap(){
+        return map;
     }
 
     @Override

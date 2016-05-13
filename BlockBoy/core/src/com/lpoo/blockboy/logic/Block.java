@@ -1,5 +1,6 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.maps.MapObject;
 import com.lpoo.blockboy.gui.GameScreen;
 
 /**
@@ -8,18 +9,20 @@ import com.lpoo.blockboy.gui.GameScreen;
 public class Block extends GameElement {
 
     private boolean picked = false;
+    private MapObject objet;
 
     /**
      * Block's constructor
      *
      * @param screen where the block will be displayed
      */
-    public Block (GameScreen screen){
+    public Block (GameScreen screen, MapObject object){
         super(screen);
+        this.objet = object;
     }
 
     @Override
-    public void initElement() {
+    public void init() {
 
     }
 
