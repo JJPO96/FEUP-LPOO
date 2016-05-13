@@ -1,5 +1,6 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -12,10 +13,14 @@ import com.lpoo.blockboy.gui.GameScreen;
  */
 public class Hero extends GameElement {
 
+    // TODO - CORRIGIR AS TEXTURES (VER CLASSE GAMEELEMENT QUE ESTA A FUNCIONAR APAENAS PARA A CLASSE HERO)
     private enum State {STANDING, RUNNING, JUMPING, FALLING}
     private State currentState;
     private State previousState;
     private boolean carryBock = false;
+
+    // Textures
+    private TextureRegion heroStannding;
 
     /**
      * Hero's constructor
@@ -23,6 +28,7 @@ public class Hero extends GameElement {
      * @param screen where the Hero will be displayed
      */
     public Hero (GameScreen screen){
+        //super(screen.getAtlas().findRegion("frame-1"));
         super(screen);
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -43,14 +49,20 @@ public class Hero extends GameElement {
         body = world.createBody(bodyDef);
         fixtureDef = new FixtureDef();
         shape = new CircleShape();
-        shape.setRadius(16 / GameScreen.PPM);
+        shape.setRadius(32 / GameScreen.PPM);
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
+
+        // Create textures
+        heroStannding = new TextureRegion(getTexture(), 1, 412, 307, 409);
+        setBounds(0, 0, 48 / GameScreen.PPM, 64 / GameScreen.PPM);
+        setRegion(heroStannding);
     }
 
+    // TODO - FALTA TERMINAR
     @Override
     public void update() {
-
+        setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y - getHeight()/2);
     }
 
     public void run(float dist){

@@ -1,0 +1,33 @@
+
+crocoherorun.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+frame-1
+  rotate: false
+  xy: 1, 412
+  size: 307, 409
+  orig: 307, 409
+  offset: 0, 0
+  index: -1
+frame-2
+  rotate: false
+  xy: 1, 1
+  size: 307, 409
+  orig: 307, 409
+  offset: 0, 0
+  index: -1
+frame-3
+  rotate: false
+  xy: 310, 412
+  size: 307, 409
+  orig: 307, 409
+  offset: 0, 0
+  index: -1
+frame-4
+  rotate: false
+  xy: 310, 1
+  size: 307, 409
+  orig: 307, 409
+  offset: 0, 0
+  index: -1

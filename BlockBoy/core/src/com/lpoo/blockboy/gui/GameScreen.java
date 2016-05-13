@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -31,11 +32,14 @@ public class GameScreen implements Screen {
 
     // Variables to be used to keep aspect ratio for any screen size
     private static final int VWIDTH = 800;
-    private static final int VHEIGHT = 450;
+    private static final int VHEIGHT = 520;
     public static final float PPM = 100;
 
     private BlockBoy game;
     private GameLogic gameLogic;
+
+    // Sprites
+    private TextureAtlas atlas;
 
     // Box2d variables
     private World world;
@@ -52,6 +56,9 @@ public class GameScreen implements Screen {
 
     public GameScreen(BlockBoy game){
         this.game = game;
+
+        // Creating an atlas
+        atlas = new TextureAtlas("sprites/hero/crocoherorun.pack");
 
         // Creates a camera to follow the hero
         this.gameCam = new OrthographicCamera();
@@ -89,10 +96,12 @@ public class GameScreen implements Screen {
         handleInput(delta);
         world.step(1 / 60f, 6, 2);
 
+        // Updates the game itself
+        gameLogic.update();
         // TODO - MAKE CAMERA FOLLOW HERO ALSO IN Y AXIS
+
         // Makes the camera follow the hero
         gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;
-        gameCam.position.y = gameLogic.getHero().getBody().getPosition().y;
 
         gameCam.update();
         // Tells renderer to only draw what the camera can see
@@ -105,6 +114,10 @@ public class GameScreen implements Screen {
 
     public TiledMap getMap(){
         return map;
+    }
+
+    public TextureAtlas getAtlas(){
+        return atlas;
     }
 
     @Override
@@ -125,7 +138,11 @@ public class GameScreen implements Screen {
 
         // Box2DDebugRenderer renderer
         boxDebug.render(world, gameCam.combined);
+
         game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        gameLogic.getHero().draw(game.batch);
+        game.batch.end();
     }
 
     @Override
@@ -153,5 +170,7 @@ public class GameScreen implements Screen {
     public void dispose() {
         world.dispose();
         mapRenderer.dispose();
+        map.dispose();
+        boxDebug.dispose();
     }
 }

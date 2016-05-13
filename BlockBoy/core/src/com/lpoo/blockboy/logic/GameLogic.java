@@ -45,6 +45,7 @@ public class GameLogic {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
+        //  Create ground
         for (MapObject object: screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -55,6 +56,7 @@ public class GameLogic {
             body.createFixture(fdef);
         }
 
+        // Create key
         for (MapObject object: screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -65,6 +67,7 @@ public class GameLogic {
             body.createFixture(fdef);
         }
 
+        // Create exit
         for (MapObject object: screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -75,6 +78,7 @@ public class GameLogic {
             body.createFixture(fdef);
         }
 
+        // Create blocks
         for (MapObject object: screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -85,6 +89,7 @@ public class GameLogic {
             body.createFixture(fdef);
         }
 
+        // Create bricks
         for (MapObject object: screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -96,10 +101,13 @@ public class GameLogic {
         }
     }
 
+    // TODO - FALTA TERMINAR
     /**
      * Updates the game
      */
-    public void update(){}
+    public void update(){
+        hero.update();
+    }
 
     public boolean isGameRunning(){
         return running;
