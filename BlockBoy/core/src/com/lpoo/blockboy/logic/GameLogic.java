@@ -105,8 +105,8 @@ public class GameLogic {
     /**
      * Updates the game
      */
-    public void update(){
-        hero.update();
+    public void update(float delta){
+        hero.update(delta);
     }
 
     public boolean isGameRunning(){

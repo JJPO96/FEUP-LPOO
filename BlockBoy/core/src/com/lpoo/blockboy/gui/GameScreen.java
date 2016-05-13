@@ -58,7 +58,7 @@ public class GameScreen implements Screen {
         this.game = game;
 
         // Creating an atlas
-        atlas = new TextureAtlas("sprites/hero/crocoherorun.pack");
+        atlas = new TextureAtlas("sprites/hero/herosprite.pack");
 
         // Creates a camera to follow the hero
         this.gameCam = new OrthographicCamera();
@@ -97,7 +97,7 @@ public class GameScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         // Updates the game itself
-        gameLogic.update();
+        gameLogic.update(delta);
         // TODO - MAKE CAMERA FOLLOW HERO ALSO IN Y AXIS
 
         // Makes the camera follow the hero

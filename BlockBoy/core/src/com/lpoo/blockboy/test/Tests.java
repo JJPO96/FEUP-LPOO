@@ -8,7 +8,7 @@ public class Tests {
     // Verificar se heroi consegue andar/saltar
     // Verificar se o heroi nao consegue passar pelos obstáculos
     // Verficar se o heroi consegue colocar blocos uns por cima dos outros
-    // Verificar se o heroi consegue saltar por cima de pequenos obstaculos
+    // Verificar se o heroi consegue saltar para cima de pequenos obstaculos
     // Verificar se o heroi consegue apanhar um block
     // Verificar se o heroi consegue pousar um block
     // Verificar se o heroi consegue apanhar a chave

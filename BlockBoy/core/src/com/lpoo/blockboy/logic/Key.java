@@ -27,7 +27,7 @@ public class Key extends GameElement {
     }
 
     @Override
-    public void update() {
+    public void update(float delta) {
 
     }
 

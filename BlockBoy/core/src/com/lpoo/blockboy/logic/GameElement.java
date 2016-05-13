@@ -24,13 +24,14 @@ public abstract class GameElement extends Sprite {
     protected CircleShape shape;
     protected World world;
 
+    // TODO - CORRIGIR ESTE CONSTRUTOR
     /**
      * GameElement's Constructor
      *
      * @param screen where the element will be displayed
      */
     public GameElement(GameScreen screen){
-        super(screen.getAtlas().findRegion("frame-2"));
+        super(screen.getAtlas().findRegion("herosprite"));
         this.screen = screen;
         this.world = screen.getWorld();
     }
@@ -40,7 +41,7 @@ public abstract class GameElement extends Sprite {
      */
     public abstract void init();
 
-    public abstract void update();
+    public abstract void update(float delta);
 
     public World getWorld(){ return world;}
 

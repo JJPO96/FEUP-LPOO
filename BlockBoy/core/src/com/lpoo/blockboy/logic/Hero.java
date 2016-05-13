@@ -1,11 +1,13 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 import com.lpoo.blockboy.gui.GameScreen;
 
 /**
@@ -20,7 +22,14 @@ public class Hero extends GameElement {
     private boolean carryBock = false;
 
     // Textures
-    private TextureRegion heroStannding;
+    // TODO - TROCAR HEROSTANDING
+    private TextureRegion heroJumping;
+    private TextureRegion heroFalling;
+    private Animation heroRunning;
+    private Animation heroStanding;
+
+    private float stateTimer;
+    private Boolean facingRight;
 
     /**
      * Hero's constructor
@@ -32,8 +41,10 @@ public class Hero extends GameElement {
         super(screen);
         currentState = State.STANDING;
         previousState = State.STANDING;
+        stateTimer = 0;
+        facingRight = true;
 
-        // Create the body of the Hero
+        // Creates the body of the Hero
         init();
     }
 
@@ -54,15 +65,104 @@ public class Hero extends GameElement {
         body.createFixture(fixtureDef);
 
         // Create textures
-        heroStannding = new TextureRegion(getTexture(), 1, 412, 307, 409);
+        loadTextures();
+    }
+
+    public void loadTextures(){
+
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+
+        // Creates running animation
+        for (int i = 0; i < 4; i++){
+            frames.add(new TextureRegion(getTexture(), 1+ i*307, 1, 307, 409 ));
+        }
+
+        heroRunning = new Animation(0.1f, frames);
+        frames.clear();
+
+        // Creates standing animation
+        for (int i = 4; i < 6; i++){
+            frames.add(new TextureRegion(getTexture(), 1+ i*307, 1, 307, 409 ));
+        }
+
+        heroStanding = new Animation(0.16f, frames);
+        frames.clear();
+
+        // Creates jumping texture
+        heroJumping = new TextureRegion(getTexture(), 1+6*307, 1, 307, 409);
         setBounds(0, 0, 48 / GameScreen.PPM, 64 / GameScreen.PPM);
-        setRegion(heroStannding);
+
+        // Creates falling texture
+        heroFalling = new TextureRegion(getTexture(), 1+7*307, 1, 307, 409);
+        setBounds(0, 0, 48 / GameScreen.PPM, 64 / GameScreen.PPM);
     }
 
     // TODO - FALTA TERMINAR
     @Override
-    public void update() {
-        setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y - getHeight()/2);
+    public void update(float delta) {
+        // Makes the sprite (hero itself) to move within the graphical body in the world
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setRegion(getFrame(delta));
+    }
+
+    /**
+     * Returns the current frame
+     *
+     * @param delta time passed
+     * @return frame
+     */
+    public TextureRegion getFrame(float delta){
+        currentState = getState();
+        TextureRegion region;
+
+        switch (currentState){
+            case JUMPING:
+                region = heroJumping;
+                break;
+            case FALLING:
+                region = heroFalling;
+                break;
+            case RUNNING:
+                region = heroRunning.getKeyFrame(stateTimer, true);
+                break;
+            case STANDING:
+            default:
+                region = heroStanding.getKeyFrame(stateTimer, true);
+                break;
+        }
+
+        // If the hero is running or tuning to the left
+        if ((body.getLinearVelocity().x < 0 || !facingRight) && !region.isFlipX()){
+            // Flips the sprite (first parameter x, second y)
+            region.flip(true, false);
+            facingRight = false;
+        }
+
+        else if ((body.getLinearVelocity().x > 0 || facingRight) && region.isFlipX()){
+            region.flip(true, false);
+            facingRight = true;
+        }
+
+        stateTimer = currentState == previousState ? stateTimer + delta : 0;
+        previousState = currentState;
+
+        return region;
+    }
+
+    /**
+     * Returns the current state of the hero
+     *
+     * @return the state of the hero
+     */
+    public State getState(){
+        if (body.getLinearVelocity().y > 0)
+            return State.JUMPING;
+        else if (body.getLinearVelocity().y < 0)
+            return State.FALLING;
+        else if (body.getLinearVelocity().x != 0)
+            return State.RUNNING;
+        else
+            return State.STANDING;
     }
 
     public void run(float dist){
@@ -71,13 +171,10 @@ public class Hero extends GameElement {
     }
 
     public void jump(){
-        if (currentState != State.JUMPING ) {
+        if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
             body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
-
-        // TODO - REMOVER/CORRIGIR - HEROI SEM ISTO NAO SALTA NA VERTICAL QD ESTÁ PARADO
-        currentState = State.STANDING;
     }
 
     // TODO - DECIDIR SE ESTAS FUNÇÕES SÃO OU NAO REUTILIZAVEIS USANDO-SE MAQUINA DE ESTADOS
