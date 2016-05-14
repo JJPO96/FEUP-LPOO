@@ -85,7 +85,7 @@ public class Hero extends GameElement {
             frames.add(new TextureRegion(getTexture(), 1+ i*307, 1, 307, 409 ));
         }
 
-        heroStanding = new Animation(0.16f, frames);
+        heroStanding = new Animation(0.14f, frames);
         frames.clear();
 
         // Creates jumping texture
@@ -166,7 +166,10 @@ public class Hero extends GameElement {
     }
 
     public void run(float dist){
-        body.applyLinearImpulse(new Vector2(dist, 0), body.getWorldCenter(), true);
+        // Makes the hero run. Sets also a maximum speed
+        if (body.getLinearVelocity().x > -3f && body.getLinearVelocity().x < 3f)
+            body.applyLinearImpulse(new Vector2(dist, 0), body.getWorldCenter(), true);
+
         currentState = State.RUNNING;
     }
 

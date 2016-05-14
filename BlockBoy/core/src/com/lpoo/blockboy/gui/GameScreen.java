@@ -2,6 +2,7 @@ package com.lpoo.blockboy.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,6 +25,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.logic.GameLogic;
 import com.lpoo.blockboy.logic.Hero;
+
+import sun.rmi.runtime.Log;
 
 /**
  * Created by Manuel Gomes on 12/05/2016.
@@ -83,6 +86,17 @@ public class GameScreen implements Screen {
 
     public void handleInput(float delta){
         // TODO - PASSAR AS KEYS DO INPUT PARA ALGO DETETAVEL PELO TLM
+
+        // TODO - Testar para o caso de multitouch
+        // Hero is always at the center of the screen
+        if (Gdx.input.isTouched()) {
+            if (Gdx.input.getX() > Gdx.graphics.getWidth()/2)
+                gameLogic.getHero().run(0.1f);
+            else if (Gdx.input.getX() < Gdx.graphics.getWidth()/2)
+                gameLogic.getHero().run(-0.1f);
+        }
+
+        // TODO - REMOVER - DESKTOP KEYS
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
@@ -116,14 +130,10 @@ public class GameScreen implements Screen {
         return map;
     }
 
-    public TextureAtlas getAtlas(){
-        return atlas;
-    }
+    public TextureAtlas getAtlas(){ return atlas; }
 
     @Override
-    public void show() {
-
-    }
+    public void show() {}
 
     @Override
     public void render(float delta) {
@@ -152,19 +162,13 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
@@ -173,4 +177,6 @@ public class GameScreen implements Screen {
         map.dispose();
         boxDebug.dispose();
     }
+
+
 }
