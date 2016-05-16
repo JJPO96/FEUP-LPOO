@@ -13,6 +13,7 @@ public class BlockBoy extends Game {
 		batch = new SpriteBatch();
 
 		// TODO - MUDAR PARA O MENU SCREEN NA VERSAO FINAL PARA MOSTRAR MENU
+		// CRIAR AQUI UM GAMELOOP - WHILE GAME IS NOT OVER - UPDATE SCREEN IN USE
         setScreen(new GameScreen(this));
 	}
 
