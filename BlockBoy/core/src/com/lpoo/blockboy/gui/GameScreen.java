@@ -134,6 +134,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {}
+    
+    
+    // TODO - SEPARAR RENDER EM "UPDATE GAME" E EM "DRAW GAME"?
 
     @Override
     public void render(float delta) {
