@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class GameLogic {
 
     private Hero hero;
-    private Key key;
+    private ArrayList<Coin> coins;
     private ArrayList<Block> blocks;
     private Boolean running = true;
 
@@ -36,9 +36,7 @@ public class GameLogic {
     // TODO - CRIAR TODOS OS ELEMENTOS DE JOGO AQUI
     public void init(){
         hero = new Hero(screen);
-
-
-
+        coins = new ArrayList<Coin>();
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -56,15 +54,9 @@ public class GameLogic {
             body.createFixture(fdef);
         }
 
-        // Create key
+        // Create coins
         for (MapObject object: screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ GameScreen.PPM, (rect.getY()+rect.getHeight()/2)/ GameScreen.PPM);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ GameScreen.PPM, rect.getHeight()/2/ GameScreen.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            coins.add(new Coin (screen, object));
         }
 
         // Create exit
@@ -107,6 +99,8 @@ public class GameLogic {
      */
     public void update(float delta){
         hero.update(delta);
+        for (Coin coin: coins)
+            coin.update(delta);
     }
 
     public boolean isGameRunning(){
@@ -115,5 +109,9 @@ public class GameLogic {
 
     public Hero getHero(){
         return hero;
+    }
+
+    public ArrayList<Coin> getCoins() {
+        return coins;
     }
 }

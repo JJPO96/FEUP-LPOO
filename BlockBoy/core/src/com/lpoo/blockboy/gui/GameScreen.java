@@ -2,31 +2,20 @@ package com.lpoo.blockboy.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.math.Rectangle;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.logic.GameLogic;
-import com.lpoo.blockboy.logic.Hero;
-
-import sun.rmi.runtime.Log;
 
 /**
  * Created by Manuel Gomes on 12/05/2016.
@@ -61,7 +50,7 @@ public class GameScreen implements Screen {
         this.game = game;
 
         // Creating an atlas
-        atlas = new TextureAtlas("sprites/hero/herosprite.pack");
+        atlas = new TextureAtlas("sprites/gamesprites.pack");
 
         // Creates a camera to follow the hero
         this.gameCam = new OrthographicCamera();
@@ -112,11 +101,10 @@ public class GameScreen implements Screen {
 
         // Updates the game itself
         gameLogic.update(delta);
-        // TODO - MAKE CAMERA FOLLOW HERO ALSO IN Y AXIS
 
         // Makes the camera follow the hero
         gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;
-
+        gameCam.position.y = gameLogic.getHero().getBody().getPosition().y;
         gameCam.update();
         // Tells renderer to only draw what the camera can see
         mapRenderer.setView(gameCam);
@@ -154,7 +142,11 @@ public class GameScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
+        // Draw hero
         gameLogic.getHero().draw(game.batch);
+        // Draw game elements
+        for (int i = 0; i < gameLogic.getCoins().size(); i++)
+            gameLogic.getCoins().get(i).draw(game.batch);
         game.batch.end();
     }
 

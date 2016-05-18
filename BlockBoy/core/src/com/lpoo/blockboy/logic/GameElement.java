@@ -21,7 +21,6 @@ public abstract class GameElement extends Sprite {
     protected Body body;
     protected BodyDef bodyDef;
     protected FixtureDef fixtureDef;
-    protected CircleShape shape;
     protected World world;
 
     // TODO - CORRIGIR ESTE CONSTRUTOR
@@ -30,8 +29,8 @@ public abstract class GameElement extends Sprite {
      *
      * @param screen where the element will be displayed
      */
-    public GameElement(GameScreen screen){
-        super(screen.getAtlas().findRegion("herosprite"));
+    public GameElement(GameScreen screen, String region){
+        super(screen.getAtlas().findRegion(region));
         this.screen = screen;
         this.world = screen.getWorld();
     }
@@ -40,6 +39,8 @@ public abstract class GameElement extends Sprite {
      * Initializes an element of the game and creates its body
      */
     public abstract void init();
+
+    public abstract void loadTextures();
 
     public abstract void update(float delta);
 

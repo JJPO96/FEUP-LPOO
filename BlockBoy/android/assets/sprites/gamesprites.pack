@@ -1,0 +1,19 @@
+
+gamesprites.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+coinpack
+  rotate: false
+  xy: 1, 1
+  size: 4988, 515
+  orig: 4988, 515
+  offset: 0, 0
+  index: -1
+herosprite
+  rotate: false
+  xy: 4991, 2
+  size: 2515, 514
+  orig: 2515, 514
+  offset: 0, 0
+  index: -1

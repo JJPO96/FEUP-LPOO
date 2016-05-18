@@ -17,12 +17,18 @@ public class Block extends GameElement {
      * @param screen where the block will be displayed
      */
     public Block (GameScreen screen, MapObject object){
-        super(screen);
+        //TODO - MUDAR
+        super(screen, "herosprite");
         this.objet = object;
     }
 
     @Override
     public void init() {
+
+    }
+
+    @Override
+    public void loadTextures() {
 
     }
 

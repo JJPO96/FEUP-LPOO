@@ -28,6 +28,8 @@ public class Hero extends GameElement {
     private Animation heroRunning;
     private Animation heroStanding;
 
+    protected CircleShape shape;
+
     private float stateTimer;
     private Boolean facingRight;
 
@@ -37,8 +39,7 @@ public class Hero extends GameElement {
      * @param screen where the Hero will be displayed
      */
     public Hero (GameScreen screen){
-        //super(screen.getAtlas().findRegion("frame-1"));
-        super(screen);
+        super(screen, "herosprite");
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -53,8 +54,11 @@ public class Hero extends GameElement {
      */
     @Override
     public void init() {
-        // TODO - CORRIGIR POSIÇAO INICILA DO HEROI CONSOANTE O MAPA ESCOLHIDO
+        // TODO - CORRIGIR POSIÇAO INICIAL DO HEROI CONSOANTE O MAPA ESCOLHIDO
         bodyDef = new BodyDef();
+
+        // TODO CRIAR DIRETAMENTE NO MAPA  POSIÇAO DO HEROI E COLOCAR COM O SET
+        // rect.getx/ppm, rect.gety/ppm
         bodyDef.position.set(200/ GameScreen.PPM, 64/ GameScreen.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
@@ -68,13 +72,15 @@ public class Hero extends GameElement {
         loadTextures();
     }
 
+    @Override
     public void loadTextures(){
-
         Array<TextureRegion> frames = new Array<TextureRegion>();
+        // In game sprite size
+        setBounds(0, 0, 48 / GameScreen.PPM, 64 / GameScreen.PPM);
 
         // Creates running animation
         for (int i = 0; i < 4; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*307, 1, 307, 409 ));
+            frames.add(new TextureRegion(getTexture(), 4991+ i*307, 2, 307, 409 ));
         }
 
         heroRunning = new Animation(0.1f, frames);
@@ -82,19 +88,17 @@ public class Hero extends GameElement {
 
         // Creates standing animation
         for (int i = 4; i < 6; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*307, 1, 307, 409 ));
+            frames.add(new TextureRegion(getTexture(), 4991+ i*307, 1, 307, 409 ));
         }
 
         heroStanding = new Animation(0.14f, frames);
         frames.clear();
 
         // Creates jumping texture
-        heroJumping = new TextureRegion(getTexture(), 1+6*307, 1, 307, 409);
-        setBounds(0, 0, 48 / GameScreen.PPM, 64 / GameScreen.PPM);
+        heroJumping = new TextureRegion(getTexture(), 4991+6*307, 1, 307, 409);
 
         // Creates falling texture
-        heroFalling = new TextureRegion(getTexture(), 1+7*307, 1, 307, 409);
-        setBounds(0, 0, 48 / GameScreen.PPM, 64 / GameScreen.PPM);
+        heroFalling = new TextureRegion(getTexture(), 4991+7*307, 1, 307, 409);
     }
 
     // TODO - FALTA TERMINAR
@@ -131,7 +135,7 @@ public class Hero extends GameElement {
                 break;
         }
 
-        // If the hero is running or tuning to the left
+        // If the hero is running or turning to the left
         if ((body.getLinearVelocity().x < 0 || !facingRight) && !region.isFlipX()){
             // Flips the sprite (first parameter x, second y)
             region.flip(true, false);
