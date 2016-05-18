@@ -37,6 +37,7 @@ public class GameLogic {
     public void init(){
         hero = new Hero(screen);
         coins = new ArrayList<Coin>();
+        blocks = new ArrayList<Block>();
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -72,13 +73,7 @@ public class GameLogic {
 
         // Create blocks
         for (MapObject object: screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ GameScreen.PPM, (rect.getY()+rect.getHeight()/2)/ GameScreen.PPM);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ GameScreen.PPM, rect.getHeight()/2/ GameScreen.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            blocks.add(new Block(screen, object));
         }
 
         // Create bricks
@@ -101,6 +96,8 @@ public class GameLogic {
         hero.update(delta);
         for (Coin coin: coins)
             coin.update(delta);
+        for (Block block: blocks)
+            block.update(delta);
     }
 
     public boolean isGameRunning(){
@@ -113,5 +110,9 @@ public class GameLogic {
 
     public ArrayList<Coin> getCoins() {
         return coins;
+    }
+
+    public ArrayList<Block> getBlocks() {
+        return blocks;
     }
 }

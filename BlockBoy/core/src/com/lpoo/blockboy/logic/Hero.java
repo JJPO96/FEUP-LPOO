@@ -80,7 +80,7 @@ public class Hero extends GameElement {
 
         // Creates running animation
         for (int i = 0; i < 4; i++){
-            frames.add(new TextureRegion(getTexture(), 4991+ i*307, 2, 307, 409 ));
+            frames.add(new TextureRegion(getTexture(), 1+ i*307, 2, 307, 409 ));
         }
 
         heroRunning = new Animation(0.1f, frames);
@@ -88,17 +88,17 @@ public class Hero extends GameElement {
 
         // Creates standing animation
         for (int i = 4; i < 6; i++){
-            frames.add(new TextureRegion(getTexture(), 4991+ i*307, 1, 307, 409 ));
+            frames.add(new TextureRegion(getTexture(), 1+ i*307, 1, 307, 409 ));
         }
 
         heroStanding = new Animation(0.14f, frames);
         frames.clear();
 
         // Creates jumping texture
-        heroJumping = new TextureRegion(getTexture(), 4991+6*307, 1, 307, 409);
+        heroJumping = new TextureRegion(getTexture(), 1+6*307, 1, 307, 409);
 
         // Creates falling texture
-        heroFalling = new TextureRegion(getTexture(), 4991+7*307, 1, 307, 409);
+        heroFalling = new TextureRegion(getTexture(), 1+7*307, 1, 307, 409);
     }
 
     // TODO - FALTA TERMINAR

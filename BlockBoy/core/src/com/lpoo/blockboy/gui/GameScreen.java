@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.logic.GameLogic;
 
@@ -147,6 +148,10 @@ public class GameScreen implements Screen {
         // Draw game elements
         for (int i = 0; i < gameLogic.getCoins().size(); i++)
             gameLogic.getCoins().get(i).draw(game.batch);
+
+        for (int i = 0; i < gameLogic.getBlocks().size(); i++)
+            gameLogic.getBlocks().get(i).draw(game.batch);
+
         game.batch.end();
     }
 

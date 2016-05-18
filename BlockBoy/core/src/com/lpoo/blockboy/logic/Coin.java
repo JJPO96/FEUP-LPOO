@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.lpoo.blockboy.gui.GameScreen;
 
 /**
- * Class that represents a key
+ * Class that represents a coin
  */
 public class Coin extends GameElement {
 
@@ -41,7 +41,7 @@ public class Coin extends GameElement {
      * @param screen where the key will be displayed
      */
     public Coin (GameScreen screen, MapObject object){
-        super(screen, "coinpack");
+        super(screen, "coinsprite");
         this.object = object;
         this.map = screen.getMap();
         this.bounds = ((RectangleMapObject) object).getRectangle();
@@ -74,7 +74,7 @@ public class Coin extends GameElement {
 
         // Creates coin animation
         for (int i = 0; i < 10; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*496, 1, 496, 496 ));
+            frames.add(new TextureRegion(getTexture(), 1+ i*496, 515, 496, 496 ));
         }
 
         coinAnim = new Animation(0.50f, frames);
