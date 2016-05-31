@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.logic.GameLogic;
+import com.sun.javafx.scene.traversal.Hueristic2D;
 
 /**
  * Created by Manuel Gomes on 12/05/2016.
@@ -35,6 +36,7 @@ public class GameScreen implements Screen {
     // Screen variables
     private OrthographicCamera gameCam;
     private Viewport gamePort;
+    private Hud hud;
 
     // Tiled maps variables
     private TmxMapLoader mapLoader;
@@ -64,8 +66,8 @@ public class GameScreen implements Screen {
 
         // Creates an instance of logic of the game itself
         gameLogic = new GameLogic(this);
-
         boxDebug = new Box2DDebugRenderer();
+        hud = new Hud(game.batch, game.font);
     }
 
     public void checkInput(float delta){
@@ -98,6 +100,7 @@ public class GameScreen implements Screen {
 
         // Updates the game itself
         gameLogic.update(delta);
+        hud.update(delta);
 
         // Updates the camera position in relation to the hero
         gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;
@@ -151,15 +154,13 @@ public class GameScreen implements Screen {
         game.batch.end();
 
         // TODO - COLOCAR ALGO AQUI NO NO FICHEIRO BLOCKBOY PARA FAZER MUDANÇA DO SCREEN
-        /*
-
-        if(gameOver()){
+        /*        if(gameOver()){
             game.setScreen(new GameOverScreen(game));
             dispose();
-        }
+        }         */
 
-
-         */
+        game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+        hud.getStage().draw();
     }
 
     @Override
