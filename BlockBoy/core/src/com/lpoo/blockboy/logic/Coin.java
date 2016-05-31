@@ -70,14 +70,19 @@ public class Coin extends GameElement {
     public void loadTextures() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         // In game sprite size
-        setBounds(0, 0, 32 / GameScreen.PPM, 32 / GameScreen.PPM);
+        setBounds(0, 0, 40 / GameScreen.PPM, 40 / GameScreen.PPM);
 
         // Creates coin animation
+        for (int i = 0; i < 10; i++){
+            frames.add(new TextureRegion(getTexture(), 1, 515, 496, 496 ));
+        }
+
         for (int i = 0; i < 10; i++){
             frames.add(new TextureRegion(getTexture(), 1+ i*496, 515, 496, 496 ));
         }
 
-        coinAnim = new Animation(0.50f, frames);
+        // Takes frames and the frame rate
+        coinAnim = new Animation(0.11f, frames);
     }
 
     @Override

@@ -80,9 +80,11 @@ public class GameScreen implements Screen {
         // TODO - Testar para o caso de multitouch
         // Hero is always at the center of the screen
         if (Gdx.input.isTouched()) {
+            if (Gdx.input.getY() < Gdx.graphics.getWidth()/3)
+                gameLogic.getHero().jump();
             if (Gdx.input.getX() > Gdx.graphics.getWidth()/2)
                 gameLogic.getHero().run(0.1f);
-            else if (Gdx.input.getX() < Gdx.graphics.getWidth()/2)
+            if (Gdx.input.getX() < Gdx.graphics.getWidth()/2)
                 gameLogic.getHero().run(-0.1f);
         }
 
@@ -153,6 +155,17 @@ public class GameScreen implements Screen {
             gameLogic.getBlocks().get(i).draw(game.batch);
 
         game.batch.end();
+
+        // TODO - COLOCAR ALGO AQUI NO NO FICHEIRO BLOCKBOY PARA FAZER MUDANÇA DO SCREEN
+        /*
+
+        if(gameOver()){
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        }
+
+
+         */
     }
 
     @Override
