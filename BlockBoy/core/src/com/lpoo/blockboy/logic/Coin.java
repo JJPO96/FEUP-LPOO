@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
 
 /**
@@ -57,9 +58,9 @@ public class Coin extends GameElement {
         fixtureDef = new FixtureDef();
 
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / GameScreen.PPM, (bounds.getY() + bounds.getHeight() / 2) / GameScreen.PPM);
+        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / BlockBoy.PPM, (bounds.getY() + bounds.getHeight() / 2) / BlockBoy.PPM);
         body = world.createBody(bodyDef);
-        shape.setAsBox(bounds.getWidth() / 2 / GameScreen.PPM, bounds.getHeight() / 2 / GameScreen.PPM);
+        shape.setAsBox(bounds.getWidth() / 2 / BlockBoy.PPM, bounds.getHeight() / 2 / BlockBoy.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
 
@@ -70,10 +71,10 @@ public class Coin extends GameElement {
     public void loadTextures() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         // In game sprite size
-        setBounds(0, 0, 40 / GameScreen.PPM, 40 / GameScreen.PPM);
+        setBounds(0, 0, 40 / BlockBoy.PPM, 40 / BlockBoy.PPM);
 
         // Creates coin animation
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 16; i++){
             frames.add(new TextureRegion(getTexture(), 1, 515, 496, 496 ));
         }
 

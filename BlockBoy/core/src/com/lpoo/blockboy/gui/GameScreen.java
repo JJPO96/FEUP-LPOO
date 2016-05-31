@@ -22,12 +22,6 @@ import com.lpoo.blockboy.logic.GameLogic;
  * Created by Manuel Gomes on 12/05/2016.
  */
 public class GameScreen implements Screen {
-
-    // Variables to be used to keep aspect ratio for any screen size
-    private static final int VWIDTH = 800;
-    private static final int VHEIGHT = 520;
-    public static final float PPM = 100;
-
     private BlockBoy game;
     private GameLogic gameLogic;
 
@@ -57,12 +51,12 @@ public class GameScreen implements Screen {
         this.gameCam = new OrthographicCamera();
 
         // This enables to keep aspect ratio despite of screen size
-        gamePort = new FitViewport(VWIDTH / GameScreen.PPM, VHEIGHT / GameScreen.PPM, gameCam);
+        gamePort = new FitViewport(game.VWIDTH / game.PPM, game.VHEIGHT / game.PPM, gameCam);
 
         // Prepares the map to be rendered
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("levels/level1.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / GameScreen.PPM);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / game.PPM);
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
         // Create a Box2D world, setting no gravity in X axis, -9.8 gravity in Y axis
@@ -74,7 +68,7 @@ public class GameScreen implements Screen {
         boxDebug = new Box2DDebugRenderer();
     }
 
-    public void handleInput(float delta){
+    public void checkInput(float delta){
         // TODO - PASSAR AS KEYS DO INPUT PARA ALGO DETETAVEL PELO TLM
 
         // TODO - Testar para o caso de multitouch
@@ -88,7 +82,7 @@ public class GameScreen implements Screen {
                 gameLogic.getHero().run(-0.1f);
         }
 
-        // TODO - REMOVER - DESKTOP KEYS
+        // TODO - REMOVER - DESKTOP KEYS (FAST DEBUGGING)
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
@@ -99,13 +93,13 @@ public class GameScreen implements Screen {
     }
 
     public void update(float delta){
-        handleInput(delta);
+        checkInput(delta);
         world.step(1 / 60f, 6, 2);
 
         // Updates the game itself
         gameLogic.update(delta);
 
-        // Makes the camera follow the hero
+        // Updates the camera position in relation to the hero
         gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;
         gameCam.position.y = gameLogic.getHero().getBody().getPosition().y;
         gameCam.update();
@@ -140,7 +134,7 @@ public class GameScreen implements Screen {
         // Render map
         mapRenderer.render();
 
-        // Box2DDebugRenderer renderer
+        // TODO - APAGAR QD NAO FOR MAIS NECESSARIO - Box2DDebugRenderer renderer
         boxDebug.render(world, gameCam.combined);
 
         game.batch.setProjectionMatrix(gameCam.combined);

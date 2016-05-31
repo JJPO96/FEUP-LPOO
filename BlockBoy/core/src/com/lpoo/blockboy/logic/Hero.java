@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
+import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
 
 /**
@@ -59,12 +60,12 @@ public class Hero extends GameElement {
 
         // TODO CRIAR DIRETAMENTE NO MAPA  POSIÇAO DO HEROI E COLOCAR COM O SET
         // rect.getx/ppm, rect.gety/ppm
-        bodyDef.position.set(200/ GameScreen.PPM, 64/ GameScreen.PPM);
+        bodyDef.position.set(200/ BlockBoy.PPM, 64/ BlockBoy.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
         fixtureDef = new FixtureDef();
         shape = new CircleShape();
-        shape.setRadius(32 / GameScreen.PPM);
+        shape.setRadius(32 / BlockBoy.PPM);
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
@@ -76,7 +77,7 @@ public class Hero extends GameElement {
     public void loadTextures(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
         // In game sprite size
-        setBounds(0, 0, 48 / GameScreen.PPM, 64 / GameScreen.PPM);
+        setBounds(0, 0, 48 / BlockBoy.PPM, 64 / BlockBoy.PPM);
 
         // Creates running animation
         for (int i = 0; i < 4; i++){
