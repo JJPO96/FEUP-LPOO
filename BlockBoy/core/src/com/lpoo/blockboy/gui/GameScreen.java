@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
 
-    public GameScreen(BlockBoy game){
+    public GameScreen(BlockBoy game) {
         this.game = game;
 
         // Creating an atlas
@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("levels/level1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / game.PPM);
-        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
+        gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         // Create a Box2D world, setting no gravity in X axis, -9.8 gravity in Y axis
         world = new World(new Vector2(0, -9.8f), true);
@@ -72,17 +72,17 @@ public class GameScreen implements Screen {
         world.setContactListener(new CollisionListener());
     }
 
-    public void checkInput(float delta){
+    public void checkInput(float delta) {
         // TODO - PASSAR AS KEYS DO INPUT PARA ALGO DETETAVEL PELO TLM
 
         // TODO - Testar para o caso de multitouch
         // Hero is always at the center of the screen
         if (Gdx.input.isTouched()) {
-            if (Gdx.input.getY() < Gdx.graphics.getWidth()/3)
+            if (Gdx.input.getY() < Gdx.graphics.getWidth() / 3)
                 gameLogic.getHero().jump();
-            if (Gdx.input.getX() > Gdx.graphics.getWidth()/2)
+            if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2)
                 gameLogic.getHero().run(0.1f);
-            if (Gdx.input.getX() < Gdx.graphics.getWidth()/2)
+            if (Gdx.input.getX() < Gdx.graphics.getWidth() / 2)
                 gameLogic.getHero().run(-0.1f);
         }
 
@@ -96,12 +96,13 @@ public class GameScreen implements Screen {
 
     }
 
-    public void update(float delta){
+    public void update(float delta) {
         checkInput(delta);
         world.step(1 / 60f, 6, 2);
 
         // Updates the game itself
         gameLogic.update(delta);
+        hud.updateCoinScore(gameLogic.getCoinScore());
         hud.update(delta);
 
         // Updates the camera position in relation to the hero
@@ -112,20 +113,23 @@ public class GameScreen implements Screen {
         mapRenderer.setView(gameCam);
     }
 
-    public World getWorld(){
+    public World getWorld() {
         return world;
     }
 
-    public TiledMap getMap(){
+    public TiledMap getMap() {
         return map;
     }
 
-    public TextureAtlas getAtlas(){ return atlas; }
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
 
     @Override
-    public void show() {}
-    
-    
+    public void show() {
+    }
+
+
     // TODO - SEPARAR RENDER EM "UPDATE GAME" E EM "DRAW GAME"?
 
     @Override
@@ -148,7 +152,8 @@ public class GameScreen implements Screen {
         gameLogic.getHero().draw(game.batch);
         // Draw game's elements
         for (int i = 0; i < gameLogic.getCoins().size(); i++)
-            gameLogic.getCoins().get(i).draw(game.batch);
+            if (!gameLogic.getCoins().get(i).isPicked())
+                gameLogic.getCoins().get(i).draw(game.batch);
 
         for (int i = 0; i < gameLogic.getBlocks().size(); i++)
             gameLogic.getBlocks().get(i).draw(game.batch);
@@ -174,13 +179,16 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
     public void dispose() {

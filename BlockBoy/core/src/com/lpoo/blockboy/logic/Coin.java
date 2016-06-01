@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
@@ -25,6 +26,7 @@ public class Coin extends GameElement {
 
     // TODO - CREATE HUD.ADDSCORE
 
+    private boolean pick = false;
     private boolean picked = false;
     private MapObject object;
     private TiledMap map;
@@ -89,6 +91,8 @@ public class Coin extends GameElement {
 
     public void detectCollition(){
         Gdx.app.log("Coin", "Collision");
+        pick = true;
+        // TODO - APAGAR SE NAO USADO (MUDA O FILTER PARA PICKED BIT)
         //setCategoryFilter(BlockBoy.COIN_PICKED_BIT);
     }
 
@@ -100,8 +104,14 @@ public class Coin extends GameElement {
 
     @Override
     public void update(float delta) {
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setRegion(getFrame(delta));
+        if (pick && !picked){
+            world.destroyBody(this.body);
+            picked = true;
+        }
+        else {
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setRegion(getFrame(delta));
+        }
     }
 
     public TextureRegion getFrame(float delta){
@@ -116,7 +126,7 @@ public class Coin extends GameElement {
      * Sets the key as picked by the Hero
      */
     public void setPicked(){
-        picked = true;
+        pick = true;
     }
 
     /**

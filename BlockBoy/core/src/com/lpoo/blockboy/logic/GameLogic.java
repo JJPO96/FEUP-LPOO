@@ -1,5 +1,6 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -117,5 +118,9 @@ public class GameLogic {
 
     public ArrayList<Block> getBlocks() {
         return blocks;
+    }
+
+    public int getCoinScore(){
+        return coinScore;
     }
 }

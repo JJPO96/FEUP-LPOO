@@ -16,15 +16,12 @@ import com.lpoo.blockboy.gui.GameScreen;
  * Class that represents the hero of the game
  */
 public class Hero extends GameElement {
-
-    // TODO - CORRIGIR AS TEXTURES (VER CLASSE GAMEELEMENT QUE ESTA A FUNCIONAR APAENAS PARA A CLASSE HERO)
     private enum State {STANDING, RUNNING, JUMPING, FALLING}
     private State currentState;
     private State previousState;
     private boolean carryBock = false;
 
     // Textures
-    // TODO - TROCAR HEROSTANDING
     private TextureRegion heroJumping;
     private TextureRegion heroFalling;
     private Animation heroRunning;
@@ -46,8 +43,6 @@ public class Hero extends GameElement {
         previousState = State.STANDING;
         stateTimer = 0;
         facingRight = true;
-
-        // Creates the body of the Hero
         init();
     }
 
@@ -67,7 +62,7 @@ public class Hero extends GameElement {
         shape.setRadius(32 / BlockBoy.PPM);
         // TODO - FALTA PARA O LADO ESQUERDO - USAR ANTES UMA BARRA EM BAIXO NA HORIZONTAL?? - corrigir para diagonal BIT?
         fixtureDef.filter.categoryBits = BlockBoy.HERO_BIT;
-        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT;
+        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT | BlockBoy.COIN_BIT;
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
@@ -201,7 +196,7 @@ public class Hero extends GameElement {
 
     public void jump(){
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
-            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(0, 3.5f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
     }

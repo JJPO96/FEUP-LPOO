@@ -20,21 +20,19 @@ import com.lpoo.blockboy.BlockBoy;
 public class Hud implements Disposable{
     private Stage stage;
     private Viewport viewport;
-    private Integer numCoins;
+    private Integer coinScore;
     private Integer worldTimer;
     private float timeCount;
     private Label coinsCount;
     private Label coinsLabel;
     private Label countdownLabel;
     private Label timeLabel;
-    private Label spacing;
     private Table tableTop;
     private Table tableBottom;
-    private TextButton buttonBox;
 
     // TODO - FALTA TERMINAR
     public Hud(SpriteBatch batch, BitmapFont font){
-        this.numCoins = 0;
+        this.coinScore = 0;
         this.worldTimer = 0;
         this.timeCount = 0;
         this.viewport = new FitViewport(BlockBoy.VHEIGHT, BlockBoy.VHEIGHT, new OrthographicCamera());
@@ -47,18 +45,13 @@ public class Hud implements Disposable{
         this.tableBottom.setFillParent(true);
         this.countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
         this.timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
-        this.coinsCount = new Label(String.format("%01d", numCoins), new Label.LabelStyle(font, Color.WHITE));
+        this.coinsCount = new Label(String.format("%01d", coinScore), new Label.LabelStyle(font, Color.WHITE));
         this.coinsLabel = new Label("COINS", new Label.LabelStyle(font, Color.WHITE));
-        this.spacing = new Label("", new Label.LabelStyle(font, Color.WHITE));
-        //this.buttonBox.add("Pick Box", TextButton.TextButtonStyle());
 
         tableTop.add(coinsLabel).expandX();
-        tableTop.add(coinsCount).expandX();
-        tableTop.add(spacing).expandX();
-        tableTop.add(spacing).expandX();
-        tableTop.add(spacing).expandX();
-        tableTop.add(spacing).expandX();
         tableTop.add(timeLabel).expandX();
+        tableTop.row();
+        tableTop.add(coinsCount).expandX();
         tableTop.add(countdownLabel).expandX();
         stage.addActor(tableTop);
         stage.addActor(tableBottom);
@@ -66,6 +59,10 @@ public class Hud implements Disposable{
 
     public Stage getStage() {
         return stage;
+    }
+
+    public void updateCoinScore(int score){
+        this.coinScore = score;
     }
 
     public void update(float delta){
