@@ -22,6 +22,7 @@ public class GameLogic {
     private Hero hero;
     private ArrayList<Coin> coins;
     private ArrayList<Block> blocks;
+    private int coinScore;
     private Boolean running = true;
 
     private GameScreen screen;
@@ -31,6 +32,7 @@ public class GameLogic {
         // TODO - implementar aqui a logica do jogo
         this.screen = screen;
         this.world = screen.getWorld();
+        this.coinScore = 0;
         init();
     }
 

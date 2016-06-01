@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.lpoo.blockboy.BlockBoy;
@@ -56,18 +57,38 @@ public class Hero extends GameElement {
     @Override
     public void init() {
         // TODO - CORRIGIR POSIÇAO INICIAL DO HEROI CONSOANTE O MAPA ESCOLHIDO
+        // Creating the body
         bodyDef = new BodyDef();
-
-        // TODO CRIAR DIRETAMENTE NO MAPA  POSIÇAO DO HEROI E COLOCAR COM O SET
-        // rect.getx/ppm, rect.gety/ppm
         bodyDef.position.set(200/ BlockBoy.PPM, 64/ BlockBoy.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
         fixtureDef = new FixtureDef();
         shape = new CircleShape();
         shape.setRadius(32 / BlockBoy.PPM);
+        // TODO - FALTA PARA O LADO ESQUERDO - USAR ANTES UMA BARRA EM BAIXO NA HORIZONTAL?? - corrigir para diagonal BIT?
+        fixtureDef.filter.categoryBits = BlockBoy.HERO_BIT;
+        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT;
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
+
+        // TODO - APAGAR??
+        // Creating collision sensors
+        /*EdgeShape right = new EdgeShape();
+        right.set(new Vector2(33 / BlockBoy.PPM, 32 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
+        fixtureDef.shape = right;
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef).setUserData("heroSensorRight");
+        EdgeShape left = new EdgeShape();
+        left.set(new Vector2(-33 / BlockBoy.PPM, 32 / BlockBoy.PPM), new Vector2(-33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
+        fixtureDef.shape = left;
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef).setUserData("heroSensorLeft");*/
+
+        EdgeShape diagonal = new EdgeShape();
+        diagonal.set(new Vector2(-33 / BlockBoy.PPM, 32 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
+        fixtureDef.shape = diagonal;
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef).setUserData("heroSensorDiagonal");
 
         // Create textures
         loadTextures();
@@ -81,7 +102,7 @@ public class Hero extends GameElement {
 
         // Creates running animation
         for (int i = 0; i < 4; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*307, 2, 307, 409 ));
+            frames.add(new TextureRegion(getTexture(), 1+ i*307, 20, 307, 409 ));
         }
 
         heroRunning = new Animation(0.1f, frames);
@@ -89,17 +110,17 @@ public class Hero extends GameElement {
 
         // Creates standing animation
         for (int i = 4; i < 6; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*307, 1, 307, 409 ));
+            frames.add(new TextureRegion(getTexture(), 1+ i*307, 20, 307, 409 ));
         }
 
         heroStanding = new Animation(0.14f, frames);
         frames.clear();
 
         // Creates jumping texture
-        heroJumping = new TextureRegion(getTexture(), 1+6*307, 1, 307, 409);
+        heroJumping = new TextureRegion(getTexture(), 1+6*307, 20, 307, 409);
 
         // Creates falling texture
-        heroFalling = new TextureRegion(getTexture(), 1+7*307, 1, 307, 409);
+        heroFalling = new TextureRegion(getTexture(), 1+7*307, 20, 307, 409);
     }
 
     // TODO - FALTA TERMINAR

@@ -68,6 +68,8 @@ public class GameScreen implements Screen {
         gameLogic = new GameLogic(this);
         boxDebug = new Box2DDebugRenderer();
         hud = new Hud(game.batch, game.font);
+
+        world.setContactListener(new CollisionListener());
     }
 
     public void checkInput(float delta){
@@ -144,7 +146,7 @@ public class GameScreen implements Screen {
         game.batch.begin();
         // Draw hero
         gameLogic.getHero().draw(game.batch);
-        // Draw game elements
+        // Draw game's elements
         for (int i = 0; i < gameLogic.getCoins().size(); i++)
             gameLogic.getCoins().get(i).draw(game.batch);
 
@@ -152,6 +154,9 @@ public class GameScreen implements Screen {
             gameLogic.getBlocks().get(i).draw(game.batch);
 
         game.batch.end();
+        // Draws HUD
+        game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+        hud.getStage().draw()
 
         // TODO - COLOCAR ALGO AQUI NO NO FICHEIRO BLOCKBOY PARA FAZER MUDANÇA DO SCREEN
         /*        if(gameOver()){
@@ -159,8 +164,7 @@ public class GameScreen implements Screen {
             dispose();
         }         */
 
-        game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
-        hud.getStage().draw();
+        ;
     }
 
     @Override

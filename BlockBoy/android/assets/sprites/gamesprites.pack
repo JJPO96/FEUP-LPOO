@@ -3,23 +3,23 @@ gamesprites.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-coinsprite
-  rotate: false
-  xy: 1, 515
-  size: 4988, 515
-  orig: 4988, 515
-  offset: 0, 0
-  index: -1
 herosprite
   rotate: false
-  xy: 1, 1
-  size: 4096, 512
-  orig: 4096, 512
+  xy: 1, 20
+  size: 2456, 409
+  orig: 2456, 409
   offset: 0, 0
   index: -1
-box
+coins
   rotate: false
-  xy: 4991, 966
+  xy: 2459, 299
+  size: 780, 130
+  orig: 780, 130
+  offset: 0, 0
+  index: -1
+boxCrate_double
+  rotate: false
+  xy: 2459, 195
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

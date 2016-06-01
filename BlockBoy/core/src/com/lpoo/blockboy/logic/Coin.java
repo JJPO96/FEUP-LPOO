@@ -1,5 +1,6 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -29,6 +31,7 @@ public class Coin extends GameElement {
     private Rectangle bounds;
     private PolygonShape shape;
     private Fixture fixture;
+    private Filter filter;
 
     private Animation coinAnim;
     private TextureRegion region;
@@ -42,13 +45,13 @@ public class Coin extends GameElement {
      * @param screen where the key will be displayed
      */
     public Coin (GameScreen screen, MapObject object){
-        super(screen, "coinsprite");
+        super(screen, "coins");
         this.object = object;
         this.map = screen.getMap();
         this.bounds = ((RectangleMapObject) object).getRectangle();
         this.stateTimer = 0;
-
         init();
+        setCategoryFilter(BlockBoy.COIN_BIT);
     }
 
     @Override
@@ -63,6 +66,8 @@ public class Coin extends GameElement {
         shape.setAsBox(bounds.getWidth() / 2 / BlockBoy.PPM, bounds.getHeight() / 2 / BlockBoy.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
+        // TODO - APAGAR SE NAO USADO (SENSOR)
+        fixture.setUserData(this);
 
         loadTextures();
     }
@@ -73,17 +78,24 @@ public class Coin extends GameElement {
         // In game sprite size
         setBounds(0, 0, 40 / BlockBoy.PPM, 40 / BlockBoy.PPM);
 
-        // Creates coin animation
-        for (int i = 0; i < 16; i++){
-            frames.add(new TextureRegion(getTexture(), 1, 515, 496, 496 ));
-        }
-
-        for (int i = 0; i < 10; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*496, 515, 496, 496 ));
+       // Creates coin animation
+       for (int i = 0; i < 6; i++){
+            frames.add(new TextureRegion(getTexture(), 2459 + i*130, 299, 130, 130));
         }
 
         // Takes frames and the frame rate
-        coinAnim = new Animation(0.11f, frames);
+        coinAnim = new Animation(0.16f, frames);
+    }
+
+    public void detectCollition(){
+        Gdx.app.log("Coin", "Collision");
+        //setCategoryFilter(BlockBoy.COIN_PICKED_BIT);
+    }
+
+    public void setCategoryFilter(short filterBit){
+        filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setFilterData(filter);
     }
 
     @Override

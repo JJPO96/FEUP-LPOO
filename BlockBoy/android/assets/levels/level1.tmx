@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="16" tilewidth="32" tileheight="32" nextobjectid="45">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="16" tilewidth="32" tileheight="32" nextobjectid="46">
  <tileset firstgid="1" name="blue_land" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="blue_land.png" width="1024" height="1024"/>
  </tileset>
@@ -72,14 +72,15 @@
   <object id="4" x="2527.27" y="-2" width="28.73" height="450"/>
   <object id="8" x="0" y="0" width="32" height="446.667"/>
  </objectgroup>
- <objectgroup name="Key">
+ <objectgroup name="Coin">
   <object id="41" x="2048" y="256" width="64" height="64"/>
   <object id="44" x="928" y="256" width="64" height="64"/>
+  <object id="45" x="512" y="384" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Exit">
   <object id="26" x="2432" y="327" width="64" height="119"/>
  </objectgroup>
- <objectgroup name="Block">
+ <objectgroup name="Box">
   <object id="39" x="672" y="384" width="64" height="64"/>
   <object id="40" x="1792" y="384" width="64" height="64"/>
  </objectgroup>

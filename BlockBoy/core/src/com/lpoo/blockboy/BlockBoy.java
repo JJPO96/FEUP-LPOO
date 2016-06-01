@@ -13,6 +13,14 @@ public class BlockBoy extends Game {
 	public static final int VWIDTH = 800;
 	public static final int VHEIGHT = 520;
 	public static final float PPM = 100;
+
+	// TODO - PASSAR PARA OUTRO LOCAL
+	public static final short DEFAULT_BIT = 1;
+	public static final short HERO_BIT = 2;
+	public static final short BLOCK_BIT = 4;
+	public static final short COIN_BIT = 8;
+	public static final short COIN_PICKED_BIT = 8;
+
 	public SpriteBatch batch;
 	public BitmapFont font;
 	private FreeTypeFontGenerator generator;
