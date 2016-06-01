@@ -66,21 +66,9 @@ public class Hero extends GameElement {
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
-        // TODO - APAGAR??
-        // Creating collision sensors
-        /*EdgeShape right = new EdgeShape();
-        right.set(new Vector2(33 / BlockBoy.PPM, 32 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
-        fixtureDef.shape = right;
-        fixtureDef.isSensor = true;
-        body.createFixture(fixtureDef).setUserData("heroSensorRight");
-        EdgeShape left = new EdgeShape();
-        left.set(new Vector2(-33 / BlockBoy.PPM, 32 / BlockBoy.PPM), new Vector2(-33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
-        fixtureDef.shape = left;
-        fixtureDef.isSensor = true;
-        body.createFixture(fixtureDef).setUserData("heroSensorLeft");*/
-
+        // Creating sensor
         EdgeShape diagonal = new EdgeShape();
-        diagonal.set(new Vector2(-33 / BlockBoy.PPM, 32 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
+        diagonal.set(new Vector2(-33 / BlockBoy.PPM, 30 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
         fixtureDef.shape = diagonal;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData("heroSensorDiagonal");

@@ -98,8 +98,14 @@ public class GameLogic {
      */
     public void update(float delta){
         hero.update(delta);
-        for (Coin coin: coins)
+        for (Coin coin: coins){
             coin.update(delta);
+            if (coin.isPicked() && !coin.isScored()){
+                coinScore++;
+                coin.setScored();
+            }
+        }
+
         for (Block block: blocks)
             block.update(delta);
     }

@@ -30,32 +30,6 @@ public class CollisionListener implements ContactListener {
                 ((Block) object.getUserData()).detectCollition();
             }
         }
-        // TODO - PAGAR?
-        /*if (fixA.getUserData() == "heroSensorRight" || fixB.getUserData() == "heroSensorRight"){
-            Fixture right = fixA.getUserData() == "heroSensorRight"? fixA : fixB;
-            Fixture object = right == fixA? fixB : fixA;
-
-            if(object.getUserData() instanceof Coin){
-                ((Coin) object.getUserData()).detectCollition();
-            }
-
-            if(object.getUserData() instanceof Block){
-                ((Block) object.getUserData()).detectCollition();
-            }
-        }
-
-        if (fixA.getUserData() == "heroSensorLeft" || fixB.getUserData() == "heroSensorLeft" ){
-            Fixture left = fixA.getUserData() == "heroSensorLeft"? fixA : fixB;
-            Fixture object = left == fixA? fixB : fixA;
-
-            if(object.getUserData() instanceof Coin){
-                ((Coin) object.getUserData()).detectCollition();
-            }
-
-            if(object.getUserData() instanceof Block){
-                ((Block) object.getUserData()).detectCollition();
-            }
-        }*/
     }
 
     @Override

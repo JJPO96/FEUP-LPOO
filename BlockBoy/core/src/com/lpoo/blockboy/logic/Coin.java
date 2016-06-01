@@ -28,6 +28,7 @@ public class Coin extends GameElement {
 
     private boolean pick = false;
     private boolean picked = false;
+    private boolean scored = false;
     private MapObject object;
     private TiledMap map;
     private Rectangle bounds;
@@ -41,12 +42,13 @@ public class Coin extends GameElement {
 
     // TODO - CORRIGIR TODO A CLASSE
     // TODO - CORRIGIR CONSTRUTOR
+
     /**
      * Coin's constructor
      *
      * @param screen where the key will be displayed
      */
-    public Coin (GameScreen screen, MapObject object){
+    public Coin(GameScreen screen, MapObject object) {
         super(screen, "coins");
         this.object = object;
         this.map = screen.getMap();
@@ -80,23 +82,21 @@ public class Coin extends GameElement {
         // In game sprite size
         setBounds(0, 0, 40 / BlockBoy.PPM, 40 / BlockBoy.PPM);
 
-       // Creates coin animation
-       for (int i = 0; i < 6; i++){
-            frames.add(new TextureRegion(getTexture(), 2459 + i*130, 299, 130, 130));
+        // Creates coin animation
+        for (int i = 0; i < 6; i++) {
+            frames.add(new TextureRegion(getTexture(), 2459 + i * 130, 299, 130, 130));
         }
 
         // Takes frames and the frame rate
         coinAnim = new Animation(0.16f, frames);
     }
 
-    public void detectCollition(){
+    public void detectCollition() {
         Gdx.app.log("Coin", "Collision");
         pick = true;
-        // TODO - APAGAR SE NAO USADO (MUDA O FILTER PARA PICKED BIT)
-        //setCategoryFilter(BlockBoy.COIN_PICKED_BIT);
     }
 
-    public void setCategoryFilter(short filterBit){
+    public void setCategoryFilter(short filterBit) {
         filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
@@ -104,17 +104,16 @@ public class Coin extends GameElement {
 
     @Override
     public void update(float delta) {
-        if (pick && !picked){
+        if (pick && !picked) {
             world.destroyBody(this.body);
             picked = true;
-        }
-        else {
+        } else {
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion(getFrame(delta));
         }
     }
 
-    public TextureRegion getFrame(float delta){
+    public TextureRegion getFrame(float delta) {
         TextureRegion region;
         region = coinAnim.getKeyFrame(stateTimer, true);
         stateTimer = stateTimer + delta;
@@ -125,8 +124,8 @@ public class Coin extends GameElement {
     /**
      * Sets the key as picked by the Hero
      */
-    public void setPicked(){
-        pick = true;
+    public void setPicked() {
+        this.pick = true;
     }
 
     /**
@@ -134,7 +133,15 @@ public class Coin extends GameElement {
      *
      * @return true if the key is picked
      */
-    public boolean isPicked(){
-        return picked;
+    public boolean isPicked() {
+        return this.picked;
+    }
+
+    public void setScored() {
+        this.scored = true;
+    }
+
+    public boolean isScored() {
+        return this.scored;
     }
 }

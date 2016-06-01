@@ -89,6 +89,8 @@ public class GameScreen implements Screen {
         // TODO - REMOVER - DESKTOP KEYS (FAST DEBUGGING)
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A))
+            gameLogic.getHero().jump();
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
             gameLogic.getHero().run(0.1f);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && gameLogic.getHero().getBody().getLinearVelocity().x >= -2)
@@ -102,8 +104,7 @@ public class GameScreen implements Screen {
 
         // Updates the game itself
         gameLogic.update(delta);
-        hud.updateCoinScore(gameLogic.getCoinScore());
-        hud.update(delta);
+        hud.update(delta, gameLogic.getCoinScore());
 
         // Updates the camera position in relation to the hero
         gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;

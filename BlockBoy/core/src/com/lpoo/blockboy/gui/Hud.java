@@ -61,11 +61,7 @@ public class Hud implements Disposable{
         return stage;
     }
 
-    public void updateCoinScore(int score){
-        this.coinScore = score;
-    }
-
-    public void update(float delta){
+    public void update(float delta, int score){
         timeCount+= delta;
         if (timeCount >= 1){
             worldTimer++;
@@ -74,6 +70,9 @@ public class Hud implements Disposable{
             countdownLabel.setText(String.format("%03d", worldTimer));
             timeCount = 0;
         }
+
+        this.coinScore = score;
+        this.coinsCount.setText(String.format("%01d", coinScore));
     }
 
     @Override
