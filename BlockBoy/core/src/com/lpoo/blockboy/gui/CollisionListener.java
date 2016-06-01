@@ -22,19 +22,25 @@ public class CollisionListener implements ContactListener {
             Fixture left = fixA.getUserData() == "heroSensorDiagonal"? fixA : fixB;
             Fixture object = left == fixA? fixB : fixA;
 
-            if(object.getUserData() instanceof Coin){
-                ((Coin) object.getUserData()).detectCollition();
-            }
-
             if(object.getUserData() instanceof Block){
-                ((Block) object.getUserData()).detectCollition();
+                ((Block) object.getUserData()).setCollision(true);
             }
         }
     }
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.log("End Contact", "");
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+
+        if (fixA.getUserData() == "heroSensorDiagonal" || fixB.getUserData() == "heroSensorDiagonal" ){
+            Fixture left = fixA.getUserData() == "heroSensorDiagonal"? fixA : fixB;
+            Fixture object = left == fixA? fixB : fixA;
+
+            if(object.getUserData() instanceof Block){
+                ((Block) object.getUserData()).setCollision(false);
+            }
+        }
     }
 
     @Override

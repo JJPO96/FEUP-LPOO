@@ -1,5 +1,6 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -17,27 +18,28 @@ import com.lpoo.blockboy.gui.GameScreen;
  */
 public class Hero extends GameElement {
     private enum State {STANDING, RUNNING, JUMPING, FALLING}
+
     private State currentState;
     private State previousState;
-    private boolean carryBock = false;
+    private boolean carryBlock = false;
+    private Boolean facingRight;
 
     // Textures
     private TextureRegion heroJumping;
     private TextureRegion heroFalling;
     private Animation heroRunning;
     private Animation heroStanding;
+    private int radius = 32;
 
     protected CircleShape shape;
-
     private float stateTimer;
-    private Boolean facingRight;
 
     /**
      * Hero's constructor
      *
      * @param screen where the Hero will be displayed
      */
-    public Hero (GameScreen screen){
+    public Hero(GameScreen screen) {
         super(screen, "herosprite");
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -54,15 +56,14 @@ public class Hero extends GameElement {
         // TODO - CORRIGIR POSIÇAO INICIAL DO HEROI CONSOANTE O MAPA ESCOLHIDO
         // Creating the body
         bodyDef = new BodyDef();
-        bodyDef.position.set(200/ BlockBoy.PPM, 64/ BlockBoy.PPM);
+        bodyDef.position.set(200 / BlockBoy.PPM, 64 / BlockBoy.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
         fixtureDef = new FixtureDef();
         shape = new CircleShape();
-        shape.setRadius(32 / BlockBoy.PPM);
-        // TODO - FALTA PARA O LADO ESQUERDO - USAR ANTES UMA BARRA EM BAIXO NA HORIZONTAL?? - corrigir para diagonal BIT?
+        shape.setRadius(radius / BlockBoy.PPM);
         fixtureDef.filter.categoryBits = BlockBoy.HERO_BIT;
-        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT | BlockBoy.COIN_BIT;
+        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT;
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
@@ -78,32 +79,51 @@ public class Hero extends GameElement {
     }
 
     @Override
-    public void loadTextures(){
+    public void loadTextures() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         // In game sprite size
         setBounds(0, 0, 48 / BlockBoy.PPM, 64 / BlockBoy.PPM);
 
         // Creates running animation
-        for (int i = 0; i < 4; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*307, 20, 307, 409 ));
+        for (int i = 0; i < 4; i++) {
+            frames.add(new TextureRegion(getTexture(), 1 + i * 307, 20, 307, 409));
         }
 
         heroRunning = new Animation(0.1f, frames);
         frames.clear();
 
         // Creates standing animation
-        for (int i = 4; i < 6; i++){
-            frames.add(new TextureRegion(getTexture(), 1+ i*307, 20, 307, 409 ));
+        for (int i = 4; i < 6; i++) {
+            frames.add(new TextureRegion(getTexture(), 1 + i * 307, 20, 307, 409));
         }
 
         heroStanding = new Animation(0.14f, frames);
         frames.clear();
 
         // Creates jumping texture
-        heroJumping = new TextureRegion(getTexture(), 1+6*307, 20, 307, 409);
+        heroJumping = new TextureRegion(getTexture(), 1 + 6 * 307, 20, 307, 409);
 
         // Creates falling texture
-        heroFalling = new TextureRegion(getTexture(), 1+7*307, 20, 307, 409);
+        heroFalling = new TextureRegion(getTexture(), 1 + 7 * 307, 20, 307, 409);
+    }
+
+    /**
+     * Verifies if the Hero is overlapping a coin
+     *
+     * @param coin to be checked
+     * @return true if the Hero is overlapping the coin
+     */
+    boolean bodysOverlaping(Coin coin) {
+        if ((getX() + getWidth()) < coin.getX())
+            return false;
+        if (getX() > (coin.getX() + coin.getWidth()))
+            return false;
+        if ((getY() + getHeight()) < coin.getY())
+            return false;
+        if (getY() > (coin.getY() + coin.getHeight()))
+            return false;
+
+        return true;
     }
 
     // TODO - FALTA TERMINAR
@@ -120,11 +140,11 @@ public class Hero extends GameElement {
      * @param delta time passed
      * @return frame
      */
-    public TextureRegion getFrame(float delta){
+    public TextureRegion getFrame(float delta) {
         currentState = getState();
         TextureRegion region;
 
-        switch (currentState){
+        switch (currentState) {
             case JUMPING:
                 region = heroJumping;
                 break;
@@ -141,13 +161,11 @@ public class Hero extends GameElement {
         }
 
         // If the hero is running or turning to the left
-        if ((body.getLinearVelocity().x < 0 || !facingRight) && !region.isFlipX()){
+        if ((body.getLinearVelocity().x < 0 || !facingRight) && !region.isFlipX()) {
             // Flips the sprite (first parameter x, second y)
             region.flip(true, false);
             facingRight = false;
-        }
-
-        else if ((body.getLinearVelocity().x > 0 || facingRight) && region.isFlipX()){
+        } else if ((body.getLinearVelocity().x > 0 || facingRight) && region.isFlipX()) {
             region.flip(true, false);
             facingRight = true;
         }
@@ -163,7 +181,7 @@ public class Hero extends GameElement {
      *
      * @return the state of the hero
      */
-    public State getState(){
+    public State getState() {
         if (body.getLinearVelocity().y > 0)
             return State.JUMPING;
         else if (body.getLinearVelocity().y < 0)
@@ -174,7 +192,7 @@ public class Hero extends GameElement {
             return State.STANDING;
     }
 
-    public void run(float dist){
+    public void run(float dist) {
         // Makes the hero run. Sets also a maximum speed
         if (body.getLinearVelocity().x > -3f && body.getLinearVelocity().x < 3f)
             body.applyLinearImpulse(new Vector2(dist, 0), body.getWorldCenter(), true);
@@ -182,7 +200,7 @@ public class Hero extends GameElement {
         currentState = State.RUNNING;
     }
 
-    public void jump(){
+    public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
             body.applyLinearImpulse(new Vector2(0, 3.5f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
@@ -190,13 +208,14 @@ public class Hero extends GameElement {
     }
 
     // TODO - DECIDIR SE ESTAS FUNÇÕES SÃO OU NAO REUTILIZAVEIS USANDO-SE MAQUINA DE ESTADOS
+
     /**
      * Changes the Hero state about carrying the box
      *
      * @param carry with the new state of the Hero
      */
-    public void setCarryBock(boolean carry){
-        carryBock = carry;
+    public void setCarryBlock(boolean carry) {
+        carryBlock = carry;
     }
 
     /**
@@ -204,7 +223,7 @@ public class Hero extends GameElement {
      *
      * @return true if the Hero is carrying a block
      */
-    public boolean isCarryBock(){
-        return carryBock;
+    public boolean isCarryBlock() {
+        return carryBlock;
     }
 }

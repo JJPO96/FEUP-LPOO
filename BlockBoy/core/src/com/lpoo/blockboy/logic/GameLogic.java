@@ -29,7 +29,7 @@ public class GameLogic {
     private GameScreen screen;
     private World world;
 
-    public GameLogic(GameScreen screen){
+    public GameLogic(GameScreen screen) {
         // TODO - implementar aqui a logica do jogo
         this.screen = screen;
         this.world = screen.getWorld();
@@ -38,7 +38,7 @@ public class GameLogic {
     }
 
     // TODO - CRIAR TODOS OS ELEMENTOS DE JOGO AQUI
-    public void init(){
+    public void init() {
         hero = new Hero(screen);
         coins = new ArrayList<Coin>();
         blocks = new ArrayList<Block>();
@@ -49,72 +49,91 @@ public class GameLogic {
         Body body;
 
         //  Create ground
-        for (MapObject object: screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BlockBoy.PPM, (rect.getY()+rect.getHeight()/2)/ BlockBoy.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ BlockBoy.PPM, rect.getHeight()/2/ BlockBoy.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
 
         // Create coins
-        for (MapObject object: screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            coins.add(new Coin (screen, object));
+        for (MapObject object : screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            coins.add(new Coin(screen, object));
         }
 
         // Create exit
-        for (MapObject object: screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BlockBoy.PPM, (rect.getY()+rect.getHeight()/2)/BlockBoy.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ BlockBoy.PPM, rect.getHeight()/2/ BlockBoy.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
 
         // Create blocks
-        for (MapObject object: screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             blocks.add(new Block(screen, object));
         }
 
         // Create bricks
-        for (MapObject object: screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BlockBoy.PPM, (rect.getY()+rect.getHeight()/2)/ BlockBoy.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ BlockBoy.PPM, rect.getHeight()/2/ BlockBoy.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
     }
 
-    // TODO - FALTA TERMINAR
+    /**
+     * Calculates hero overlapping for each coin still not picked
+     */
+    void checkCoinPicking() {
+        for (Coin coin : coins) {
+            if (!coin.isPicked())
+                if (hero.bodysOverlaping(coin)) {
+                    coin.setCollision(true);
+                }
+        }
+    }
+
+    //boolean pick block
+
     /**
      * Updates the game
      */
-    public void update(float delta){
+    public void update(float delta) {
         hero.update(delta);
-        for (Coin coin: coins){
+
+        for (Coin coin : coins) {
             coin.update(delta);
-            if (coin.isPicked() && !coin.isScored()){
+            if (coin.isPicked() && !coin.isScored()) {
                 coinScore++;
                 coin.setScored();
             }
         }
 
-        for (Block block: blocks)
+        /*blocks.get(0).getBody().setTransform(hero.getBody().getPosition().x,
+                hero.getBody().getPosition().y + hero.getHeight(), blocks.get(0).getBody().getAngle());*/
+
+        for (Block block : blocks)
             block.update(delta);
+
+        checkCoinPicking();
     }
 
-    public boolean isGameRunning(){
+    public boolean isGameRunning() {
         return running;
     }
 
-    public Hero getHero(){
+    public Hero getHero() {
         return hero;
     }
 
@@ -126,7 +145,7 @@ public class GameLogic {
         return blocks;
     }
 
-    public int getCoinScore(){
+    public int getCoinScore() {
         return coinScore;
     }
 }

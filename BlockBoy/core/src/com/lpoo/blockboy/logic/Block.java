@@ -23,17 +23,15 @@ import com.lpoo.blockboy.gui.GameScreen;
  */
 public class Block extends GameElement {
     private boolean picked = false;
+    private boolean collision = false;
     private MapObject object;
     private TiledMap map;
     private Rectangle bounds;
     private PolygonShape shape;
     private Fixture fixture;
     private Filter filter;
-
     private TextureRegion region;
 
-    // TODO - CORRIGIR TODO A CLASSE
-    // TODO - CORRIGIR CONSTRUTOR
     /**
      * Coin's constructor
      *
@@ -62,7 +60,6 @@ public class Block extends GameElement {
         // TODO - APAGAR SE NAO USADO (SENSOR)
         fixture.setUserData(this);
 
-
         loadTextures();
     }
 
@@ -70,12 +67,24 @@ public class Block extends GameElement {
     public void loadTextures() {
         // In game sprite size
         setBounds(0, 0, 64 / BlockBoy.PPM, 64 / BlockBoy.PPM);
-
         region = new TextureRegion(getTexture(), 2459, 195, 64, 64);
     }
 
-    public void detectCollition(){
-        Gdx.app.log("Block", "Collision");
+    /**
+     * Sets a new collision state
+     *
+     * @param collision
+     */
+    public void setCollision(boolean collision){
+        this.collision = collision;
+        if (collision)
+            Gdx.app.log("Block", "begin collision");
+        else
+            Gdx.app.log("Block", "end collision");
+    }
+
+    public boolean getCollision(){
+        return collision;
     }
 
     public void setCategoryFilter(short filterBit){

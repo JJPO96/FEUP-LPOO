@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.lpoo.blockboy.BlockBoy;
+import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.GameLogic;
 import com.sun.javafx.scene.traversal.Hueristic2D;
 
@@ -89,8 +90,12 @@ public class GameScreen implements Screen {
         // TODO - REMOVER - DESKTOP KEYS (FAST DEBUGGING)
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A))
-            gameLogic.getHero().jump();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
+            /*for (Block block: gameLogic.getBlocks())
+                if (block.getCollision()){
+                    block.getBody().set
+                }*/
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
             gameLogic.getHero().run(0.1f);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && gameLogic.getHero().getBody().getLinearVelocity().x >= -2)
@@ -130,7 +135,6 @@ public class GameScreen implements Screen {
     public void show() {
     }
 
-
     // TODO - SEPARAR RENDER EM "UPDATE GAME" E EM "DRAW GAME"?
 
     @Override
@@ -162,15 +166,7 @@ public class GameScreen implements Screen {
         game.batch.end();
         // Draws HUD
         game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
-        hud.getStage().draw()
-
-        // TODO - COLOCAR ALGO AQUI NO NO FICHEIRO BLOCKBOY PARA FAZER MUDANÇA DO SCREEN
-        /*        if(gameOver()){
-            game.setScreen(new GameOverScreen(game));
-            dispose();
-        }         */
-
-        ;
+        hud.getStage().draw();
     }
 
     @Override

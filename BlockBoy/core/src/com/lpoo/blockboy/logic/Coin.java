@@ -23,9 +23,6 @@ import com.lpoo.blockboy.gui.GameScreen;
  * Class that represents a coin
  */
 public class Coin extends GameElement {
-
-    // TODO - CREATE HUD.ADDSCORE
-
     private boolean pick = false;
     private boolean picked = false;
     private boolean scored = false;
@@ -91,9 +88,9 @@ public class Coin extends GameElement {
         coinAnim = new Animation(0.16f, frames);
     }
 
-    public void detectCollition() {
+    public void setCollision(boolean collision) {
         Gdx.app.log("Coin", "Collision");
-        pick = true;
+        pick = collision;
     }
 
     public void setCategoryFilter(short filterBit) {
@@ -114,7 +111,6 @@ public class Coin extends GameElement {
     }
 
     public TextureRegion getFrame(float delta) {
-        TextureRegion region;
         region = coinAnim.getKeyFrame(stateTimer, true);
         stateTimer = stateTimer + delta;
 
