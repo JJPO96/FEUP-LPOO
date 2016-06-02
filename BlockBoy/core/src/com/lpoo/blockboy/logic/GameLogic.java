@@ -110,29 +110,42 @@ public class GameLogic {
                 if (hero.isFacingRight()) {
                     if (hero.getX() < block.getX()) {
                         block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
-                        moveBlock = false;
                         hero.setCarryBlock(true);
                         block.setPicked(true);
                     }
                 } else if (hero.getX() > block.getX()) {
                     block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
-                    moveBlock = false;
                     hero.setCarryBlock(true);
                     block.setPicked(true);
                 }
             }
         }
+
+        moveBlock = false;
     }
 
     /**
-     * Hero atemps to drop the block
+     * Hero attempts to drop the block
      */
     void heroDropBlock() {
-       /* for (Block block : blocks){
-            if (block.isPicked())
-                if (hero.isFacingRight())
+       for (Block block : blocks){
+            if (block.isPicked()){
+                if (hero.isFacingRight()){
+                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getHeight(), hero.getBody().getPosition().y);
+                    hero.setCarryBlock(false);
+                    block.setPicked(false);
+                }
 
-        }*/
+                else {
+                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight(), hero.getBody().getPosition().y);
+                    hero.setCarryBlock(false);
+                    block.setPicked(false);
+                }
+
+                break;
+            }
+
+        }
     }
 
     /**
@@ -152,11 +165,15 @@ public class GameLogic {
         }
 
         // Verifies if was received user's input to move a block
-        if (moveBlock)
+        if (moveBlock){
+            moveBlock = false;
+
             if (hero.hasBlock())
                 heroDropBlock();
             else
                 heroPickBlock();
+        }
+
 
         // Updates blocks
         for (Block block : blocks) {

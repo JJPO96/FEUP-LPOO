@@ -123,7 +123,11 @@ public class Block extends GameElement {
      */
     public void setPicked(boolean pick){
         this.picked = pick;
-        setCategoryFilter(BlockBoy.BLOCK_PICKED_BIT);
+
+        if (picked)
+            setCategoryFilter(BlockBoy.BLOCK_PICKED_BIT);
+        else
+            setCategoryFilter(BlockBoy.BLOCK_BIT);
     }
 
     /**
