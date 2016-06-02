@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class GameLogic {
 
     private Hero hero;
-    private boolean pickBlock = false;
+    private boolean moveBlock = false;
     private ArrayList<Coin> coins;
     private ArrayList<Block> blocks;
     private int coinScore;
@@ -31,14 +31,12 @@ public class GameLogic {
     private World world;
 
     public GameLogic(GameScreen screen) {
-        // TODO - implementar aqui a logica do jogo
         this.screen = screen;
         this.world = screen.getWorld();
         this.coinScore = 0;
         init();
     }
 
-    // TODO - CRIAR TODOS OS ELEMENTOS DE JOGO AQUI
     public void init() {
         hero = new Hero(screen);
         coins = new ArrayList<Coin>();
@@ -112,18 +110,29 @@ public class GameLogic {
                 if (hero.isFacingRight()) {
                     if (hero.getX() < block.getX()) {
                         block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
-                        pickBlock = false;
+                        moveBlock = false;
                         hero.setCarryBlock(true);
                         block.setPicked(true);
                     }
                 } else if (hero.getX() > block.getX()) {
                     block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
-                    pickBlock = false;
+                    moveBlock = false;
                     hero.setCarryBlock(true);
                     block.setPicked(true);
                 }
             }
         }
+    }
+
+    /**
+     * Hero atemps to drop the block
+     */
+    void heroDropBlock() {
+       /* for (Block block : blocks){
+            if (block.isPicked())
+                if (hero.isFacingRight())
+
+        }*/
     }
 
     /**
@@ -142,9 +151,12 @@ public class GameLogic {
             }
         }
 
-        // Verifies if was received user's input to pick a block
-        if (pickBlock)
-            heroPickBlock();
+        // Verifies if was received user's input to move a block
+        if (moveBlock)
+            if (hero.hasBlock())
+                heroDropBlock();
+            else
+                heroPickBlock();
 
         // Updates blocks
         for (Block block : blocks) {
@@ -178,7 +190,7 @@ public class GameLogic {
         return coinScore;
     }
 
-    public void setPickBlock(boolean pick) {
-        this.pickBlock = pick;
+    public void setMoveBlock(boolean move) {
+        this.moveBlock = move;
     }
 }

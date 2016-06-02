@@ -91,8 +91,9 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
         if (Gdx.input.isKeyJustPressed(Input.Keys.A))
-            if (!gameLogic.getHero().hasBlock())
-                gameLogic.setPickBlock(true);
+            // TODO - ESTÁ DE ALGUMA FORMA A MEMORIZAR A TECLA PRESSIONADA O UE FAZ COM QUE SE NA ALTURA NAO É POSSIVEL APANHR O BLOCO,
+            // CASO DEPOIS O SEJA, ESTÁ A APANHAR O BLOCO AUTOMATICAMENTE
+            gameLogic.setMoveBlock(true);
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
             gameLogic.getHero().run(0.1f);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && gameLogic.getHero().getBody().getLinearVelocity().x >= -2)
