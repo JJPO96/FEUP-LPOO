@@ -56,7 +56,7 @@ public class Hero extends GameElement {
         // TODO - CORRIGIR POSIÇAO INICIAL DO HEROI CONSOANTE O MAPA ESCOLHIDO
         // Creating the body
         bodyDef = new BodyDef();
-        bodyDef.position.set(200 / BlockBoy.PPM, 64 / BlockBoy.PPM);
+        bodyDef.position.set(600/ BlockBoy.PPM, 512 / BlockBoy.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
         fixtureDef = new FixtureDef();

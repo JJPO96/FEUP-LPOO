@@ -48,7 +48,7 @@ public class GameLogic {
         Body body;
 
         //  Create ground
-        for (MapObject object : screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
             bodyDef.linearDamping = 1.0f;
@@ -60,12 +60,12 @@ public class GameLogic {
         }
 
         // Create coins
-        for (MapObject object : screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             coins.add(new Coin(screen, object));
         }
 
         // Create exit
-        for (MapObject object : screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
             bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
@@ -76,12 +76,12 @@ public class GameLogic {
         }
 
         // Create blocks
-        for (MapObject object : screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             blocks.add(new Block(screen, object));
         }
 
         // Create bricks
-        for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : screen.getMap().getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
             bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
@@ -104,6 +104,9 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Hero attempts to pick the block
+     */
     void heroPickBlock() {
         for (Block block : blocks) {
             if (block.hasCollision()) {
@@ -146,7 +149,6 @@ public class GameLogic {
 
                 break;
             }
-
         }
     }
 
