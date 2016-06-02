@@ -131,13 +131,15 @@ public class GameLogic {
        for (Block block : blocks){
             if (block.isPicked()){
                 if (hero.isFacingRight()){
-                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getHeight(), hero.getBody().getPosition().y);
+                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getWidth(),
+                            hero.getBody().getPosition().y + hero.getHeight());
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 }
 
                 else {
-                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight(), hero.getBody().getPosition().y);
+                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight(),
+                            hero.getBody().getPosition().y + hero.getHeight());
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 }
