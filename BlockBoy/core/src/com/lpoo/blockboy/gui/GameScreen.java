@@ -79,7 +79,7 @@ public class GameScreen implements Screen {
         // TODO - Testar para o caso de multitouch
         // Hero is always at the center of the screen
         if (Gdx.input.isTouched()) {
-            if (Gdx.input.getY() < Gdx.graphics.getWidth() / 3)
+            if (Gdx.input.getY() < Gdx.graphics.getWidth() / 4)
                 gameLogic.getHero().jump();
             if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2)
                 gameLogic.getHero().run(0.1f);
@@ -90,17 +90,13 @@ public class GameScreen implements Screen {
         // TODO - REMOVER - DESKTOP KEYS (FAST DEBUGGING)
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            /*for (Block block: gameLogic.getBlocks())
-                if (block.getCollision()){
-                    block.getBody().set
-                }*/
-        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A))
+            if (!gameLogic.getHero().hasBlock())
+                gameLogic.setPickBlock(true);
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
             gameLogic.getHero().run(0.1f);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && gameLogic.getHero().getBody().getLinearVelocity().x >= -2)
             gameLogic.getHero().run(-0.1f);
-
     }
 
     public void update(float delta) {

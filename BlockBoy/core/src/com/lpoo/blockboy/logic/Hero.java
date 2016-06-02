@@ -69,7 +69,7 @@ public class Hero extends GameElement {
 
         // Creating sensor
         EdgeShape diagonal = new EdgeShape();
-        diagonal.set(new Vector2(-33 / BlockBoy.PPM, 30 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -32 / BlockBoy.PPM));
+        diagonal.set(new Vector2(-33 / BlockBoy.PPM, 30 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -30 / BlockBoy.PPM));
         fixtureDef.shape = diagonal;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData("heroSensorDiagonal");
@@ -113,20 +113,24 @@ public class Hero extends GameElement {
      * @param coin to be checked
      * @return true if the Hero is overlapping the coin
      */
-    boolean bodysOverlaping(Coin coin) {
+    boolean bodysOverlapping(Coin coin) {
         if ((getX() + getWidth()) < coin.getX())
             return false;
-        if (getX() > (coin.getX() + coin.getWidth()))
+        else if (getX() > (coin.getX() + coin.getWidth()))
             return false;
-        if ((getY() + getHeight()) < coin.getY())
+        else if ((getY() + getHeight()) < coin.getY())
             return false;
-        if (getY() > (coin.getY() + coin.getHeight()))
+        else if (getY() > (coin.getY() + coin.getHeight()))
             return false;
-
-        return true;
+        else
+            return true;
     }
 
-    // TODO - FALTA TERMINAR
+    /**
+     * Updates Hero's state
+     *
+     * @param delta time
+     */
     @Override
     public void update(float delta) {
         // Makes the sprite (hero itself) to move within the graphical body in the world
@@ -202,7 +206,7 @@ public class Hero extends GameElement {
 
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
-            body.applyLinearImpulse(new Vector2(0, 3.5f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(0, 3.6f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
     }
@@ -223,7 +227,11 @@ public class Hero extends GameElement {
      *
      * @return true if the Hero is carrying a block
      */
-    public boolean isCarryBlock() {
+    public boolean hasBlock() {
         return carryBlock;
+    }
+
+    public boolean isFacingRight(){
+        return facingRight;
     }
 }

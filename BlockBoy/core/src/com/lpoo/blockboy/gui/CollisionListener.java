@@ -1,6 +1,7 @@
 package com.lpoo.blockboy.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.Coin;
+import com.lpoo.blockboy.logic.Hero;
 
 /**
  * Created by Manuel Gomes on 01/06/2016.
@@ -22,9 +24,8 @@ public class CollisionListener implements ContactListener {
             Fixture left = fixA.getUserData() == "heroSensorDiagonal"? fixA : fixB;
             Fixture object = left == fixA? fixB : fixA;
 
-            if(object.getUserData() instanceof Block){
+            if(object.getUserData() instanceof Block)
                 ((Block) object.getUserData()).setCollision(true);
-            }
         }
     }
 

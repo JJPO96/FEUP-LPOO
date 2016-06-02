@@ -18,8 +18,8 @@ public class BlockBoy extends Game {
     public static final short DEFAULT_BIT = 1;
     public static final short HERO_BIT = 2;
     public static final short BLOCK_BIT = 4;
-    public static final short COIN_BIT = 8;
-    public static final short COIN_PICKED_BIT = 8;
+    public static final short BLOCK_PICKED_BIT = 8;
+    public static final short COIN_BIT = 16;
 
     public SpriteBatch batch;
     public BitmapFont font;
@@ -57,7 +57,6 @@ public class BlockBoy extends Game {
 
     @Override
     public void render() {
-
         // Renders the screen active at the time
         super.render();
     }

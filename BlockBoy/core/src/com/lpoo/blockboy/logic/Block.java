@@ -24,6 +24,7 @@ import com.lpoo.blockboy.gui.GameScreen;
 public class Block extends GameElement {
     private boolean picked = false;
     private boolean collision = false;
+    private boolean bodyTypeChange = false;
     private MapObject object;
     private TiledMap map;
     private Rectangle bounds;
@@ -51,13 +52,14 @@ public class Block extends GameElement {
         bodyDef = new BodyDef();
         shape = new PolygonShape();
         fixtureDef = new FixtureDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.linearDamping = 5.0f;
         bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / BlockBoy.PPM, (bounds.getY() + bounds.getHeight() / 2) / BlockBoy.PPM);
         body = world.createBody(bodyDef);
         shape.setAsBox(bounds.getWidth() / 2 / BlockBoy.PPM, bounds.getHeight() / 2 / BlockBoy.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
-        // TODO - APAGAR SE NAO USADO (SENSOR)
         fixture.setUserData(this);
 
         loadTextures();
@@ -75,15 +77,28 @@ public class Block extends GameElement {
      *
      * @param collision
      */
+
+    // TODO - CORRIGIR
     public void setCollision(boolean collision){
         this.collision = collision;
-        if (collision)
+        if (collision){
             Gdx.app.log("Block", "begin collision");
-        else
+            /*bodyDef.type = BodyDef.BodyType.StaticBody;
+            body = world.createBody(bodyDef);
+            //body.setType();*/
+        }
+
+        else{
             Gdx.app.log("Block", "end collision");
+            /*if (bodyTypeChange){
+                bodyDef.type = BodyDef.BodyType.DynamicBody;
+                body = world.createBody(bodyDef);
+            }*/
+        }
+
     }
 
-    public boolean getCollision(){
+    public boolean hasCollision(){
         return collision;
     }
 
@@ -91,6 +106,10 @@ public class Block extends GameElement {
         filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
+    }
+
+    public void setBodyPosition(float x, float y){
+        this.body.setTransform(x, y, body.getAngle());
     }
 
     @Override
@@ -102,8 +121,9 @@ public class Block extends GameElement {
     /**
      * Sets the block as picked by the Hero
      */
-    public void setPicked(){
-        picked = true;
+    public void setPicked(boolean pick){
+        this.picked = pick;
+        setCategoryFilter(BlockBoy.BLOCK_PICKED_BIT);
     }
 
     /**

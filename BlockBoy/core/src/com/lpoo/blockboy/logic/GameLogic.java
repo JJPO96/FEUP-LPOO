@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class GameLogic {
 
     private Hero hero;
+    private boolean pickBlock = false;
     private ArrayList<Coin> coins;
     private ArrayList<Block> blocks;
     private int coinScore;
@@ -43,7 +44,7 @@ public class GameLogic {
         coins = new ArrayList<Coin>();
         blocks = new ArrayList<Block>();
 
-        BodyDef bdef = new BodyDef();
+        BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
@@ -51,9 +52,10 @@ public class GameLogic {
         //  Create ground
         for (MapObject object : screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
-            body = world.createBody(bdef);
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.linearDamping = 1.0f;
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
+            body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
@@ -67,9 +69,9 @@ public class GameLogic {
         // Create exit
         for (MapObject object : screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
-            body = world.createBody(bdef);
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
+            body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
@@ -83,9 +85,9 @@ public class GameLogic {
         // Create bricks
         for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
-            body = world.createBody(bdef);
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
+            body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
@@ -98,20 +100,40 @@ public class GameLogic {
     void checkCoinPicking() {
         for (Coin coin : coins) {
             if (!coin.isPicked())
-                if (hero.bodysOverlaping(coin)) {
+                if (hero.bodysOverlapping(coin)) {
                     coin.setCollision(true);
                 }
         }
     }
 
-    //boolean pick block
+    void heroPickBlock() {
+        for (Block block : blocks) {
+            if (block.hasCollision()) {
+                if (hero.isFacingRight()) {
+                    if (hero.getX() < block.getX()) {
+                        block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
+                        pickBlock = false;
+                        hero.setCarryBlock(true);
+                        block.setPicked(true);
+                    }
+                } else if (hero.getX() > block.getX()) {
+                    block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
+                    pickBlock = false;
+                    hero.setCarryBlock(true);
+                    block.setPicked(true);
+                }
+            }
+        }
+    }
 
     /**
      * Updates the game
      */
     public void update(float delta) {
+        // Updates Hero
         hero.update(delta);
 
+        // Updates coins
         for (Coin coin : coins) {
             coin.update(delta);
             if (coin.isPicked() && !coin.isScored()) {
@@ -120,12 +142,19 @@ public class GameLogic {
             }
         }
 
-        /*blocks.get(0).getBody().setTransform(hero.getBody().getPosition().x,
-                hero.getBody().getPosition().y + hero.getHeight(), blocks.get(0).getBody().getAngle());*/
+        // Verifies if was received user's input to pick a block
+        if (pickBlock)
+            heroPickBlock();
 
-        for (Block block : blocks)
+        // Updates blocks
+        for (Block block : blocks) {
+            if (block.isPicked())
+                block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
+
             block.update(delta);
+        }
 
+        // Picks coins if possible
         checkCoinPicking();
     }
 
@@ -147,5 +176,9 @@ public class GameLogic {
 
     public int getCoinScore() {
         return coinScore;
+    }
+
+    public void setPickBlock(boolean pick) {
+        this.pickBlock = pick;
     }
 }

@@ -67,8 +67,6 @@ public class Coin extends GameElement {
         shape.setAsBox(bounds.getWidth() / 2 / BlockBoy.PPM, bounds.getHeight() / 2 / BlockBoy.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
-        // TODO - APAGAR SE NAO USADO (SENSOR)
-        fixture.setUserData(this);
 
         loadTextures();
     }
