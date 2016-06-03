@@ -27,6 +27,8 @@ public class LevelScreen implements Screen {
     private Skin skin;
     private Viewport viewport;
 
+    private boolean[] lockLevels;
+
     private TextureAtlas lvlMenuAtlas;
 
     private ImageButton lvl1Btn;
@@ -45,6 +47,8 @@ public class LevelScreen implements Screen {
 
     public LevelScreen(BlockBoy game){
         this.game = game;
+
+        lockLevels = new boolean[10];
 
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
@@ -112,17 +116,22 @@ public class LevelScreen implements Screen {
         skin = new Skin();
         skin.addRegions(lvlMenuAtlas);
         stage.clear();
+        for (int i = 0; i < lockLevels.length; i++)
+            lockLevels[i] = true;
 
-        lvl1Btn = new ImageButton(skin.getDrawable("lvl1"),skin.getDrawable("lvl1p"));
-        lvl2Btn = new ImageButton(skin.getDrawable("lvl2"),skin.getDrawable("lvl2p"));
-        lvl3Btn = new ImageButton(skin.getDrawable("lvl3"),skin.getDrawable("lvl3p"));
-        lvl4Btn = new ImageButton(skin.getDrawable("lvl4"),skin.getDrawable("lvl4p"));
-        lvl5Btn = new ImageButton(skin.getDrawable("lvl5"),skin.getDrawable("lvl5p"));
-        lvl6Btn = new ImageButton(skin.getDrawable("lvl6"),skin.getDrawable("lvl6p"));
-        lvl7Btn = new ImageButton(skin.getDrawable("lvl7"),skin.getDrawable("lvl7p"));
-        lvl8Btn = new ImageButton(skin.getDrawable("lvl8"),skin.getDrawable("lvl8p"));
-        lvl9Btn = new ImageButton(skin.getDrawable("lvl9"),skin.getDrawable("lvl9p"));
-        lvl10Btn = new ImageButton(skin.getDrawable("lvl10"),skin.getDrawable("lvl10p"));
+        lockLevels[0] = false;
+
+        lvl1Btn = !lockLevels[0] ? new ImageButton(skin.getDrawable("lvl1"),skin.getDrawable("lvl1p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl2Btn = !lockLevels[1] ? new ImageButton(skin.getDrawable("lvl2"),skin.getDrawable("lvl2p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl3Btn = !lockLevels[2] ? new ImageButton(skin.getDrawable("lvl3"),skin.getDrawable("lvl3p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl4Btn = !lockLevels[3] ? new ImageButton(skin.getDrawable("lvl4"),skin.getDrawable("lvl4p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl5Btn = !lockLevels[4] ? new ImageButton(skin.getDrawable("lvl5"),skin.getDrawable("lvl5p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl6Btn = !lockLevels[5] ? new ImageButton(skin.getDrawable("lvl6"),skin.getDrawable("lvl6p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl7Btn = !lockLevels[6] ? new ImageButton(skin.getDrawable("lvl7"),skin.getDrawable("lvl7p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl8Btn = !lockLevels[7] ? new ImageButton(skin.getDrawable("lvl8"),skin.getDrawable("lvl8p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl9Btn = !lockLevels[8] ? new ImageButton(skin.getDrawable("lvl9"),skin.getDrawable("lvl9p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl10Btn = !lockLevels[9] ? new ImageButton(skin.getDrawable("lvl10"),skin.getDrawable("lvl10p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+
         lvlLockedBtn = new ImageButton(skin.getDrawable("lockedLvl"));
 
 
@@ -149,112 +158,172 @@ public class LevelScreen implements Screen {
         lvl10Btn.setPosition(11*BlockBoy.VWIDTH/14-lvl10Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl10Btn.getHeight()/2);
 
         lvl1Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[0]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(new GameScreen(game));
-                dispose();
+                if(!lockLevels[0]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl2Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[1]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-               /* game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[1]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl3Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[2]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[2]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl4Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[3]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[3]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl5Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[4]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[4]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl6Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[5]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[5]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl7Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[6]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[6]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl8Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[7]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[7]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl9Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[8]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[8]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
         lvl10Btn.addListener(new InputListener(){
+
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                return true;
+                if(!lockLevels[9]){
+                    return true;
+                }
+                return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*game.setScreen(new GameScreen(game));
-                dispose();*/
+                if(!lockLevels[9]){
+                    game.setScreen(new GameScreen(game));
+                    dispose();
+                }
             }
         });
 
