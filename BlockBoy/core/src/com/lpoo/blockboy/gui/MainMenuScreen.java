@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
+import com.lpoo.blockboy.logic.Block;
 
 /**
  * Created by Manuel Gomes on 12/05/2016.
@@ -40,7 +41,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(BlockBoy game){
         this.game = game;
 
-        this.viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
+        this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
         menu_bg = new Texture("menu/menu_bg.png");
@@ -85,7 +86,7 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(menu_bg,0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        game.batch.draw(menu_bg,0,0, BlockBoy.VWIDTH,BlockBoy.VHEIGHT);
         game.batch.end();
 
         stage.draw();
@@ -119,6 +120,7 @@ public class MainMenuScreen implements Screen {
 
     public void initStage(SpriteBatch batch){
         this.stage = new Stage(viewport, batch);
+
         startMenuAtlas = new TextureAtlas("menu/startMenu.pack");
         skin = new Skin();
         skin.addRegions(startMenuAtlas);
@@ -128,15 +130,15 @@ public class MainMenuScreen implements Screen {
         optionsBtn = new ImageButton(skin.getDrawable("optionsBtn"),skin.getDrawable("optionsPressed"));
         exitBtn = new ImageButton(skin.getDrawable("exitBtn"),skin.getDrawable("exitPressed"));
 
-        widthRatio = Gdx.graphics.getWidth() * newGameBtn.getWidth()/1280;
-        heightRatio = Gdx.graphics.getHeight() * newGameBtn.getHeight()/770;
+        /*widthRatio = Gdx.graphics.getWidth() * newGameBtn.getWidth()/1280;
+        heightRatio = BlockBoy.VHEIGHT * newGameBtn.getHeight()/770;*/
 
-        newGameBtn.setSize(widthRatio,heightRatio);
-        newGameBtn.setPosition(Gdx.graphics.getWidth()/2-newGameBtn.getWidth()/2,7*Gdx.graphics.getHeight()/10-newGameBtn.getHeight()/2);
-        optionsBtn.setSize(widthRatio,heightRatio);
-        optionsBtn.setPosition(Gdx.graphics.getWidth()/2-optionsBtn.getWidth()/2,5*Gdx.graphics.getHeight()/10-optionsBtn.getHeight()/2);
-        exitBtn.setSize(widthRatio,heightRatio);
-        exitBtn.setPosition(Gdx.graphics.getWidth()/2-exitBtn.getWidth()/2,3*Gdx.graphics.getHeight()/10-exitBtn.getHeight()/2);
+        newGameBtn.setSize(newGameBtn.getWidth()/2,newGameBtn.getHeight()/2);
+        newGameBtn.setPosition(BlockBoy.VWIDTH/2-newGameBtn.getWidth()/2,7*BlockBoy.VHEIGHT/10-newGameBtn.getHeight()/2);
+        optionsBtn.setSize(optionsBtn.getWidth()/2,optionsBtn.getHeight()/2);
+        optionsBtn.setPosition(BlockBoy.VWIDTH/2-optionsBtn.getWidth()/2,5*BlockBoy.VHEIGHT/10-optionsBtn.getHeight()/2);
+        exitBtn.setSize(exitBtn.getWidth()/2,exitBtn.getHeight()/2);
+        exitBtn.setPosition(BlockBoy.VWIDTH/2-exitBtn.getWidth()/2,3*BlockBoy.VHEIGHT/10-exitBtn.getHeight()/2);
 
         stage.addActor(newGameBtn);
         stage.addActor(optionsBtn);
