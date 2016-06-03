@@ -128,21 +128,15 @@ public class MainMenuScreen implements Screen {
         optionsBtn = new ImageButton(skin.getDrawable("optionsBtn"),skin.getDrawable("optionsPressed"));
         exitBtn = new ImageButton(skin.getDrawable("exitBtn"),skin.getDrawable("exitPressed"));
 
-        widthRatio = Gdx.graphics.getWidth() * newGameBtn.getWidth()/2560;
-        heightRatio = Gdx.graphics.getHeight() * newGameBtn.getHeight() /1440;
+        widthRatio = Gdx.graphics.getWidth() * newGameBtn.getWidth()/1280;
+        heightRatio = Gdx.graphics.getHeight() * newGameBtn.getHeight()/770;
 
-        /*newGameBtn.setWidth(newGameBtn.getWidth()/3);
-        newGameBtn.setHeight(newGameBtn.getHeight()/3);*/
         newGameBtn.setSize(widthRatio,heightRatio);
         newGameBtn.setPosition(Gdx.graphics.getWidth()/2-newGameBtn.getWidth()/2,7*Gdx.graphics.getHeight()/10-newGameBtn.getHeight()/2);
-       /* optionsBtn.setWidth(optionsBtn.getWidth()/3);
-        optionsBtn.setHeight(optionsBtn.getHeight()/3);*/
         optionsBtn.setSize(widthRatio,heightRatio);
-        optionsBtn.setPosition(Gdx.graphics.getWidth()/2-newGameBtn.getWidth()/2,5*Gdx.graphics.getHeight()/10-newGameBtn.getHeight()/2);
-        /*exitBtn.setWidth(exitBtn.getWidth()/3);
-        exitBtn.setHeight(exitBtn.getHeight()/3);*/
+        optionsBtn.setPosition(Gdx.graphics.getWidth()/2-optionsBtn.getWidth()/2,5*Gdx.graphics.getHeight()/10-optionsBtn.getHeight()/2);
         exitBtn.setSize(widthRatio,heightRatio);
-        exitBtn.setPosition(Gdx.graphics.getWidth()/2-newGameBtn.getWidth()/2,3*Gdx.graphics.getHeight()/10-newGameBtn.getHeight()/2);
+        exitBtn.setPosition(Gdx.graphics.getWidth()/2-exitBtn.getWidth()/2,3*Gdx.graphics.getHeight()/10-exitBtn.getHeight()/2);
 
         stage.addActor(newGameBtn);
         stage.addActor(optionsBtn);
