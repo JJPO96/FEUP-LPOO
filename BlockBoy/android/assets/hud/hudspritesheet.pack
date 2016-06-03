@@ -10,6 +10,13 @@ boxPressed
   orig: 177, 178
   offset: 0, 0
   index: -1
+boxUp
+  rotate: false
+  xy: 759, 77
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
 homePressed
   rotate: false
   xy: 1, 127
