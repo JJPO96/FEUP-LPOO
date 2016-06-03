@@ -212,7 +212,6 @@ public class Hero extends GameElement {
 
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
-            Gdx.app.log("jump", "");
             body.applyLinearImpulse(new Vector2(0, 3.5f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }

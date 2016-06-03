@@ -118,10 +118,10 @@ public class Hud implements Disposable {
         back.setPosition(BlockBoy.VWIDTH/8, 50);
         pickBox.setWidth(90);
         pickBox.setHeight(90);
-        pickBox.setPosition(7*BlockBoy.VWIDTH/8-240, 50);
+        pickBox.setPosition(7*BlockBoy.VWIDTH/8-90, 50);
         jump.setWidth(90);
         jump.setHeight(90);
-        jump.setPosition(7*BlockBoy.VWIDTH/8-90, 50);
+        jump.setPosition(BlockBoy.VWIDTH/2-45, 50);
 
         addButtonListeners();
 
@@ -168,14 +168,13 @@ public class Hud implements Disposable {
         });
 
         // Jump button
-        back.addListener(new InputListener() {
+        jump.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 gameScreen.getGameLogic().getHero().jump();
                 return true;
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                gameScreen.getGameLogic().getHero().jump();
             }
         });
     }
