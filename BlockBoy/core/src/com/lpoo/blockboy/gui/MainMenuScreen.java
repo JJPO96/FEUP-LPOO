@@ -5,6 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
 
 /**
@@ -15,48 +22,42 @@ public class MainMenuScreen implements Screen {
     BlockBoy game;
     OrthographicCamera gameCam;
 
-    private Texture background;
+    private Stage stage;
+    private Skin skin;
+    private Viewport viewport;
+
+    private TextureAtlas startMenuAtlas;
+
+    private ImageButton newGameBtn;
+    private ImageButton optionsBtn;
+    private ImageButton exitBtn;
+
     private Texture menu_bg;
-    private Texture newGameBtn;
-    private Texture optionsBtn;
-    private Texture exitBtn;
 
     float widthRatio;
     float heightRatio;
 
     public MainMenuScreen(BlockBoy game){
         this.game = game;
-        this.gameCam = new OrthographicCamera();
-        gameCam.setToOrtho(false, BlockBoy.VHEIGHT, BlockBoy.VHEIGHT);
 
-        background = new Texture("menu/background.png");
+        this.viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
+        initStage(game.batch);
+
         menu_bg = new Texture("menu/menu_bg.png");
-        newGameBtn = new Texture("menu/newGameBtn.png");
-        optionsBtn = new Texture("menu/optionsBtn.png");
-        exitBtn = new Texture("menu/exitBtn.png");
 
-        widthRatio = Gdx.graphics.getWidth() * 195/2560;
-        heightRatio = Gdx.graphics.getHeight() * 97 /1440;
+
+        Gdx.app.log("" + widthRatio,"" + heightRatio);
     }
 
     public void checkInput(float delta){
         if (Gdx.input.isTouched()) {
-            if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2 - 2 * widthRatio
-             && Gdx.input.getX() < Gdx.graphics.getWidth() / 2 - 2 * widthRatio + 4 * widthRatio
-             && Gdx.input.getY() < (Gdx.graphics.getHeight() - (7 * Gdx.graphics.getHeight() / 8 - 4 * heightRatio))
-             && Gdx.input.getY() > (Gdx.graphics.getHeight() - (7 * Gdx.graphics.getHeight() / 8 - 4 * heightRatio + 3 * heightRatio))){ // new game button
+            if (newGameBtn.isPressed()){ // new game button
                 game.setScreen(new GameScreen(game));
                 dispose();
-            }else if (Gdx.input.getX() > Gdx.graphics.getWidth()/2 - 2*widthRatio
-                   && Gdx.input.getX() < Gdx.graphics.getWidth()/2 - 2*widthRatio + 4*widthRatio
-                   && Gdx.input.getY() < (Gdx.graphics.getHeight() - (4*Gdx.graphics.getHeight()/8 - 8*heightRatio/5))
-                   && Gdx.input.getY() > (Gdx.graphics.getHeight() - (4*Gdx.graphics.getHeight()/8 - 8*heightRatio/5 + 3*heightRatio))) {
-                game.setScreen(new LevelScreen(game));
-                dispose();
-            }else if (Gdx.input.getX() > Gdx.graphics.getWidth()/2 - 2*widthRatio
-             && Gdx.input.getX() < Gdx.graphics.getWidth()/2 - 2*widthRatio + 4*widthRatio
-             && Gdx.input.getY() < (Gdx.graphics.getHeight() - (2*Gdx.graphics.getHeight()/8 - heightRatio))
-             && Gdx.input.getY() > (Gdx.graphics.getHeight() - (2*Gdx.graphics.getHeight()/8 - heightRatio + 3*heightRatio))) { // exit button
+            }else if (optionsBtn.isPressed()) {
+              /*game.setScreen(new LevelScreen(game));
+                dispose();*/
+            }else if (exitBtn.isPressed()) { // exit button
                 dispose();
                 Gdx.app.exit();
             }
@@ -69,7 +70,6 @@ public class MainMenuScreen implements Screen {
 
     public void update(float delta){
         checkInput(delta);
-        gameCam.update();
     }
 
     @Override
@@ -86,15 +86,9 @@ public class MainMenuScreen implements Screen {
 
         game.batch.begin();
         game.batch.draw(menu_bg,0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-
-        game.batch.draw(newGameBtn,Gdx.graphics.getWidth()/2 - 2*widthRatio,7*Gdx.graphics.getHeight()/8 - 4*heightRatio,4*widthRatio,3*heightRatio);
-        game.batch.draw(optionsBtn,Gdx.graphics.getWidth()/2 - 2*widthRatio,4*Gdx.graphics.getHeight()/8 - 8*heightRatio/5,4*widthRatio,3*heightRatio);
-        game.batch.draw(exitBtn,Gdx.graphics.getWidth()/2 - 2*widthRatio,2*Gdx.graphics.getHeight()/8 - 1*heightRatio,4*widthRatio,3*heightRatio);
-
-        /*game.font.draw(game.batch "Welcome to BlockBoy! ", 200, 300);1
-        game.font.draw(game.batch, "Tap anywhere to begin!", 200, 200);*/
         game.batch.end();
 
+        stage.draw();
     }
 
     @Override
@@ -119,10 +113,41 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        background.dispose();
         menu_bg.dispose();
-        newGameBtn.dispose();
-        optionsBtn.dispose();
-        exitBtn.dispose();
+        stage.dispose();
+    }
+
+    public void initStage(SpriteBatch batch){
+        this.stage = new Stage(viewport, batch);
+        startMenuAtlas = new TextureAtlas("menu/startMenu.pack");
+        skin = new Skin();
+        skin.addRegions(startMenuAtlas);
+        stage.clear();
+
+        newGameBtn = new ImageButton(skin.getDrawable("newGameBtn"),skin.getDrawable("newGamePressed"));
+        optionsBtn = new ImageButton(skin.getDrawable("optionsBtn"),skin.getDrawable("optionsPressed"));
+        exitBtn = new ImageButton(skin.getDrawable("exitBtn"),skin.getDrawable("exitPressed"));
+
+        widthRatio = Gdx.graphics.getWidth() * newGameBtn.getWidth()/2560;
+        heightRatio = Gdx.graphics.getHeight() * newGameBtn.getHeight() /1440;
+
+        /*newGameBtn.setWidth(newGameBtn.getWidth()/3);
+        newGameBtn.setHeight(newGameBtn.getHeight()/3);*/
+        newGameBtn.setSize(widthRatio,heightRatio);
+        newGameBtn.setPosition(Gdx.graphics.getWidth()/2-newGameBtn.getWidth()/2,7*Gdx.graphics.getHeight()/10-newGameBtn.getHeight()/2);
+       /* optionsBtn.setWidth(optionsBtn.getWidth()/3);
+        optionsBtn.setHeight(optionsBtn.getHeight()/3);*/
+        optionsBtn.setSize(widthRatio,heightRatio);
+        optionsBtn.setPosition(Gdx.graphics.getWidth()/2-newGameBtn.getWidth()/2,5*Gdx.graphics.getHeight()/10-newGameBtn.getHeight()/2);
+        /*exitBtn.setWidth(exitBtn.getWidth()/3);
+        exitBtn.setHeight(exitBtn.getHeight()/3);*/
+        exitBtn.setSize(widthRatio,heightRatio);
+        exitBtn.setPosition(Gdx.graphics.getWidth()/2-newGameBtn.getWidth()/2,3*Gdx.graphics.getHeight()/10-newGameBtn.getHeight()/2);
+
+        stage.addActor(newGameBtn);
+        stage.addActor(optionsBtn);
+        stage.addActor(exitBtn);
+
+        Gdx.input.setInputProcessor(stage);
     }
 }
