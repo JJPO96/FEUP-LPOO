@@ -3,93 +3,149 @@ hudspritesheet.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+boxPressed
+  rotate: false
+  xy: 1, 307
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+homePressed
+  rotate: false
+  xy: 1, 127
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+homeUp
+  rotate: false
+  xy: 180, 307
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+jumpPressed
+  rotate: false
+  xy: 180, 127
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+jumpUp
+  rotate: false
+  xy: 359, 307
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+pausePressed
+  rotate: false
+  xy: 359, 127
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+pauseUp
+  rotate: false
+  xy: 538, 307
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+sandclock
+  rotate: false
+  xy: 1, 5
+  size: 100, 120
+  orig: 100, 120
+  offset: 0, 0
+  index: -1
 coin
   rotate: false
-  xy: 1, 103
+  xy: 538, 205
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 eight
   rotate: false
-  xy: 1, 1
+  xy: 717, 385
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 five
   rotate: false
-  xy: 103, 103
+  xy: 103, 25
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 four
   rotate: false
-  xy: 103, 1
+  xy: 819, 385
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 halfheart
   rotate: false
-  xy: 205, 103
+  xy: 205, 25
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 205, 1
+  xy: 921, 385
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 nine
   rotate: false
-  xy: 307, 103
+  xy: 307, 25
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 one
   rotate: false
-  xy: 307, 1
+  xy: 409, 25
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 seven
   rotate: false
-  xy: 409, 103
+  xy: 538, 103
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 six
   rotate: false
-  xy: 409, 1
+  xy: 717, 283
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 three
   rotate: false
-  xy: 511, 103
+  xy: 819, 283
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 two
   rotate: false
-  xy: 511, 1
+  xy: 921, 283
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 x
   rotate: false
-  xy: 613, 103
+  xy: 511, 1
   size: 100, 100
   orig: 100, 100
   offset: 0, 0

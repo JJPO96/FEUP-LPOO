@@ -69,31 +69,28 @@ public class GameScreen implements Screen {
         // Creates an instance of logic of the game itself
         gameLogic = new GameLogic(this);
         boxDebug = new Box2DDebugRenderer();
-        hud = new Hud(game.batch, game.font);
+        hud = new Hud(this);
 
         world.setContactListener(new CollisionListener());
     }
 
     public void checkInput(float delta) {
-        // TODO - PASSAR AS KEYS DO INPUT PARA ALGO DETETAVEL PELO TLM
-
-        // TODO - Testar para o caso de multitouch
         // Hero is always at the center of the screen
         if (Gdx.input.isTouched()) {
-            if (Gdx.input.getY() < Gdx.graphics.getWidth() / 4)
-                gameLogic.getHero().jump();
-            if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2)
-                gameLogic.getHero().run(0.1f);
-            if (Gdx.input.getX() < Gdx.graphics.getWidth() / 2)
-                gameLogic.getHero().run(-0.1f);
+            if (Gdx.input.getY() < 2*Gdx.graphics.getHeight()/3){
+                if (Gdx.input.getY() < Gdx.graphics.getWidth() / 4)
+                    gameLogic.getHero().jump();
+                if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2)
+                    gameLogic.getHero().run(0.1f);
+                if (Gdx.input.getX() < Gdx.graphics.getWidth() / 2)
+                    gameLogic.getHero().run(-0.1f);
+            }
         }
 
         // TODO - REMOVER - DESKTOP KEYS (FAST DEBUGGING)
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
         if (Gdx.input.isKeyJustPressed(Input.Keys.A))
-            // TODO - ESTÁ DE ALGUMA FORMA A MEMORIZAR A TECLA PRESSIONADA O UE FAZ COM QUE SE NA ALTURA NAO É POSSIVEL APANHR O BLOCO,
-            // CASO DEPOIS O SEJA, ESTÁ A APANHAR O BLOCO AUTOMATICAMENTE
             gameLogic.setMoveBlock(true);
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && gameLogic.getHero().getBody().getLinearVelocity().x <= 2)
             gameLogic.getHero().run(0.1f);
@@ -130,11 +127,13 @@ public class GameScreen implements Screen {
         return atlas;
     }
 
+    public BlockBoy getGame() { return game; }
+
+    public GameLogic getGameLogic() { return gameLogic; }
+
     @Override
     public void show() {
     }
-
-    // TODO - SEPARAR RENDER EM "UPDATE GAME" E EM "DRAW GAME"?
 
     @Override
     public void render(float delta) {
@@ -192,6 +191,7 @@ public class GameScreen implements Screen {
         mapRenderer.dispose();
         map.dispose();
         boxDebug.dispose();
+        hud.dispose();
     }
 
 
