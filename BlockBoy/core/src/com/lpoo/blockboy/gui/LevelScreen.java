@@ -5,121 +5,59 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
 
 /**
- * Created by José Oliveira on 12/05/2016.
+ * Created by Manuel Gomes on 12/05/2016.
  */
 public class LevelScreen implements Screen {
 
     BlockBoy game;
-    OrthographicCamera gameCam;
 
     private Stage stage;
+    private Skin skin;
+    private Viewport viewport;
+
+    private TextureAtlas lvlMenuAtlas;
+
+    private ImageButton lvl1Btn;
+    private ImageButton lvl2Btn;
+    private ImageButton lvl3Btn;
+    private ImageButton lvl4Btn;
+    private ImageButton lvl5Btn;
+    private ImageButton lvl6Btn;
+    private ImageButton lvl7Btn;
+    private ImageButton lvl8Btn;
+    private ImageButton lvl9Btn;
+    private ImageButton lvl10Btn;
+    private ImageButton lvlLockedBtn;
 
     private Texture menu_bg;
 
-    private boolean[] lvlsLock;
-
-    private TextureAtlas lvlAtlas;
-    Skin skin;
-
-    private ImageButton lvl1;
-    private ImageButton lvl2;
-    private ImageButton lvl3;
-    private ImageButton lvl4;
-    private ImageButton lvl5;
-    private ImageButton lvl6;
-    private ImageButton lvl7;
-    private ImageButton lvl8;
-    private ImageButton lvl9;
-    private ImageButton lvl10;
-    private ImageButton lvlLocked;
-
-    float widthRatio;
-    float heightRatio;
-
     public LevelScreen(BlockBoy game){
         this.game = game;
-        this.gameCam = new OrthographicCamera();
-        gameCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        stage = new Stage();
-        lvlAtlas = new TextureAtlas("menu/lvlMenu.pack");
-        skin = new Skin();
-        skin.addRegions(lvlAtlas);
-        stage.clear();
+        this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
+        initStage(game.batch);
 
         menu_bg = new Texture("menu/menu_bg.png");
-
-        lvl1 = new ImageButton(skin.getDrawable("lvl1"),skin.getDrawable("lvl1p"));
-        lvl2 = new ImageButton(skin.getDrawable("lvl2"),skin.getDrawable("lvl2p"));
-        lvl3 = new ImageButton(skin.getDrawable("lvl3"),skin.getDrawable("lvl3p"));
-        lvl4 = new ImageButton(skin.getDrawable("lvl4"),skin.getDrawable("lvl4p"));
-        lvl5 = new ImageButton(skin.getDrawable("lvl5"),skin.getDrawable("lvl5p"));
-        lvl6 = new ImageButton(skin.getDrawable("lvl6"),skin.getDrawable("lvl6p"));
-        lvl7 = new ImageButton(skin.getDrawable("lvl7"),skin.getDrawable("lvl7p"));
-        lvl8 = new ImageButton(skin.getDrawable("lvl8"),skin.getDrawable("lvl8p"));
-        lvl9 = new ImageButton(skin.getDrawable("lvl9"),skin.getDrawable("lvl9p"));
-        lvl10 = new ImageButton(skin.getDrawable("lvl10"),skin.getDrawable("lvl10p"));
-        lvlLocked = new ImageButton(skin.getDrawable("lockedLvl"));
-
-
-        lvlsLock = new boolean[10];
-        for(int i = 0; i < 10 ; i++){
-            lvlsLock[i] = true;
-        }
-
-        widthRatio = Gdx.graphics.getWidth() * 178 / 2560;
-        heightRatio = Gdx.graphics.getHeight() * 178 / 1440;
-
-        lvl1.setPosition(Gdx.graphics.getWidth()/2 - lvl1.getWidth(),Gdx.graphics.getHeight()/2);
-        //lvl1.setPosition(600, 440);
-
-        stage.addActor(lvl1);
-        Gdx.input.setInputProcessor(stage);
-
-
-
-
     }
 
     public void checkInput(float delta){
-        if (Gdx.input.justTouched()) {
-           /* if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2 - 2 * widthRatio
-             && Gdx.input.getX() < Gdx.graphics.getWidth() / 2 - 2 * widthRatio + 4 * widthRatio
-             && Gdx.input.getY() < (Gdx.graphics.getHeight() - (7 * Gdx.graphics.getHeight() / 8 - 4 * heightRatio))
-             && Gdx.input.getY() > (Gdx.graphics.getHeight() - (7 * Gdx.graphics.getHeight() / 8 - 4 * heightRatio + 3 * heightRatio))){ // new game button
-                game.setScreen(new GameScreen(game));
-                dispose();
-            }else if (Gdx.input.getX() > Gdx.graphics.getWidth()/2 - 2*widthRatio
-                   && Gdx.input.getX() < Gdx.graphics.getWidth()/2 - 2*widthRatio + 4*widthRatio
-                   && Gdx.input.getY() < (Gdx.graphics.getHeight() - (4*Gdx.graphics.getHeight()/8 - 8*heightRatio/5))
-                   && Gdx.input.getY() > (Gdx.graphics.getHeight() - (4*Gdx.graphics.getHeight()/8 - 8*heightRatio/5 + 3*heightRatio))) {
-                      dispose();
-            }else if (Gdx.input.getX() > Gdx.graphics.getWidth()/2 - 2*widthRatio
-                   && Gdx.input.getX() < Gdx.graphics.getWidth()/2 - 2*widthRatio + 4*widthRatio
-                   && Gdx.input.getY() < (Gdx.graphics.getHeight() - (2*Gdx.graphics.getHeight()/8 - heightRatio))
-                   && Gdx.input.getY() > (Gdx.graphics.getHeight() - (2*Gdx.graphics.getHeight()/8 - heightRatio + 3*heightRatio))) { // exit button
-                       dispose();
-                       Gdx.app.exit();
-            }*/
-
-
-           // dispose();
-        }
 
     }
 
     public void update(float delta){
         checkInput(delta);
-        gameCam.update();
     }
 
     @Override
@@ -135,11 +73,10 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(menu_bg,0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        game.batch.draw(menu_bg,0,0, BlockBoy.VWIDTH,BlockBoy.VHEIGHT);
         game.batch.end();
 
         stage.draw();
-
     }
 
     @Override
@@ -165,6 +102,75 @@ public class LevelScreen implements Screen {
     @Override
     public void dispose() {
         menu_bg.dispose();
-        lvlAtlas.dispose();
+        stage.dispose();
+    }
+
+    public void initStage(SpriteBatch batch){
+        this.stage = new Stage(viewport, batch);
+
+        lvlMenuAtlas = new TextureAtlas("menu/lvlMenu.pack");
+        skin = new Skin();
+        skin.addRegions(lvlMenuAtlas);
+        stage.clear();
+
+        lvl1Btn = new ImageButton(skin.getDrawable("lvl1"),skin.getDrawable("lvl1p"));
+        lvl2Btn = new ImageButton(skin.getDrawable("lvl2"),skin.getDrawable("lvl2p"));
+        lvl3Btn = new ImageButton(skin.getDrawable("lvl3"),skin.getDrawable("lvl3p"));
+        lvl4Btn = new ImageButton(skin.getDrawable("lvl4"),skin.getDrawable("lvl4p"));
+        lvl5Btn = new ImageButton(skin.getDrawable("lvl5"),skin.getDrawable("lvl5p"));
+        lvl6Btn = new ImageButton(skin.getDrawable("lvl6"),skin.getDrawable("lvl6p"));
+        lvl7Btn = new ImageButton(skin.getDrawable("lvl7"),skin.getDrawable("lvl7p"));
+        lvl8Btn = new ImageButton(skin.getDrawable("lvl8"),skin.getDrawable("lvl8p"));
+        lvl9Btn = new ImageButton(skin.getDrawable("lvl9"),skin.getDrawable("lvl9p"));
+        lvl10Btn = new ImageButton(skin.getDrawable("lvl10"),skin.getDrawable("lvl10p"));
+        lvlLockedBtn = new ImageButton(skin.getDrawable("lockedLvl"));
+
+
+        lvl1Btn.setSize(3*lvl1Btn.getWidth()/7,3*lvl1Btn.getHeight()/7);
+        lvl1Btn.setPosition(3*BlockBoy.VWIDTH/14-lvl1Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl1Btn.getHeight()/2);
+        lvl2Btn.setSize(3*lvl2Btn.getWidth()/7,3*lvl2Btn.getHeight()/7);
+        lvl2Btn.setPosition(5*BlockBoy.VWIDTH/14-lvl2Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl2Btn.getHeight()/2);
+        lvl3Btn.setSize(3*lvl3Btn.getWidth()/7,3*lvl3Btn.getHeight()/7);
+        lvl3Btn.setPosition(7*BlockBoy.VWIDTH/14-lvl3Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl3Btn.getHeight()/2);
+        lvl4Btn.setSize(3*lvl4Btn.getWidth()/7,3*lvl4Btn.getHeight()/7);
+        lvl4Btn.setPosition(9*BlockBoy.VWIDTH/14-lvl4Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl4Btn.getHeight()/2);
+        lvl5Btn.setSize(3*lvl5Btn.getWidth()/7,3*lvl5Btn.getHeight()/7);
+        lvl5Btn.setPosition(11*BlockBoy.VWIDTH/14-lvl5Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl5Btn.getHeight()/2);
+
+        lvl6Btn.setSize(3*lvl6Btn.getWidth()/7,3*lvl6Btn.getHeight()/7);
+        lvl6Btn.setPosition(3*BlockBoy.VWIDTH/14-lvl6Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl6Btn.getHeight()/2);
+        lvl7Btn.setSize(3*lvl7Btn.getWidth()/7,3*lvl7Btn.getHeight()/7);
+        lvl7Btn.setPosition(5*BlockBoy.VWIDTH/14-lvl7Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl7Btn.getHeight()/2);
+        lvl8Btn.setSize(3*lvl8Btn.getWidth()/7,3*lvl8Btn.getHeight()/7);
+        lvl8Btn.setPosition(7*BlockBoy.VWIDTH/14-lvl8Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl8Btn.getHeight()/2);
+        lvl9Btn.setSize(3*lvl9Btn.getWidth()/7,3*lvl9Btn.getHeight()/7);
+        lvl9Btn.setPosition(9*BlockBoy.VWIDTH/14-lvl9Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl9Btn.getHeight()/2);
+        lvl10Btn.setSize(3*lvl10Btn.getWidth()/7,3*lvl10Btn.getHeight()/7);
+        lvl10Btn.setPosition(11*BlockBoy.VWIDTH/14-lvl10Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl10Btn.getHeight()/2);
+
+        lvl1Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                game.setScreen(new GameScreen(game));
+                dispose();
+            }
+        });
+
+        stage.addActor(lvl1Btn);
+        stage.addActor(lvl2Btn);
+        stage.addActor(lvl3Btn);
+        stage.addActor(lvl4Btn);
+        stage.addActor(lvl5Btn);
+        stage.addActor(lvl6Btn);
+        stage.addActor(lvl7Btn);
+        stage.addActor(lvl8Btn);
+        stage.addActor(lvl9Btn);
+        stage.addActor(lvl10Btn);
+        //stage.addActor(lvlLockedBtn);
+
+        Gdx.input.setInputProcessor(stage);
     }
 }

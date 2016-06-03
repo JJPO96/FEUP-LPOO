@@ -22,7 +22,6 @@ import com.lpoo.blockboy.BlockBoy;
 public class MainMenuScreen implements Screen {
 
     BlockBoy game;
-    OrthographicCamera gameCam;
 
     private Stage stage;
     private Skin skin;
@@ -35,9 +34,6 @@ public class MainMenuScreen implements Screen {
     private ImageButton exitBtn;
 
     private Texture menu_bg;
-
-    float widthRatio;
-    float heightRatio;
 
     public MainMenuScreen(BlockBoy game){
         this.game = game;
@@ -99,6 +95,10 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         menu_bg.dispose();
         stage.dispose();
+
+        stage.dispose();
+        skin.dispose();
+        startMenuAtlas.dispose();
     }
 
     public void initStage(SpriteBatch batch){
@@ -119,7 +119,7 @@ public class MainMenuScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new LevelScreen(game));
                 dispose();
             }
         });
@@ -131,6 +131,7 @@ public class MainMenuScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 game.setScreen(new LevelScreen(game));
+                dispose();
             }
         });
 
