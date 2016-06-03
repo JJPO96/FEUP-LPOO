@@ -1,0 +1,152 @@
+
+lvlMenu.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+lockedLvl
+  rotate: false
+  xy: 1, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl1
+  rotate: false
+  xy: 1, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl10
+  rotate: false
+  xy: 181, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl10p
+  rotate: false
+  xy: 1, 361
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl1p
+  rotate: false
+  xy: 181, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl2
+  rotate: false
+  xy: 361, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl2p
+  rotate: false
+  xy: 1, 181
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl3
+  rotate: false
+  xy: 181, 361
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl3p
+  rotate: false
+  xy: 361, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl4
+  rotate: false
+  xy: 541, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl4p
+  rotate: false
+  xy: 1, 1
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl5
+  rotate: false
+  xy: 181, 181
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl5p
+  rotate: false
+  xy: 361, 361
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl6
+  rotate: false
+  xy: 541, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl6p
+  rotate: false
+  xy: 721, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl7
+  rotate: false
+  xy: 181, 1
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl7p
+  rotate: false
+  xy: 361, 181
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl8
+  rotate: false
+  xy: 541, 361
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl8p
+  rotate: false
+  xy: 721, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl9
+  rotate: false
+  xy: 361, 1
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+lvl9p
+  rotate: false
+  xy: 541, 181
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1

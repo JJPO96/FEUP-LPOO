@@ -1,0 +1,47 @@
+
+startMenu.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+exitBtn
+  rotate: false
+  xy: 1, 547
+  size: 365, 180
+  orig: 365, 180
+  offset: 0, 0
+  index: -1
+exitPressed
+  rotate: false
+  xy: 1, 365
+  size: 365, 180
+  orig: 365, 180
+  offset: 0, 0
+  index: -1
+newGameBtn
+  rotate: false
+  xy: 368, 547
+  size: 365, 180
+  orig: 365, 180
+  offset: 0, 0
+  index: -1
+newGamePressed
+  rotate: false
+  xy: 1, 183
+  size: 365, 180
+  orig: 365, 180
+  offset: 0, 0
+  index: -1
+optionsBtn
+  rotate: false
+  xy: 368, 365
+  size: 365, 180
+  orig: 365, 180
+  offset: 0, 0
+  index: -1
+optionsPressed
+  rotate: false
+  xy: 1, 1
+  size: 365, 180
+  orig: 365, 180
+  offset: 0, 0
+  index: -1
