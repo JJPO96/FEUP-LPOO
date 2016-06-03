@@ -76,17 +76,17 @@ public class LevelScreen implements Screen {
             lvlsLock[i] = true;
         }
 
-        Gdx.app.log("" + Gdx.graphics.getWidth(), ""+Gdx.graphics.getHeight());
+        widthRatio = Gdx.graphics.getWidth() * 178 / 2560;
+        heightRatio = Gdx.graphics.getHeight() * 178 / 1440;
 
-        //lvl1.setPosition(Gdx.graphics.getWidth()/2 - lvl1.getWidth(),Gdx.graphics.getHeight()/2);
-        lvl1.setPosition(100, 100);
+        lvl1.setPosition(Gdx.graphics.getWidth()/2 - lvl1.getWidth(),Gdx.graphics.getHeight()/2);
+        //lvl1.setPosition(600, 440);
 
         stage.addActor(lvl1);
         Gdx.input.setInputProcessor(stage);
 
 
-        widthRatio = Gdx.graphics.getWidth() * 178 / 2560;
-        heightRatio = Gdx.graphics.getHeight() * 178 / 1440;
+
 
     }
 
@@ -135,15 +135,9 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-       // game.batch.draw(menu_bg,0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-
-
-        //game.batch.draw(newGameBtn,Gdx.graphics.getWidth()/2 - 2*widthRatio,7*Gdx.graphics.getHeight()/8 - 4*heightRatio,4*widthRatio,3*heightRatio);
-
+        game.batch.draw(menu_bg,0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.end();
 
-
-        game.batch.setProjectionMatrix(gameCam.combined);
         stage.draw();
 
     }

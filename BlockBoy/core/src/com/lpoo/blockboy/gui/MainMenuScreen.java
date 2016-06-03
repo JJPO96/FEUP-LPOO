@@ -45,13 +45,14 @@ public class MainMenuScreen implements Screen {
              && Gdx.input.getX() < Gdx.graphics.getWidth() / 2 - 2 * widthRatio + 4 * widthRatio
              && Gdx.input.getY() < (Gdx.graphics.getHeight() - (7 * Gdx.graphics.getHeight() / 8 - 4 * heightRatio))
              && Gdx.input.getY() > (Gdx.graphics.getHeight() - (7 * Gdx.graphics.getHeight() / 8 - 4 * heightRatio + 3 * heightRatio))){ // new game button
-                game.setScreen(new LevelScreen(game));
+                game.setScreen(new GameScreen(game));
                 dispose();
             }else if (Gdx.input.getX() > Gdx.graphics.getWidth()/2 - 2*widthRatio
                    && Gdx.input.getX() < Gdx.graphics.getWidth()/2 - 2*widthRatio + 4*widthRatio
                    && Gdx.input.getY() < (Gdx.graphics.getHeight() - (4*Gdx.graphics.getHeight()/8 - 8*heightRatio/5))
                    && Gdx.input.getY() > (Gdx.graphics.getHeight() - (4*Gdx.graphics.getHeight()/8 - 8*heightRatio/5 + 3*heightRatio))) {
-                      dispose();
+                game.setScreen(new LevelScreen(game));
+                dispose();
             }else if (Gdx.input.getX() > Gdx.graphics.getWidth()/2 - 2*widthRatio
              && Gdx.input.getX() < Gdx.graphics.getWidth()/2 - 2*widthRatio + 4*widthRatio
              && Gdx.input.getY() < (Gdx.graphics.getHeight() - (2*Gdx.graphics.getHeight()/8 - heightRatio))
