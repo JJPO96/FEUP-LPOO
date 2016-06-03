@@ -2,6 +2,7 @@ package com.lpoo.blockboy.logic;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -19,6 +20,7 @@ public abstract class GameElement extends Sprite {
 
     // Box2d variables
     protected Body body;
+    protected MapObject object;
     protected BodyDef bodyDef;
     protected FixtureDef fixtureDef;
     protected World world;

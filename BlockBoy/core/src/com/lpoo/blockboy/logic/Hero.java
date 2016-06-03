@@ -3,6 +3,11 @@ package com.lpoo.blockboy.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -29,8 +34,7 @@ public class Hero extends GameElement {
     private TextureRegion heroFalling;
     private Animation heroRunning;
     private Animation heroStanding;
-    private int radius = 32;
-
+    private Rectangle bounds;
     protected CircleShape shape;
     private float stateTimer;
 
@@ -39,8 +43,10 @@ public class Hero extends GameElement {
      *
      * @param screen where the Hero will be displayed
      */
-    public Hero(GameScreen screen) {
+    public Hero(GameScreen screen, MapObject object) {
         super(screen, "herosprite");
+        this.object = object;
+        this.bounds = ((RectangleMapObject) object).getRectangle();
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -53,28 +59,28 @@ public class Hero extends GameElement {
      */
     @Override
     public void init() {
-        // TODO - CORRIGIR POSIÇAO INICIAL DO HEROI CONSOANTE O MAPA ESCOLHIDO
         // Creating the body
         bodyDef = new BodyDef();
-        bodyDef.position.set(600/ BlockBoy.PPM, 512 / BlockBoy.PPM);
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(bodyDef);
-        fixtureDef = new FixtureDef();
         shape = new CircleShape();
-        shape.setRadius(radius / BlockBoy.PPM);
+        fixtureDef = new FixtureDef();
+
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / BlockBoy.PPM, (bounds.getY() + bounds.getHeight() / 2) / BlockBoy.PPM);
+        body = world.createBody(bodyDef);
+        shape.setRadius(bounds.getWidth()/2 / BlockBoy.PPM);
         fixtureDef.filter.categoryBits = BlockBoy.HERO_BIT;
         fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT;
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
-        // Creating sensor
+        // Creating the sensor in the body
         EdgeShape diagonal = new EdgeShape();
         diagonal.set(new Vector2(-33 / BlockBoy.PPM, 30 / BlockBoy.PPM), new Vector2(33 / BlockBoy.PPM, -30 / BlockBoy.PPM));
         fixtureDef.shape = diagonal;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData("heroSensorDiagonal");
 
-        // Create textures
+        // Creating the textures
         loadTextures();
     }
 
@@ -206,7 +212,7 @@ public class Hero extends GameElement {
 
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
-            body.applyLinearImpulse(new Vector2(0, 3.6f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(0, 3.5f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
     }

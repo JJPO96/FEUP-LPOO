@@ -2,8 +2,10 @@ package com.lpoo.blockboy.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -38,7 +40,6 @@ public class GameLogic {
     }
 
     public void init() {
-        hero = new Hero(screen);
         coins = new ArrayList<Coin>();
         blocks = new ArrayList<Block>();
 
@@ -77,11 +78,13 @@ public class GameLogic {
 
         // Create blocks
         for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Gdx.app.log("sim", "");
             blocks.add(new Block(screen, object));
         }
 
         // Create bricks
         for (MapObject object : screen.getMap().getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+            Gdx.app.log("dasda", "");
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
             bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
@@ -89,6 +92,14 @@ public class GameLogic {
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
+        }
+
+        Gdx.app.log("dasda", "");
+
+        // Create Hero
+        for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
+            Gdx.app.log("nao", "");
+            hero = new Hero (screen, object);
         }
     }
 

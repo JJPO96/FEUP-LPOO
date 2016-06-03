@@ -57,6 +57,7 @@ public class Coin extends GameElement {
 
     @Override
     public void init() {
+        // Creating the body
         bodyDef = new BodyDef();
         shape = new PolygonShape();
         fixtureDef = new FixtureDef();
