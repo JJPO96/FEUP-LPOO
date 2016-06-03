@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
-import com.lpoo.blockboy.logic.Block;
 
 /**
  * Created by Manuel Gomes on 12/05/2016.
@@ -45,27 +46,9 @@ public class MainMenuScreen implements Screen {
         initStage(game.batch);
 
         menu_bg = new Texture("menu/menu_bg.png");
-
-
-        Gdx.app.log("" + widthRatio,"" + heightRatio);
     }
 
     public void checkInput(float delta){
-        if (Gdx.input.isTouched()) {
-            if (newGameBtn.isPressed()){ // new game button
-                game.setScreen(new GameScreen(game));
-                dispose();
-            }else if (optionsBtn.isPressed()) {
-              /*game.setScreen(new LevelScreen(game));
-                dispose();*/
-            }else if (exitBtn.isPressed()) { // exit button
-                dispose();
-                Gdx.app.exit();
-            }
-
-
-           // dispose();
-        }
 
     }
 
@@ -130,8 +113,37 @@ public class MainMenuScreen implements Screen {
         optionsBtn = new ImageButton(skin.getDrawable("optionsBtn"),skin.getDrawable("optionsPressed"));
         exitBtn = new ImageButton(skin.getDrawable("exitBtn"),skin.getDrawable("exitPressed"));
 
-        /*widthRatio = Gdx.graphics.getWidth() * newGameBtn.getWidth()/1280;
-        heightRatio = BlockBoy.VHEIGHT * newGameBtn.getHeight()/770;*/
+        newGameBtn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                game.setScreen(new GameScreen(game));
+                dispose();
+            }
+        });
+
+        optionsBtn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                game.setScreen(new LevelScreen(game));
+            }
+        });
+
+        exitBtn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*Bullet bullet = new Bullet((int) hero.getPositionX() + 30, (int) hero.getPositionY() + 17, "H");
+                hero_bullets.add(bullet);*/
+            }
+        });
 
         newGameBtn.setSize(newGameBtn.getWidth()/2,newGameBtn.getHeight()/2);
         newGameBtn.setPosition(BlockBoy.VWIDTH/2-newGameBtn.getWidth()/2,7*BlockBoy.VHEIGHT/10-newGameBtn.getHeight()/2);
