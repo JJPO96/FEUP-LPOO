@@ -76,10 +76,13 @@ public class LevelScreen implements Screen {
             lvlsLock[i] = true;
         }
 
+        Gdx.app.log("" + Gdx.graphics.getWidth(), ""+Gdx.graphics.getHeight());
+
         //lvl1.setPosition(Gdx.graphics.getWidth()/2 - lvl1.getWidth(),Gdx.graphics.getHeight()/2);
         lvl1.setPosition(100, 100);
 
         stage.addActor(lvl1);
+        Gdx.input.setInputProcessor(stage);
 
 
         widthRatio = Gdx.graphics.getWidth() * 178 / 2560;
