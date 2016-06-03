@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.lpoo.blockboy.BlockBoy;
 
@@ -75,9 +76,11 @@ public class LevelScreen implements Screen {
             lvlsLock[i] = true;
         }
 
-        lvl1.setPosition(Gdx.graphics.getWidth()/2 - lvl1.getWidth(),Gdx.graphics.getHeight()/2);
+        //lvl1.setPosition(Gdx.graphics.getWidth()/2 - lvl1.getWidth(),Gdx.graphics.getHeight()/2);
+        lvl1.setPosition(100, 100);
 
         stage.addActor(lvl1);
+
 
         widthRatio = Gdx.graphics.getWidth() * 178 / 2560;
         heightRatio = Gdx.graphics.getHeight() * 178 / 1440;
