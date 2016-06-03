@@ -159,6 +159,105 @@ public class LevelScreen implements Screen {
             }
         });
 
+        lvl2Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+               /* game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl3Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl4Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl5Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl6Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl7Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl8Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl9Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
+        lvl10Btn.addListener(new InputListener(){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                /*game.setScreen(new GameScreen(game));
+                dispose();*/
+            }
+        });
+
         stage.addActor(lvl1Btn);
         stage.addActor(lvl2Btn);
         stage.addActor(lvl3Btn);
