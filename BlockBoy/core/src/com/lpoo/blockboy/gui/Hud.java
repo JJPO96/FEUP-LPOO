@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
+import com.lpoo.blockboy.logic.Block;
 
 /**
  * Created by Manuel Gomes on 31/05/2016.
@@ -53,7 +54,7 @@ public class Hud implements Disposable{
         this.coinScore = 0;
         this.worldTimer = 0;
         this.timeCount = 0;
-        this.viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
+        this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(batch);
 
 
@@ -91,13 +92,13 @@ public class Hud implements Disposable{
 
         coin.setWidth(coin.getWidth()/3);
         coin.setHeight(coin.getHeight()/3);
-        coin.setPosition(20, Gdx.graphics.getHeight()-coin.getHeight());
-        cross.setWidth(cross.getWidth()/3);
+        coin.setPosition(20, BlockBoy.VHEIGHT-coin.getHeight());
+        /*cross.setWidth(cross.getWidth()/3);
         cross.setHeight(cross.getHeight()/3);
         cross.setPosition(40+coin.getWidth()/3, Gdx.graphics.getHeight()-cross.getHeight());
         coinNumber.setWidth(coinNumber.getWidth()/3);
         coinNumber.setHeight(coinNumber.getHeight()/3);
-        coinNumber.setPosition(70+cross.getWidth()/3, Gdx.graphics.getHeight()-coin.getHeight());
+        coinNumber.setPosition(70+cross.getWidth()/3, Gdx.graphics.getHeight()-coin.getHeight());*/
 
         stage.addActor(coin);
         stage.addActor(cross);
