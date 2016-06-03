@@ -107,7 +107,9 @@ public class GameScreen implements Screen {
 
         // Updates the game itself
         gameLogic.update(delta);
-        hud.update(delta, gameLogic.getCoinScore());
+
+        // TODO - CORRIGIR
+        //hud.update(delta, gameLogic.getCoinScore());
 
         // Updates the camera position in relation to the hero
         gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;

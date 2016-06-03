@@ -78,13 +78,11 @@ public class GameLogic {
 
         // Create blocks
         for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
-            Gdx.app.log("sim", "");
             blocks.add(new Block(screen, object));
         }
 
         // Create bricks
         for (MapObject object : screen.getMap().getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
-            Gdx.app.log("dasda", "");
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
             bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
@@ -93,12 +91,8 @@ public class GameLogic {
             fdef.shape = shape;
             body.createFixture(fdef);
         }
-
-        Gdx.app.log("dasda", "");
-
         // Create Hero
         for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
-            Gdx.app.log("nao", "");
             hero = new Hero (screen, object);
         }
     }
