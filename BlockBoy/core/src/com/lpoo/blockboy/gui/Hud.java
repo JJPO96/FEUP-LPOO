@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -85,7 +86,7 @@ public class Hud implements Disposable{
 
         coin = new ImageButton(skin.getDrawable("coin"));
         cross = new ImageButton(skin.getDrawable("x"));
-        coinNumber = new ImageButton(skin.getDrawable("one"));
+        coinNumber = new ImageButton(skin.getDrawable("zero"));
 
 
         coin.setWidth(coin.getWidth()/3);
@@ -123,7 +124,43 @@ public class Hud implements Disposable{
 
         //stage.removeac
         this.coinScore = score;
-        this.coinsCount.setText(String.format("%01d", coinScore));
+
+        coinNumber.remove();
+        coinNumber = new ImageButton(skin.getDrawable(getNumber(score)));
+        coinNumber.setWidth(coinNumber.getWidth()/3);
+        coinNumber.setHeight(coinNumber.getHeight()/3);
+        coinNumber.setPosition(70+cross.getWidth()/3, Gdx.graphics.getHeight()-coin.getHeight());
+        stage.addActor(coinNumber);
+    }
+
+    public String getNumber(Integer integer){
+
+        switch (integer){
+            case 0:
+                return "zero";
+            case 1:
+                return "one";
+            case 2:
+                return "two";
+            case 3:
+                return "three";
+            case 4:
+                return "four";
+            case 5:
+                return "five";
+            case 6:
+                return "six";
+            case 7:
+                return "seven";
+            case 8:
+                return "eight";
+            case 9:
+                return "nine";
+            default:
+                break;
+        }
+
+        return null;
     }
 
     @Override
