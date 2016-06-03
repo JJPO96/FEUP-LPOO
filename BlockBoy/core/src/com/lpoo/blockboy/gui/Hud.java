@@ -84,7 +84,6 @@ public class Hud implements Disposable {
         timeTwo = new ImageButton(skin.getDrawable("zero"));
         timeThree = new ImageButton(skin.getDrawable("zero"));
         back = new ImageButton(skin.getDrawable("homeUp"), skin.getDrawable("homePressed"));
-        // TODO - CORRIGIR
         pickBox = new ImageButton(skin.getDrawable("boxUp"), skin.getDrawable("boxPressed"));
         jump = new ImageButton(skin.getDrawable("jumpUp"), skin.getDrawable("jumpPressed"));
 
