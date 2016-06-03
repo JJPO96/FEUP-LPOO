@@ -89,16 +89,15 @@ public class Hud implements Disposable{
         cross = new ImageButton(skin.getDrawable("x"));
         coinNumber = new ImageButton(skin.getDrawable("zero"));
 
-
         coin.setWidth(coin.getWidth()/3);
         coin.setHeight(coin.getHeight()/3);
         coin.setPosition(20, BlockBoy.VHEIGHT-coin.getHeight());
-        /*cross.setWidth(cross.getWidth()/3);
+        cross.setWidth(cross.getWidth()/3);
         cross.setHeight(cross.getHeight()/3);
-        cross.setPosition(40+coin.getWidth()/3, Gdx.graphics.getHeight()-cross.getHeight());
+        cross.setPosition(40+coin.getWidth()/2, BlockBoy.VHEIGHT-cross.getHeight());
         coinNumber.setWidth(coinNumber.getWidth()/3);
         coinNumber.setHeight(coinNumber.getHeight()/3);
-        coinNumber.setPosition(70+cross.getWidth()/3, Gdx.graphics.getHeight()-coin.getHeight());*/
+        coinNumber.setPosition(70+cross.getWidth()/3, BlockBoy.VHEIGHT-coinNumber.getHeight());
 
         stage.addActor(coin);
         stage.addActor(cross);
@@ -130,7 +129,7 @@ public class Hud implements Disposable{
         coinNumber = new ImageButton(skin.getDrawable(getNumber(score)));
         coinNumber.setWidth(coinNumber.getWidth()/3);
         coinNumber.setHeight(coinNumber.getHeight()/3);
-        coinNumber.setPosition(70+cross.getWidth()/3, Gdx.graphics.getHeight()-coin.getHeight());
+        coinNumber.setPosition(70+cross.getWidth()/2, BlockBoy.VHEIGHT-coinNumber.getHeight());
         stage.addActor(coinNumber);
     }
 
