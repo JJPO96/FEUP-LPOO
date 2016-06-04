@@ -106,7 +106,7 @@ public class Block extends GameElement {
     public void setCategoryFilter(short filterBit){
         filter = new Filter();
         filter.categoryBits = filterBit;
-        filter.maskBits = BlockBoy.HERO_BIT;
+        filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT;
         fixture.setFilterData(filter);
     }
 

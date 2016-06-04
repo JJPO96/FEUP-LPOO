@@ -57,6 +57,7 @@ public class GameLogic {
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
+            fdef.filter.categoryBits = BlockBoy.DEFAULT_BIT;
             body.createFixture(fdef);
         }
 
