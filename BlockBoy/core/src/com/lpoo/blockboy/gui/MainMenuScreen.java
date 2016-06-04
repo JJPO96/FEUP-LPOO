@@ -141,8 +141,8 @@ public class MainMenuScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                /*Bullet bullet = new Bullet((int) hero.getPositionX() + 30, (int) hero.getPositionY() + 17, "H");
-                hero_bullets.add(bullet);*/
+                dispose();
+                Gdx.app.exit();
             }
         });
 

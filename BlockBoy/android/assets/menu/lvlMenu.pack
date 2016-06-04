@@ -150,3 +150,17 @@ lvl9p
   orig: 178, 178
   offset: 0, 0
   index: -1
+homeBtn
+  rotate: false
+  xy: 721, 361
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1
+homePressed
+  rotate: false
+  xy: 541, 1
+  size: 177, 178
+  orig: 177, 178
+  offset: 0, 0
+  index: -1

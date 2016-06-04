@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
 
 /**
- * Created by Manuel Gomes on 12/05/2016.
+ * Created by José Oliveira on 12/05/2016.
  */
 public class LevelScreen implements Screen {
 
@@ -41,7 +41,7 @@ public class LevelScreen implements Screen {
     private ImageButton lvl8Btn;
     private ImageButton lvl9Btn;
     private ImageButton lvl10Btn;
-    private ImageButton lvlLockedBtn;
+    private ImageButton homeBtn;
 
     private Texture menu_bg;
 
@@ -53,7 +53,7 @@ public class LevelScreen implements Screen {
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
-        menu_bg = new Texture("menu/menu_bg.png");
+        menu_bg = new Texture("menu/levels_bg.png");
     }
 
     public void checkInput(float delta){
@@ -132,8 +132,7 @@ public class LevelScreen implements Screen {
         lvl9Btn = !lockLevels[8] ? new ImageButton(skin.getDrawable("lvl9"),skin.getDrawable("lvl9p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
         lvl10Btn = !lockLevels[9] ? new ImageButton(skin.getDrawable("lvl10"),skin.getDrawable("lvl10p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
 
-        lvlLockedBtn = new ImageButton(skin.getDrawable("lockedLvl"));
-
+        homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
 
         lvl1Btn.setSize(3*lvl1Btn.getWidth()/7,3*lvl1Btn.getHeight()/7);
         lvl1Btn.setPosition(3*BlockBoy.VWIDTH/14-lvl1Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl1Btn.getHeight()/2);
@@ -145,7 +144,6 @@ public class LevelScreen implements Screen {
         lvl4Btn.setPosition(9*BlockBoy.VWIDTH/14-lvl4Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl4Btn.getHeight()/2);
         lvl5Btn.setSize(3*lvl5Btn.getWidth()/7,3*lvl5Btn.getHeight()/7);
         lvl5Btn.setPosition(11*BlockBoy.VWIDTH/14-lvl5Btn.getWidth()/2,6*BlockBoy.VHEIGHT/10-lvl5Btn.getHeight()/2);
-
         lvl6Btn.setSize(3*lvl6Btn.getWidth()/7,3*lvl6Btn.getHeight()/7);
         lvl6Btn.setPosition(3*BlockBoy.VWIDTH/14-lvl6Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl6Btn.getHeight()/2);
         lvl7Btn.setSize(3*lvl7Btn.getWidth()/7,3*lvl7Btn.getHeight()/7);
@@ -156,6 +154,8 @@ public class LevelScreen implements Screen {
         lvl9Btn.setPosition(9*BlockBoy.VWIDTH/14-lvl9Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl9Btn.getHeight()/2);
         lvl10Btn.setSize(3*lvl10Btn.getWidth()/7,3*lvl10Btn.getHeight()/7);
         lvl10Btn.setPosition(11*BlockBoy.VWIDTH/14-lvl10Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl10Btn.getHeight()/2);
+        homeBtn.setSize(homeBtn.getWidth()/4,homeBtn.getHeight()/4);
+        homeBtn.setPosition(10,BlockBoy.VHEIGHT - homeBtn.getHeight() - 10);
 
         lvl1Btn.addListener(new InputListener(){
 
@@ -326,6 +326,17 @@ public class LevelScreen implements Screen {
                 }
             }
         });
+        homeBtn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+               return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            }
+        });
 
         stage.addActor(lvl1Btn);
         stage.addActor(lvl2Btn);
@@ -337,7 +348,7 @@ public class LevelScreen implements Screen {
         stage.addActor(lvl8Btn);
         stage.addActor(lvl9Btn);
         stage.addActor(lvl10Btn);
-        //stage.addActor(lvlLockedBtn);
+        stage.addActor(homeBtn);
 
         Gdx.input.setInputProcessor(stage);
     }
