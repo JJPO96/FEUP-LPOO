@@ -69,7 +69,7 @@ public class Hero extends GameElement {
         body = world.createBody(bodyDef);
         shape.setRadius(bounds.getWidth()/2 / BlockBoy.PPM);
         fixtureDef.filter.categoryBits = BlockBoy.HERO_BIT;
-        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT;
+        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT ;//| BlockBoy.BLOCK_BIT;
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 

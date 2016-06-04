@@ -92,7 +92,7 @@ public class Hud implements Disposable {
         coin.setPosition(BlockBoy.VWIDTH/8, BlockBoy.VHEIGHT - coin.getHeight());
         cross.setWidth(cross.getWidth() / 3);
         cross.setHeight(cross.getHeight() / 3);
-        cross.setPosition(40 + BlockBoy.VWIDTH/8, BlockBoy.VHEIGHT - cross.getHeight());
+        cross.setPosition(35 + BlockBoy.VWIDTH/8, BlockBoy.VHEIGHT - cross.getHeight());
         coinNumber.setWidth(coinNumber.getWidth() / 3);
         coinNumber.setHeight(coinNumber.getHeight() / 3);
         coinNumber.setPosition(70 + BlockBoy.VWIDTH/8, BlockBoy.VHEIGHT - coinNumber.getHeight());
@@ -104,13 +104,13 @@ public class Hud implements Disposable {
         sandclock.setPosition(3*BlockBoy.VWIDTH/4 - sandclock.getWidth()/2, BlockBoy.VHEIGHT - sandclock.getHeight());
         timeOne.setWidth(timeOne.getWidth() / 3);
         timeOne.setHeight(timeOne.getHeight() / 3);
-        timeOne.setPosition(40+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeOne.getHeight());
+        timeOne.setPosition(30+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeOne.getHeight());
         timeTwo.setWidth(timeTwo.getWidth() / 3);
         timeTwo.setHeight(timeTwo.getHeight() / 3);
-        timeTwo.setPosition(60+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeTwo.getHeight());
+        timeTwo.setPosition(50+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeTwo.getHeight());
         timeThree.setWidth(timeThree.getWidth() / 3);
         timeThree.setHeight(timeThree.getHeight() / 3);
-        timeThree.setPosition(80+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeThree.getHeight());
+        timeThree.setPosition(70+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeThree.getHeight());
 
         back.setWidth(90);
         back.setHeight(90);
@@ -225,13 +225,13 @@ public class Hud implements Disposable {
 
         timeOne.setWidth(timeOne.getWidth() / 3);
         timeOne.setHeight(timeOne.getHeight() / 3);
-        timeOne.setPosition(40+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeOne.getHeight());
+        timeOne.setPosition(30+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeOne.getHeight());
         timeTwo.setWidth(timeTwo.getWidth() / 3);
         timeTwo.setHeight(timeTwo.getHeight() / 3);
-        timeTwo.setPosition(60+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeTwo.getHeight());
+        timeTwo.setPosition(50+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeTwo.getHeight());
         timeThree.setWidth(timeThree.getWidth() / 3);
         timeThree.setHeight(timeThree.getHeight() / 3);
-        timeThree.setPosition(80+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeThree.getHeight());
+        timeThree.setPosition(70+3*BlockBoy.VWIDTH/4, BlockBoy.VHEIGHT - timeThree.getHeight());
 
         stage.addActor(timeOne);
         stage.addActor(timeTwo);
