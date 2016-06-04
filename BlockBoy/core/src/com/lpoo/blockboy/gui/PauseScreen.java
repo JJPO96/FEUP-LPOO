@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
@@ -20,7 +19,7 @@ import com.lpoo.blockboy.BlockBoy;
 /**
  * Created by José Oliveira on 12/05/2016.
  */
-public class OptionsScreen implements Screen {
+public class PauseScreen implements Screen {
 
     BlockBoy game;
 
@@ -28,18 +27,24 @@ public class OptionsScreen implements Screen {
     private Skin skin;
     private Viewport viewport;
 
-    private TextureAtlas optMenuAtlas;
+    private TextureAtlas pauseMenuAtlas;
 
     private ImageButton homeBtn;
+    private ImageButton rstBtn;
+    private ImageButton resumeBtn;
+
 
     private Texture menu_bg;
 
-    public OptionsScreen(BlockBoy game){
+    private GameScreen gamePlayed;
+
+    public PauseScreen(BlockBoy game, GameScreen gamePlayed){
         this.game = game;
+        this.gamePlayed = gamePlayed;
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
-        menu_bg = new Texture("menu/opt_bg.png");
+        menu_bg = new Texture("menu/pause_bg.png");
     }
 
     public void checkInput(float delta){
@@ -98,29 +103,63 @@ public class OptionsScreen implements Screen {
     public void initStage(SpriteBatch batch){
         this.stage = new Stage(viewport, batch);
 
-        optMenuAtlas = new TextureAtlas("menu/optMenu.pack");
+        pauseMenuAtlas = new TextureAtlas("menu/pauseMenu.pack");
         skin = new Skin();
-        skin.addRegions(optMenuAtlas);
+        skin.addRegions(pauseMenuAtlas);
         stage.clear();
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
+        rstBtn = new ImageButton(skin.getDrawable("rstBtn"),skin.getDrawable("rstPressed"));
+        resumeBtn = new ImageButton(skin.getDrawable("playBtn"),skin.getDrawable("playPressed"));
 
-        homeBtn.setSize(2*homeBtn.getWidth()/5,2*homeBtn.getHeight()/5);
-        homeBtn.setPosition(10,BlockBoy.VHEIGHT - homeBtn.getHeight() - 10);
+        homeBtn.setSize(2*homeBtn.getWidth()/3,2*homeBtn.getHeight()/3);
+        homeBtn.setPosition(3*BlockBoy.VWIDTH/10-homeBtn.getWidth()/2,BlockBoy.VHEIGHT/2-homeBtn.getHeight()/2);
+        rstBtn.setSize(2*rstBtn.getWidth()/3,2*rstBtn.getHeight()/3);
+        rstBtn.setPosition(5*BlockBoy.VWIDTH/10-rstBtn.getWidth()/2,BlockBoy.VHEIGHT/2-rstBtn.getHeight()/2);
+        resumeBtn.setSize(2*resumeBtn.getWidth()/3,2*resumeBtn.getHeight()/3);
+        resumeBtn.setPosition(7*BlockBoy.VWIDTH/10-resumeBtn.getWidth()/2,BlockBoy.VHEIGHT/2-resumeBtn.getHeight()/2);
 
         homeBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-               return true;
+                return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                gamePlayed.dispose();
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
             }
         });
 
+        rstBtn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                gamePlayed.dispose();
+                game.setScreen(new GameScreen(game));
+                dispose();
+            }
+        });
+
+        resumeBtn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                game.setScreen(gamePlayed);
+                dispose();
+            }
+        });
+
         stage.addActor(homeBtn);
+        stage.addActor(rstBtn);
+        stage.addActor(resumeBtn);
 
         Gdx.input.setInputProcessor(stage);
     }

@@ -1,0 +1,47 @@
+
+pauseMenu.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+homeBtn
+  rotate: false
+  xy: 1, 181
+  size: 179, 178
+  orig: 179, 178
+  offset: 0, 0
+  index: -1
+homePressed
+  rotate: false
+  xy: 1, 1
+  size: 179, 178
+  orig: 179, 178
+  offset: 0, 0
+  index: -1
+playBtn
+  rotate: false
+  xy: 182, 181
+  size: 179, 178
+  orig: 179, 178
+  offset: 0, 0
+  index: -1
+playPressed
+  rotate: false
+  xy: 182, 1
+  size: 179, 178
+  orig: 179, 178
+  offset: 0, 0
+  index: -1
+rstBtn
+  rotate: false
+  xy: 363, 181
+  size: 179, 178
+  orig: 179, 178
+  offset: 0, 0
+  index: -1
+rstPressed
+  rotate: false
+  xy: 363, 1
+  size: 179, 178
+  orig: 179, 178
+  offset: 0, 0
+  index: -1

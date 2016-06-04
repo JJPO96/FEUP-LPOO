@@ -57,7 +57,7 @@ public class LevelScreen implements Screen {
     }
 
     public void checkInput(float delta){
-        
+
     }
 
     public void update(float delta){
@@ -154,7 +154,7 @@ public class LevelScreen implements Screen {
         lvl9Btn.setPosition(9*BlockBoy.VWIDTH/14-lvl9Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl9Btn.getHeight()/2);
         lvl10Btn.setSize(3*lvl10Btn.getWidth()/7,3*lvl10Btn.getHeight()/7);
         lvl10Btn.setPosition(11*BlockBoy.VWIDTH/14-lvl10Btn.getWidth()/2,4*BlockBoy.VHEIGHT/10-lvl10Btn.getHeight()/2);
-        homeBtn.setSize(homeBtn.getWidth()/4,homeBtn.getHeight()/4);
+        homeBtn.setSize(2*homeBtn.getWidth()/5,2*homeBtn.getHeight()/5);
         homeBtn.setPosition(10,BlockBoy.VHEIGHT - homeBtn.getHeight() - 10);
 
         lvl1Btn.addListener(new InputListener(){

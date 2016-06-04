@@ -83,7 +83,7 @@ public class Hud implements Disposable {
         timeOne = new ImageButton(skin.getDrawable("zero"));
         timeTwo = new ImageButton(skin.getDrawable("zero"));
         timeThree = new ImageButton(skin.getDrawable("zero"));
-        back = new ImageButton(skin.getDrawable("homeUp"), skin.getDrawable("homePressed"));
+        back = new ImageButton(skin.getDrawable("pauseUp"), skin.getDrawable("pausePressed"));
         pickBox = new ImageButton(skin.getDrawable("boxUp"), skin.getDrawable("boxPressed"));
         jump = new ImageButton(skin.getDrawable("jumpUp"), skin.getDrawable("jumpPressed"));
 
@@ -151,7 +151,7 @@ public class Hud implements Disposable {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                gameScreen.getGame().setScreen(new MainMenuScreen(gameScreen.getGame()));
+                gameScreen.getGame().setScreen(new PauseScreen(gameScreen.getGame(),gameScreen));
             }
         });
 
