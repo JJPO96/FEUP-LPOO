@@ -2,6 +2,8 @@ package com.lpoo.blockboy;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,36 +25,27 @@ public class BlockBoy extends Game {
 
     public SpriteBatch batch;
     public BitmapFont font;
-    private FreeTypeFontGenerator generator;
+    public AssetManager manager;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        //TODO - APAGAR SE NAO FOR USADO
-        initFonts();
 
+        // TODO - SOUND NOT WORKING
+        manager = new AssetManager();
+        manager.load("sounds/coin.wav", Sound.class);
+        manager.load("sounds/jump.mp3", Sound.class);
+        manager.finishLoading();
 
-        // TODO - MUDAR PARA O MENU SCREEN NA VERSAO FINAL PARA MOSTRAR MENU
-        // USAR PATTERN VISITOR PARA DETEÇÃO DE COLISÕES ENTRE SPRITES?
-        // CRIAR AQUI UM GAMELOOP - WHILE GAME IS NOT OVER - UPDATE SCREEN IN USE
         setScreen(new MainMenuScreen(this));
     }
 
-    public void initFonts() {
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Akashi.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        params.size = 20;
-        params.color = Color.WHITE;
-        params.borderColor = Color.GOLDENROD;
-        params.borderWidth = 2;
-        font = generator.generateFont(params);
-    }
 
     @Override
     public void dispose() {
         super.dispose();
         batch.dispose();
-        font.dispose();
+        manager.dispose();
     }
 
     @Override
