@@ -36,6 +36,7 @@ public class MainMenuScreen implements Screen {
     private Texture menu_bg;
 
     public MainMenuScreen(BlockBoy game){
+
         this.game = game;
 
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
@@ -45,7 +46,9 @@ public class MainMenuScreen implements Screen {
     }
 
     public void checkInput(float delta){
+        if (Gdx.input.isCatchBackKey()){
 
+        }
     }
 
     public void update(float delta){

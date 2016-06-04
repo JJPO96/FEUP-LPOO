@@ -35,7 +35,6 @@ public class OptionsScreen implements Screen {
 
     public OptionsScreen(BlockBoy game){
         this.game = game;
-
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
