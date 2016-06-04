@@ -57,6 +57,7 @@ public class GameLogic {
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
+            fdef.filter.categoryBits = BlockBoy.DEFAULT_BIT;
             body.createFixture(fdef);
         }
 
@@ -139,15 +140,15 @@ public class GameLogic {
        for (Block block : blocks){
             if (block.isPicked()){
                 if (hero.isFacingRight()){
-                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getWidth(),
-                            hero.getBody().getPosition().y + hero.getHeight());
+                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getHeight()+2/10,
+                            hero.getBody().getPosition().y + hero.getHeight()+2/10);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 }
 
                 else {
-                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight(),
-                            hero.getBody().getPosition().y + hero.getHeight());
+                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight()-2/10,
+                            hero.getBody().getPosition().y + hero.getHeight()+2/10);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 }
