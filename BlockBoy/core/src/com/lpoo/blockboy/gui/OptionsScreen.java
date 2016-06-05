@@ -35,8 +35,6 @@ public class OptionsScreen implements Screen {
     private ImageButton plusBtn;
     private ImageButton minusBtn;
 
-    private Slider volSlider;
-
     private Texture menu_bg;
 
     public OptionsScreen(BlockBoy game){
@@ -113,13 +111,6 @@ public class OptionsScreen implements Screen {
         plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
         minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
 
-        /*Slider.SliderStyle volSliStyle = new Slider.SliderStyle(skin.getDrawable("knobBtn"),skin.getDrawable("slider_bg"));
-        volSliStyle.knobDown = skin.getDrawable("knobPressed");
-
-        volSlider = new Slider(0,100,5,false,volSliStyle);
-        volSlider.setSize(100,20);
-        volSlider.setPosition(5*BlockBoy.VWIDTH/12,2*BlockBoy.VWIDTH/5);*/
-
         homeBtn.setSize(2*homeBtn.getWidth()/5,2*homeBtn.getHeight()/5);
         homeBtn.setPosition(10,BlockBoy.VHEIGHT - homeBtn.getHeight() - 10);
 
@@ -148,8 +139,6 @@ public class OptionsScreen implements Screen {
         stage.addActor(volBtn);
         stage.addActor(plusBtn);
         stage.addActor(minusBtn);
-
-        //stage.addActor(volSlider);
 
         Gdx.input.setInputProcessor(stage);
     }
