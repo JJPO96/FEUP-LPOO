@@ -46,9 +46,7 @@ public class MainMenuScreen implements Screen {
     }
 
     public void checkInput(float delta){
-        if (Gdx.input.isCatchBackKey()){
 
-        }
     }
 
     public void update(float delta){
