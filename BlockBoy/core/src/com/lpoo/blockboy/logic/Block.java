@@ -19,13 +19,12 @@ import com.lpoo.blockboy.gui.GameScreen;
  */
 public class Block extends GameElement {
     private boolean picked = false;
-    private boolean collision = false;
+    private boolean heroCollision = false;
     private boolean changeToStatic = false;
     private boolean isStatic = false;
     private boolean changeToDynamic= false;
     private boolean isDynamic = false;
     private MapObject object;
-    private TiledMap map;
     private Rectangle bounds;
     private PolygonShape shape;
     private Fixture fixture;
@@ -40,7 +39,6 @@ public class Block extends GameElement {
     public Block(GameScreen screen, MapObject object) {
         super(screen, "boxCrate_double");
         this.object = object;
-        this.map = screen.getMap();
         this.bounds = ((RectangleMapObject) object).getRectangle();
         init();
         setCategoryFilter(BlockBoy.BLOCK_BIT);
@@ -79,33 +77,27 @@ public class Block extends GameElement {
      */
 
     // TODO - CORRIGIR
-    public void setCollision(boolean collision) {
-        this.collision = collision;
+    public void setHeroCollision(boolean collision) {
+        this.heroCollision = collision;
         if (collision) {
             Gdx.app.log("Block", "begin collision");
-            /*bodyDef.type = BodyDef.BodyType.StaticBody;
-            body = world.createBody(bodyDef);
-            //body.setType();*/
         } else {
             Gdx.app.log("Block", "end collision");
-            /*if (bodyTypeChange){
-                bodyDef.type = BodyDef.BodyType.DynamicBody;
-                body = world.createBody(bodyDef);
-            }*/
         }
 
     }
 
     public void setStatic() {
         this.changeToStatic = true;
+        this.heroCollision = false;
     }
 
     public void setDynamic() {
         this.changeToDynamic = true;
     }
 
-    public boolean hasCollision() {
-        return collision;
+    public boolean hasHeroCollision() {
+        return heroCollision;
     }
 
     public void setCategoryFilter(short filterBit) {
@@ -116,6 +108,12 @@ public class Block extends GameElement {
         fixture.setFilterData(filter);
     }
 
+    /**
+     * Changes block new position
+     *
+     * @param x coordinate
+     * @param y coordinate
+     */
     public void setBodyPosition(float x, float y) {
         this.body.setTransform(x, y, body.getAngle());
     }

@@ -34,9 +34,9 @@ public class CollisionListener implements ContactListener {
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
-                    ((Block) fixB.getUserData()).setCollision(true);
+                    ((Block) fixB.getUserData()).setHeroCollision(true);
                 else
-                    ((Block) fixA.getUserData()).setCollision(true);
+                    ((Block) fixA.getUserData()).setHeroCollision(true);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT){
@@ -63,9 +63,9 @@ public class CollisionListener implements ContactListener {
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
-                    ((Block) fixB.getUserData()).setCollision(false);
+                    ((Block) fixB.getUserData()).setHeroCollision(false);
                 else
-                    ((Block) fixA.getUserData()).setCollision(false);
+                    ((Block) fixA.getUserData()).setHeroCollision(false);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT){

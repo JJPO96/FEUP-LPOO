@@ -137,7 +137,7 @@ public class GameLogic {
      */
     void heroPickBlock() {
         for (Block block : blocks) {
-            if (block.hasCollision() && !hero.hasBlock()) {
+            if (block.hasHeroCollision() && !hero.hasBlock()) {
                 if (hero.isFacingRight()) {
                     if (hero.getX() < block.getX()) {
                         block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
