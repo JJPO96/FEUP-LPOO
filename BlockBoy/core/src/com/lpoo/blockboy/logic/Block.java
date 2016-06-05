@@ -52,7 +52,7 @@ public class Block extends GameElement {
         fixtureDef = new FixtureDef();
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.linearDamping = 4.0f;
+        bodyDef.linearDamping = 3.0f;
         bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / BlockBoy.PPM, (bounds.getY() + bounds.getHeight() / 2) / BlockBoy.PPM);
         body = world.createBody(bodyDef);
         shape.setAsBox(bounds.getWidth() / 2 / BlockBoy.PPM, bounds.getHeight() / 2 / BlockBoy.PPM);
