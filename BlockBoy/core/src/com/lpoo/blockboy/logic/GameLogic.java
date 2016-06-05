@@ -22,12 +22,13 @@ import java.util.ArrayList;
  */
 public class GameLogic {
 
+    public enum State {RUNNING, WIN, LOOSE}
     private Hero hero;
     private ArrayList<Coin> coins;
     private ArrayList<Block> blocks;
     private int coinScore;
     private boolean moveBlock = false;
-    private Boolean running = true;
+    private State state;
 
     private GameScreen screen;
     private World world;
@@ -42,6 +43,7 @@ public class GameLogic {
         this.world = screen.getWorld();
         this.coinScore = 0;
         init();
+        this.state = State.RUNNING;
     }
 
     public void init() {
@@ -79,7 +81,7 @@ public class GameLogic {
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
-            fdef.filter.categoryBits = BlockBoy.BRICK_BIT;
+            fdef.filter.categoryBits = BlockBoy.EXIT_BIT;
             body.createFixture(fdef);
         }
 
@@ -135,7 +137,7 @@ public class GameLogic {
      */
     void heroPickBlock() {
         for (Block block : blocks) {
-            if (block.hasCollision()) {
+            if (block.hasCollision() && !hero.hasBlock()) {
                 if (hero.isFacingRight()) {
                     if (hero.getX() < block.getX()) {
                         block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
@@ -198,6 +200,11 @@ public class GameLogic {
         // Updates Hero
         hero.update(delta);
 
+        if(hero.getState() == Hero.State.WIN)
+            this.state = State.WIN;
+        else if(hero.getState() == Hero.State.DEAD)
+            this.state = State.LOOSE;
+
         // Updates coins
         for (Coin coin : coins) {
             coin.update(delta);
@@ -235,10 +242,6 @@ public class GameLogic {
         checkCoinPicking();
     }
 
-    public boolean isGameRunning() {
-        return running;
-    }
-
     public Hero getHero() {
         return hero;
     }
@@ -257,5 +260,14 @@ public class GameLogic {
 
     public void setMoveBlock(boolean move) {
         this.moveBlock = move;
+    }
+
+    /**
+     * Returns the state of the game
+     *
+     * @return the state of the game
+     */
+    public State getState(){
+        return  state;
     }
 }

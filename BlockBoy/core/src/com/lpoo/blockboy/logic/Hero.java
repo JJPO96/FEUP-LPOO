@@ -22,12 +22,12 @@ import com.lpoo.blockboy.gui.GameScreen;
  * Class that represents the hero of the game
  */
 public class Hero extends GameElement {
-    private enum State {STANDING, RUNNING, JUMPING, FALLING}
-
+    public enum State {STANDING, RUNNING, JUMPING, FALLING, WIN, DEAD}
     private State currentState;
     private State previousState;
-    private boolean carryBlock = false;
+    private boolean heroDead = false;
     private boolean arriveExit = false;
+    private boolean carryBlock = false;
     private Boolean facingRight;
 
     // Textures
@@ -194,7 +194,11 @@ public class Hero extends GameElement {
      * @return the state of the hero
      */
     public State getState() {
-        if (body.getLinearVelocity().y > 0)
+        if (arriveExit)
+            return State.WIN;
+        else if (heroDead)
+            return State.DEAD;
+        else if (body.getLinearVelocity().y > 0)
             return State.JUMPING;
         else if (body.getLinearVelocity().y < 0)
             return State.FALLING;
@@ -244,10 +248,11 @@ public class Hero extends GameElement {
     }
 
     public void setArriveExit(boolean arriveExit){
+        Gdx.app.log("arive exit", "");
         this.arriveExit = arriveExit;
     }
 
-    public boolean getArriveExit(){
-        return  arriveExit;
+    public void setHerodead(){
+        this.heroDead = true;
     }
 }

@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
         boxDebug = new Box2DDebugRenderer();
         hud = new Hud(this);
 
-        world.setContactListener(new CollisionListener());
+        world.setContactListener(new CollisionListener(gameLogic));
     }
 
     public void checkInput(float delta) {
@@ -106,7 +106,18 @@ public class GameScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         // Updates the game itself
-        gameLogic.update(delta);
+        // TODO - MUDAR AQUI OS SCREEN PARA WIN OU LOOSE
+       if (gameLogic.getState() == GameLogic.State.WIN){
+           game.setScreen(new MainMenuScreen(game));
+           dispose();
+       }
+        else if (gameLogic.getState() == GameLogic.State.LOOSE){
+           game.setScreen(new MainMenuScreen(game));
+           dispose();
+       }
+        else if (gameLogic.getState() == GameLogic.State.RUNNING)
+            gameLogic.update(delta);
+
         // Updates hud
         hud.update(delta, gameLogic.getCoinScore());
 
@@ -140,8 +151,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
-
         // Clears game screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -167,7 +176,9 @@ public class GameScreen implements Screen {
         game.batch.end();
         // Draws HUD
         game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+
         hud.getStage().draw();
+        update(delta);
     }
 
     @Override
