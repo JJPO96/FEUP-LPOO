@@ -116,10 +116,12 @@ public class MainMenuScreen implements Screen {
 
         newGameBtn.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+
                 game.setScreen(new LevelScreen(game));
                 dispose();
             }
@@ -127,6 +129,7 @@ public class MainMenuScreen implements Screen {
 
         optionsBtn.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 
@@ -138,6 +141,7 @@ public class MainMenuScreen implements Screen {
 
         exitBtn.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 

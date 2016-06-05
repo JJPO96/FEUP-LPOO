@@ -171,7 +171,8 @@ public class OptionsScreen implements Screen {
         homeBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-               return true;
+                Gdx.input.vibrate(40);
+                return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
@@ -183,6 +184,7 @@ public class OptionsScreen implements Screen {
         plusBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 
@@ -197,6 +199,7 @@ public class OptionsScreen implements Screen {
         minusBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 
@@ -211,6 +214,7 @@ public class OptionsScreen implements Screen {
         volBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 

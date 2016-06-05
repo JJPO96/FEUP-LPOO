@@ -124,6 +124,7 @@ public class PauseScreen implements Screen {
         homeBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 
@@ -137,6 +138,7 @@ public class PauseScreen implements Screen {
         rstBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 
@@ -150,6 +152,7 @@ public class PauseScreen implements Screen {
         resumeBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
                 return true;
             }
 

@@ -200,9 +200,14 @@ public class GameLogic {
         // Updates Hero
         hero.update(delta);
 
-        if(hero.getState() == Hero.State.WIN)
+        if(hero.getState() == Hero.State.WIN) {
             this.state = State.WIN;
-        else if(hero.getState() == Hero.State.DEAD)
+            if (BlockBoy.levelInd < BlockBoy.lockLevels.length - 1){
+                BlockBoy.levelInd++;
+                BlockBoy.lockLevels[BlockBoy.levelInd] = false;
+                Gdx.input.vibrate(600);
+            }
+        }else if(hero.getState() == Hero.State.DEAD)
             this.state = State.LOOSE;
 
         // Updates coins
