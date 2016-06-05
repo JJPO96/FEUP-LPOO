@@ -117,7 +117,7 @@ public class MainMenuScreen implements Screen {
         newGameBtn.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
-                BlockBoy.btnClick.play(BlockBoy.volume/100);
+                if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 
@@ -131,7 +131,7 @@ public class MainMenuScreen implements Screen {
         optionsBtn.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
-                BlockBoy.btnClick.play(BlockBoy.volume/100);
+                if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 
@@ -144,7 +144,7 @@ public class MainMenuScreen implements Screen {
         exitBtn.addListener(new InputListener(){
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
-                BlockBoy.btnClick.play(BlockBoy.volume/100);
+                if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 

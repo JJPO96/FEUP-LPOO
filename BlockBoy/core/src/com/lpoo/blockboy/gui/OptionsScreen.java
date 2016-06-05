@@ -59,6 +59,7 @@ public class OptionsScreen implements Screen {
     public void update(float delta){
         checkInput(delta);
         BlockBoy.volume = volCtrl.getValue();
+        BlockBoy.bg_music.setVolume(BlockBoy.volume/100);
     }
 
     @Override
@@ -172,6 +173,7 @@ public class OptionsScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
+                if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 
@@ -186,6 +188,7 @@ public class OptionsScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
+                if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 
@@ -193,6 +196,9 @@ public class OptionsScreen implements Screen {
                 if (BlockBoy.volume < 100 && !BlockBoy.mute) {
                     BlockBoy.volume += 5;
                     volCtrl.setValue(BlockBoy.volume);
+                    BlockBoy.bg_music.play();
+                    BlockBoy.bg_music.setVolume(BlockBoy.volume / 100);
+                    BlockBoy.bg_music.setLooping(true);
                 }
             }
         });
@@ -201,6 +207,7 @@ public class OptionsScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
+                if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 
@@ -208,6 +215,10 @@ public class OptionsScreen implements Screen {
                 if (BlockBoy.volume > 0 && !BlockBoy.mute) {
                     BlockBoy.volume -= 5;
                     volCtrl.setValue(BlockBoy.volume);
+                    BlockBoy.bg_music.play();
+                    BlockBoy.bg_music.setVolume(BlockBoy.volume / 100);
+                    BlockBoy.bg_music.setLooping(true);
+
                 }
             }
         });
@@ -216,6 +227,7 @@ public class OptionsScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
+                if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 
@@ -224,6 +236,12 @@ public class OptionsScreen implements Screen {
                 volCtrl.setDisabled(BlockBoy.mute);
                 plusBtn.setDisabled(BlockBoy.mute);
                 minusBtn.setDisabled(BlockBoy.mute);
+                if(BlockBoy.mute)
+                    BlockBoy.bg_music.stop();
+                else
+                    BlockBoy.bg_music.play();
+                BlockBoy.bg_music.setVolume(BlockBoy.volume / 100);
+                BlockBoy.bg_music.setLooping(true);
 
                 if (BlockBoy.mute) {
                     Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"), skin.getDrawable("knobCheck"));

@@ -153,7 +153,8 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[0]){
-                    Gdx.input.vibrate(40);
+                     Gdx.input.vibrate(40);
+                    if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -172,7 +173,8 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[1]){
-                    Gdx.input.vibrate(40);
+                     Gdx.input.vibrate(40);
+                    if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -191,7 +193,8 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[2]){
-                    Gdx.input.vibrate(40);
+                     Gdx.input.vibrate(40);
+                    if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -210,7 +213,8 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[3]){
-                    Gdx.input.vibrate(40);
+                     Gdx.input.vibrate(40);
+                    if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -229,7 +233,8 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[4]){
-                    Gdx.input.vibrate(40);
+                     Gdx.input.vibrate(40);
+                    if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -248,7 +253,7 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[5]){
-                    Gdx.input.vibrate(40);
+                     Gdx.input.vibrate(40);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -267,7 +272,7 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[6]){
-                    Gdx.input.vibrate(40);
+                      Gdx.input.vibrate(40);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -286,7 +291,7 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[7]){
-                    Gdx.input.vibrate(40);
+                      Gdx.input.vibrate(40);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -305,7 +310,7 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[8]){
-                    Gdx.input.vibrate(40);
+                      Gdx.input.vibrate(40);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -324,7 +329,7 @@ public class LevelScreen implements Screen {
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 if(!BlockBoy.lockLevels[9]){
-                    Gdx.input.vibrate(40);
+                     Gdx.input.vibrate(40);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                     return true;
                 }
                 return false;
@@ -341,7 +346,7 @@ public class LevelScreen implements Screen {
         homeBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                Gdx.input.vibrate(40);
+                 Gdx.input.vibrate(40);if(!BlockBoy.mute) BlockBoy.btnClick.play(BlockBoy.volume/100);
                 return true;
             }
 
