@@ -105,19 +105,6 @@ public class GameScreen implements Screen {
         checkInput(delta);
         world.step(1 / 60f, 6, 2);
 
-        // Updates the game itself
-        // TODO - MUDAR AQUI OS SCREEN PARA WIN OU LOOSE
-       if (gameLogic.getState() == GameLogic.State.WIN){
-           game.setScreen(new MainMenuScreen(game));
-           dispose();
-       }
-        else if (gameLogic.getState() == GameLogic.State.LOOSE){
-           game.setScreen(new MainMenuScreen(game));
-           dispose();
-       }
-        else if (gameLogic.getState() == GameLogic.State.RUNNING)
-            gameLogic.update(delta);
-
         // Updates hud
         hud.update(delta, gameLogic.getCoinScore());
 
@@ -127,6 +114,19 @@ public class GameScreen implements Screen {
         gameCam.update();
         // Tells renderer to only draw what the camera can see
         mapRenderer.setView(gameCam);
+
+        // Updates the game itself
+        // TODO - MUDAR AQUI OS SCREEN PARA WIN OU LOOSE
+        if (gameLogic.getState() == GameLogic.State.WIN){
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
+        }
+        else if (gameLogic.getState() == GameLogic.State.LOOSE){
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
+        }
+        else if (gameLogic.getState() == GameLogic.State.RUNNING)
+            gameLogic.update(delta);
     }
 
     public World getWorld() {
