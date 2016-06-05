@@ -32,8 +32,6 @@ public class GameOverScreen implements Screen {
 
     private ImageButton homeBtn;
     private ImageButton rstBtn;
-    private ImageButton resumeBtn;
-
 
     private Texture menu_bg;
 
@@ -115,14 +113,11 @@ public class GameOverScreen implements Screen {
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
         rstBtn = new ImageButton(skin.getDrawable("rstBtn"),skin.getDrawable("rstPressed"));
-        resumeBtn = new ImageButton(skin.getDrawable("playBtn"),skin.getDrawable("playPressed"));
 
         homeBtn.setSize(2*homeBtn.getWidth()/3,2*homeBtn.getHeight()/3);
-        homeBtn.setPosition(3*BlockBoy.VWIDTH/10-homeBtn.getWidth()/2,BlockBoy.VHEIGHT/2-homeBtn.getHeight()/2);
+        homeBtn.setPosition(4*BlockBoy.VWIDTH/10-homeBtn.getWidth()/2,BlockBoy.VHEIGHT/2-homeBtn.getHeight()/2);
         rstBtn.setSize(2*rstBtn.getWidth()/3,2*rstBtn.getHeight()/3);
-        rstBtn.setPosition(5*BlockBoy.VWIDTH/10-rstBtn.getWidth()/2,BlockBoy.VHEIGHT/2-rstBtn.getHeight()/2);
-        resumeBtn.setSize(2*resumeBtn.getWidth()/3,2*resumeBtn.getHeight()/3);
-        resumeBtn.setPosition(7*BlockBoy.VWIDTH/10-resumeBtn.getWidth()/2,BlockBoy.VHEIGHT/2-resumeBtn.getHeight()/2);
+        rstBtn.setPosition(6*BlockBoy.VWIDTH/10-rstBtn.getWidth()/2,BlockBoy.VHEIGHT/2-rstBtn.getHeight()/2);
 
         homeBtn.addListener(new InputListener(){
 
@@ -152,22 +147,8 @@ public class GameOverScreen implements Screen {
             }
         });
 
-        resumeBtn.addListener(new InputListener(){
-
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                Gdx.input.vibrate(40);
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(gamePlayed);
-                dispose();
-            }
-        });
-
         stage.addActor(homeBtn);
         stage.addActor(rstBtn);
-        stage.addActor(resumeBtn);
 
         Gdx.input.setInputProcessor(stage);
     }
