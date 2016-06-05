@@ -116,8 +116,8 @@ public class OptionsScreen implements Screen {
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
         volBtn = new ImageButton(skin.getDrawable("volBtn"),skin.getDrawable("volPressed"),skin.getDrawable("volCheck"));
-        plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
-        minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
+        plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"),skin.getDrawable("plusCheck"));
+        minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"),skin.getDrawable("minusCheck"));
 
         /*ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("slider_bg", Color.DARK_GRAY), skin.getDrawable("knobBtn"));
         ProgressBar bar = new ProgressBar(0, 10, 1, false, barStyle);
@@ -125,17 +125,24 @@ public class OptionsScreen implements Screen {
         bar.setSize(290, bar.getPrefHeight());
         bar.setAnimateDuration(2);
         stage.addActor(bar);*/
-
-        Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"),skin.getDrawable("knobBtn"));
-        sliderStyle.knobDown = skin.getDrawable("knobPressed");
-        sliderStyle.knobBefore = skin.newDrawable("slider_bg", Color.FOREST);
-        sliderStyle.knob.setMinHeight(60);
-        sliderStyle.knob.setMinWidth(60);
-        sliderStyle.knobDown.setMinHeight(65);
-        sliderStyle.knobDown.setMinWidth(65);
-        sliderStyle.background.setMinWidth(5*BlockBoy.VWIDTH/12 - volBtn.getWidth()/4);
-
-        volCtrl = new Slider(0,100,5,false,sliderStyle);
+        if (BlockBoy.mute) {
+            Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"), skin.getDrawable("knobCheck"));
+            sliderStyle.knobBefore = skin.newDrawable("slider_bg", Color.LIGHT_GRAY);
+            sliderStyle.knob.setMinHeight(60);
+            sliderStyle.knob.setMinWidth(60);
+            sliderStyle.background.setMinWidth(5 * BlockBoy.VWIDTH / 12 - volBtn.getWidth() / 4);
+            volCtrl = new Slider(0,100,5,false,sliderStyle);
+        }else{
+            Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"), skin.getDrawable("knobBtn"));
+            sliderStyle.knobDown = skin.getDrawable("knobPressed");
+            sliderStyle.knobBefore = skin.newDrawable("slider_bg", Color.FOREST);
+            sliderStyle.knob.setMinHeight(60);
+            sliderStyle.knob.setMinWidth(60);
+            sliderStyle.knobDown.setMinHeight(65);
+            sliderStyle.knobDown.setMinWidth(65);
+            sliderStyle.background.setMinWidth(5 * BlockBoy.VWIDTH / 12 - volBtn.getWidth() / 4);
+            volCtrl = new Slider(0,100,5,false,sliderStyle);
+        }
         volCtrl.setSize(4*BlockBoy.VWIDTH/12-30, 10);
         volCtrl.setPosition(6.5f*BlockBoy.VWIDTH/12-volCtrl.getWidth()/2+5, 3*BlockBoy.VHEIGHT/5-volCtrl.getHeight()/2);
         volCtrl.setValue(BlockBoy.volume);
@@ -152,6 +159,14 @@ public class OptionsScreen implements Screen {
 
         minusBtn.setSize(2*minusBtn.getWidth()/5,2*minusBtn.getHeight()/5);
         minusBtn.setPosition(4*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2 + 10,3*BlockBoy.VHEIGHT/5 - volBtn.getHeight()/2);
+
+
+        volCtrl.setDisabled(BlockBoy.mute);
+        volBtn.setChecked(BlockBoy.mute);
+        plusBtn.setDisabled(BlockBoy.mute);
+        plusBtn.setChecked(BlockBoy.mute);
+        minusBtn.setDisabled(BlockBoy.mute);
+        minusBtn.setChecked(BlockBoy.mute);
 
         homeBtn.addListener(new InputListener(){
 
@@ -172,10 +187,9 @@ public class OptionsScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if (BlockBoy.volume < 100) {
+                if (BlockBoy.volume < 100 && !BlockBoy.mute) {
                     BlockBoy.volume += 5;
                     volCtrl.setValue(BlockBoy.volume);
-                    Gdx.app.log("Debug: ", "" + BlockBoy.volume);
                 }
             }
         });
@@ -187,10 +201,9 @@ public class OptionsScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if (BlockBoy.volume > 0) {
+                if (BlockBoy.volume > 0 && !BlockBoy.mute) {
                     BlockBoy.volume -= 5;
                     volCtrl.setValue(BlockBoy.volume);
-                    Gdx.app.log("Debug: ", "" + BlockBoy.volume);
                 }
             }
         });
@@ -203,8 +216,30 @@ public class OptionsScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 BlockBoy.mute = !BlockBoy.mute;
-                Gdx.app.log("Debug: ", "" + BlockBoy.mute);
                 volCtrl.setDisabled(BlockBoy.mute);
+                plusBtn.setDisabled(BlockBoy.mute);
+                plusBtn.setChecked(BlockBoy.mute);
+                minusBtn.setDisabled(BlockBoy.mute);
+                minusBtn.setChecked(BlockBoy.mute);
+
+                if (BlockBoy.mute) {
+                    Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"), skin.getDrawable("knobCheck"));
+                    sliderStyle.knobBefore = skin.newDrawable("slider_bg", Color.LIGHT_GRAY);
+                    sliderStyle.knob.setMinHeight(60);
+                    sliderStyle.knob.setMinWidth(60);
+                    sliderStyle.background.setMinWidth(5 * BlockBoy.VWIDTH / 12 - volBtn.getWidth() / 4);
+                    volCtrl.setStyle(sliderStyle);
+                }else{
+                    Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"), skin.getDrawable("knobBtn"));
+                    sliderStyle.knobDown = skin.getDrawable("knobPressed");
+                    sliderStyle.knobBefore = skin.newDrawable("slider_bg", Color.FOREST);
+                    sliderStyle.knob.setMinHeight(60);
+                    sliderStyle.knob.setMinWidth(60);
+                    sliderStyle.knobDown.setMinHeight(65);
+                    sliderStyle.knobDown.setMinWidth(65);
+                    sliderStyle.background.setMinWidth(5 * BlockBoy.VWIDTH / 12 - volBtn.getWidth() / 4);
+                    volCtrl.setStyle(sliderStyle);
+                }
             }
         });
 

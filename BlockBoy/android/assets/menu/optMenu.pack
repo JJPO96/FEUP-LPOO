@@ -38,58 +38,72 @@ minusBtn
   orig: 178, 178
   offset: 0, 0
   index: -1
-minusPressed
+minusCheck
   rotate: false
   xy: 181, 541
   size: 178, 178
   orig: 178, 178
   offset: 0, 0
   index: -1
-plusBtn
+minusPressed
   rotate: false
   xy: 361, 721
   size: 178, 178
   orig: 178, 178
   offset: 0, 0
   index: -1
-plusPressed
+plusBtn
   rotate: false
   xy: 1, 181
   size: 178, 178
   orig: 178, 178
   offset: 0, 0
   index: -1
-volBtn
+plusCheck
   rotate: false
   xy: 181, 361
   size: 178, 178
   orig: 178, 178
   offset: 0, 0
   index: -1
-volCheck
+plusPressed
   rotate: false
   xy: 361, 541
   size: 178, 178
   orig: 178, 178
   offset: 0, 0
   index: -1
-volPressed
+volBtn
   rotate: false
   xy: 1, 1
   size: 178, 178
   orig: 178, 178
   offset: 0, 0
   index: -1
-homeBtn
+volCheck
   rotate: false
   xy: 181, 181
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+volPressed
+  rotate: false
+  xy: 361, 361
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+homeBtn
+  rotate: false
+  xy: 181, 1
   size: 177, 178
   orig: 177, 178
   offset: 0, 0
   index: -1
 homePressed
   rotate: false
-  xy: 361, 361
+  xy: 361, 181
   size: 177, 178
   orig: 177, 178
   offset: 0, 0
