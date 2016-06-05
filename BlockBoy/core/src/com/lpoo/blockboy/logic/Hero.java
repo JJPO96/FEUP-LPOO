@@ -209,7 +209,7 @@ public class Hero extends GameElement {
     }
 
     public void run(float dist) {
-        // Makes the hero run. Sets also a maximum speed
+        // Makes the hero run. Also sets a maximum speed for the hero
         if (body.getLinearVelocity().x > -3f && body.getLinearVelocity().x < 3f)
             body.applyLinearImpulse(new Vector2(dist, 0), body.getWorldCenter(), true);
 
@@ -248,7 +248,6 @@ public class Hero extends GameElement {
     }
 
     public void setArriveExit(boolean arriveExit){
-        Gdx.app.log("arive exit", "");
         this.arriveExit = arriveExit;
     }
 

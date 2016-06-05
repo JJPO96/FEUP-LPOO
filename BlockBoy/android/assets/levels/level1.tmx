@@ -97,7 +97,6 @@
  <objectgroup name="Exit">
   <object id="52" x="2880" y="478" width="62" height="96"/>
   <object id="54" x="2860" y="1088"/>
-  <object id="56" x="832" y="512" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Block">
   <object id="19" x="1024" y="512" width="64" height="64"/>
