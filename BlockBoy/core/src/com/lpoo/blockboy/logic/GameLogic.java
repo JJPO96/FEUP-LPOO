@@ -205,6 +205,7 @@ public class GameLogic {
             if (BlockBoy.levelInd < BlockBoy.lockLevels.length - 1){
                 BlockBoy.levelInd++;
                 BlockBoy.lockLevels[BlockBoy.levelInd] = false;
+                BlockBoy.saveData();
                 Gdx.input.vibrate(600);
             }
         }else if(hero.getState() == Hero.State.DEAD)
