@@ -8,19 +8,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
-import com.lpoo.blockboy.logic.Block;
 
 /**
  * Created by José Oliveira on 12/05/2016.
@@ -103,8 +99,11 @@ public class OptionsScreen implements Screen {
 
     @Override
     public void dispose() {
-        menu_bg.dispose();
+        game.dispose();
         stage.dispose();
+        skin.dispose();
+        optMenuAtlas.dispose();
+        menu_bg.dispose();
     }
 
     public void initStage(SpriteBatch batch){

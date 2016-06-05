@@ -84,6 +84,10 @@ public class BlockBoy extends Game {
     public void dispose() {
         super.dispose();
         batch.dispose();
+        bg_music.dispose();
+        btnClick.dispose();
+        coinSound.dispose();
+        jumpSound.dispose();
     }
 
     @Override

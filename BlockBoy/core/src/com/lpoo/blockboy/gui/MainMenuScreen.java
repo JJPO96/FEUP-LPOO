@@ -96,10 +96,10 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         menu_bg.dispose();
         stage.dispose();
-
         stage.dispose();
         skin.dispose();
         startMenuAtlas.dispose();
+        game.dispose();
     }
 
     public void initStage(SpriteBatch batch){
