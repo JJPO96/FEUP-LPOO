@@ -110,15 +110,15 @@ public class OptionsScreen implements Screen {
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
         volBtn = new ImageButton(skin.getDrawable("volBtn"),skin.getDrawable("volPressed"),skin.getDrawable("volCheck"));
-        plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("homePressed"));
+        plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
         minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
 
-        Slider.SliderStyle volSliStyle = new Slider.SliderStyle(skin.getDrawable("knobBtn"),skin.getDrawable("slider_bg"));
+        /*Slider.SliderStyle volSliStyle = new Slider.SliderStyle(skin.getDrawable("knobBtn"),skin.getDrawable("slider_bg"));
         volSliStyle.knobDown = skin.getDrawable("knobPressed");
 
         volSlider = new Slider(0,100,5,false,volSliStyle);
         volSlider.setSize(100,20);
-        volSlider.setPosition(5*BlockBoy.VWIDTH/12,2*BlockBoy.VWIDTH/5);
+        volSlider.setPosition(5*BlockBoy.VWIDTH/12,2*BlockBoy.VWIDTH/5);*/
 
         homeBtn.setSize(2*homeBtn.getWidth()/5,2*homeBtn.getHeight()/5);
         homeBtn.setPosition(10,BlockBoy.VHEIGHT - homeBtn.getHeight() - 10);
