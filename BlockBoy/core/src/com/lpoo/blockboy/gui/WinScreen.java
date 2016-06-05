@@ -19,7 +19,7 @@ import com.lpoo.blockboy.BlockBoy;
 /**
  * Created by José Oliveira on 12/05/2016.
  */
-public class GameOverScreen implements Screen {
+public class WinScreen implements Screen {
 
     BlockBoy game;
     private int level;
@@ -39,7 +39,7 @@ public class GameOverScreen implements Screen {
 
     private GameScreen gamePlayed;
 
-    public GameOverScreen(BlockBoy game, GameScreen gamePlayed, int level){
+    public WinScreen(BlockBoy game, GameScreen gamePlayed, int level){
         this.game = game;
         this.level = level;
         this.gamePlayed = gamePlayed;

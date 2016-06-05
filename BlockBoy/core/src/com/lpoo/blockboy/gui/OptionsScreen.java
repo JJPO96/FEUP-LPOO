@@ -177,8 +177,8 @@ public class OptionsScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(new MainMenuScreen(game));
                 BlockBoy.saveData();
+                game.setScreen(new MainMenuScreen(game));
                 dispose();
             }
         });
