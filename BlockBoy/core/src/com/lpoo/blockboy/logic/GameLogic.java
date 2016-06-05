@@ -90,11 +90,25 @@ public class GameLogic {
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
+            fdef.filter.categoryBits = BlockBoy.BRICK_BIT;
             body.createFixture(fdef);
         }
         // Create Hero
         for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
             hero = new Hero (screen, object);
+        }
+
+        //  Create air ground
+        for (MapObject object : screen.getMap().getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.linearDamping = 1.0f;
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
+            body = world.createBody(bodyDef);
+            shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
+            fdef.shape = shape;
+            fdef.filter.categoryBits = BlockBoy.AIRGROUND_BIT;
+            body.createFixture(fdef);
         }
     }
 

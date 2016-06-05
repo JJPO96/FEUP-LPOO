@@ -24,7 +24,8 @@ import com.lpoo.blockboy.gui.GameScreen;
 public class Block extends GameElement {
     private boolean picked = false;
     private boolean collision = false;
-    private boolean bodyTypeChange = false;
+    private boolean changeToStatic = false;
+    private boolean isStatic = false;
     private MapObject object;
     private TiledMap map;
     private Rectangle bounds;
@@ -99,6 +100,21 @@ public class Block extends GameElement {
 
     }
 
+    public void setStatic(){
+        Gdx.app.log("Block/Brick", "begin collision");
+
+        //body.setLinearVelocity(0, 0);
+        this.changeToStatic = true;
+        //body.setActive(false);
+        //bodyDef.type = BodyDef.BodyType.StaticBody;
+        //body = world.createBody(bodyDef);
+    }
+
+    public void setDynamic(){
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bodyDef);
+    }
+
     public boolean hasCollision(){
         return collision;
     }
@@ -106,7 +122,7 @@ public class Block extends GameElement {
     public void setCategoryFilter(short filterBit){
         filter = new Filter();
         filter.categoryBits = filterBit;
-        filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT;
+        filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT | BlockBoy.AIRGROUND_BIT | BlockBoy.BRICK_BIT;
         fixture.setFilterData(filter);
     }
 
@@ -116,8 +132,16 @@ public class Block extends GameElement {
 
     @Override
     public void update(float delta) {
+       /* if (pick && !picked) {
+            world.destroyBody(this.body);
+            picked = true;
+        } else {
+
+        }*/
+
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(region);
+
     }
 
     /**
