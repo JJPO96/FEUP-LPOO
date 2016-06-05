@@ -79,7 +79,7 @@ public class GameScreen implements Screen {
     public void checkInput(float delta) {
         // Hero is always at the center of the screen
         if (Gdx.input.isTouched()) {
-            if (Gdx.input.getY() < 2*Gdx.graphics.getHeight()/3){
+            if (Gdx.input.getY() < 2 * Gdx.graphics.getHeight() / 3) {
                 if (Gdx.input.getY() < Gdx.graphics.getWidth() / 4)
                     gameLogic.getHero().jump();
                 if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2)
@@ -116,7 +116,7 @@ public class GameScreen implements Screen {
 
         // Updates the game itself
         // TODO - MUDAR AQUI OS SCREEN PARA WIN OU LOOSE
-        switch (gameLogic.getState()){
+        /*switch (gameLogic.getState()) {
             case WIN:
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
@@ -125,7 +125,18 @@ public class GameScreen implements Screen {
                 dispose();
             case RUNNING:
                 gameLogic.update(delta);
-        }
+            default:
+                break;
+        }*/
+
+       if (gameLogic.getState() == GameLogic.State.WIN) {
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
+        } else if (gameLogic.getState() == GameLogic.State.LOOSE) {
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
+        } else if (gameLogic.getState() == GameLogic.State.RUNNING)
+            gameLogic.update(delta);
     }
 
     public World getWorld() {
@@ -140,9 +151,13 @@ public class GameScreen implements Screen {
         return atlas;
     }
 
-    public BlockBoy getGame() { return game; }
+    public BlockBoy getGame() {
+        return game;
+    }
 
-    public GameLogic getGameLogic() { return gameLogic; }
+    public GameLogic getGameLogic() {
+        return gameLogic;
+    }
 
     @Override
     public void show() {
