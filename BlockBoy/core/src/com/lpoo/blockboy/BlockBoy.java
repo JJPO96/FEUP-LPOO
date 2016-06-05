@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -29,6 +30,10 @@ public class BlockBoy extends Game {
     public static boolean[] lockLevels;
     public static boolean[] lockSkins;
 
+    public static Music bg_music;
+    public static Sound btnClick;
+
+
     // TODO - PASSAR PARA OUTRO LOCAL // APAGAR AS VARIAVEIS QUE NAO INTERESSEM
     public static final short DEFAULT_BIT = 1;
     public static final short HERO_BIT = 2;
@@ -40,20 +45,19 @@ public class BlockBoy extends Game {
     public static final short EXIT_BIT = 128;
 
     public SpriteBatch batch;
-    public AssetManager manager;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
 
         // TODO - SOUND NOT WORKING
-        manager = new AssetManager();
-        manager.load("sounds/coin.wav", Sound.class);
-        manager.load("sounds/jump.mp3", Sound.class);
-        manager.finishLoading();
+
 
         lockLevels = new boolean[10];
         lockSkins = new boolean[3];
+
+        bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/jump.mp3"));
+        btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
 
         prefs = Gdx.app.getPreferences("BlockBoyPrefs");
         String name = prefs.getString("name", "No name stored");
@@ -72,7 +76,6 @@ public class BlockBoy extends Game {
     public void dispose() {
         super.dispose();
         batch.dispose();
-        manager.dispose();
     }
 
     @Override

@@ -116,15 +116,18 @@ public class OptionsScreen implements Screen {
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
         volBtn = new ImageButton(skin.getDrawable("volBtn"),skin.getDrawable("volPressed"),skin.getDrawable("volCheck"));
-        plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"),skin.getDrawable("plusCheck"));
-        minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"),skin.getDrawable("minusCheck"));
 
-        /*ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("slider_bg", Color.DARK_GRAY), skin.getDrawable("knobBtn"));
-        ProgressBar bar = new ProgressBar(0, 10, 1, false, barStyle);
-        bar.setPosition(5*BlockBoy.VWIDTH/12, 10);
-        bar.setSize(290, bar.getPrefHeight());
-        bar.setAnimateDuration(2);
-        stage.addActor(bar);*/
+
+        plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
+        minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
+
+        ImageButton.ImageButtonStyle plSty = plusBtn.getStyle();
+        ImageButton.ImageButtonStyle minSty = minusBtn.getStyle();
+        plSty.imageDisabled = skin.getDrawable("plusCheck");
+        minSty.imageDisabled = skin.getDrawable("minusCheck");
+        plusBtn.setStyle(plSty);
+        minusBtn.setStyle(minSty);
+
         if (BlockBoy.mute) {
             Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"), skin.getDrawable("knobCheck"));
             sliderStyle.knobBefore = skin.newDrawable("slider_bg", Color.LIGHT_GRAY);
@@ -160,13 +163,10 @@ public class OptionsScreen implements Screen {
         minusBtn.setSize(2*minusBtn.getWidth()/5,2*minusBtn.getHeight()/5);
         minusBtn.setPosition(4*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2 + 10,3*BlockBoy.VHEIGHT/5 - volBtn.getHeight()/2);
 
-
         volCtrl.setDisabled(BlockBoy.mute);
         volBtn.setChecked(BlockBoy.mute);
         plusBtn.setDisabled(BlockBoy.mute);
-        plusBtn.setChecked(BlockBoy.mute);
         minusBtn.setDisabled(BlockBoy.mute);
-        minusBtn.setChecked(BlockBoy.mute);
 
         homeBtn.addListener(new InputListener(){
 
@@ -223,9 +223,7 @@ public class OptionsScreen implements Screen {
                 BlockBoy.mute = !BlockBoy.mute;
                 volCtrl.setDisabled(BlockBoy.mute);
                 plusBtn.setDisabled(BlockBoy.mute);
-                plusBtn.setChecked(BlockBoy.mute);
                 minusBtn.setDisabled(BlockBoy.mute);
-                minusBtn.setChecked(BlockBoy.mute);
 
                 if (BlockBoy.mute) {
                     Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"), skin.getDrawable("knobCheck"));
