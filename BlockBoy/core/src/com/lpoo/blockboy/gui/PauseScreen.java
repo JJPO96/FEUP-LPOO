@@ -39,9 +39,8 @@ public class PauseScreen implements Screen {
 
     private GameScreen gamePlayed;
 
-    public PauseScreen(BlockBoy game, GameScreen gamePlayed,int level){
+    public PauseScreen(BlockBoy game, GameScreen gamePlayed){
         this.game = game;
-        this.level = level;
         this.gamePlayed = gamePlayed;
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);

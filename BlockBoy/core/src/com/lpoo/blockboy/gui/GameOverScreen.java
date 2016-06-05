@@ -37,10 +37,8 @@ public class GameOverScreen implements Screen {
 
     private GameScreen gamePlayed;
 
-    public GameOverScreen(BlockBoy game, GameScreen gamePlayed, int level){
+    public GameOverScreen(BlockBoy game){
         this.game = game;
-        this.level = level;
-        this.gamePlayed = gamePlayed;
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 

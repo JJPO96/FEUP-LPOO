@@ -22,7 +22,6 @@ import com.lpoo.blockboy.BlockBoy;
 public class WinScreen implements Screen {
 
     BlockBoy game;
-    private int level;
 
     private Stage stage;
     private Skin skin;
@@ -36,12 +35,8 @@ public class WinScreen implements Screen {
 
     private Texture menu_bg;
 
-    private GameScreen gamePlayed;
-
-    public WinScreen(BlockBoy game, GameScreen gamePlayed, int level){
+    public WinScreen(BlockBoy game){
         this.game = game;
-        this.level = level;
-        this.gamePlayed = gamePlayed;
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
@@ -99,7 +94,6 @@ public class WinScreen implements Screen {
     public void dispose() {
         menu_bg.dispose();
         stage.dispose();
-        gamePlayed.dispose();
         skin.dispose();
         game.dispose();
     }
@@ -128,7 +122,6 @@ public class WinScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                gamePlayed.dispose();
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
             }
@@ -142,7 +135,7 @@ public class WinScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(gamePlayed);
+                game.setScreen(new GameScreen(game));
                 dispose();
             }
         });
