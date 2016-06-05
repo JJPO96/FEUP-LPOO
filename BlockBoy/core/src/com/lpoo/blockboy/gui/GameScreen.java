@@ -47,9 +47,8 @@ public class GameScreen implements Screen {
         return level;
     }
 
-    public GameScreen(BlockBoy game, int levelInd) {
+    public GameScreen(BlockBoy game) {
         this.game = game;
-        this.level = levelInd;
         // Creating an atlas
         atlas = new TextureAtlas("sprites/gamesprites.pack");
 

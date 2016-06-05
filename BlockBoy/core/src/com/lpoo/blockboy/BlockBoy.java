@@ -10,11 +10,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.lpoo.blockboy.gui.*;
 
+import java.util.Arrays;
+
 public class BlockBoy extends Game {
     // Variables used to keep aspect ratio for any screen size (screen resolution of the game)
     public static final int VWIDTH = 800;
     public static final int VHEIGHT = 520;
     public static final float PPM = 100;
+
+    public static float volume = 0;
+    public static boolean mute = false;
+
+    public static int levelInd = 0;
+
+    public static boolean[] lockLevels;
 
     // TODO - PASSAR PARA OUTRO LOCAL // APAGAR AS VARIAVEIS QUE NAO INTERESSEM
     public static final short DEFAULT_BIT = 1;
@@ -38,6 +47,12 @@ public class BlockBoy extends Game {
         manager.load("sounds/coin.wav", Sound.class);
         manager.load("sounds/jump.mp3", Sound.class);
         manager.finishLoading();
+
+        lockLevels = new boolean[10];
+        for (int i = 0; i < lockLevels.length; i++)
+            lockLevels[i] = true;
+
+        lockLevels[0] = false;
 
         setScreen(new MainMenuScreen(this));
     }

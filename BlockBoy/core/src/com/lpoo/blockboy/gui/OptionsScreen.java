@@ -2,20 +2,25 @@ package com.lpoo.blockboy.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
+import com.lpoo.blockboy.logic.Block;
 
 /**
  * Created by José Oliveira on 12/05/2016.
@@ -35,6 +40,8 @@ public class OptionsScreen implements Screen {
     private ImageButton plusBtn;
     private ImageButton minusBtn;
 
+    private Slider volCtrl;
+
     private Texture menu_bg;
 
     public OptionsScreen(BlockBoy game){
@@ -51,6 +58,7 @@ public class OptionsScreen implements Screen {
 
     public void update(float delta){
         checkInput(delta);
+        BlockBoy.volume = volCtrl.getValue();
     }
 
     @Override
@@ -111,17 +119,39 @@ public class OptionsScreen implements Screen {
         plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
         minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
 
+        /*ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("slider_bg", Color.DARK_GRAY), skin.getDrawable("knobBtn"));
+        ProgressBar bar = new ProgressBar(0, 10, 1, false, barStyle);
+        bar.setPosition(5*BlockBoy.VWIDTH/12, 10);
+        bar.setSize(290, bar.getPrefHeight());
+        bar.setAnimateDuration(2);
+        stage.addActor(bar);*/
+
+        Slider.SliderStyle sliderStyle = new Slider.SliderStyle(skin.getDrawable("slider_bg"),skin.getDrawable("knobBtn"));
+        sliderStyle.knobDown = skin.getDrawable("knobPressed");
+        sliderStyle.knobBefore = skin.newDrawable("slider_bg", Color.FOREST);
+        sliderStyle.knob.setMinHeight(60);
+        sliderStyle.knob.setMinWidth(60);
+        sliderStyle.knobDown.setMinHeight(65);
+        sliderStyle.knobDown.setMinWidth(65);
+        sliderStyle.background.setMinWidth(5*BlockBoy.VWIDTH/12 - volBtn.getWidth()/4);
+
+        volCtrl = new Slider(0,100,5,false,sliderStyle);
+        volCtrl.setSize(4*BlockBoy.VWIDTH/12-30, 10);
+        volCtrl.setPosition(6.5f*BlockBoy.VWIDTH/12-volCtrl.getWidth()/2+5, 3*BlockBoy.VHEIGHT/5-volCtrl.getHeight()/2);
+        volCtrl.setValue(BlockBoy.volume);
+        volCtrl.setVisible(true);
+
         homeBtn.setSize(2*homeBtn.getWidth()/5,2*homeBtn.getHeight()/5);
         homeBtn.setPosition(10,BlockBoy.VHEIGHT - homeBtn.getHeight() - 10);
 
         volBtn.setSize(2*volBtn.getWidth()/5,2*volBtn.getHeight()/5);
-        volBtn.setPosition(3*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2,2*BlockBoy.VWIDTH/5 - volBtn.getHeight()/2);
+        volBtn.setPosition(3*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2,3*BlockBoy.VHEIGHT/5 - volBtn.getHeight()/2);
 
         plusBtn.setSize(2*plusBtn.getWidth()/5,2*plusBtn.getHeight()/5);
-        plusBtn.setPosition(9*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2,2*BlockBoy.VWIDTH/5 - volBtn.getHeight()/2);
+        plusBtn.setPosition(9*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2,3*BlockBoy.VHEIGHT/5 - volBtn.getHeight()/2);
 
         minusBtn.setSize(2*minusBtn.getWidth()/5,2*minusBtn.getHeight()/5);
-        minusBtn.setPosition(4*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2 + 5,2*BlockBoy.VWIDTH/5 - volBtn.getHeight()/2);
+        minusBtn.setPosition(4*BlockBoy.VWIDTH/12 - volBtn.getWidth()/2 + 10,3*BlockBoy.VHEIGHT/5 - volBtn.getHeight()/2);
 
         homeBtn.addListener(new InputListener(){
 
@@ -135,10 +165,54 @@ public class OptionsScreen implements Screen {
             }
         });
 
+        plusBtn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                if (BlockBoy.volume < 100) {
+                    BlockBoy.volume += 5;
+                    volCtrl.setValue(BlockBoy.volume);
+                    Gdx.app.log("Debug: ", "" + BlockBoy.volume);
+                }
+            }
+        });
+
+        minusBtn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                if (BlockBoy.volume > 0) {
+                    BlockBoy.volume -= 5;
+                    volCtrl.setValue(BlockBoy.volume);
+                    Gdx.app.log("Debug: ", "" + BlockBoy.volume);
+                }
+            }
+        });
+
+        volBtn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                BlockBoy.mute = !BlockBoy.mute;
+                Gdx.app.log("Debug: ", "" + BlockBoy.mute);
+                volCtrl.setDisabled(BlockBoy.mute);
+            }
+        });
+
         stage.addActor(homeBtn);
         stage.addActor(volBtn);
         stage.addActor(plusBtn);
         stage.addActor(minusBtn);
+        stage.addActor(volCtrl);
 
         Gdx.input.setInputProcessor(stage);
     }

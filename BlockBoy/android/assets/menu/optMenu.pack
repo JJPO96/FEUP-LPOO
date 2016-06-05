@@ -17,14 +17,14 @@ knobBtn
   orig: 178, 178
   offset: 0, 0
   index: -1
-knobPressed
+knobCheck
   rotate: false
   xy: 1, 541
   size: 178, 178
   orig: 178, 178
   offset: 0, 0
   index: -1
-lockedLvl
+knobPressed
   rotate: false
   xy: 181, 721
   size: 178, 178

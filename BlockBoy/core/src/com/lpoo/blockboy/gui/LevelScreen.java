@@ -27,8 +27,6 @@ public class LevelScreen implements Screen {
     private Skin skin;
     private Viewport viewport;
 
-    private boolean[] lockLevels;
-
     private TextureAtlas lvlMenuAtlas;
 
     private ImageButton lvl1Btn;
@@ -47,8 +45,6 @@ public class LevelScreen implements Screen {
 
     public LevelScreen(BlockBoy game){
         this.game = game;
-
-        lockLevels = new boolean[10];
 
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
@@ -116,21 +112,17 @@ public class LevelScreen implements Screen {
         skin = new Skin();
         skin.addRegions(lvlMenuAtlas);
         stage.clear();
-        for (int i = 0; i < lockLevels.length; i++)
-            lockLevels[i] = true;
 
-        lockLevels[0] = false;
-
-        lvl1Btn = !lockLevels[0] ? new ImageButton(skin.getDrawable("lvl1"),skin.getDrawable("lvl1p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl2Btn = !lockLevels[1] ? new ImageButton(skin.getDrawable("lvl2"),skin.getDrawable("lvl2p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl3Btn = !lockLevels[2] ? new ImageButton(skin.getDrawable("lvl3"),skin.getDrawable("lvl3p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl4Btn = !lockLevels[3] ? new ImageButton(skin.getDrawable("lvl4"),skin.getDrawable("lvl4p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl5Btn = !lockLevels[4] ? new ImageButton(skin.getDrawable("lvl5"),skin.getDrawable("lvl5p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl6Btn = !lockLevels[5] ? new ImageButton(skin.getDrawable("lvl6"),skin.getDrawable("lvl6p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl7Btn = !lockLevels[6] ? new ImageButton(skin.getDrawable("lvl7"),skin.getDrawable("lvl7p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl8Btn = !lockLevels[7] ? new ImageButton(skin.getDrawable("lvl8"),skin.getDrawable("lvl8p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl9Btn = !lockLevels[8] ? new ImageButton(skin.getDrawable("lvl9"),skin.getDrawable("lvl9p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
-        lvl10Btn = !lockLevels[9] ? new ImageButton(skin.getDrawable("lvl10"),skin.getDrawable("lvl10p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl1Btn = !BlockBoy.lockLevels[0] ? new ImageButton(skin.getDrawable("lvl1"),skin.getDrawable("lvl1p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl2Btn = !BlockBoy.lockLevels[1] ? new ImageButton(skin.getDrawable("lvl2"),skin.getDrawable("lvl2p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl3Btn = !BlockBoy.lockLevels[2] ? new ImageButton(skin.getDrawable("lvl3"),skin.getDrawable("lvl3p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl4Btn = !BlockBoy.lockLevels[3] ? new ImageButton(skin.getDrawable("lvl4"),skin.getDrawable("lvl4p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl5Btn = !BlockBoy.lockLevels[4] ? new ImageButton(skin.getDrawable("lvl5"),skin.getDrawable("lvl5p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl6Btn = !BlockBoy.lockLevels[5] ? new ImageButton(skin.getDrawable("lvl6"),skin.getDrawable("lvl6p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl7Btn = !BlockBoy.lockLevels[6] ? new ImageButton(skin.getDrawable("lvl7"),skin.getDrawable("lvl7p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl8Btn = !BlockBoy.lockLevels[7] ? new ImageButton(skin.getDrawable("lvl8"),skin.getDrawable("lvl8p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl9Btn = !BlockBoy.lockLevels[8] ? new ImageButton(skin.getDrawable("lvl9"),skin.getDrawable("lvl9p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
+        lvl10Btn = !BlockBoy.lockLevels[9] ? new ImageButton(skin.getDrawable("lvl10"),skin.getDrawable("lvl10p")) :  new ImageButton(skin.getDrawable("lockedLvl"));
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
 
@@ -160,15 +152,16 @@ public class LevelScreen implements Screen {
         lvl1Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[0]){
+                if(!BlockBoy.lockLevels[0]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[0]){
-                    game.setScreen(new GameScreen(game,0));
+                if(!BlockBoy.lockLevels[0]){
+                    BlockBoy.levelInd = 0;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -177,15 +170,16 @@ public class LevelScreen implements Screen {
         lvl2Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[1]){
+                if(!BlockBoy.lockLevels[1]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[1]){
-                    game.setScreen(new GameScreen(game,1));
+                if(!BlockBoy.lockLevels[1]){
+                    BlockBoy.levelInd = 1;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -194,15 +188,16 @@ public class LevelScreen implements Screen {
         lvl3Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[2]){
+                if(!BlockBoy.lockLevels[2]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[2]){
-                    game.setScreen(new GameScreen(game,2));
+                if(!BlockBoy.lockLevels[2]){
+                    BlockBoy.levelInd = 2;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -211,15 +206,16 @@ public class LevelScreen implements Screen {
         lvl4Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[3]){
+                if(!BlockBoy.lockLevels[3]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[3]){
-                    game.setScreen(new GameScreen(game,3));
+                if(!BlockBoy.lockLevels[3]){
+                    BlockBoy.levelInd = 3;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -228,15 +224,16 @@ public class LevelScreen implements Screen {
         lvl5Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[4]){
+                if(!BlockBoy.lockLevels[4]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[4]){
-                    game.setScreen(new GameScreen(game,4));
+                if(!BlockBoy.lockLevels[4]){
+                    BlockBoy.levelInd = 4;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -245,15 +242,16 @@ public class LevelScreen implements Screen {
         lvl6Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[5]){
+                if(!BlockBoy.lockLevels[5]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[5]){
-                    game.setScreen(new GameScreen(game,5));
+                if(!BlockBoy.lockLevels[5]){
+                    BlockBoy.levelInd = 5;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -262,15 +260,16 @@ public class LevelScreen implements Screen {
         lvl7Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[6]){
+                if(!BlockBoy.lockLevels[6]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[6]){
-                    game.setScreen(new GameScreen(game,6));
+                if(!BlockBoy.lockLevels[6]){
+                    BlockBoy.levelInd = 6;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -279,15 +278,16 @@ public class LevelScreen implements Screen {
         lvl8Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[7]){
+                if(!BlockBoy.lockLevels[7]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[7]){
-                    game.setScreen(new GameScreen(game,7));
+                if(!BlockBoy.lockLevels[7]){
+                    BlockBoy.levelInd = 7;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -296,15 +296,16 @@ public class LevelScreen implements Screen {
         lvl9Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[8]){
+                if(!BlockBoy.lockLevels[8]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[8]){
-                    game.setScreen(new GameScreen(game,8));
+                if(!BlockBoy.lockLevels[8]){
+                    BlockBoy.levelInd = 8;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }
@@ -313,15 +314,16 @@ public class LevelScreen implements Screen {
         lvl10Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[9]){
+                if(!BlockBoy.lockLevels[9]){
                     return true;
                 }
                 return false;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!lockLevels[9]){
-                    game.setScreen(new GameScreen(game,9));
+                if(!BlockBoy.lockLevels[9]){
+                    BlockBoy.levelInd = 9;
+                    game.setScreen(new GameScreen(game));
                     dispose();
                 }
             }

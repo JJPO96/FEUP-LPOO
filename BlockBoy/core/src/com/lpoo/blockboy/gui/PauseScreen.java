@@ -142,7 +142,7 @@ public class PauseScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 gamePlayed.dispose();
-                game.setScreen(new GameScreen(game,level));
+                game.setScreen(new GameScreen(game));
                 dispose();
             }
         });
