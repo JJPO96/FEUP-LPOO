@@ -100,9 +100,6 @@ public class PauseScreen implements Screen {
     public void dispose() {
         menu_bg.dispose();
         stage.dispose();
-        gamePlayed.dispose();
-        skin.dispose();
-        game.dispose();
     }
 
     public void initStage(SpriteBatch batch){

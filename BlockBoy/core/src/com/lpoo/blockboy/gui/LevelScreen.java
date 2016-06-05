@@ -103,9 +103,6 @@ public class LevelScreen implements Screen {
     public void dispose() {
         menu_bg.dispose();
         stage.dispose();
-        lvlMenuAtlas.dispose();
-        skin.dispose();
-        game.dispose();
     }
 
     public void initStage(SpriteBatch batch){
