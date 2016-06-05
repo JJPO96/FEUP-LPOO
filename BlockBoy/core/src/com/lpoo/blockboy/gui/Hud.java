@@ -206,6 +206,7 @@ public class Hud implements Disposable {
         coinNumber.setHeight(coinNumber.getHeight() / 3);
         coinNumber.setPosition(70 + BlockBoy.VWIDTH/8, BlockBoy.VHEIGHT - coinNumber.getHeight());
         stage.addActor(coinNumber);
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
