@@ -31,6 +31,9 @@ public class OptionsScreen implements Screen {
     private TextureAtlas optMenuAtlas;
 
     private ImageButton homeBtn;
+    private ImageButton volBtn;
+    private ImageButton plusBtn;
+    private ImageButton minusBtn;
 
     private Texture menu_bg;
 
@@ -104,6 +107,9 @@ public class OptionsScreen implements Screen {
         stage.clear();
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
+        volBtn = new ImageButton(skin.getDrawable("volBtn"),skin.getDrawable("volPressed"),skin.getDrawable("volCheck"));
+        plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("homePressed"));
+        minusBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
 
         homeBtn.setSize(2*homeBtn.getWidth()/5,2*homeBtn.getHeight()/5);
         homeBtn.setPosition(10,BlockBoy.VHEIGHT - homeBtn.getHeight() - 10);

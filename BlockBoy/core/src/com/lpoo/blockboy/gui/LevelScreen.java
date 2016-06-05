@@ -168,7 +168,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[0]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,0));
                     dispose();
                 }
             }
@@ -185,7 +185,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[1]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,1));
                     dispose();
                 }
             }
@@ -202,7 +202,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[2]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,2));
                     dispose();
                 }
             }
@@ -219,7 +219,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[3]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,3));
                     dispose();
                 }
             }
@@ -236,7 +236,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[4]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,4));
                     dispose();
                 }
             }
@@ -253,7 +253,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[5]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,5));
                     dispose();
                 }
             }
@@ -270,7 +270,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[6]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,6));
                     dispose();
                 }
             }
@@ -287,7 +287,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[7]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,7));
                     dispose();
                 }
             }
@@ -304,7 +304,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[8]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,8));
                     dispose();
                 }
             }
@@ -321,7 +321,7 @@ public class LevelScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 if(!lockLevels[9]){
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,9));
                     dispose();
                 }
             }

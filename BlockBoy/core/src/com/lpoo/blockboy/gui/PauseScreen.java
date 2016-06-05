@@ -22,6 +22,7 @@ import com.lpoo.blockboy.BlockBoy;
 public class PauseScreen implements Screen {
 
     BlockBoy game;
+    private int level;
 
     private Stage stage;
     private Skin skin;
@@ -38,8 +39,9 @@ public class PauseScreen implements Screen {
 
     private GameScreen gamePlayed;
 
-    public PauseScreen(BlockBoy game, GameScreen gamePlayed){
+    public PauseScreen(BlockBoy game, GameScreen gamePlayed,int level){
         this.game = game;
+        this.level = level;
         this.gamePlayed = gamePlayed;
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
@@ -140,7 +142,7 @@ public class PauseScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 gamePlayed.dispose();
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game,level));
                 dispose();
             }
         });

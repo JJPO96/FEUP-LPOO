@@ -13,6 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 		// Accelerometer and Compass turned off for battery saving purposes
 		config.useAccelerometer = false;
 		config.useCompass = false;
+		config.useImmersiveMode = true;
 		initialize(new BlockBoy(), config);
 	}
 }

@@ -14,11 +14,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.lpoo.blockboy.BlockBoy;
-import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.GameLogic;
-import com.sun.javafx.scene.traversal.Hueristic2D;
 
 /**
  * Created by Manuel Gomes on 12/05/2016.
@@ -26,6 +23,8 @@ import com.sun.javafx.scene.traversal.Hueristic2D;
 public class GameScreen implements Screen {
     private BlockBoy game;
     private GameLogic gameLogic;
+
+    private int level;
 
     // Sprites
     private TextureAtlas atlas;
@@ -44,9 +43,13 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
 
-    public GameScreen(BlockBoy game) {
-        this.game = game;
+    public int getLevel() {
+        return level;
+    }
 
+    public GameScreen(BlockBoy game, int levelInd) {
+        this.game = game;
+        this.level = levelInd;
         // Creating an atlas
         atlas = new TextureAtlas("sprites/gamesprites.pack");
 
