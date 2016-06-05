@@ -23,15 +23,20 @@ import java.util.ArrayList;
 public class GameLogic {
 
     private Hero hero;
-    private boolean moveBlock = false;
     private ArrayList<Coin> coins;
     private ArrayList<Block> blocks;
     private int coinScore;
+    private boolean moveBlock = false;
     private Boolean running = true;
 
     private GameScreen screen;
     private World world;
 
+    /**
+     * GameLogic constructor
+     *
+     * @param screen of the game
+     */
     public GameLogic(GameScreen screen) {
         this.screen = screen;
         this.world = screen.getWorld();
@@ -74,6 +79,7 @@ public class GameLogic {
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
+            fdef.filter.categoryBits = BlockBoy.BRICK_BIT;
             body.createFixture(fdef);
         }
 
@@ -90,11 +96,25 @@ public class GameLogic {
             body = world.createBody(bodyDef);
             shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
             fdef.shape = shape;
+            fdef.filter.categoryBits = BlockBoy.BRICK_BIT;
             body.createFixture(fdef);
         }
         // Create Hero
         for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
-            hero = new Hero (screen, object);
+            hero = new Hero(screen, object);
+        }
+
+        //  Create air ground
+        for (MapObject object : screen.getMap().getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.linearDamping = 1.0f;
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / BlockBoy.PPM, (rect.getY() + rect.getHeight() / 2) / BlockBoy.PPM);
+            body = world.createBody(bodyDef);
+            shape.setAsBox(rect.getWidth() / 2 / BlockBoy.PPM, rect.getHeight() / 2 / BlockBoy.PPM);
+            fdef.shape = shape;
+            fdef.filter.categoryBits = BlockBoy.AIRGROUND_BIT;
+            body.createFixture(fdef);
         }
     }
 
@@ -120,11 +140,13 @@ public class GameLogic {
                     if (hero.getX() < block.getX()) {
                         block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                         hero.setCarryBlock(true);
+                        block.setDynamic();
                         block.setPicked(true);
                     }
                 } else if (hero.getX() > block.getX()) {
                     block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                     hero.setCarryBlock(true);
+                    block.setDynamic();
                     block.setPicked(true);
                 }
             }
@@ -137,18 +159,16 @@ public class GameLogic {
      * Hero attempts to drop the block
      */
     void heroDropBlock() {
-       for (Block block : blocks){
-            if (block.isPicked()){
-                if (hero.isFacingRight()){
-                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getHeight()+2/10,
-                            hero.getBody().getPosition().y + hero.getHeight()+2/10);
+        for (Block block : blocks) {
+            if (block.isPicked()) {
+                if (hero.isFacingRight()) {
+                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getHeight() + 2 / 10,
+                            hero.getBody().getPosition().y + hero.getHeight() + 2 / 10);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
-                }
-
-                else {
-                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight()-2/10,
-                            hero.getBody().getPosition().y + hero.getHeight()+2/10);
+                } else {
+                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight() - 2 / 10,
+                            hero.getBody().getPosition().y + hero.getHeight() + 2 / 10);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 }
@@ -156,6 +176,19 @@ public class GameLogic {
                 break;
             }
         }
+    }
+
+    /**
+     * Verifies if the Hero is currently above a block
+     *
+     * @param block to be checked
+     * @return true if the Hero is above of the block; false otherwise
+     */
+    public boolean checkHeroAboveBlock(Block block) {
+        if (hero.getBody().getPosition().y > block.getBody().getPosition().y)
+            return true;
+
+        return false;
     }
 
     /**
@@ -175,7 +208,7 @@ public class GameLogic {
         }
 
         // Verifies if was received user's input to move a block
-        if (moveBlock){
+        if (moveBlock) {
             moveBlock = false;
 
             if (hero.hasBlock())
@@ -187,6 +220,11 @@ public class GameLogic {
 
         // Updates blocks
         for (Block block : blocks) {
+            if (checkHeroAboveBlock(block))
+                block.setStatic();
+            else
+                block.setDynamic();
+
             if (block.isPicked())
                 block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
 

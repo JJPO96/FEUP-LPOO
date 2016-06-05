@@ -22,6 +22,9 @@ public class BlockBoy extends Game {
     public static final short BLOCK_BIT = 4;
     public static final short BLOCK_PICKED_BIT = 8;
     public static final short COIN_BIT = 16;
+    public static final short AIRGROUND_BIT = 32;
+    public static final short BRICK_BIT = 64;
+    public static final short EXIT_BIT = 128;
 
     public SpriteBatch batch;
     public BitmapFont font;

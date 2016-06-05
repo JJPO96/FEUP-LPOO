@@ -27,6 +27,7 @@ public class Hero extends GameElement {
     private State currentState;
     private State previousState;
     private boolean carryBlock = false;
+    private boolean arriveExit = false;
     private Boolean facingRight;
 
     // Textures
@@ -69,7 +70,8 @@ public class Hero extends GameElement {
         body = world.createBody(bodyDef);
         shape.setRadius(bounds.getWidth()/2 / BlockBoy.PPM);
         fixtureDef.filter.categoryBits = BlockBoy.HERO_BIT;
-        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT;
+        fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT |
+                BlockBoy.AIRGROUND_BIT | BlockBoy.BRICK_BIT | BlockBoy.EXIT_BIT;
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
@@ -212,7 +214,7 @@ public class Hero extends GameElement {
 
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
-            body.applyLinearImpulse(new Vector2(0, 3.5f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(0, 3.6f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
     }
@@ -239,5 +241,13 @@ public class Hero extends GameElement {
 
     public boolean isFacingRight(){
         return facingRight;
+    }
+
+    public void setArriveExit(boolean arriveExit){
+        this.arriveExit = arriveExit;
+    }
+
+    public boolean getArriveExit(){
+        return  arriveExit;
     }
 }
