@@ -224,7 +224,6 @@ public class GameLogic {
                 heroPickBlock();
         }
 
-
         // Updates blocks
         for (Block block : blocks) {
             if (checkHeroAboveBlock(block))

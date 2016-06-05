@@ -27,7 +27,6 @@ public class BlockBoy extends Game {
     public static final short EXIT_BIT = 128;
 
     public SpriteBatch batch;
-    public BitmapFont font;
     public AssetManager manager;
 
     @Override

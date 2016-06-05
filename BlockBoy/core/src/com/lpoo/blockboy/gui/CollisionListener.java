@@ -38,7 +38,13 @@ public class CollisionListener implements ContactListener {
                 else
                     ((Block) fixA.getUserData()).setCollision(true);
                 break;
-
+            case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_BIT:
+                if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT){
+                    ((Block) fixB.getUserData()).setStatic();
+                }
+                else
+                    ((Block) fixA.getUserData()).setStatic();
+                break;
             case BlockBoy.HERO_BIT | BlockBoy.EXIT_BIT:
                 gameLogic.getHero().setArriveExit(true);
                 break;

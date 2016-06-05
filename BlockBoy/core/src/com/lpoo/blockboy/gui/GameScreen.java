@@ -117,16 +117,16 @@ public class GameScreen implements Screen {
 
         // Updates the game itself
         // TODO - MUDAR AQUI OS SCREEN PARA WIN OU LOOSE
-        if (gameLogic.getState() == GameLogic.State.WIN){
-            game.setScreen(new MainMenuScreen(game));
-            dispose();
+        switch (gameLogic.getState()){
+            case WIN:
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            case LOOSE:
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            case RUNNING:
+                gameLogic.update(delta);
         }
-        else if (gameLogic.getState() == GameLogic.State.LOOSE){
-            game.setScreen(new MainMenuScreen(game));
-            dispose();
-        }
-        else if (gameLogic.getState() == GameLogic.State.RUNNING)
-            gameLogic.update(delta);
     }
 
     public World getWorld() {
