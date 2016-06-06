@@ -11,6 +11,5 @@ public class Tests {
     // Verificar se o heroi consegue saltar para cima de pequenos obstaculos
     // Verificar se o heroi consegue apanhar um block
     // Verificar se o heroi consegue pousar um block
-    // Verificar se o heroi consegue apanhar a chave
-    // Verificar se o heroi chegando até à saída se só consegue ganhar caso tenha apanhado a chave
+    // Verificar se o heroi consegue apanhar as moedas
 }
