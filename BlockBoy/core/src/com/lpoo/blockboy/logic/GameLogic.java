@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class GameLogic {
 
     public enum State {RUNNING, WIN, LOOSE}
+
     private Hero hero;
     private ArrayList<Coin> coins;
     private ArrayList<Block> blocks;
@@ -182,14 +183,18 @@ public class GameLogic {
     }
 
     /**
-     * Verifies if the Hero is currently above a block
+     * Verifies if a game's object (Hero or block) is currently above a block
      *
      * @param block to be checked
      * @return true if the Hero is above of the block; false otherwise
      */
-    public boolean checkHeroAboveBlock(Block block) {
-        if (hero.getBody().getPosition().y > block.getBody().getPosition().y)
-            return true;
+    public boolean checkObjectAboveBlock(Object obj, Block block) {
+        if (obj instanceof Hero) {
+            if (((Hero) obj).getBody().getPosition().y > block.getBody().getPosition().y)
+                return true;
+        } else if (obj instanceof Block)
+            if (((Block) obj).getBody().getPosition().y > block.getBody().getPosition().y)
+                return true;
 
         return false;
     }
@@ -201,15 +206,15 @@ public class GameLogic {
         // Updates Hero
         hero.update(delta);
 
-        if(hero.getState() == Hero.State.WIN) {
+        if (hero.getState() == Hero.State.WIN) {
             this.state = State.WIN;
-            if (BlockBoy.levelInd < BlockBoy.lockLevels.length - 1){
+            if (BlockBoy.levelInd < BlockBoy.lockLevels.length - 1) {
                 BlockBoy.levelInd++;
                 BlockBoy.lockLevels[BlockBoy.levelInd] = false;
                 BlockBoy.saveData();
                 Gdx.input.vibrate(600);
             }
-        }else if(hero.getState() == Hero.State.DEAD)
+        } else if (hero.getState() == Hero.State.DEAD)
             this.state = State.LOOSE;
 
         // Updates coins
@@ -223,6 +228,7 @@ public class GameLogic {
 
         // Verifies if was received user's input to move a block
         if (moveBlock) {
+            Gdx.app.log("move block", "");
             moveBlock = false;
 
             if (hero.hasBlock())
@@ -233,7 +239,7 @@ public class GameLogic {
 
         // Updates blocks
         for (Block block : blocks) {
-            if (checkHeroAboveBlock(block))
+            if (checkObjectAboveBlock(hero, block))
                 block.setStatic();
             else
                 block.setDynamic();
@@ -273,7 +279,7 @@ public class GameLogic {
      *
      * @return the state of the game
      */
-    public State getState(){
-        return  state;
+    public State getState() {
+        return state;
     }
 }

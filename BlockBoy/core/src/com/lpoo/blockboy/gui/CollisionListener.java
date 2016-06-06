@@ -50,15 +50,19 @@ public class CollisionListener implements ContactListener {
                 break;
             case BlockBoy.BLOCK_PICKED_BIT | BlockBoy.AIRGROUND_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.AIRGROUND_BIT){
-                    Gdx.app.log("begin airground", "");
-                    ((Block) fixB.getUserData()).setPicked(false);
+                    if (((Block) fixA.getUserData()).isPicked())
+                    {
+                        ((Block) fixA.getUserData()).setPicked(false);
+                        gameLogic.getHero().setCarryBlock(false);
+                    }
                 }
-
                 else{
-                    Gdx.app.log("begin airground", "");
-                    ((Block) fixA.getUserData()).setPicked(false);
+                    if (((Block) fixA.getUserData()).isPicked())
+                    {
+                        ((Block) fixA.getUserData()).setPicked(false);
+                        gameLogic.getHero().setCarryBlock(false);
+                    }
                 }
-
                 break;
             default:
                 break;
@@ -86,16 +90,6 @@ public class CollisionListener implements ContactListener {
                 else
                     ((Block) fixA.getUserData()).setDynamic();
                 break;
-            case BlockBoy.BLOCK_PICKED_BIT | BlockBoy.AIRGROUND_BIT:
-                if(fixA.getFilterData().categoryBits == BlockBoy.AIRGROUND_BIT){
-                    Gdx.app.log("end airground", "");
-                    //((Block) fixB.getUserData()).setPicked(false);
-                }
-
-                else{
-                    Gdx.app.log("end airground", "");
-                    //((Block) fixA.getUserData()).setPicked(false);
-                }
             default:
                 break;
         }
