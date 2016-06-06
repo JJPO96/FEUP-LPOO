@@ -208,6 +208,11 @@ public class Hero extends GameElement {
             return State.STANDING;
     }
 
+    /**
+     * Makes the hero run
+     *
+     * @param dist do be traveled
+     */
     public void run(float dist) {
         // Makes the hero run. Also sets a maximum speed for the hero
         if (body.getLinearVelocity().x > -3f && body.getLinearVelocity().x < 3f)
@@ -216,6 +221,9 @@ public class Hero extends GameElement {
         currentState = State.RUNNING;
     }
 
+    /**
+     * Makes the hero jump
+     */
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
             BlockBoy.jumpSound.play();
@@ -223,8 +231,6 @@ public class Hero extends GameElement {
             currentState = State.JUMPING;
         }
     }
-
-    // TODO - DECIDIR SE ESTAS FUNÇÕES SÃO OU NAO REUTILIZAVEIS USANDO-SE MAQUINA DE ESTADOS
 
     /**
      * Changes the Hero state about carrying the box
