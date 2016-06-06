@@ -110,6 +110,12 @@ public class GameScreen implements Screen {
     public void gameStateUpdate(float delta) {
         switch (gameLogic.getState()) {
             case WIN:
+                if (BlockBoy.levelInd < BlockBoy.lockLevels.length - 1) {
+                    BlockBoy.levelInd++;
+                    BlockBoy.lockLevels[BlockBoy.levelInd] = false;
+                }
+                BlockBoy.saveData();
+                Gdx.input.vibrate(600);
                 game.setScreen(new WinScreen(game));
                 dispose();
                 break;
