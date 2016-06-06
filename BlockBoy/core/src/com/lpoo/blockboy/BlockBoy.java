@@ -52,12 +52,11 @@ public class BlockBoy extends Game {
     public void create() {
         batch = new SpriteBatch();
 
-        // TODO - SOUND NOT WORKING
-
 
         lockLevels = new boolean[10];
         lockSkins = new boolean[3];
 
+        // TODO - UNCOMMENT SOUND
         //bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
         btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));

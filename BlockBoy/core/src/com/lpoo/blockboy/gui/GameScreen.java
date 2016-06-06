@@ -29,9 +29,8 @@ public class GameScreen implements Screen {
     // Sprites
     private TextureAtlas atlas;
 
-    // Box2d variables
+    // Box2d variable
     private World world;
-    private Box2DDebugRenderer boxDebug;
 
     // Screen variables
     private OrthographicCamera gameCam;
@@ -70,7 +69,6 @@ public class GameScreen implements Screen {
 
         // Creates an instance of logic of the game itself
         gameLogic = new GameLogic(this);
-        boxDebug = new Box2DDebugRenderer();
         hud = new Hud(this);
 
         world.setContactListener(new CollisionListener(gameLogic));
@@ -100,7 +98,35 @@ public class GameScreen implements Screen {
             gameLogic.getHero().run(-0.1f);
     }
 
-    public void update(float delta) {
+    /**
+     * Updates the game according to the game's state
+     *
+     * @param delta time
+     */
+    public void gameStateUpdate(float delta) {
+        switch (gameLogic.getState()) {
+            case WIN:
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+                break;
+            case LOOSE:
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+                break;
+            case RUNNING:
+                update(delta);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Updates the game
+     *
+     * @param delta
+     */
+    public void update(float delta){
         checkInput(delta);
         world.step(1 / 60f, 6, 2);
 
@@ -113,30 +139,7 @@ public class GameScreen implements Screen {
         gameCam.update();
         // Tells renderer to only draw what the camera can see
         mapRenderer.setView(gameCam);
-
-        // Updates the game itself
-        // TODO - MUDAR AQUI OS SCREEN PARA WIN OU LOOSE
-        /*switch (gameLogic.getState()) {
-            case WIN:
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
-            case LOOSE:
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
-            case RUNNING:
-                gameLogic.update(delta);
-            default:
-                break;
-        }*/
-
-       if (gameLogic.getState() == GameLogic.State.WIN) {
-            game.setScreen(new MainMenuScreen(game));
-            dispose();
-        } else if (gameLogic.getState() == GameLogic.State.LOOSE) {
-            game.setScreen(new MainMenuScreen(game));
-            dispose();
-        } else if (gameLogic.getState() == GameLogic.State.RUNNING)
-            gameLogic.update(delta);
+        gameLogic.update(delta);
     }
 
     public World getWorld() {
@@ -172,9 +175,6 @@ public class GameScreen implements Screen {
         // Render map
         mapRenderer.render();
 
-        // TODO - APAGAR QD NAO FOR MAIS NECESSARIO - Box2DDebugRenderer renderer
-        boxDebug.render(world, gameCam.combined);
-
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         // Draw hero
@@ -192,7 +192,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
 
         hud.getStage().draw();
-        update(delta);
+        gameStateUpdate(delta);
     }
 
     @Override
@@ -218,7 +218,6 @@ public class GameScreen implements Screen {
         world.dispose();
         mapRenderer.dispose();
         map.dispose();
-        boxDebug.dispose();
         hud.dispose();
     }
 
