@@ -26,6 +26,7 @@ public class BlockBoy extends Game {
     public static Preferences prefs;
 
     public static int levelInd = 0;
+    public static int skinInd;
     public static int coinScore;
 
     public static boolean[] lockLevels;
@@ -65,7 +66,7 @@ public class BlockBoy extends Game {
 
         prefs = Gdx.app.getPreferences("BlockBoyPrefs");
         String name = prefs.getString("name", "No name stored");
-        if (name == "No name stored"){
+        if (name.equals("No name stored")){
             predefinedData();
         }else {
             loadData();
@@ -94,27 +95,25 @@ public class BlockBoy extends Game {
 
     public static void saveData(){
         prefs.putString("name", "BlockBoy");
-        prefs.flush();
         prefs.putInteger("volume",(int)volume);
-        prefs.flush();
+        prefs.putInteger("coins",coinScore);
         prefs.putBoolean("mute", mute);
-        prefs.flush();
+        prefs.putInteger("skinInd", skinInd);
 
         for (int i = 0; i < lockLevels.length;i++){
             prefs.putBoolean("level " + i, lockLevels[i]);
-            prefs.flush();
         }
 
         for (int i = 0; i < lockSkins.length;i++){
             prefs.putBoolean("skin " + i, lockSkins[i]);
-            prefs.flush();
         }
+        prefs.flush();
     }
 
     public static void loadData(){
         mute = prefs.getBoolean("mute");
         volume = prefs.getInteger("volume");
-
+        skinInd = prefs.getInteger("skinInd");
         for (int i = 0; i < lockLevels.length;i++){
             lockLevels[i] = prefs.getBoolean("level " + i);
         }
@@ -126,8 +125,14 @@ public class BlockBoy extends Game {
 
     public static void predefinedData(){
         volume = 0;
+        skinInd = 0;
+        coinScore = 0;
+        
         prefs.putInteger("volume",(int)volume);
+        prefs.putInteger("coins",coinScore);
+        prefs.putInteger("skinInd", skinInd);
         prefs.putBoolean("mute",mute);
+        prefs.putString("name","BlockBoy");
 
         for (int i = 0; i < lockLevels.length;i++){
             lockLevels[i] = true;
