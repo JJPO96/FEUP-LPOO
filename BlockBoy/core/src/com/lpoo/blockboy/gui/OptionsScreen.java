@@ -353,8 +353,8 @@ public class OptionsScreen implements Screen {
                     BlockBoy.lockSkins[0] = false;
                     hero1Btn.setStyle(st1);
                     hero1Btn.setDisabled(true);
-                    if(BlockBoy.skinInd == 1) hero2Btn.setDisabled(false);
-                    if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
+                    hero2Btn.setDisabled(false);
+                    hero3Btn.setDisabled(false);
                     BlockBoy.saveData();
 
                 }
@@ -375,14 +375,14 @@ public class OptionsScreen implements Screen {
                     if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
                     if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
                     BlockBoy.skinInd = 1;
-                }else if (BlockBoy.coinScore >= 10){
-                    BlockBoy.coinScore -= 10;
+                }else if (BlockBoy.coinScore >= 2){
+                    BlockBoy.coinScore -= 2;
                     BlockBoy.skinInd = 1;
                     BlockBoy.lockSkins[1] = false;
                     hero2Btn.setStyle(st2);
+                    hero1Btn.setDisabled(false);
                     hero2Btn.setDisabled(true);
-                    if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
-                    if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
+                    hero3Btn.setDisabled(false);
                     BlockBoy.saveData();
 
                 }
@@ -408,9 +408,9 @@ public class OptionsScreen implements Screen {
                     BlockBoy.skinInd = 2;
                     BlockBoy.lockSkins[2] = false;
                     hero3Btn.setStyle(st3);
+                    hero1Btn.setDisabled(false);
+                    hero2Btn.setDisabled(false);
                     hero3Btn.setDisabled(true);
-                    if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
-                    if(BlockBoy.skinInd == 1) hero2Btn.setDisabled(false);
                     BlockBoy.saveData();
                 }
             }
