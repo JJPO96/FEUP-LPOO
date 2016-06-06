@@ -308,6 +308,18 @@ public class OptionsScreen implements Screen {
         hero3Btn.setSize(3*hero3Btn.getWidth()/5,3*hero3Btn.getHeight()/5);
         hero3Btn.setPosition(9*BlockBoy.VWIDTH/14 - hero3Btn.getWidth()/2 + 20,2*BlockBoy.VHEIGHT/5 - hero3Btn.getHeight()/2);
 
+        ImageButton.ImageButtonStyle st1lock = new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle st2lock = new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle st3lock = new ImageButton.ImageButtonStyle();
+        st1lock.imageUp = heroSkin.getDrawable("hero1d");
+        st2lock.imageUp = heroSkin.getDrawable("hero2d");
+        st3lock.imageUp = heroSkin.getDrawable("hero3d");
+
+        if (BlockBoy.lockSkins[0]) hero1Btn.setStyle(st1lock);
+        if (BlockBoy.lockSkins[1]) hero2Btn.setStyle(st2lock);
+        if (BlockBoy.lockSkins[2]) hero3Btn.setStyle(st3lock);
+
+
         hero1Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
