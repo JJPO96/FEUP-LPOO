@@ -17,32 +17,31 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
 
 /**
- * Created by José Oliveira on 12/05/2016.
+ * Created by Manuel Gomes on 12/05/2016.
  */
 public class GameOverScreen implements Screen {
 
     BlockBoy game;
-    private int level;
 
     private Stage stage;
     private Skin skin;
     private Viewport viewport;
 
-    private TextureAtlas pauseMenuAtlas;
+    private TextureAtlas winMenuAtlas;
 
     private ImageButton homeBtn;
-    private ImageButton rstBtn;
+    private ImageButton resetBtn;
 
     private Texture menu_bg;
 
-    private GameScreen gamePlayed;
-
     public GameOverScreen(BlockBoy game){
+
         this.game = game;
+
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
-        menu_bg = new Texture("menu/pause_bg.png");
+        menu_bg = new Texture("menu/menu_bg.png");
     }
 
     public void checkInput(float delta){
@@ -96,26 +95,27 @@ public class GameOverScreen implements Screen {
     public void dispose() {
         menu_bg.dispose();
         stage.dispose();
-        gamePlayed.dispose();
+
+        stage.dispose();
         skin.dispose();
-        game.dispose();
+        winMenuAtlas.dispose();
     }
 
     public void initStage(SpriteBatch batch){
         this.stage = new Stage(viewport, batch);
 
-        pauseMenuAtlas = new TextureAtlas("menu/pauseMenu.pack");
+        winMenuAtlas = new TextureAtlas("menu/pauseMenu.pack");
         skin = new Skin();
-        skin.addRegions(pauseMenuAtlas);
+        skin.addRegions(winMenuAtlas);
         stage.clear();
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
-        rstBtn = new ImageButton(skin.getDrawable("rstBtn"),skin.getDrawable("rstPressed"));
+        resetBtn = new ImageButton(skin.getDrawable("playBtn"),skin.getDrawable("playPressed"));
 
         homeBtn.setSize(2*homeBtn.getWidth()/3,2*homeBtn.getHeight()/3);
         homeBtn.setPosition(4*BlockBoy.VWIDTH/10-homeBtn.getWidth()/2,BlockBoy.VHEIGHT/2-homeBtn.getHeight()/2);
-        rstBtn.setSize(2*rstBtn.getWidth()/3,2*rstBtn.getHeight()/3);
-        rstBtn.setPosition(6*BlockBoy.VWIDTH/10-rstBtn.getWidth()/2,BlockBoy.VHEIGHT/2-rstBtn.getHeight()/2);
+        resetBtn.setSize(2*resetBtn.getWidth()/3,2*resetBtn.getHeight()/3);
+        resetBtn.setPosition(6*BlockBoy.VWIDTH/10-resetBtn.getWidth()/2,BlockBoy.VHEIGHT/2-resetBtn.getHeight()/2);
 
         homeBtn.addListener(new InputListener(){
 
@@ -125,13 +125,12 @@ public class GameOverScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                gamePlayed.dispose();
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
             }
         });
 
-        rstBtn.addListener(new InputListener(){
+        resetBtn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 Gdx.input.vibrate(40);
@@ -139,14 +138,13 @@ public class GameOverScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                gamePlayed.dispose();
                 game.setScreen(new GameScreen(game));
                 dispose();
             }
         });
 
         stage.addActor(homeBtn);
-        stage.addActor(rstBtn);
+        stage.addActor(resetBtn);
 
         Gdx.input.setInputProcessor(stage);
     }

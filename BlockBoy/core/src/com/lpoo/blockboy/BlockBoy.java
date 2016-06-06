@@ -58,7 +58,7 @@ public class BlockBoy extends Game {
         lockSkins = new boolean[3];
 
         // TODO - UNCOMMENT SOUND
-        //bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
+        bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
         btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
         coinSound = Gdx.audio.newSound(Gdx.files.internal("sounds/coin.wav"));
@@ -72,9 +72,9 @@ public class BlockBoy extends Game {
         }
 
         if (!mute) {
-            //bg_music.play();
-            //bg_music.setVolume(BlockBoy.volume / 100);
-            //bg_music.setLooping(true);
+            bg_music.play();
+            bg_music.setVolume(BlockBoy.volume / 100);
+            bg_music.setLooping(true);
         }
         setScreen(new MainMenuScreen(this));
     }

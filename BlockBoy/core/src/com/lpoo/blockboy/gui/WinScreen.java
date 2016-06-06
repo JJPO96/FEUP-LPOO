@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
 
 /**
- * Created by José Oliveira on 12/05/2016.
+ * Created by Manuel Gomes on 12/05/2016.
  */
 public class WinScreen implements Screen {
 
@@ -27,20 +27,21 @@ public class WinScreen implements Screen {
     private Skin skin;
     private Viewport viewport;
 
-    private TextureAtlas pauseMenuAtlas;
+    private TextureAtlas winMenuAtlas;
 
     private ImageButton homeBtn;
     private ImageButton nextLevelBtn;
 
-
     private Texture menu_bg;
 
     public WinScreen(BlockBoy game){
+
         this.game = game;
+
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
-        menu_bg = new Texture("menu/pause_bg.png");
+        menu_bg = new Texture("menu/menu_bg.png");
     }
 
     public void checkInput(float delta){
@@ -94,16 +95,18 @@ public class WinScreen implements Screen {
     public void dispose() {
         menu_bg.dispose();
         stage.dispose();
+
+        stage.dispose();
         skin.dispose();
-        game.dispose();
+        winMenuAtlas.dispose();
     }
 
     public void initStage(SpriteBatch batch){
         this.stage = new Stage(viewport, batch);
 
-        pauseMenuAtlas = new TextureAtlas("menu/pauseMenu.pack");
+        winMenuAtlas = new TextureAtlas("menu/pauseMenu.pack");
         skin = new Skin();
-        skin.addRegions(pauseMenuAtlas);
+        skin.addRegions(winMenuAtlas);
         stage.clear();
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
