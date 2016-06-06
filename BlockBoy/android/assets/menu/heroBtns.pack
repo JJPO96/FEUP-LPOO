@@ -1,0 +1,89 @@
+
+heroBtns.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+hero1a
+  rotate: false
+  xy: 1, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero1b
+  rotate: false
+  xy: 1, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero1c
+  rotate: false
+  xy: 181, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero1d
+  rotate: false
+  xy: 1, 361
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero2a
+  rotate: false
+  xy: 181, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero2b
+  rotate: false
+  xy: 361, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero2c
+  rotate: false
+  xy: 1, 181
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero2d
+  rotate: false
+  xy: 181, 361
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero3a
+  rotate: false
+  xy: 361, 541
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero3b
+  rotate: false
+  xy: 541, 721
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero3c
+  rotate: false
+  xy: 1, 1
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1
+hero3d
+  rotate: false
+  xy: 181, 181
+  size: 178, 178
+  orig: 178, 178
+  offset: 0, 0
+  index: -1

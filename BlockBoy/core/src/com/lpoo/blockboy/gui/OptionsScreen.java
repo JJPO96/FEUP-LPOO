@@ -40,6 +40,15 @@ public class OptionsScreen implements Screen {
     private ImageButton plusBtn;
     private ImageButton minusBtn;
 
+    private Skin heroSkin;
+
+    private TextureAtlas heroAtlas;
+
+    private ImageButton hero1Btn;
+    private ImageButton hero2Btn;
+    private ImageButton hero3Btn;
+
+
     private Slider volCtrl;
 
     private Texture menu_bg;
@@ -269,6 +278,39 @@ public class OptionsScreen implements Screen {
         stage.addActor(plusBtn);
         stage.addActor(minusBtn);
         stage.addActor(volCtrl);
+
+        heroAtlas = new TextureAtlas("menu/heroBtns.pack");
+        heroSkin = new Skin();
+        heroSkin.addRegions(heroAtlas);
+
+        hero1Btn = new ImageButton(heroSkin.getDrawable("hero1a"),heroSkin.getDrawable("hero1c"));
+        hero2Btn = new ImageButton(heroSkin.getDrawable("hero2a"),heroSkin.getDrawable("hero2c"));
+        hero3Btn = new ImageButton(heroSkin.getDrawable("hero3a"),heroSkin.getDrawable("hero3c"));
+
+        hero1Btn.setSize(3*hero1Btn.getWidth()/5,3*hero1Btn.getHeight()/5);
+        hero1Btn.setPosition(5*BlockBoy.VWIDTH/14 - hero1Btn.getWidth()/2 - 20,2*BlockBoy.VHEIGHT/5 - hero1Btn.getHeight()/2);
+        hero2Btn.setSize(3*hero2Btn.getWidth()/5,3*hero2Btn.getHeight()/5);
+        hero2Btn.setPosition(7*BlockBoy.VWIDTH/14 - hero2Btn.getWidth()/2,2*BlockBoy.VHEIGHT/5 - hero2Btn.getHeight()/2);
+        hero3Btn.setSize(3*hero3Btn.getWidth()/5,3*hero3Btn.getHeight()/5);
+        hero3Btn.setPosition(9*BlockBoy.VWIDTH/14 - hero3Btn.getWidth()/2 + 20,2*BlockBoy.VHEIGHT/5 - hero3Btn.getHeight()/2);
+
+        hero1Btn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                Gdx.input.vibrate(40);
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                BlockBoy.saveData();
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            }
+        });
+
+        stage.addActor(hero1Btn);
+        stage.addActor(hero2Btn);
+        stage.addActor(hero3Btn);
 
         Gdx.input.setInputProcessor(stage);
     }
