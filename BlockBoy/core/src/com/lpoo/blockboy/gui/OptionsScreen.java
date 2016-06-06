@@ -286,6 +286,20 @@ public class OptionsScreen implements Screen {
         hero1Btn = new ImageButton(heroSkin.getDrawable("hero1a"),heroSkin.getDrawable("hero1c"));
         hero2Btn = new ImageButton(heroSkin.getDrawable("hero2a"),heroSkin.getDrawable("hero2c"));
         hero3Btn = new ImageButton(heroSkin.getDrawable("hero3a"),heroSkin.getDrawable("hero3c"));
+        ImageButton.ImageButtonStyle st1 = hero1Btn.getStyle();
+        ImageButton.ImageButtonStyle st2 = hero2Btn.getStyle();
+        ImageButton.ImageButtonStyle st3 = hero3Btn.getStyle();
+        st1.imageDisabled = heroSkin.getDrawable("hero1b");
+        st2.imageDisabled = heroSkin.getDrawable("hero2b");
+        st3.imageDisabled = heroSkin.getDrawable("hero3b");
+        hero1Btn.setStyle(st1);
+        hero2Btn.setStyle(st2);
+        hero3Btn.setStyle(st3);
+
+
+        if (BlockBoy.skinInd == 0) hero1Btn.setDisabled(true);
+        if (BlockBoy.skinInd == 1) hero2Btn.setDisabled(true);
+        if (BlockBoy.skinInd == 2) hero3Btn.setDisabled(true);
 
         hero1Btn.setSize(3*hero1Btn.getWidth()/5,3*hero1Btn.getHeight()/5);
         hero1Btn.setPosition(5*BlockBoy.VWIDTH/14 - hero1Btn.getWidth()/2 - 20,2*BlockBoy.VHEIGHT/5 - hero1Btn.getHeight()/2);
@@ -297,14 +311,54 @@ public class OptionsScreen implements Screen {
         hero1Btn.addListener(new InputListener(){
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                Gdx.input.vibrate(40);
+                if(!hero1Btn.isDisabled())
+                    Gdx.input.vibrate(40);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                BlockBoy.saveData();
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
+                if(!hero1Btn.isDisabled()){
+                    hero1Btn.setDisabled(true);
+                    if(BlockBoy.skinInd == 1) hero2Btn.setDisabled(false);
+                    if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
+                    BlockBoy.skinInd = 0;
+                }
+            }
+        });
+
+        hero2Btn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                if(!hero2Btn.isDisabled())
+                    Gdx.input.vibrate(40);
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                if(!hero2Btn.isDisabled()){
+                    hero2Btn.setDisabled(true);
+                    if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
+                    if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
+                    BlockBoy.skinInd = 1;
+                }
+            }
+        });
+
+        hero3Btn.addListener(new InputListener(){
+
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                if(!hero3Btn.isDisabled())
+                    Gdx.input.vibrate(40);
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                if(!hero3Btn.isDisabled()){
+                    hero3Btn.setDisabled(true);
+                    if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
+                    if(BlockBoy.skinInd == 1) hero2Btn.setDisabled(false);
+                    BlockBoy.skinInd = 2;
+                }
             }
         });
 

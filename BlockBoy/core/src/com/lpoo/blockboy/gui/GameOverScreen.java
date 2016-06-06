@@ -41,7 +41,7 @@ public class GameOverScreen implements Screen {
         this.viewport = new FitViewport(BlockBoy.VWIDTH, BlockBoy.VHEIGHT, new OrthographicCamera());
         initStage(game.batch);
 
-        menu_bg = new Texture("menu/menu_bg.png");
+        menu_bg = new Texture("menu/gameover_bg.png");
     }
 
     public void checkInput(float delta){
