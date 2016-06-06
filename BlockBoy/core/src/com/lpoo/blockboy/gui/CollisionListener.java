@@ -1,6 +1,5 @@
 package com.lpoo.blockboy.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.GameLogic;
-import com.lpoo.blockboy.logic.Hero;
 
 /**
  * Created by Manuel Gomes on 01/06/2016.
