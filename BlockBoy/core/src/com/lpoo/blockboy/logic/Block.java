@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,6 +21,7 @@ import com.lpoo.blockboy.gui.GameScreen;
 public class Block extends GameElement {
     private boolean picked = false;
     private boolean heroCollision = false;
+    private boolean blockTopCollision = false;
     private boolean changeToStatic = false;
     private boolean isStatic = false;
     private boolean changeToDynamic= false;
@@ -149,6 +149,24 @@ public class Block extends GameElement {
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion(region);
         }
+    }
+
+    /**
+     * Sets true if a block in collision with this block in the top side
+     *
+     * @param above
+     */
+    public void setBlockCollisionAbove(boolean above){
+        this.blockTopCollision = above;
+    }
+
+    /**
+     * Returns true if the block has another block above colliding
+     *
+     * @return true if the block has another block above colliding
+     */
+    public boolean getBlockTopCollision(){
+        return blockTopCollision;
     }
 
     /**

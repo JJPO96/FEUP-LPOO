@@ -208,6 +208,7 @@ public class GameLogic {
 
         if (hero.getState() == Hero.State.WIN) {
             this.state = State.WIN;
+            // TODO - APAGAR ISTO DAQUI
             if (BlockBoy.levelInd < BlockBoy.lockLevels.length - 1) {
                 BlockBoy.levelInd++;
                 BlockBoy.lockLevels[BlockBoy.levelInd] = false;

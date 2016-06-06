@@ -37,7 +37,8 @@ public class CollisionListener implements ContactListener {
             Fixture aboveBlock = topBlock == fixA? fixB: fixA;
 
             if (aboveBlock.getUserData() instanceof Block){
-                Gdx.app.log("hero above", "");
+                Gdx.app.log("block above block", "");
+                //topBlock.getUserData().
             }
         }
 
@@ -85,6 +86,15 @@ public class CollisionListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
 
         int bits = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
+
+        if (fixA.getUserData() == "topBlock" || fixA.getUserData() == "topBlock"){
+            Fixture topBlock = fixA.getUserData() == "topBlock" ? fixA: fixB;
+            Fixture aboveBlock = topBlock == fixA? fixB: fixA;
+
+            if (aboveBlock.getUserData() instanceof Block){
+                Gdx.app.log("no longer block above block", "");
+            }
+        }
 
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
