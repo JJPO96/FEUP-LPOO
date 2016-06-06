@@ -27,7 +27,7 @@ public class BlockBoy extends Game {
 
     public static int levelInd = 0;
     public static int skinInd;
-    public static int coinScore;
+    public static int coinScore = 0;
 
     public static boolean[] lockLevels;
     public static boolean[] lockSkins;
@@ -37,8 +37,6 @@ public class BlockBoy extends Game {
     public static Sound jumpSound;
     public static Sound coinSound;
 
-
-    // TODO - PASSAR PARA OUTRO LOCAL // APAGAR AS VARIAVEIS QUE NAO INTERESSEM
     public static final short DEFAULT_BIT = 1;
     public static final short HERO_BIT = 2;
     public static final short BLOCK_BIT = 4;
@@ -59,7 +57,7 @@ public class BlockBoy extends Game {
         lockSkins = new boolean[3];
 
         // TODO - UNCOMMENT SOUND
-        bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
+       // bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
         btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
         coinSound = Gdx.audio.newSound(Gdx.files.internal("sounds/coin.wav"));
@@ -73,9 +71,9 @@ public class BlockBoy extends Game {
         }
 
         if (!mute) {
-            bg_music.play();
+           /* bg_music.play();
             bg_music.setVolume(BlockBoy.volume / 100);
-            bg_music.setLooping(true);
+            bg_music.setLooping(true);*/
         }
         setScreen(new MainMenuScreen(this));
     }

@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
+import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.GameLogic;
 
 /**
@@ -116,10 +117,12 @@ public class GameScreen implements Screen {
                 }
                 BlockBoy.saveData();
                 Gdx.input.vibrate(600);
+                BlockBoy.coinScore+=gameLogic.getCoinScore();
                 game.setScreen(new WinScreen(game));
                 dispose();
                 break;
             case LOOSE:
+                BlockBoy.coinScore+=gameLogic.getCoinScore();
                 game.setScreen(new GameOverScreen(game));
                 dispose();
                 break;

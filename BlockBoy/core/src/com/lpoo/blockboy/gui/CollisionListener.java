@@ -32,16 +32,6 @@ public class CollisionListener implements ContactListener {
         Fixture fixB  = contact.getFixtureB();
         int bits = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-        if (fixA.getUserData() == "topBlock" || fixA.getUserData() == "topBlock"){
-            Fixture topBlock = fixA.getUserData() == "topBlock" ? fixA: fixB;
-            Fixture aboveBlock = topBlock == fixA? fixB: fixA;
-
-            if (aboveBlock.getUserData() instanceof Block){
-                Gdx.app.log("block above block", "");
-                //topBlock.getUserData().
-            }
-        }
-
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
@@ -50,7 +40,14 @@ public class CollisionListener implements ContactListener {
                     ((Block) fixA.getUserData()).setHeroCollision(true);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_BIT:
-                if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT){
+                if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
+                    ((Block) fixB.getUserData()).setStatic();
+                }
+                else
+                    ((Block) fixA.getUserData()).setStatic();
+                break;
+            case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_PICKED_BIT:
+                if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
                     ((Block) fixB.getUserData()).setStatic();
                 }
                 else
@@ -87,15 +84,6 @@ public class CollisionListener implements ContactListener {
 
         int bits = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-        if (fixA.getUserData() == "topBlock" || fixA.getUserData() == "topBlock"){
-            Fixture topBlock = fixA.getUserData() == "topBlock" ? fixA: fixB;
-            Fixture aboveBlock = topBlock == fixA? fixB: fixA;
-
-            if (aboveBlock.getUserData() instanceof Block){
-                Gdx.app.log("no longer block above block", "");
-            }
-        }
-
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
@@ -104,7 +92,14 @@ public class CollisionListener implements ContactListener {
                     ((Block) fixA.getUserData()).setHeroCollision(false);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_BIT:
-                if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT){
+                if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
+                    ((Block) fixB.getUserData()).setDynamic();
+                }
+                else
+                    ((Block) fixA.getUserData()).setDynamic();
+                break;
+            case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_PICKED_BIT:
+                if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
                     ((Block) fixB.getUserData()).setDynamic();
                 }
                 else

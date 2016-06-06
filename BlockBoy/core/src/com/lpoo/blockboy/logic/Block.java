@@ -60,14 +60,6 @@ public class Block extends GameElement {
         shape.setAsBox(bounds.getWidth() / 2 / BlockBoy.PPM, bounds.getHeight() / 2 / BlockBoy.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
-        // TODO - CORRIGIR
-        EdgeShape topShape = new EdgeShape();
-        topShape.set(new Vector2(bounds.getWidth()/3/BlockBoy.PPM,
-                (bounds.getHeight()/2/BlockBoy.PPM)), new Vector2(-bounds.getWidth()/3/BlockBoy.PPM, bounds.getHeight()/2/BlockBoy.PPM));
-        fixtureDef.shape = topShape;
-        body.createFixture(fixtureDef).setUserData("topBlock");
-        /////////////////////
-
         fixture.setUserData(this);
 
         loadTextures();
@@ -113,13 +105,13 @@ public class Block extends GameElement {
     public void setCategoryFilter(short filterBit) {
         filter = new Filter();
         filter.categoryBits = filterBit;
-        filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT |
+        filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT | BlockBoy.BLOCK_PICKED_BIT |
                 BlockBoy.AIRGROUND_BIT | BlockBoy.BRICK_BIT | BlockBoy.EXIT_BIT;
         fixture.setFilterData(filter);
     }
 
     /**
-     * Changes block new position
+     * Changes block to a new position
      *
      * @param x coordinate
      * @param y coordinate

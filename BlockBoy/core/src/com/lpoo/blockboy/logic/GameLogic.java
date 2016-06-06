@@ -146,12 +146,14 @@ public class GameLogic {
                         hero.setCarryBlock(true);
                         block.setDynamic();
                         block.setPicked(true);
+                        break;
                     }
                 } else if (hero.getX() > block.getX()) {
                     block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                     hero.setCarryBlock(true);
                     block.setDynamic();
                     block.setPicked(true);
+                    break;
                 }
             }
         }
@@ -166,13 +168,13 @@ public class GameLogic {
         for (Block block : blocks) {
             if (block.isPicked()) {
                 if (hero.isFacingRight()) {
-                    block.setBodyPosition(hero.getBody().getPosition().x + hero.getHeight() + 2 / 10,
-                            hero.getBody().getPosition().y + hero.getHeight() + 2 / 10);
+                    block.setBodyPosition(block.getBody().getPosition().x + block.getWidth() + 2 / 10,
+                            block.getBody().getPosition().y + 2 / 10);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 } else {
-                    block.setBodyPosition(hero.getBody().getPosition().x - hero.getHeight() - 2 / 10,
-                            hero.getBody().getPosition().y + hero.getHeight() + 2 / 10);
+                    block.setBodyPosition(block.getBody().getPosition().x - block.getWidth() + 2 / 10,
+                            block.getBody().getPosition().y + 2 / 10);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 }
@@ -208,7 +210,6 @@ public class GameLogic {
 
         if (hero.getState() == Hero.State.WIN) {
             this.state = State.WIN;
-            // TODO - APAGAR ISTO DAQUI
 
         } else if (hero.getState() == Hero.State.DEAD)
             this.state = State.LOOSE;
@@ -231,6 +232,7 @@ public class GameLogic {
                 heroDropBlock();
             else
                 heroPickBlock();
+
         }
 
         // Updates blocks
