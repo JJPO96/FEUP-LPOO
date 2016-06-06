@@ -26,6 +26,7 @@ public class BlockBoy extends Game {
     public static Preferences prefs;
 
     public static int levelInd = 0;
+    public static int coinScore;
 
     public static boolean[] lockLevels;
     public static boolean[] lockSkins;
