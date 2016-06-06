@@ -6,7 +6,9 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -58,6 +60,14 @@ public class Block extends GameElement {
         shape.setAsBox(bounds.getWidth() / 2 / BlockBoy.PPM, bounds.getHeight() / 2 / BlockBoy.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
+        // TODO - CORRIGIR
+        EdgeShape topShape = new EdgeShape();
+        topShape.set(new Vector2(bounds.getWidth()/3/BlockBoy.PPM,
+                (bounds.getHeight()/2/BlockBoy.PPM)), new Vector2(-bounds.getWidth()/3/BlockBoy.PPM, bounds.getHeight()/2/BlockBoy.PPM));
+        fixtureDef.shape = topShape;
+        body.createFixture(fixtureDef).setUserData("topBlock");
+        /////////////////////
+
         fixture.setUserData(this);
 
         loadTextures();

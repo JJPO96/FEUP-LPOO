@@ -42,6 +42,8 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
 
+    private Box2DDebugRenderer boxDebug;
+
     public int getLevel() {
         return level;
     }
@@ -70,6 +72,8 @@ public class GameScreen implements Screen {
         // Creates an instance of logic of the game itself
         gameLogic = new GameLogic(this);
         hud = new Hud(this);
+
+        boxDebug = new Box2DDebugRenderer();
 
         world.setContactListener(new CollisionListener(gameLogic));
     }
@@ -106,11 +110,11 @@ public class GameScreen implements Screen {
     public void gameStateUpdate(float delta) {
         switch (gameLogic.getState()) {
             case WIN:
-                game.setScreen(new MainMenuScreen(game));
+                game.setScreen(new WinScreen(game));
                 dispose();
                 break;
             case LOOSE:
-                game.setScreen(new MainMenuScreen(game));
+                game.setScreen(new GameOverScreen(game));
                 dispose();
                 break;
             case RUNNING:
@@ -139,6 +143,7 @@ public class GameScreen implements Screen {
         gameCam.update();
         // Tells renderer to only draw what the camera can see
         mapRenderer.setView(gameCam);
+        boxDebug.render(world, gameCam.combined);
         gameLogic.update(delta);
     }
 

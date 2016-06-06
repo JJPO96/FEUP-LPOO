@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.GameLogic;
+import com.lpoo.blockboy.logic.Hero;
 
 /**
  * Created by Manuel Gomes on 01/06/2016.
@@ -30,6 +31,15 @@ public class CollisionListener implements ContactListener {
         Fixture fixA  = contact.getFixtureA();
         Fixture fixB  = contact.getFixtureB();
         int bits = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
+
+        if (fixA.getUserData() == "topBlock" || fixA.getUserData() == "topBlock"){
+            Fixture topBlock = fixA.getUserData() == "topBlock" ? fixA: fixB;
+            Fixture aboveBlock = topBlock == fixA? fixB: fixA;
+
+            if (aboveBlock.getUserData() instanceof Block){
+                Gdx.app.log("hero above", "");
+            }
+        }
 
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
