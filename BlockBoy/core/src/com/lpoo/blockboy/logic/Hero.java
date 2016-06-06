@@ -218,6 +218,7 @@ public class Hero extends GameElement {
 
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
+            BlockBoy.jumpSound.play();
             body.applyLinearImpulse(new Vector2(0, 3.6f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
