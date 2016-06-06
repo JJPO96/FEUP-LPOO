@@ -30,6 +30,8 @@ public class OptionsScreen implements Screen {
     private Viewport viewport;
 
     private TextureAtlas optMenuAtlas;
+    private TextureAtlas tempAtlas;
+
 
     private ImageButton homeBtn;
     private ImageButton rstBtn;
@@ -116,12 +118,14 @@ public class OptionsScreen implements Screen {
         this.stage = new Stage(viewport, batch);
 
         optMenuAtlas = new TextureAtlas("menu/optMenu.pack");
+        tempAtlas = new TextureAtlas("menu/pauseMenu.pack");
         skin = new Skin();
         skin.addRegions(optMenuAtlas);
+        skin.addRegions(tempAtlas);
         stage.clear();
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
-        rstBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
+        rstBtn = new ImageButton(skin.getDrawable("rstBtn"),skin.getDrawable("rstPressed"));
         volBtn = new ImageButton(skin.getDrawable("volBtn"),skin.getDrawable("volPressed"),skin.getDrawable("volCheck"));
 
 
@@ -375,8 +379,8 @@ public class OptionsScreen implements Screen {
                     if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
                     if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
                     BlockBoy.skinInd = 1;
-                }else if (BlockBoy.coinScore >= 2){
-                    BlockBoy.coinScore -= 2;
+                }else if (BlockBoy.coinScore >= 10){
+                    BlockBoy.coinScore -= 10;
                     BlockBoy.skinInd = 1;
                     BlockBoy.lockSkins[1] = false;
                     hero2Btn.setStyle(st2);
