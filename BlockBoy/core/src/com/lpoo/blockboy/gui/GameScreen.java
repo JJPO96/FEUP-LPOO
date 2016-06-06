@@ -115,9 +115,9 @@ public class GameScreen implements Screen {
                     BlockBoy.levelInd++;
                     BlockBoy.lockLevels[BlockBoy.levelInd] = false;
                 }
-                BlockBoy.saveData();
                 Gdx.input.vibrate(600);
                 BlockBoy.coinScore+=gameLogic.getCoinScore();
+                BlockBoy.saveData();
                 game.setScreen(new WinScreen(game));
                 dispose();
                 break;

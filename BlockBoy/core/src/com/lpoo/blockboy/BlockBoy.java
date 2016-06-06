@@ -3,16 +3,10 @@ package com.lpoo.blockboy;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.lpoo.blockboy.gui.*;
-
-import java.util.Arrays;
 
 public class BlockBoy extends Game {
     // Variables used to keep aspect ratio for any screen size (screen resolution of the game)
@@ -57,7 +51,7 @@ public class BlockBoy extends Game {
         lockSkins = new boolean[3];
 
         // TODO - UNCOMMENT SOUND
-       // bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
+        bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
         btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
         coinSound = Gdx.audio.newSound(Gdx.files.internal("sounds/coin.wav"));
@@ -71,9 +65,9 @@ public class BlockBoy extends Game {
         }
 
         if (!mute) {
-           /* bg_music.play();
+            bg_music.play();
             bg_music.setVolume(BlockBoy.volume / 100);
-            bg_music.setLooping(true);*/
+            bg_music.setLooping(true);
         }
         setScreen(new MainMenuScreen(this));
     }
