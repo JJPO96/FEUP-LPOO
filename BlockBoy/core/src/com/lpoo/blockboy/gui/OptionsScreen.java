@@ -329,7 +329,7 @@ public class OptionsScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!hero1Btn.isDisabled()){
+                if(!hero1Btn.isDisabled() && !BlockBoy.lockSkins[0]){
                     hero1Btn.setDisabled(true);
                     if(BlockBoy.skinInd == 1) hero2Btn.setDisabled(false);
                     if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
@@ -347,7 +347,7 @@ public class OptionsScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!hero2Btn.isDisabled()){
+                if(!hero2Btn.isDisabled() && !BlockBoy.lockSkins[1]){
                     hero2Btn.setDisabled(true);
                     if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
                     if(BlockBoy.skinInd == 2) hero3Btn.setDisabled(false);
@@ -365,7 +365,7 @@ public class OptionsScreen implements Screen {
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                if(!hero3Btn.isDisabled()){
+                if(!hero3Btn.isDisabled() && !BlockBoy.lockSkins[2]){
                     hero3Btn.setDisabled(true);
                     if(BlockBoy.skinInd == 0) hero1Btn.setDisabled(false);
                     if(BlockBoy.skinInd == 1) hero2Btn.setDisabled(false);
