@@ -1,5 +1,6 @@
 package com.lpoo.blockboy.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -32,6 +33,7 @@ public class CollisionListener implements ContactListener {
 
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
+                Gdx.app.log("heroblock begin", "");
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
                     ((Block) fixB.getUserData()).setHeroCollision(true);
                 else
@@ -84,6 +86,7 @@ public class CollisionListener implements ContactListener {
 
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
+                Gdx.app.log("heroblock end", "");
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
                     ((Block) fixB.getUserData()).setHeroCollision(false);
                 else

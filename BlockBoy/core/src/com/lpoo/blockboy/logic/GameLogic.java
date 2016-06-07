@@ -191,6 +191,11 @@ public class GameLogic {
      * @return true if the Hero is above of the block; false otherwise
      */
     public boolean checkHeroAboveBlock(Block block) {
+        if ((hero.getBody().getPosition().x + hero.getWidth()) < block.getBody().getPosition().x)
+            return false;
+        else if (hero.getBody().getPosition().x > (block.getBody().getPosition().x + block.getWidth()))
+            return false;
+
         if (hero.getBody().getPosition().y > block.getBody().getPosition().y && block.hasHeroCollision())
             return true;
 
