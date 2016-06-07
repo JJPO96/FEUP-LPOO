@@ -42,6 +42,7 @@ public class OptionsScreen implements Screen {
     private ImageButton uCoinBtn;
     private ImageButton dCoinBtn;
     private ImageButton cCoinBtn;
+    private ImageButton coin;
 
     private Skin heroSkin;
 
@@ -69,8 +70,8 @@ public class OptionsScreen implements Screen {
 
     public void update(float delta){
         checkInput(delta);
-        BlockBoy.volume = volCtrl.getValue();
-        BlockBoy.bg_music.setVolume(BlockBoy.volume/100);
+        if(volCtrl.getValue()*100 != BlockBoy.volume) BlockBoy.volume = volCtrl.getValue();
+        if(volCtrl.getValue()*100 != BlockBoy.volume) BlockBoy.bg_music.setVolume(BlockBoy.volume/100);
     }
 
     @Override
@@ -133,6 +134,7 @@ public class OptionsScreen implements Screen {
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
         rstBtn = new ImageButton(skin.getDrawable("rstBtn"),skin.getDrawable("rstPressed"));
         volBtn = new ImageButton(skin.getDrawable("volBtn"),skin.getDrawable("volPressed"),skin.getDrawable("volCheck"));
+        coin = new ImageButton(skin.getDrawable("coin"));
 
         plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
         minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
@@ -358,6 +360,8 @@ public class OptionsScreen implements Screen {
         dCoinBtn.setPosition(BlockBoy.VWIDTH/2 - dCoinBtn.getWidth()/2, BlockBoy.VHEIGHT/6 + 10);
         cCoinBtn.setSize(cCoinBtn.getWidth() / 2,cCoinBtn.getHeight() / 2);
         cCoinBtn.setPosition(BlockBoy.VWIDTH/2 - 3*cCoinBtn.getWidth()/2 +20, BlockBoy.VHEIGHT/6 + 10);
+        coin.setSize(cCoinBtn.getWidth() / 2,coin.getHeight() / 2);
+        coin.setPosition(BlockBoy.VWIDTH/2  + 50, BlockBoy.VHEIGHT/6 + 10);
 
 
         hero1Btn.addListener(new InputListener(){
@@ -452,6 +456,8 @@ public class OptionsScreen implements Screen {
         stage.addActor(uCoinBtn);
         stage.addActor(dCoinBtn);
         stage.addActor(cCoinBtn);
+        stage.addActor(cCoinBtn);
+        stage.addActor(coin);
 
         Gdx.input.setInputProcessor(stage);
     }
