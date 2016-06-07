@@ -83,6 +83,9 @@ public class Hero extends GameElement {
         loadTextures();
     }
 
+    /**
+     * Loads the textures
+     */
     @Override
     public void loadTextures() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -248,10 +251,20 @@ public class Hero extends GameElement {
         return carryBlock;
     }
 
+    /**
+     * Verifies if the hero is facing right side
+     *
+     * @return true if the hero is facing the right side
+     */
     public boolean isFacingRight() {
         return facingRight;
     }
 
+    /**
+     * Sets the exit as being visited
+     *
+     * @param arriveExit
+     */
     public void setArriveExit(boolean arriveExit) {
         this.arriveExit = arriveExit;
     }

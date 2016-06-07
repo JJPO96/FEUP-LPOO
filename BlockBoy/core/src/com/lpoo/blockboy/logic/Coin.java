@@ -33,13 +33,9 @@ public class Coin extends GameElement {
     private PolygonShape shape;
     private Fixture fixture;
     private Filter filter;
-
     private Animation coinAnim;
     private TextureRegion region;
     private float stateTimer;
-
-    // TODO - CORRIGIR TODO A CLASSE
-    // TODO - CORRIGIR CONSTRUTOR
 
     /**
      * Coin's constructor

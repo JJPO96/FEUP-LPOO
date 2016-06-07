@@ -1,11 +1,7 @@
 package com.lpoo.blockboy.logic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -30,7 +26,6 @@ public class GameLogic {
     private int coinScore;
     private boolean moveBlock = false;
     private State state;
-
     private GameScreen screen;
     private World world;
 
@@ -47,6 +42,9 @@ public class GameLogic {
         this.state = State.RUNNING;
     }
 
+    /**
+     * Initiates the game variables
+     */
     public void init() {
         coins = new ArrayList<Coin>();
         blocks = new ArrayList<Block>();

@@ -22,13 +22,8 @@ import com.lpoo.blockboy.logic.GameLogic;
 public class GameScreen implements Screen {
     private BlockBoy game;
     private GameLogic gameLogic;
-
     private int level;
-
-    // Sprites
     private TextureAtlas atlas;
-
-    // Box2d variable
     private World world;
 
     // Screen variables
@@ -36,7 +31,7 @@ public class GameScreen implements Screen {
     private Viewport gamePort;
     private Hud hud;
 
-    // Tiled maps variables
+    // Tiled map variables
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
@@ -107,7 +102,7 @@ public class GameScreen implements Screen {
             }
         }
 
-        // TODO - REMOVER - DESKTOP KEYS (FAST DEBUGGING)
+        // Desktop commands
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
             gameLogic.getHero().jump();
         if (Gdx.input.isKeyJustPressed(Input.Keys.A))
