@@ -89,8 +89,6 @@ public class BlockBoyTester {
 
     @Test
     public void testPickCoin() {
-        gameScreen = new GameScreen(GAME, LEVELPATH);
-
         // Confirms the coins are not picked yet
         assertEquals(0, gameScreen.getGameLogic().getCoinScore());
 
@@ -150,8 +148,6 @@ public class BlockBoyTester {
 
     @Test // Confirms if the hero can pick a block at right side
     public void testPickBlockRight() {
-        gameScreen = new GameScreen(GAME, LEVELPATH);
-
         // Confirms the hero starts the game without a block
         assertTrue(!gameScreen.getGameLogic().getHero().hasBlock());
 
@@ -183,8 +179,6 @@ public class BlockBoyTester {
 
     @Test // Confirms the hero can drop a block
     public void testDropBlock() {
-        gameScreen = new GameScreen(GAME, LEVELPATH);
-
         /* First the hero will have to pick the block */
 
         // Confirms the hero starts the game without a block
