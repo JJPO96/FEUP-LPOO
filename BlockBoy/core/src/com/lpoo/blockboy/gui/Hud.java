@@ -39,7 +39,6 @@ public class Hud implements Disposable {
     private ImageButton coin;
     private ImageButton cross;
     private ImageButton coinNumber;
-    private ImageButton heart;
     private ImageButton sandclock;
     private ImageButton timeOne;
     private ImageButton timeTwo;
@@ -78,7 +77,6 @@ public class Hud implements Disposable {
         coin = new ImageButton(skin.getDrawable("coin"));
         cross = new ImageButton(skin.getDrawable("x"));
         coinNumber = new ImageButton(skin.getDrawable("zero"));
-        heart = new ImageButton(skin.getDrawable("heart"));
         sandclock = new ImageButton(skin.getDrawable("sandclock"));
         timeOne = new ImageButton(skin.getDrawable("zero"));
         timeTwo = new ImageButton(skin.getDrawable("zero"));
@@ -96,9 +94,6 @@ public class Hud implements Disposable {
         coinNumber.setWidth(coinNumber.getWidth() / 3);
         coinNumber.setHeight(coinNumber.getHeight() / 3);
         coinNumber.setPosition(70 + BlockBoy.VWIDTH/8, BlockBoy.VHEIGHT - coinNumber.getHeight());
-        heart.setWidth(heart.getWidth() / 3);
-        heart.setHeight(heart.getHeight() / 3);
-        heart.setPosition(BlockBoy.VWIDTH/2 - heart.getWidth()/2, BlockBoy.VHEIGHT - heart.getHeight());
         sandclock.setWidth(sandclock.getWidth() / 3);
         sandclock.setHeight(sandclock.getHeight() / 4);
         sandclock.setPosition(3*BlockBoy.VWIDTH/4 - sandclock.getWidth()/2, BlockBoy.VHEIGHT - sandclock.getHeight());
@@ -128,7 +123,6 @@ public class Hud implements Disposable {
         stage.addActor(coin);
         stage.addActor(cross);
         stage.addActor(coinNumber);
-        stage.addActor(heart);
         stage.addActor(sandclock);
         stage.addActor(timeOne);
         stage.addActor(timeTwo);
