@@ -31,6 +31,7 @@ public class OptionsScreen implements Screen {
 
     private TextureAtlas optMenuAtlas;
     private TextureAtlas tempAtlas;
+    private TextureAtlas numberAtlas;
 
 
     private ImageButton homeBtn;
@@ -38,6 +39,9 @@ public class OptionsScreen implements Screen {
     private ImageButton volBtn;
     private ImageButton plusBtn;
     private ImageButton minusBtn;
+    private ImageButton uCoinBtn;
+    private ImageButton dCoinBtn;
+    private ImageButton cCoinBtn;
 
     private Skin heroSkin;
 
@@ -119,18 +123,21 @@ public class OptionsScreen implements Screen {
 
         optMenuAtlas = new TextureAtlas("menu/optMenu.pack");
         tempAtlas = new TextureAtlas("menu/pauseMenu.pack");
+        numberAtlas = new TextureAtlas("hud/hudspritesheet.pack");
         skin = new Skin();
         skin.addRegions(optMenuAtlas);
         skin.addRegions(tempAtlas);
+        skin.addRegions(numberAtlas);
         stage.clear();
 
         homeBtn = new ImageButton(skin.getDrawable("homeBtn"),skin.getDrawable("homePressed"));
         rstBtn = new ImageButton(skin.getDrawable("rstBtn"),skin.getDrawable("rstPressed"));
         volBtn = new ImageButton(skin.getDrawable("volBtn"),skin.getDrawable("volPressed"),skin.getDrawable("volCheck"));
 
-
         plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
         minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
+
+
 
         ImageButton.ImageButtonStyle plSty = plusBtn.getStyle();
         ImageButton.ImageButtonStyle minSty = minusBtn.getStyle();
@@ -206,6 +213,10 @@ public class OptionsScreen implements Screen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 BlockBoy.predefinedData();
+                dispose();
+                BlockBoy.bg_music.play();
+                BlockBoy.bg_music.setVolume(BlockBoy.volume/100);
+                game.setScreen(new OptionsScreen(game));
             }
         });
 
@@ -314,6 +325,11 @@ public class OptionsScreen implements Screen {
         hero3Btn.setStyle(st3);
 
 
+        uCoinBtn = new ImageButton(skin.getDrawable(getNumber(BlockBoy.coinScore%10)));
+        dCoinBtn = new ImageButton(skin.getDrawable(getNumber((BlockBoy.coinScore/10)%10)));
+        cCoinBtn = new ImageButton(skin.getDrawable(getNumber((BlockBoy.coinScore/100)%10)));
+
+
         if (BlockBoy.skinInd == 0) hero1Btn.setDisabled(true);
         if (BlockBoy.skinInd == 1) hero2Btn.setDisabled(true);
         if (BlockBoy.skinInd == 2) hero3Btn.setDisabled(true);
@@ -335,6 +351,13 @@ public class OptionsScreen implements Screen {
         if (BlockBoy.lockSkins[0]) hero1Btn.setStyle(st1lock);
         if (BlockBoy.lockSkins[1]) hero2Btn.setStyle(st2lock);
         if (BlockBoy.lockSkins[2]) hero3Btn.setStyle(st3lock);
+
+        uCoinBtn.setSize(uCoinBtn.getWidth() / 2,uCoinBtn.getHeight() / 2);
+        uCoinBtn.setPosition(BlockBoy.VWIDTH/2 + uCoinBtn.getWidth()/2 - 20, BlockBoy.VHEIGHT/6 + 10);
+        dCoinBtn.setSize(dCoinBtn.getWidth() / 2,dCoinBtn.getHeight() / 2);
+        dCoinBtn.setPosition(BlockBoy.VWIDTH/2 - dCoinBtn.getWidth()/2, BlockBoy.VHEIGHT/6 + 10);
+        cCoinBtn.setSize(cCoinBtn.getWidth() / 2,cCoinBtn.getHeight() / 2);
+        cCoinBtn.setPosition(BlockBoy.VWIDTH/2 - 3*cCoinBtn.getWidth()/2 +20, BlockBoy.VHEIGHT/6 + 10);
 
 
         hero1Btn.addListener(new InputListener(){
@@ -359,6 +382,7 @@ public class OptionsScreen implements Screen {
                     hero1Btn.setDisabled(true);
                     hero2Btn.setDisabled(false);
                     hero3Btn.setDisabled(false);
+                    updateCoins();
                     BlockBoy.saveData();
 
                 }
@@ -387,6 +411,7 @@ public class OptionsScreen implements Screen {
                     hero1Btn.setDisabled(false);
                     hero2Btn.setDisabled(true);
                     hero3Btn.setDisabled(false);
+                    updateCoins();
                     BlockBoy.saveData();
 
                 }
@@ -415,6 +440,7 @@ public class OptionsScreen implements Screen {
                     hero1Btn.setDisabled(false);
                     hero2Btn.setDisabled(false);
                     hero3Btn.setDisabled(true);
+                    updateCoins();
                     BlockBoy.saveData();
                 }
             }
@@ -423,7 +449,68 @@ public class OptionsScreen implements Screen {
         stage.addActor(hero1Btn);
         stage.addActor(hero2Btn);
         stage.addActor(hero3Btn);
+        stage.addActor(uCoinBtn);
+        stage.addActor(dCoinBtn);
+        stage.addActor(cCoinBtn);
 
         Gdx.input.setInputProcessor(stage);
+    }
+
+    /**
+     * Converts integer to string
+     *
+     * @param integer
+     * @return string
+     */
+    public String getNumber(Integer integer) {
+
+        switch (integer) {
+            case 0:
+                return "zero";
+            case 1:
+                return "one";
+            case 2:
+                return "two";
+            case 3:
+                return "three";
+            case 4:
+                return "four";
+            case 5:
+                return "five";
+            case 6:
+                return "six";
+            case 7:
+                return "seven";
+            case 8:
+                return "eight";
+            case 9:
+                return "nine";
+            default:
+                break;
+        }
+
+        return null;
+    }
+
+    public void updateCoins() {
+
+        uCoinBtn.remove();
+        dCoinBtn.remove();
+        cCoinBtn.remove();
+
+        uCoinBtn = new ImageButton(skin.getDrawable(getNumber(BlockBoy.coinScore%10)));
+        dCoinBtn = new ImageButton(skin.getDrawable(getNumber((BlockBoy.coinScore/10)%10)));
+        cCoinBtn = new ImageButton(skin.getDrawable(getNumber((BlockBoy.coinScore/100)%10)));
+
+        uCoinBtn.setSize(uCoinBtn.getWidth() / 2,uCoinBtn.getHeight() / 2);
+        uCoinBtn.setPosition(BlockBoy.VWIDTH/2 + uCoinBtn.getWidth()/2 - 20, BlockBoy.VHEIGHT/6 + 10);
+        dCoinBtn.setSize(dCoinBtn.getWidth() / 2,dCoinBtn.getHeight() / 2);
+        dCoinBtn.setPosition(BlockBoy.VWIDTH/2 - dCoinBtn.getWidth()/2, BlockBoy.VHEIGHT/6 + 10);
+        cCoinBtn.setSize(cCoinBtn.getWidth() / 2,cCoinBtn.getHeight() / 2);
+        cCoinBtn.setPosition(BlockBoy.VWIDTH/2 - 3*cCoinBtn.getWidth()/2 +20, BlockBoy.VHEIGHT/6 + 10);
+
+        stage.addActor(uCoinBtn);
+        stage.addActor(dCoinBtn);
+        stage.addActor(cCoinBtn);
     }
 }

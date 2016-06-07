@@ -30,6 +30,8 @@ public class BlockBoy extends Game {
     public static Sound btnClick;
     public static Sound jumpSound;
     public static Sound coinSound;
+    public static Sound winSound;
+    public static Sound gameOverSound;
 
     public static final short DEFAULT_BIT = 1;
     public static final short HERO_BIT = 2;
@@ -51,10 +53,12 @@ public class BlockBoy extends Game {
         lockSkins = new boolean[3];
 
         // TODO - UNCOMMENT SOUND
-        //bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
+        bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
         btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
         coinSound = Gdx.audio.newSound(Gdx.files.internal("sounds/coin.wav"));
+        winSound = Gdx.audio.newSound(Gdx.files.internal("sounds/win.mp3"));
+        gameOverSound = Gdx.audio.newSound(Gdx.files.internal("sounds/gameOver.mp3"));
 
         prefs = Gdx.app.getPreferences("BlockBoyPrefs");
         String name = prefs.getString("name", "No name stored");
@@ -65,9 +69,9 @@ public class BlockBoy extends Game {
         }
 
         if (!mute) {
-            //bg_music.play();
-            //bg_music.setVolume(BlockBoy.volume / 100);
-            //bg_music.setLooping(true);
+            bg_music.play();
+            bg_music.setVolume(BlockBoy.volume / 100);
+            bg_music.setLooping(true);
         }
         setScreen(new MainMenuScreen(this));
     }
@@ -116,7 +120,8 @@ public class BlockBoy extends Game {
     }
 
     public static void predefinedData(){
-        volume = 0;
+        volume = 100;
+        mute = false;
         skinInd = 0;
         coinScore = 0;
         
