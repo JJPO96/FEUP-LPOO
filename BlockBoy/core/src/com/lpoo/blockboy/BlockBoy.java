@@ -121,7 +121,7 @@ public class BlockBoy extends Game {
     }
 
     public static void predefinedData(){
-        volume = 100;
+        volume = 50;
         mute = false;
         skinInd = 0;
         coinScore = 0;
