@@ -88,7 +88,7 @@ public class GameScreen implements Screen {
 
         // Prepares the map to be rendered
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("levels/level1.tmx");
+        map = mapLoader.load(lvlMap);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         // Create a Box2D world, setting no gravity in X axis, -9.8 gravity in Y axis
