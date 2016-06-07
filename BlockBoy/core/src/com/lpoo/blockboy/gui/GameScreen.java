@@ -10,12 +10,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
-import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.GameLogic;
 
 /**
@@ -42,10 +40,6 @@ public class GameScreen implements Screen {
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
-
-    public int getLevel() {
-        return level;
-    }
 
     public GameScreen(BlockBoy game) {
         this.game = game;
@@ -233,6 +227,10 @@ public class GameScreen implements Screen {
         gameStateUpdate(delta);
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     @Override
     public void resize(int width, int height) {
         // Update game Viewport to the new resized screen
@@ -258,6 +256,4 @@ public class GameScreen implements Screen {
         map.dispose();
         hud.dispose();
     }
-
-
 }

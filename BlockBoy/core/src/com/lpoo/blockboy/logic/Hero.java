@@ -4,12 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
@@ -23,6 +20,7 @@ import com.lpoo.blockboy.gui.GameScreen;
  */
 public class Hero extends GameElement {
     public enum State {STANDING, RUNNING, JUMPING, FALLING, WIN, DEAD}
+
     private State currentState;
     private State previousState;
     private boolean heroDead = false;
@@ -68,7 +66,7 @@ public class Hero extends GameElement {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / BlockBoy.PPM, (bounds.getY() + bounds.getHeight() / 2) / BlockBoy.PPM);
         body = world.createBody(bodyDef);
-        shape.setRadius(bounds.getWidth()/2 / BlockBoy.PPM);
+        shape.setRadius(bounds.getWidth() / 2 / BlockBoy.PPM);
         fixtureDef.filter.categoryBits = BlockBoy.HERO_BIT;
         fixtureDef.filter.maskBits = BlockBoy.DEFAULT_BIT | BlockBoy.BLOCK_BIT |
                 BlockBoy.AIRGROUND_BIT | BlockBoy.BRICK_BIT | BlockBoy.EXIT_BIT;
@@ -226,7 +224,8 @@ public class Hero extends GameElement {
      */
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
-            BlockBoy.jumpSound.play();
+            if (!BlockBoy.mute)
+                BlockBoy.jumpSound.play();
             body.applyLinearImpulse(new Vector2(0, 3.6f), body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
@@ -250,15 +249,15 @@ public class Hero extends GameElement {
         return carryBlock;
     }
 
-    public boolean isFacingRight(){
+    public boolean isFacingRight() {
         return facingRight;
     }
 
-    public void setArriveExit(boolean arriveExit){
+    public void setArriveExit(boolean arriveExit) {
         this.arriveExit = arriveExit;
     }
 
-    public void setHerodead(){
+    public void setHerodead() {
         this.heroDead = true;
     }
 }

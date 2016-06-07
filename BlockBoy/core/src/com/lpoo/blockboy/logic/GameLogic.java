@@ -128,7 +128,8 @@ public class GameLogic {
         for (Coin coin : coins) {
             if (!coin.isPicked())
                 if (hero.bodysOverlapping(coin)) {
-                    BlockBoy.coinSound.play();
+                    if (!BlockBoy.mute)
+                        BlockBoy.coinSound.play();
                     coin.setCollision(true);
                 }
         }
