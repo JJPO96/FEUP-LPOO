@@ -205,6 +205,7 @@ public class BlockBoyTester {
         /* Now that the hero has a block, will try to drop it  */
 
         // Sets the hero to move the block
+        gameScreen.getGameLogic().getHero().run(-0.1f);
         gameScreen.getGameLogic().setMoveBlock(true);
         gameScreen.updateTesting(0.1f);
 
