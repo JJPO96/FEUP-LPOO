@@ -1,0 +1,26 @@
+
+hero2sprites.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+herosprite
+  rotate: false
+  xy: 1, 20
+  size: 2456, 409
+  orig: 2456, 409
+  offset: 0, 0
+  index: -1
+coins
+  rotate: false
+  xy: 2459, 299
+  size: 780, 130
+  orig: 780, 130
+  offset: 0, 0
+  index: -1
+boxCrate_double
+  rotate: false
+  xy: 2459, 195
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

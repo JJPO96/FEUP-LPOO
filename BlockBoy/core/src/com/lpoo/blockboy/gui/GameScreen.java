@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
     public GameScreen(BlockBoy game) {
         this.game = game;
         // Creating an atlas
-        atlas = new TextureAtlas("sprites/gamesprites.pack");
+        atlas = new TextureAtlas("sprites/hero" + BlockBoy.skinInd + "sprites.pack");
 
         // Creates a camera to follow the hero
         this.gameCam = new OrthographicCamera();
@@ -67,7 +67,7 @@ public class GameScreen implements Screen {
     public GameScreen(BlockBoy game, String lvlMap) {
         this.game = game;
         // Creating an atlas
-        atlas = new TextureAtlas("sprites/gamesprites.pack");
+        atlas = new TextureAtlas("sprites/hero" + BlockBoy.skinInd + "sprites.pack");
 
         // Creates a camera to follow the hero
         this.gameCam = new OrthographicCamera();
