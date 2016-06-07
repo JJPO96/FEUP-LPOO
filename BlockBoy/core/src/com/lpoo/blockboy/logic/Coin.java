@@ -1,21 +1,16 @@
 package com.lpoo.blockboy.logic;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
@@ -52,6 +47,9 @@ public class Coin extends GameElement {
         setCategoryFilter(BlockBoy.COIN_BIT);
     }
 
+    /**
+     * Initiates the coin's variables
+     */
     @Override
     public void init() {
         // Creating the body
@@ -69,6 +67,9 @@ public class Coin extends GameElement {
         loadTextures();
     }
 
+    /**
+     * Loads coin's textures
+     */
     @Override
     public void loadTextures() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -84,16 +85,31 @@ public class Coin extends GameElement {
         coinAnim = new Animation(0.16f, frames);
     }
 
+    /**
+     * Sets the collision state of the coin
+     *
+     * @param collision
+     */
     public void setCollision(boolean collision) {
         pick = collision;
     }
 
+    /**
+     * Sets a new category filter of the coin used for detecting collisions with the coin
+     *
+     * @param filterBit
+     */
     public void setCategoryFilter(short filterBit) {
         filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
     }
 
+    /**
+     * Updates the coin's state
+     *
+     * @param delta time
+     */
     @Override
     public void update(float delta) {
         if (pick && !picked) {
@@ -105,6 +121,12 @@ public class Coin extends GameElement {
         }
     }
 
+    /**
+     * Returns the TextureRegion corresponding to the current frame
+     *
+     * @param delta
+     * @return TextureRegion of the current frame
+     */
     public TextureRegion getFrame(float delta) {
         region = coinAnim.getKeyFrame(stateTimer, true);
         stateTimer = stateTimer + delta;
@@ -121,10 +143,18 @@ public class Coin extends GameElement {
         return this.picked;
     }
 
+    /**
+     * Sets a new coin score state
+     */
     public void setScored() {
         this.scored = true;
     }
 
+    /**
+     * Verifies if the coin is already scored
+     *
+     * @return true if the coin is scored
+     */
     public boolean isScored() {
         return this.scored;
     }

@@ -67,6 +67,22 @@ public class BlockBoyTester {
         }
     }
 
+    @Test void testPickBlock() {
+
+    }
+
+    @Test void testDropBlock() {
+
+    }
+
+    @Test void testPickCoin() {
+
+    }
+
+   /* @Test void testStartingCoins() {
+
+    }*/
+
     @Test
     public void testWinGame(){
         gameLogic.getHero().setArriveExit(true);

@@ -1,13 +1,10 @@
 package com.lpoo.blockboy.logic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -19,6 +16,7 @@ import com.lpoo.blockboy.gui.GameScreen;
  * Class that represents a block
  */
 public class Block extends GameElement {
+    private final int spriteSize = 64;
     private boolean picked = false;
     private boolean heroCollision = false;
     private boolean blockTopCollision = false;
@@ -46,9 +44,12 @@ public class Block extends GameElement {
         setCategoryFilter(BlockBoy.BLOCK_BIT);
     }
 
+    /**
+     * Initiates the block's variables
+     */
     @Override
     public void init() {
-        // Creating the body
+        // Creates the body
         bodyDef = new BodyDef();
         shape = new PolygonShape();
         fixtureDef = new FixtureDef();
@@ -65,11 +66,14 @@ public class Block extends GameElement {
         loadTextures();
     }
 
+    /**
+     * Loads the block's textures
+     */
     @Override
     public void loadTextures() {
         // In game sprite size
-        setBounds(0, 0, 64 / BlockBoy.PPM, 64 / BlockBoy.PPM);
-        region = new TextureRegion(getTexture(), 2459, 195, 64, 64);
+        setBounds(0, 0, spriteSize / BlockBoy.PPM, spriteSize / BlockBoy.PPM);
+        region = new TextureRegion(getTexture(), 2459, 195, spriteSize, spriteSize);
     }
 
     /**

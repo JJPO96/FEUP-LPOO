@@ -246,22 +246,46 @@ public class GameLogic {
         checkCoinPicking();
     }
 
+    /**
+     * Returns the hero of the game
+     *
+     * @return hero
+     */
     public Hero getHero() {
         return hero;
     }
 
+    /**
+     * Returns the game's coins
+     *
+     * @return coins
+     */
     public ArrayList<Coin> getCoins() {
         return coins;
     }
 
+    /**
+     * Returns the blocks of the game
+     *
+     * @return block
+     */
     public ArrayList<Block> getBlocks() {
         return blocks;
     }
 
+    /**
+     * Returns the coin score
+     * @return coin score
+     */
     public int getCoinScore() {
         return coinScore;
     }
 
+    /**
+     * Sets the hero to try to move a block
+     *
+     * @param move
+     */
     public void setMoveBlock(boolean move) {
         this.moveBlock = move;
     }
