@@ -76,7 +76,6 @@ public class BlockBoy extends Game {
         }
     }
 
-
     @Override
     public void dispose() {
         super.dispose();
