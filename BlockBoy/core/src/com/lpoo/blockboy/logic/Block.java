@@ -77,27 +77,29 @@ public class Block extends GameElement {
      *
      * @param collision
      */
-
-    // TODO - CORRIGIR
     public void setHeroCollision(boolean collision) {
         this.heroCollision = collision;
-        if (collision) {
-            Gdx.app.log("Block", "begin collision");
-        } else {
-            Gdx.app.log("Block", "end collision");
-        }
-
     }
 
+    /**
+     * Sets the block static
+     */
     public void setStatic() {
         this.changeToStatic = true;
-        this.heroCollision = false;
     }
 
+    /**
+     * Sets the block dynamic
+     */
     public void setDynamic() {
         this.changeToDynamic = true;
     }
 
+    /**
+     * Verfies if the block is colliding with a hero
+     *
+     * @return true if the block is colliding with the hero
+     */
     public boolean hasHeroCollision() {
         return heroCollision;
     }

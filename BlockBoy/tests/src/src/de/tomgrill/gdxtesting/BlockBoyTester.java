@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
+import com.lpoo.blockboy.logic.Block;
 import com.lpoo.blockboy.logic.GameLogic;
 import com.lpoo.blockboy.logic.Hero;
 
@@ -56,6 +57,14 @@ public class BlockBoyTester {
     public void testStartingHero(){
         assertEquals(Hero.State.STANDING, gameLogic.getHero().getState());
         assertTrue(!gameLogic.getHero().hasBlock());
+    }
+
+    @Test
+    public void testStartingBlocks(){
+        for (Block block: gameLogic.getBlocks()){
+            assertTrue(!block.hasHeroCollision());
+            assertTrue(!block.isPicked());
+        }
     }
 
     @Test

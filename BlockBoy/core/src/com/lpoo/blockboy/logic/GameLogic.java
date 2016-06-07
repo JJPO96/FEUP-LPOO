@@ -186,18 +186,14 @@ public class GameLogic {
     }
 
     /**
-     * Verifies if a game's object (Hero or block) is currently above a block
+     * Verifies if the Hero is above a block
      *
      * @param block to be checked
      * @return true if the Hero is above of the block; false otherwise
      */
-    public boolean checkObjectAboveBlock(Object obj, Block block) {
-        if (obj instanceof Hero) {
-            if (((Hero) obj).getBody().getPosition().y > block.getBody().getPosition().y)
-                return true;
-        } else if (obj instanceof Block)
-            if (((Block) obj).getBody().getPosition().y > block.getBody().getPosition().y)
-                return true;
+    public boolean checkHeroAboveBlock(Block block) {
+        if (hero.getBody().getPosition().y > block.getBody().getPosition().y && block.hasHeroCollision())
+            return true;
 
         return false;
     }
@@ -237,7 +233,7 @@ public class GameLogic {
 
         // Updates blocks
         for (Block block : blocks) {
-            if (checkObjectAboveBlock(hero, block))
+            if (checkHeroAboveBlock(block))
                 block.setStatic();
             else
                 block.setDynamic();
