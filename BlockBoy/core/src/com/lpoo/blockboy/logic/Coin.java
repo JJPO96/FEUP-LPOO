@@ -19,6 +19,7 @@ import com.lpoo.blockboy.gui.GameScreen;
  * Class that represents a coin
  */
 public class Coin extends GameElement {
+    private final int SPRITESIZE = 40;
     private boolean pick = false;
     private boolean picked = false;
     private boolean scored = false;
@@ -74,7 +75,7 @@ public class Coin extends GameElement {
     public void loadTextures() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         // In game sprite size
-        setBounds(0, 0, 40 / BlockBoy.PPM, 40 / BlockBoy.PPM);
+        setBounds(0, 0, SPRITESIZE / BlockBoy.PPM, SPRITESIZE / BlockBoy.PPM);
 
         // Creates coin animation
         for (int i = 0; i < 6; i++) {

@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
         // Prepares the map to be rendered
         mapLoader = new TmxMapLoader();
         // TODO - CHANGE TO USE THE LEVEL SELECTED
-        map = mapLoader.load("levels/level1.tmx");
+        map = mapLoader.load("levels/testinglevel.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / game.PPM);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
@@ -166,6 +166,21 @@ public class GameScreen implements Screen {
         gameCam.update();
         // Tells renderer to only draw what the camera can see
         mapRenderer.setView(gameCam);
+        gameLogic.update(delta);
+    }
+
+    /**
+     * Updates the game (used for testing purposes)
+     *
+     * @param delta time
+     */
+    public void updateTesting(float delta){
+        checkInput(delta);
+        world.step(1 / 60f, 6, 2);
+        // Updates the camera position in relation to the hero
+        gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;
+        gameCam.position.y = gameLogic.getHero().getBody().getPosition().y;
+        gameCam.update();
         gameLogic.update(delta);
     }
 

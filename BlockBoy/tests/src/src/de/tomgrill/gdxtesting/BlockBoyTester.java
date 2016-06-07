@@ -22,9 +22,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.badlogic.gdx.Gdx;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
 import com.lpoo.blockboy.logic.Block;
+import com.lpoo.blockboy.logic.Coin;
 import com.lpoo.blockboy.logic.GameLogic;
 import com.lpoo.blockboy.logic.Hero;
 
@@ -32,24 +34,15 @@ import com.lpoo.blockboy.logic.Hero;
 public class BlockBoyTester {
 
     private final BlockBoy game = new BlockBoy();
-    private final String levelPath = "levels/level1.tmx";
+    private final String levelPath = "levels/testinglevel.tmx";
     private final GameScreen gameScreen = new GameScreen(game, levelPath);
     private final GameLogic gameLogic = new GameLogic(gameScreen);
-
-    // Verificar se heroi consegue andar/saltar
-    // Verificar se o heroi nao consegue passar pelos obstáculos
-    // Verficar se o heroi consegue colocar blocos uns por cima dos outros
-    // Verificar se o heroi consegue saltar para cima de pequenos obstaculos
-    // Verificar se o heroi consegue apanhar um block
-    // Verificar se o heroi consegue pousar um block
-    // Verificar se o heroi consegue apanhar as moedas
-
 
     @Test
     public void testStartingWorld(){
         assertEquals(0, gameLogic.getCoinScore());
-        assertEquals(2, gameLogic.getCoins().size());
-        assertEquals(2, gameLogic.getBlocks().size());
+        assertEquals(1, gameLogic.getCoins().size());
+        assertEquals(1, gameLogic.getBlocks().size());
         assertEquals(GameLogic.State.RUNNING, gameLogic.getState());
     }
 
@@ -67,21 +60,33 @@ public class BlockBoyTester {
         }
     }
 
-    @Test void testPickBlock() {
+    @Test
+    public void testStartingCoins() {
+        for (Coin coin: gameLogic.getCoins()){
+            assertTrue(!coin.isScored());
+            assertTrue(!coin.isPicked());
+        }
+    }
+
+    @Test
+    public void testPickBlock() {
 
     }
 
-    @Test void testDropBlock() {
+    @Test
+    public void testDropBlock() {
 
     }
 
-    @Test void testPickCoin() {
-
+    @Test
+    public void testPickCoin() {
+        Gdx.app.log(""+gameLogic.getHero().getBody().getPosition().x, "");
+        gameLogic.getHero().run(0.5f);
+        gameScreen.updateTesting(1);
+        Gdx.app.log(""+gameLogic.getHero().getBody().getPosition().x, "");
     }
 
-   /* @Test void testStartingCoins() {
 
-    }*/
 
     @Test
     public void testWinGame(){

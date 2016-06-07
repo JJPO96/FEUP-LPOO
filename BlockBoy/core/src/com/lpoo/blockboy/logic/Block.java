@@ -16,7 +16,7 @@ import com.lpoo.blockboy.gui.GameScreen;
  * Class that represents a block
  */
 public class Block extends GameElement {
-    private final int spriteSize = 64;
+    private final int SPRITESIZE = 64;
     private boolean picked = false;
     private boolean heroCollision = false;
     private boolean blockTopCollision = false;
@@ -72,8 +72,8 @@ public class Block extends GameElement {
     @Override
     public void loadTextures() {
         // In game sprite size
-        setBounds(0, 0, spriteSize / BlockBoy.PPM, spriteSize / BlockBoy.PPM);
-        region = new TextureRegion(getTexture(), 2459, 195, spriteSize, spriteSize);
+        setBounds(0, 0, SPRITESIZE / BlockBoy.PPM, SPRITESIZE / BlockBoy.PPM);
+        region = new TextureRegion(getTexture(), 2459, 195, SPRITESIZE, SPRITESIZE);
     }
 
     /**
@@ -108,6 +108,11 @@ public class Block extends GameElement {
         return heroCollision;
     }
 
+    /**
+     * Sets a new category filter of the coin used for detecting collisions with the coin
+     *
+     * @param filterBit
+     */
     public void setCategoryFilter(short filterBit) {
         filter = new Filter();
         filter.categoryBits = filterBit;
