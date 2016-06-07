@@ -137,13 +137,17 @@ public class GameScreen implements Screen {
                     BlockBoy.lockLevels[BlockBoy.levelInd] = false;
                 }
                 Gdx.input.vibrate(600);
+                if(!BlockBoy.mute)  BlockBoy.winSound.play(BlockBoy.volume/100);
                 BlockBoy.coinScore+=gameLogic.getCoinScore();
                 BlockBoy.saveData();
                 game.setScreen(new WinScreen(game));
                 dispose();
                 break;
             case LOOSE:
+                Gdx.input.vibrate(600);
+                if(!BlockBoy.mute) BlockBoy.gameOverSound.play(BlockBoy.volume/100);
                 BlockBoy.coinScore+=gameLogic.getCoinScore();
+                BlockBoy.saveData();
                 game.setScreen(new GameOverScreen(game));
                 dispose();
                 break;
