@@ -54,7 +54,7 @@ public class BlockBoy extends Game {
     public void init(){
         lockLevels = new boolean[10];
         lockSkins = new boolean[3];
-        bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
+        bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.mp3"));
         btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
         coinSound = Gdx.audio.newSound(Gdx.files.internal("sounds/coin.wav"));
@@ -109,6 +109,8 @@ public class BlockBoy extends Game {
         mute = prefs.getBoolean("mute");
         volume = prefs.getInteger("volume");
         skinInd = prefs.getInteger("skinInd");
+        coinScore = prefs.getInteger("coins");
+
         for (int i = 0; i < lockLevels.length;i++){
             lockLevels[i] = prefs.getBoolean("level " + i);
         }
