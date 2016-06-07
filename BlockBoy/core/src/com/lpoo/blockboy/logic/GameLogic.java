@@ -226,7 +226,6 @@ public class GameLogic {
 
         // Verifies if was received user's input to move a block
         if (moveBlock) {
-            Gdx.app.log("move block", "");
             moveBlock = false;
 
             if (hero.hasBlock())

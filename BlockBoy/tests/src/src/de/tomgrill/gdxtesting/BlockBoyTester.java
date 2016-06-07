@@ -25,6 +25,7 @@ import org.junit.runner.RunWith;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
 import com.lpoo.blockboy.logic.GameLogic;
+import com.lpoo.blockboy.logic.Hero;
 
 @RunWith(GdxTestRunner.class)
 public class BlockBoyTester {
@@ -32,6 +33,7 @@ public class BlockBoyTester {
     private final BlockBoy game = new BlockBoy();
     private final String levelPath = "levels/level1.tmx";
     private final GameScreen gameScreen = new GameScreen(game, levelPath);
+    private final GameLogic gameLogic = new GameLogic(gameScreen);
 
     // Verificar se heroi consegue andar/saltar
     // Verificar se o heroi nao consegue passar pelos obstáculos
@@ -41,16 +43,26 @@ public class BlockBoyTester {
     // Verificar se o heroi consegue pousar um block
     // Verificar se o heroi consegue apanhar as moedas
 
+
     @Test
-    public void testInitialCoinAndState(){
-        GameLogic gameLogic = new GameLogic(gameScreen);
+    public void testStartingWorld(){
         assertEquals(0, gameLogic.getCoinScore());
+        assertEquals(2, gameLogic.getCoins().size());
+        assertEquals(2, gameLogic.getBlocks().size());
         assertEquals(GameLogic.State.RUNNING, gameLogic.getState());
     }
 
     @Test
-    public void testB(){
-        GameLogic gameLogic = new GameLogic(gameScreen);
-        //gameLogic.update(0.1f);
+    public void testStartingHero(){
+        assertEquals(Hero.State.STANDING, gameLogic.getHero().getState());
+        assertTrue(!gameLogic.getHero().hasBlock());
+    }
+
+    @Test
+    public void testWinGame(){
+        gameLogic.getHero().setArriveExit(true);
+        assertEquals(Hero.State.WIN, gameLogic.getHero().getState());
+        gameLogic.update(0.1f);
+        assertEquals(GameLogic.State.WIN, gameLogic.getState());
     }
 }

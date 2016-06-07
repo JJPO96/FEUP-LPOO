@@ -1,6 +1,5 @@
 package com.lpoo.blockboy.logic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -255,9 +254,5 @@ public class Hero extends GameElement {
 
     public void setArriveExit(boolean arriveExit) {
         this.arriveExit = arriveExit;
-    }
-
-    public void setHerodead() {
-        this.heroDead = true;
     }
 }

@@ -89,7 +89,6 @@ public class Coin extends GameElement {
     }
 
     public void setCollision(boolean collision) {
-        Gdx.app.log("Coin", "Collision");
         pick = collision;
     }
 
@@ -115,13 +114,6 @@ public class Coin extends GameElement {
         stateTimer = stateTimer + delta;
 
         return region;
-    }
-
-    /**
-     * Sets the key as picked by the Hero
-     */
-    public void setPicked() {
-        this.pick = true;
     }
 
     /**
