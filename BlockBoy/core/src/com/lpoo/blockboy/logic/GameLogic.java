@@ -126,7 +126,7 @@ public class GameLogic {
         for (Coin coin : coins) {
             if (!coin.isPicked())
                 if (hero.bodysOverlapping(coin)) {
-                    if (!BlockBoy.mute)
+                    if (!BlockBoy.mute && !BlockBoy.testingMode)
                         BlockBoy.coinSound.play();
                     coin.setCollision(true);
                 }
@@ -141,17 +141,17 @@ public class GameLogic {
             if (block.hasHeroCollision() && !hero.hasBlock()) {
                 if (hero.isFacingRight()) {
                     if (hero.getX() < block.getX()) {
-                        block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                         hero.setCarryBlock(true);
                         block.setDynamic();
                         block.setPicked(true);
+                        block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                         break;
                     }
                 } else if (hero.getX() > block.getX()) {
-                    block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                     hero.setCarryBlock(true);
                     block.setDynamic();
                     block.setPicked(true);
+                    block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                     break;
                 }
             }

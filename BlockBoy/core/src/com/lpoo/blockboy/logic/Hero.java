@@ -122,7 +122,17 @@ public class Hero extends GameElement {
      * @return true if the Hero is overlapping the coin
      */
     boolean bodysOverlapping(Coin coin) {
-        if ((getX() + getWidth()) < coin.getX())
+        if ((body.getPosition().x + getWidth())< coin.getBody().getPosition().x)
+            return false;
+        else if (body.getPosition().x > 20)//(coin.getBody().getPosition().x + coin.getWidth()))
+            return false;
+        else if ((body.getPosition().y + getHeight()) < coin.getBody().getPosition().y)
+            return false;
+        else if (body.getPosition().y > (coin.getBody().getPosition().y + coin.getHeight()))
+            return false;
+        else
+            return true;
+       /* if ((getX() + getWidth()) < coin.getX())
             return false;
         else if (getX() > (coin.getX() + coin.getWidth()))
             return false;
@@ -131,7 +141,7 @@ public class Hero extends GameElement {
         else if (getY() > (coin.getY() + coin.getHeight()))
             return false;
         else
-            return true;
+            return true;*/
     }
 
     /**
@@ -226,7 +236,7 @@ public class Hero extends GameElement {
      */
     public void jump() {
         if (currentState != State.JUMPING && body.getLinearVelocity().y == 0) {
-            if (!BlockBoy.mute)
+            if (!BlockBoy.mute && !BlockBoy.testingMode)
                 BlockBoy.jumpSound.play();
             body.applyLinearImpulse(new Vector2(0, 3.6f), body.getWorldCenter(), true);
             currentState = State.JUMPING;

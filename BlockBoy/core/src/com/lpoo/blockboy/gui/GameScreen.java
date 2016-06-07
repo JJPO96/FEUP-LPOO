@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
         // Prepares the map to be rendered
         mapLoader = new TmxMapLoader();
         // TODO - CHANGE TO USE THE LEVEL SELECTED
-        map = mapLoader.load("levels/testinglevel.tmx");
+        map = mapLoader.load("levels/level1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / game.PPM);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 

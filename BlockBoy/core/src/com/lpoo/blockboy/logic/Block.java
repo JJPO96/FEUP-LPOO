@@ -155,24 +155,6 @@ public class Block extends GameElement {
     }
 
     /**
-     * Sets true if a block in collision with this block in the top side
-     *
-     * @param above
-     */
-    public void setBlockCollisionAbove(boolean above){
-        this.blockTopCollision = above;
-    }
-
-    /**
-     * Returns true if the block has another block above colliding
-     *
-     * @return true if the block has another block above colliding
-     */
-    public boolean getBlockTopCollision(){
-        return blockTopCollision;
-    }
-
-    /**
      * Sets the block as picked by the Hero
      */
     public void setPicked(boolean pick) {
