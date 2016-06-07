@@ -85,6 +85,7 @@ public class GameScreen implements Screen {
 
         // Creates an instance of logic of the game itself
         gameLogic = new GameLogic(this);
+        gameLogic.setTestingMode(false);
 
         world.setContactListener(new CollisionListener(gameLogic));
     }

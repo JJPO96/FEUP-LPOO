@@ -16,10 +16,7 @@ public class BlockBoy extends Game {
 
     public static float volume = 0;
     public static boolean mute = false;
-    public static boolean testingMode = false;
-
     public static Preferences prefs;
-
     public static int levelInd = 0;
     public static int skinInd;
     public static int coinScore = 0;

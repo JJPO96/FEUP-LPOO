@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class GameLogic {
 
     public enum State {RUNNING, WIN, LOOSE}
+    public static boolean testingMode = false;
 
     private Hero hero;
     private ArrayList<Coin> coins;
@@ -126,7 +127,7 @@ public class GameLogic {
         for (Coin coin : coins) {
             if (!coin.isPicked())
                 if (hero.bodysOverlapping(coin)) {
-                    if (!BlockBoy.mute && !BlockBoy.testingMode)
+                    if (!BlockBoy.mute && !testingMode)
                         BlockBoy.coinSound.play();
                     coin.setCollision(true);
                 }
@@ -297,5 +298,14 @@ public class GameLogic {
      */
     public State getState() {
         return state;
+    }
+
+    /**
+     * Sets testing mode
+     *
+     * @param mode
+     */
+    public void setTestingMode(boolean mode){
+        this.testingMode = true;
     }
 }

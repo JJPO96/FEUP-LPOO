@@ -37,25 +37,24 @@ public class BlockBoyTester {
     private final BlockBoy GAME = new BlockBoy();
     private final String LEVELPATH= "levels/testinglevel.tmx";
     private GameScreen gameScreen = new GameScreen(GAME, LEVELPATH);
-    private GameLogic gameLogic = new GameLogic(gameScreen);
 
     @Test // Confirms the starting world's objects
     public void testStartingWorld(){
-        assertEquals(0, gameLogic.getCoinScore());
-        assertEquals(1, gameLogic.getCoins().size());
-        assertEquals(1, gameLogic.getBlocks().size());
-        assertEquals(GameLogic.State.RUNNING, gameLogic.getState());
+        assertEquals(0, gameScreen.getGameLogic().getCoinScore());
+        assertEquals(1, gameScreen.getGameLogic().getCoins().size());
+        assertEquals(1, gameScreen.getGameLogic().getBlocks().size());
+        assertEquals(GameLogic.State.RUNNING, gameScreen.getGameLogic().getState());
     }
 
     @Test // Confirms hero's starting state
     public void testStartingHero(){
-        assertEquals(Hero.State.STANDING, gameLogic.getHero().getState());
-        assertTrue(!gameLogic.getHero().hasBlock());
+        assertEquals(Hero.State.STANDING, gameScreen.getGameLogic().getHero().getState());
+        assertTrue(!gameScreen.getGameLogic().getHero().hasBlock());
     }
 
     @Test // Confirms block's starting state
     public void testStartingBlocks(){
-        for (Block block: gameLogic.getBlocks()){
+        for (Block block: gameScreen.getGameLogic().getBlocks()){
             assertTrue(!block.hasHeroCollision());
             assertTrue(!block.isPicked());
         }
@@ -64,7 +63,7 @@ public class BlockBoyTester {
     @Test // Confirms block's starting state
     public void testStartingCoins() {
         // Confirms block's starting state
-        for (Coin coin: gameLogic.getCoins()){
+        for (Coin coin: gameScreen.getGameLogic().getCoins()){
             assertTrue(!coin.isScored());
             assertTrue(!coin.isPicked());
         }
@@ -72,58 +71,57 @@ public class BlockBoyTester {
 
     @Test // Confirms if the hero can run
     public void testRunHero() {
-        float startingPosX = gameLogic.getHero().getBody().getPosition().x;
-        gameLogic.getHero().run(0.5f);
+        float startingPosX = gameScreen.getGameLogic().getHero().getBody().getPosition().x;
+        gameScreen.getGameLogic().getHero().run(0.5f);
         gameScreen.updateTesting(0.1f);
-        assertNotEquals(gameLogic.getHero().getBody().getPosition().x, startingPosX);
+        assertNotEquals(gameScreen.getGameLogic().getHero().getBody().getPosition().x, startingPosX);
     }
 
     @Test // Confirms if the hero can jump
     public void testJumpHero() {
-        BlockBoy.testingMode = true;
         // The hero starts standing
-        assertEquals(Hero.State.STANDING, gameLogic.getHero().getState());
-        gameLogic.getHero().jump();
+        assertEquals(Hero.State.STANDING, gameScreen.getGameLogic().getHero().getState());
+        gameScreen.getGameLogic().getHero().jump();
         gameScreen.updateTesting(0.1f);
         // The hero is now jumping
-        assertEquals(Hero.State.JUMPING, gameLogic.getHero().getState());
+        assertEquals(Hero.State.JUMPING, gameScreen.getGameLogic().getHero().getState());
     }
 
 
     @Test // Confirms if the hero can pick a block
     public void testPickBlock() {
-        gameLogic = new GameLogic(gameScreen);
+        gameScreen = new GameScreen(GAME, LEVELPATH);
 
         // Confirms the hero starts the game without a block
-        assertTrue(!gameLogic.getHero().hasBlock());
+        assertTrue(!gameScreen.getGameLogic().getHero().hasBlock());
 
         // Confirms the hero is not currently colliding with a block
-        for (Block block: gameLogic.getBlocks()){
+        for (Block block: gameScreen.getGameLogic().getBlocks()){
             assertTrue(!block.hasHeroCollision());
         }
 
         // Confirms the hero is facing the right side (the same as the block)
-        assertTrue(gameLogic.getHero().isFacingRight());
+        assertTrue(gameScreen.getGameLogic().getHero().isFacingRight());
 
         // Hero moves to the right to close to the block
-        gameLogic.getHero().run(0.5f);
+        gameScreen.getGameLogic().getHero().run(0.5f);
         gameScreen.updateTesting(0.1f);
 
         // Confirms the hero is now colliding with the block
-        for (Block block: gameLogic.getBlocks()){
+        for (Block block: gameScreen.getGameLogic().getBlocks()){
             assertTrue(block.hasHeroCollision());
         }
 
-        gameLogic.setMoveBlock(true);
-        gameLogic.update(0.1f);
+        gameScreen.getGameLogic().setMoveBlock(true);
+        gameScreen.getGameLogic().update(0.1f);
         //gameScreen.updateTesting(0.1f);
 
-        /*for (Block block: gameLogic.getBlocks()){
-            assertTrue(block.isPicked());
-        }*/
+        for (Block block: gameScreen.getGameLogic().getBlocks()){
+            //assertTrue(block.isPicked());
+        }
 
         // Confirms the hero starts the game without a block
-        //assertTrue(gameLogic.getHero().hasBlock());
+        assertTrue(gameScreen.getGameLogic().getHero().hasBlock());
     }
 
     @Test
@@ -133,44 +131,37 @@ public class BlockBoyTester {
 
     @Test
     public void testPickCoin() {
-        BlockBoy.testingMode = true;
-        gameLogic = new GameLogic(gameScreen);
 
-        // Confirms the hero starts the game without a block
-        assertTrue(!gameLogic.getHero().hasBlock());
+        gameScreen = new GameScreen(GAME, LEVELPATH);
 
         // Confirms the coins are not picked yet
-        for (Coin coin: gameLogic.getCoins()){
+        assertEquals(0, gameScreen.getGameLogic().getCoinScore());
+
+        for (Coin coin: gameScreen.getGameLogic().getCoins()){
             assertTrue(!coin.isScored());
             assertTrue(!coin.isPicked());
         }
 
         // Hero moves to the left side (same as the coin)
-        gameLogic.getHero().run(-13f);
+        gameScreen.getGameLogic().getHero().run(-13f);
         gameScreen.updateTesting(0.1f);
         gameScreen.updateTesting(0.1f);
         gameScreen.updateTesting(0.1f);
 
-        Gdx.app.log(""+gameLogic.getHero().getBody().getPosition().x, "");
-        Gdx.app.log(""+gameLogic.getHero().getWidth(), "");
-        Gdx.app.log(""+gameLogic.getCoins().get(0).getBody().getPosition().x, "");
-        Gdx.app.log(""+gameLogic.getCoins().get(0).getWidth(), "");
+        assertEquals(1, gameScreen.getGameLogic().getCoinScore());
 
-        // Confirms the coins are now picked yet
-        for (Coin coin: gameLogic.getCoins()){
+        // Confirms that the coin is now picked
+        for (Coin coin: gameScreen.getGameLogic().getCoins()){
             assertTrue(coin.isScored());
             assertTrue(coin.isPicked());
         }
-
-        //gameLogic.setMoveBlock(true);
-        //gameLogic.update(0.1f);
     }
 
     @Test // Confirms the hero can win the game
     public void testWinGame(){
-        gameLogic.getHero().setArriveExit(true);
-        assertEquals(Hero.State.WIN, gameLogic.getHero().getState());
-        gameLogic.update(0.1f);
-        assertEquals(GameLogic.State.WIN, gameLogic.getState());
+        gameScreen.getGameLogic().getHero().setArriveExit(true);
+        assertEquals(Hero.State.WIN, gameScreen.getGameLogic().getHero().getState());
+        gameScreen.getGameLogic().update(0.1f);
+        assertEquals(GameLogic.State.WIN, gameScreen.getGameLogic().getState());
     }
 }
