@@ -141,14 +141,14 @@ public class GameLogic {
         for (Block block : blocks) {
             if (block.hasHeroCollision() && !hero.hasBlock()) {
                 if (hero.isFacingRight()) {
-                    if (hero.getX() < block.getX()) {
+                    if (hero.getBody().getPosition().x < block.getBody().getPosition().x) {
                         hero.setCarryBlock(true);
                         block.setDynamic();
                         block.setPicked(true);
                         block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                         break;
                     }
-                } else if (hero.getX() > block.getX()) {
+                } else if (hero.getBody().getPosition().x > block.getBody().getPosition().x) {
                     hero.setCarryBlock(true);
                     block.setDynamic();
                     block.setPicked(true);

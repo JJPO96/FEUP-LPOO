@@ -132,16 +132,6 @@ public class Hero extends GameElement {
             return false;
         else
             return true;
-       /* if ((getX() + getWidth()) < coin.getX())
-            return false;
-        else if (getX() > (coin.getX() + coin.getWidth()))
-            return false;
-        else if ((getY() + getHeight()) < coin.getY())
-            return false;
-        else if (getY() > (coin.getY() + coin.getHeight()))
-            return false;
-        else
-            return true;*/
     }
 
     /**
