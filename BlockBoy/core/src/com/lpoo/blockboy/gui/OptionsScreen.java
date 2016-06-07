@@ -139,8 +139,6 @@ public class OptionsScreen implements Screen {
         plusBtn = new ImageButton(skin.getDrawable("plusBtn"),skin.getDrawable("plusPressed"));
         minusBtn = new ImageButton(skin.getDrawable("minusBtn"),skin.getDrawable("minusPressed"));
 
-
-
         ImageButton.ImageButtonStyle plSty = plusBtn.getStyle();
         ImageButton.ImageButtonStyle minSty = minusBtn.getStyle();
         plSty.imageDisabled = skin.getDrawable("plusCheck");
