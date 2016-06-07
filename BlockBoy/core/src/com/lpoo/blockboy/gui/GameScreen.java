@@ -43,8 +43,6 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
 
-    private Box2DDebugRenderer boxDebug;
-
     public int getLevel() {
         return level;
     }
@@ -72,9 +70,32 @@ public class GameScreen implements Screen {
 
         // Creates an instance of logic of the game itself
         gameLogic = new GameLogic(this);
-        hud = new Hud(this);
 
-        boxDebug = new Box2DDebugRenderer();
+        world.setContactListener(new CollisionListener(gameLogic));
+        hud = new Hud(this);
+    }
+
+    public GameScreen(BlockBoy game, String lvlMap) {
+        this.game = game;
+        // Creating an atlas
+        atlas = new TextureAtlas("sprites/gamesprites.pack");
+
+        // Creates a camera to follow the hero
+        this.gameCam = new OrthographicCamera();
+
+        // This enables to keep aspect ratio despite of screen size
+        gamePort = new FitViewport(game.VWIDTH / game.PPM, game.VHEIGHT / game.PPM, gameCam);
+
+        // Prepares the map to be rendered
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("levels/level1.tmx");
+        gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+
+        // Create a Box2D world, setting no gravity in X axis, -9.8 gravity in Y axis
+        world = new World(new Vector2(0, -9.8f), true);
+
+        // Creates an instance of logic of the game itself
+        gameLogic = new GameLogic(this);
 
         world.setContactListener(new CollisionListener(gameLogic));
     }
@@ -152,7 +173,6 @@ public class GameScreen implements Screen {
         gameCam.update();
         // Tells renderer to only draw what the camera can see
         mapRenderer.setView(gameCam);
-        boxDebug.render(world, gameCam.combined);
         gameLogic.update(delta);
     }
 
