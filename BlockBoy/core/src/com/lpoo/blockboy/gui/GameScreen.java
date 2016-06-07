@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.logic.GameLogic;
+import com.lpoo.blockboy.tools.Hud;
 
 /**
  * Created by Manuel Gomes on 12/05/2016.
@@ -29,7 +30,7 @@ public class GameScreen implements Screen {
     // Screen variables
     private OrthographicCamera gameCam;
     private Viewport gamePort;
-    private Hud hud;
+    private com.lpoo.blockboy.tools.Hud hud;
 
     // Tiled map variables
     private TmxMapLoader mapLoader;
@@ -49,7 +50,6 @@ public class GameScreen implements Screen {
 
         // Prepares the map to be rendered
         mapLoader = new TmxMapLoader();
-        // TODO - CHANGE TO USE THE LEVEL SELECTED
         map = mapLoader.load("levels/level" + (BlockBoy.levelInd + 1) + ".tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / game.PPM);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
         // Creates an instance of logic of the game itself
         gameLogic = new GameLogic(this);
 
-        world.setContactListener(new CollisionListener(gameLogic));
+        world.setContactListener(new com.lpoo.blockboy.tools.CollisionListener(gameLogic));
         hud = new Hud(this);
     }
 
@@ -87,7 +87,7 @@ public class GameScreen implements Screen {
         gameLogic = new GameLogic(this);
         gameLogic.setTestingMode(false);
 
-        world.setContactListener(new CollisionListener(gameLogic));
+        world.setContactListener(new com.lpoo.blockboy.tools.CollisionListener(gameLogic));
     }
 
     public void checkInput(float delta) {
@@ -133,7 +133,7 @@ public class GameScreen implements Screen {
                 game.setScreen(new WinScreen(game));
                 dispose();
                 break;
-            case LOOSE:
+            case LOSE:
                 Gdx.input.vibrate(600);
                 if(!BlockBoy.mute) BlockBoy.gameOverSound.play(BlockBoy.volume/100);
                 BlockBoy.coinScore+=gameLogic.getCoinScore();
@@ -160,6 +160,9 @@ public class GameScreen implements Screen {
 
         // Updates hud
         hud.update(delta, gameLogic.getCoinScore());
+
+        if (hud.getWorldTimer() == 999)
+            gameLogic.state = GameLogic.State.LOSE;
 
         // Updates the camera position in relation to the hero
         gameCam.position.x = gameLogic.getHero().getBody().getPosition().x;

@@ -1,4 +1,4 @@
-package com.lpoo.blockboy.gui;
+package com.lpoo.blockboy.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -21,6 +21,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lpoo.blockboy.BlockBoy;
+import com.lpoo.blockboy.gui.GameScreen;
+import com.lpoo.blockboy.gui.PauseScreen;
 import com.lpoo.blockboy.logic.Block;
 
 /**
@@ -201,6 +203,10 @@ public class Hud implements Disposable {
         coinNumber.setPosition(70 + BlockBoy.VWIDTH/8, BlockBoy.VHEIGHT - coinNumber.getHeight());
         stage.addActor(coinNumber);
         Gdx.input.setInputProcessor(stage);
+    }
+
+    public Integer getWorldTimer(){
+        return worldTimer;
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.lpoo.blockboy.gui;
+package com.lpoo.blockboy.tools;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;

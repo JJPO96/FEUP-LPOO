@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class GameLogic {
 
-    public enum State {RUNNING, WIN, LOOSE}
+    public enum State {RUNNING, WIN, LOSE}
     public static boolean testingMode = false;
 
     private Hero hero;
@@ -26,7 +26,7 @@ public class GameLogic {
     private ArrayList<Block> blocks;
     private int coinScore;
     private boolean moveBlock = false;
-    private State state;
+    public State state;
     private GameScreen screen;
     private World world;
 
@@ -208,7 +208,7 @@ public class GameLogic {
             this.state = State.WIN;
 
         } else if (hero.getState() == Hero.State.DEAD)
-            this.state = State.LOOSE;
+            this.state = State.LOSE;
 
         // Updates coins
         for (Coin coin : coins) {
