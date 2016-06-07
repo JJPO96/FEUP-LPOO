@@ -23,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.badlogic.gdx.Gdx;
 import com.lpoo.blockboy.BlockBoy;
 import com.lpoo.blockboy.gui.GameScreen;
 import com.lpoo.blockboy.logic.Block;
@@ -129,9 +128,6 @@ public class BlockBoyTester {
 
         // Confirms the hero is facing the left side (the same as the block)
         assertTrue(!gameScreen.getGameLogic().getHero().isFacingRight());
-
-        Gdx.app.log("" + gameScreen.getGameLogic().getHero().getBody().getPosition().x, "");
-        Gdx.app.log("" + gameScreen.getGameLogic().getBlocks().get(1).getBody().getPosition().x, "");
 
         // Confirms the hero is now colliding with the block
         assertTrue(gameScreen.getGameLogic().getBlocks().get(1).hasHeroCollision());
