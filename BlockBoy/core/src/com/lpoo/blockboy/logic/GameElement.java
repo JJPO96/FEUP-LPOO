@@ -14,7 +14,6 @@ import com.lpoo.blockboy.gui.GameScreen;
  * Class parent from which the game elements inherit
  */
 public abstract class GameElement extends Sprite {
-
     // Screen
     protected GameScreen screen;
 
@@ -24,8 +23,6 @@ public abstract class GameElement extends Sprite {
     protected BodyDef bodyDef;
     protected FixtureDef fixtureDef;
     protected World world;
-
-    // TODO - CORRIGIR ESTE CONSTRUTOR
     /**
      * GameElement's Constructor
      *
@@ -42,13 +39,22 @@ public abstract class GameElement extends Sprite {
      */
     public abstract void init();
 
+    /**
+     * Loads the element's textures
+     */
     public abstract void loadTextures();
 
+    /**
+     * Updates the current state of the element
+     *
+     * @param delta time
+     */
     public abstract void update(float delta);
 
-    public World getWorld(){ return world;}
-
-    public Screen getScreen() { return screen;}
-
+    /**
+     * Returns the physical body of the element
+     *
+     * @return
+     */
     public Body getBody() { return body;}
 }

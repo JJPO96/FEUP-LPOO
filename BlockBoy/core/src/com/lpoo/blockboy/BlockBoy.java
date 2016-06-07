@@ -25,14 +25,14 @@ public class BlockBoy extends Game {
 
     public static boolean[] lockLevels;
     public static boolean[] lockSkins;
-
+    // Sounds
     public static Music bg_music;
     public static Sound btnClick;
     public static Sound jumpSound;
     public static Sound coinSound;
     public static Sound winSound;
     public static Sound gameOverSound;
-
+    // Mask bits to detect collisions
     public static final short DEFAULT_BIT = 1;
     public static final short HERO_BIT = 2;
     public static final short BLOCK_BIT = 4;
@@ -47,12 +47,13 @@ public class BlockBoy extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        init();
+        setScreen(new MainMenuScreen(this));
+    }
 
-
+    public void init(){
         lockLevels = new boolean[10];
         lockSkins = new boolean[3];
-
-        // TODO - UNCOMMENT SOUND
         bg_music = Gdx.audio.newMusic(Gdx.files.internal("sounds/bg.wav"));
         btnClick = Gdx.audio.newSound(Gdx.files.internal("sounds/button.mp3"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
@@ -73,7 +74,6 @@ public class BlockBoy extends Game {
             bg_music.setVolume(BlockBoy.volume / 100);
             bg_music.setLooping(true);
         }
-        setScreen(new MainMenuScreen(this));
     }
 
 

@@ -101,7 +101,6 @@
  <objectgroup name="Block">
   <object id="19" x="1024" y="512" width="64" height="64"/>
   <object id="27" x="1792" y="512" width="64" height="64"/>
-  <object id="75" x="1152" y="512" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Brick">
   <object id="17" x="2560" y="448" width="64" height="128"/>
