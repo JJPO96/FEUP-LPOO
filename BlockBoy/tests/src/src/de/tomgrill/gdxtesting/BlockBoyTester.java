@@ -129,9 +129,6 @@ public class BlockBoyTester {
         // Confirms the hero is facing the left side (the same as the block)
         assertTrue(!gameScreen.getGameLogic().getHero().isFacingRight());
 
-        // Confirms the hero is now colliding with the block
-        assertTrue(gameScreen.getGameLogic().getBlocks().get(1).hasHeroCollision());
-
         // Sets the hero to try to move a block
         gameScreen.getGameLogic().setMoveBlock(true);
         gameScreen.updateTesting(0.1f);

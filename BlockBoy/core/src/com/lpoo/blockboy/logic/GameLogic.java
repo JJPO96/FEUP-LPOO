@@ -1,5 +1,6 @@
 package com.lpoo.blockboy.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class GameLogic {
 
     public enum State {RUNNING, WIN, LOSE}
+
     public static boolean testingMode = false;
 
     private Hero hero;
@@ -145,6 +147,7 @@ public class GameLogic {
                         hero.setCarryBlock(true);
                         block.setDynamic();
                         block.setPicked(true);
+                        block.setBrickCollision(false);
                         block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                         break;
                     }
@@ -152,6 +155,7 @@ public class GameLogic {
                     hero.setCarryBlock(true);
                     block.setDynamic();
                     block.setPicked(true);
+                    block.setBrickCollision(false);
                     block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
                     break;
                 }
@@ -196,8 +200,11 @@ public class GameLogic {
         else if (hero.getBody().getPosition().x > (block.getBody().getPosition().x + block.getWidth()))
             return false;
 
-        if (hero.getBody().getPosition().y > block.getBody().getPosition().y && block.hasHeroCollision())
+        if (hero.getBody().getPosition().y > block.getBody().getPosition().y && block.hasHeroCollision()) {
+            Gdx.app.log("hero above block", "");
             return true;
+        }
+
 
         return false;
     }
@@ -237,10 +244,23 @@ public class GameLogic {
 
         // Updates blocks
         for (Block block : blocks) {
-            if (checkHeroAboveBlock(block))
+            if (checkHeroAboveBlock(block) || (block.getBrickCollision() && block.getBody().getLinearVelocity().y == 0))
                 block.setStatic();
-            else
+
+            if (!checkHeroAboveBlock(block) && !block.getBrickCollision())
                 block.setDynamic();
+
+           // if (checkHeroAboveBlock(block) || (block.getBrickCollision() && block.getBody().getLinearVelocity().y == 0))
+              //  block.setStatic();
+
+           /* if (checkHeroAboveBlock(block) || (block.getBrickCollision() && block.getBody().getLinearVelocity().y != 0))
+                block.setStatic();
+
+
+
+            if (!checkHeroAboveBlock(block) && block.getBrickCollision())
+                block.setDynamic();*/
+
 
             if (block.isPicked())
                 block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
@@ -281,6 +301,7 @@ public class GameLogic {
 
     /**
      * Returns the coin score
+     *
      * @return coin score
      */
     public int getCoinScore() {
@@ -310,7 +331,7 @@ public class GameLogic {
      *
      * @param mode
      */
-    public void setTestingMode(boolean mode){
+    public void setTestingMode(boolean mode) {
         this.testingMode = true;
     }
 }

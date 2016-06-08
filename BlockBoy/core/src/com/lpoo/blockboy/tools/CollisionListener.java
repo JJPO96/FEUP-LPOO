@@ -33,34 +33,34 @@ public class CollisionListener implements ContactListener {
 
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
-                Gdx.app.log("heroblock begin", "");
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
                     ((Block) fixB.getUserData()).setHeroCollision(true);
                 else
                     ((Block) fixA.getUserData()).setHeroCollision(true);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_BIT:
+                Gdx.app.log("begin collision", "");
                 if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
-                    ((Block) fixB.getUserData()).setStatic();
+                    ((Block) fixB.getUserData()).setBrickCollision(true);
                 }
                 else
-                    ((Block) fixA.getUserData()).setStatic();
+                    ((Block) fixA.getUserData()).setBrickCollision(true);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_PICKED_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
-                    ((Block) fixB.getUserData()).setStatic();
+                    ((Block) fixB.getUserData()).setBrickCollision(true);
                 }
                 else
-                    ((Block) fixA.getUserData()).setStatic();
+                    ((Block) fixA.getUserData()).setBrickCollision(true);
                 break;
             case BlockBoy.HERO_BIT | BlockBoy.EXIT_BIT:
                 gameLogic.getHero().setArriveExit(true);
                 break;
             case BlockBoy.BLOCK_PICKED_BIT | BlockBoy.AIRGROUND_BIT:
                 if(fixA.getFilterData().categoryBits == BlockBoy.AIRGROUND_BIT){
-                    if (((Block) fixA.getUserData()).isPicked())
+                    if (((Block) fixB.getUserData()).isPicked())
                     {
-                        ((Block) fixA.getUserData()).setPicked(false);
+                        ((Block) fixB.getUserData()).setPicked(false);
                         gameLogic.getHero().setCarryBlock(false);
                     }
                 }
@@ -86,25 +86,26 @@ public class CollisionListener implements ContactListener {
 
         switch (bits){
             case BlockBoy.HERO_BIT | BlockBoy.BLOCK_BIT:
-                Gdx.app.log("heroblock end", "");
                 if(fixA.getFilterData().categoryBits == BlockBoy.HERO_BIT)
                     ((Block) fixB.getUserData()).setHeroCollision(false);
                 else
                     ((Block) fixA.getUserData()).setHeroCollision(false);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_BIT:
+                Gdx.app.log("end collision", "");
                 if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
-                    ((Block) fixB.getUserData()).setDynamic();
+                    ((Block) fixB.getUserData()).setBrickCollision(false);
                 }
                 else
-                    ((Block) fixA.getUserData()).setDynamic();
+                    ((Block) fixA.getUserData()).setBrickCollision(false);
                 break;
             case BlockBoy.BRICK_BIT | BlockBoy.BLOCK_PICKED_BIT:
+                Gdx.app.log("end collision", "");
                 if(fixA.getFilterData().categoryBits == BlockBoy.BRICK_BIT){
-                    ((Block) fixB.getUserData()).setDynamic();
+                    ((Block) fixB.getUserData()).setBrickCollision(false);
                 }
                 else
-                    ((Block) fixA.getUserData()).setDynamic();
+                    ((Block) fixA.getUserData()).setBrickCollision(false);
                 break;
             default:
                 break;
