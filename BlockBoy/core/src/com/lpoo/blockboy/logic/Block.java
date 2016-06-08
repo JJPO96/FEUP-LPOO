@@ -19,6 +19,7 @@ public class Block extends GameElement {
     private final int SPRITESIZE = 64;
     private boolean picked = false;
     private boolean heroCollision = false;
+    private boolean blockCollision = false;
     private boolean brickCollision = false;
     private boolean changeToStatic = false;
     private boolean isStatic = false;
@@ -192,4 +193,23 @@ public class Block extends GameElement {
     public  boolean getBrickCollision(){
         return brickCollision;
     }
+
+    /**
+     * Sets a new collision state in relation to a block
+     *
+     * @param collision
+     */
+    public void setBlockCollision(boolean collision){
+        this.blockCollision = collision;
+    }
+
+    /**
+     * Returns the brick collision state
+     *
+     * @return true if the block  is colliding with a block
+     */
+    public  boolean getBlockCollision(){
+        return blockCollision;
+    }
+
 }

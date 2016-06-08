@@ -174,11 +174,13 @@ public class GameLogic {
                 if (hero.isFacingRight()) {
                     block.setBodyPosition(block.getBody().getPosition().x + block.getWidth() + 2 / 10,
                             block.getBody().getPosition().y + 2 / 10);
+                    block.setHeroCollision(false);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 } else {
                     block.setBodyPosition(block.getBody().getPosition().x - block.getWidth() + 2 / 10,
                             block.getBody().getPosition().y + 2 / 10);
+                    block.setHeroCollision(false);
                     hero.setCarryBlock(false);
                     block.setPicked(false);
                 }
@@ -200,11 +202,8 @@ public class GameLogic {
         else if (hero.getBody().getPosition().x > (block.getBody().getPosition().x + block.getWidth()))
             return false;
 
-        if (hero.getBody().getPosition().y > block.getBody().getPosition().y && block.hasHeroCollision()) {
-            Gdx.app.log("hero above block", "");
+        if (hero.getBody().getPosition().y > block.getBody().getPosition().y && block.hasHeroCollision())
             return true;
-        }
-
 
         return false;
     }
@@ -239,7 +238,6 @@ public class GameLogic {
                 heroDropBlock();
             else
                 heroPickBlock();
-
         }
 
         // Updates blocks
@@ -249,18 +247,6 @@ public class GameLogic {
 
             if (!checkHeroAboveBlock(block) && !block.getBrickCollision())
                 block.setDynamic();
-
-           // if (checkHeroAboveBlock(block) || (block.getBrickCollision() && block.getBody().getLinearVelocity().y == 0))
-              //  block.setStatic();
-
-           /* if (checkHeroAboveBlock(block) || (block.getBrickCollision() && block.getBody().getLinearVelocity().y != 0))
-                block.setStatic();
-
-
-
-            if (!checkHeroAboveBlock(block) && block.getBrickCollision())
-                block.setDynamic();*/
-
 
             if (block.isPicked())
                 block.setBodyPosition(hero.getBody().getPosition().x, hero.getBody().getPosition().y + hero.getHeight());
